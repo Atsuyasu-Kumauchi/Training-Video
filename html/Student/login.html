@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Training Portal</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full space-y-8">
+        <!-- Logo and Header -->
+        <div class="text-center">
+            <div class="mx-auto w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center mb-4">
+                <i class="fas fa-graduation-cap text-white text-2xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Welcome Back</h2>
+            <p class="mt-2 text-sm text-gray-600">Sign in to your Training Portal account</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+            <form id="loginForm" class="space-y-6">
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    <div id="emailError" class="hidden mt-1 text-sm text-red-600"></div>
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                            placeholder="Enter your password"
+                            required
+                        >
+                        <button 
+                            type="button" 
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                            onclick="togglePasswordVisibility()"
+                        >
+                            <i class="fas fa-eye" id="passwordIcon"></i>
+                        </button>
+                    </div>
+                    <div id="passwordError" class="hidden mt-1 text-sm text-red-600"></div>
+                </div>
+
+                <!-- Remember Me and Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            id="rememberMe" 
+                            name="rememberMe" 
+                            type="checkbox"
+                            class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                        >
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-700">
+                            Remember me
+                        </label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="forgot-password.html" class="font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200">
+                            Forgot password?
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button 
+                        type="submit" 
+                        id="loginBtn"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Sign In
+                    </button>
+                </div>
+
+                <!-- Error Message -->
+                <div id="loginError" class="hidden bg-red-50 border border-red-200 rounded-lg p-3">
+                    <div class="flex">
+                        <i class="fas fa-exclamation-circle text-red-400 mr-2 mt-0.5"></i>
+                        <div>
+                            <h3 class="text-sm font-medium text-red-800">Login Failed</h3>
+                            <p id="errorMessage" class="text-sm text-red-700 mt-1"></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Password visibility toggle
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // Form validation
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        function showError(fieldId, message) {
+            const errorDiv = document.getElementById(fieldId + 'Error');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            
+            const field = document.getElementById(fieldId);
+            field.classList.add('border-red-500');
+            field.classList.remove('border-gray-300');
+        }
+
+        function hideError(fieldId) {
+            const errorDiv = document.getElementById(fieldId + 'Error');
+            errorDiv.classList.add('hidden');
+            
+            const field = document.getElementById(fieldId);
+            field.classList.remove('border-red-500');
+            field.classList.add('border-gray-300');
+        }
+
+        function showLoginError(message) {
+            const loginError = document.getElementById('loginError');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            loginError.classList.remove('hidden');
+        }
+
+        function hideLoginError() {
+            const loginError = document.getElementById('loginError');
+            loginError.classList.add('hidden');
+        }
+
+        // Real-time validation
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value.trim();
+            if (email === '') {
+                showError('email', 'Email is required');
+            } else if (!validateEmail(email)) {
+                showError('email', 'Please enter a valid email address');
+            } else {
+                hideError('email');
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                hideError('email');
+            }
+        });
+
+        document.getElementById('password').addEventListener('blur', function() {
+            const password = this.value;
+            if (password === '') {
+                showError('password', 'Password is required');
+            } else if (!validatePassword(password)) {
+                showError('password', 'Password must be at least 6 characters');
+            } else {
+                hideError('password');
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value !== '') {
+                hideError('password');
+            }
+        });
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Hide any previous errors
+            hideLoginError();
+            hideError('email');
+            hideError('password');
+            
+            // Validate form
+            let isValid = true;
+            
+            if (email === '') {
+                showError('email', 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            if (password === '') {
+                showError('password', 'Password is required');
+                isValid = false;
+            } else if (!validatePassword(password)) {
+                showError('password', 'Password must be at least 6 characters');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                return;
+            }
+            
+            // Disable button and show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing In...';
+            
+            // Simulate login process
+            setTimeout(() => {
+                // Demo credentials (in real app, this would be server-side validation)
+                if (email === 'student@example.com' && password === 'password123') {
+                    // Successful login
+                    window.location.href = 'index.html';
+                } else {
+                    // Failed login
+                    showLoginError('Invalid email or password. Please try again.');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Sign In';
+                }
+            }, 1500);
+        });
+
+
+    </script>
+</body>
+</html> 

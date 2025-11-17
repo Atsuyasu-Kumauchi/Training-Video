@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Training Platform</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">Training Portal</h1>
+                    </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+                                <nav class="mt-6 px-3">
+                        <div class="space-y-3">
+                            <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-home w-5 h-5 mr-3"></i>
+                                Dashboard
+                            </a>
+                            <a href="my-trainings.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                                <i class="fas fa-book w-5 h-5 mr-3"></i>
+                                My Trainings
+                            </a>
+                            <a href="results.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
+                                Results
+                            </a>
+                            <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-key w-5 h-5 mr-3"></i>
+                                Change Password
+                            </a>
+                        </div>
+                    </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex flex-col transition-all duration-300 min-w-0">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button id="userMenuButton" class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">JD</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">John Doe</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                                
+                                <!-- Dropdown Menu -->
+                                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                                    <a href="change-password.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fas fa-key mr-2"></i>
+                                        Change Password
+                                    </a>
+                                    <div class="border-t border-gray-100 my-1"></div>
+                                    <a href="login.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-gray-900">My Trainings</h1>
+                    </div>
+
+                    <!-- Training List -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="p-6">
+                            <div class="space-y-4" id="trainingsList">
+                                <!-- Trainings will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Sample training data
+        const trainings = [
+            {
+                id: 1,
+                title: 'JavaScript Fundamentals',
+                description: 'Learn the basics of JavaScript programming language',
+                category: 'Programming',
+                instructor: 'Sarah Wilson',
+                progress: 75,
+                status: 'In Progress',
+                totalVideos: 12,
+                completedVideos: 9,
+                dueDate: '2024-02-15',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 2,
+                title: 'Project Management Basics',
+                description: 'Essential project management concepts and methodologies',
+                category: 'Management',
+                instructor: 'Mike Johnson',
+                progress: 0,
+                status: 'Not Started',
+                totalVideos: 8,
+                completedVideos: 0,
+                dueDate: '2024-03-01',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 3,
+                title: 'Cybersecurity Awareness',
+                description: 'Understanding cybersecurity threats and best practices',
+                category: 'Security',
+                instructor: 'David Lee',
+                progress: 45,
+                status: 'In Progress',
+                totalVideos: 10,
+                completedVideos: 4,
+                dueDate: '2024-02-28',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 4,
+                title: 'Data Analysis Fundamentals',
+                description: 'Introduction to data analysis and visualization',
+                category: 'Analytics',
+                instructor: 'Emily Brown',
+                progress: 0,
+                status: 'Not Started',
+                totalVideos: 15,
+                completedVideos: 0,
+                dueDate: '2024-03-15',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 5,
+                title: 'Communication Skills',
+                description: 'Improve your professional communication skills',
+                category: 'Soft Skills',
+                instructor: 'John Smith',
+                progress: 90,
+                status: 'In Progress',
+                totalVideos: 6,
+                completedVideos: 5,
+                dueDate: '2024-02-10',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 6,
+                title: 'Agile Methodology',
+                description: 'Learn Agile project management framework',
+                category: 'Project Management',
+                instructor: 'Lisa Chen',
+                progress: 0,
+                status: 'Not Started',
+                totalVideos: 9,
+                completedVideos: 0,
+                dueDate: '2024-03-20',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 7,
+                title: 'UI/UX Design Principles',
+                description: 'Fundamentals of user interface and experience design',
+                category: 'Design',
+                instructor: 'Alex Rodriguez',
+                progress: 30,
+                status: 'In Progress',
+                totalVideos: 11,
+                completedVideos: 3,
+                dueDate: '2024-02-25',
+                score: null,
+                completedDate: null
+            },
+            {
+                id: 8,
+                title: 'Database Management',
+                description: 'Introduction to database design and management',
+                category: 'Technical',
+                instructor: 'Maria Garcia',
+                progress: 0,
+                status: 'Not Started',
+                totalVideos: 14,
+                completedVideos: 0,
+                dueDate: '2024-03-30',
+                score: null,
+                completedDate: null
+            },
+            // Completed trainings
+            {
+                id: 9,
+                title: 'Introduction to HTML & CSS',
+                description: 'Learn web development fundamentals',
+                category: 'Web Development',
+                instructor: 'Tom Wilson',
+                progress: 100,
+                status: 'Completed',
+                totalVideos: 8,
+                completedVideos: 8,
+                dueDate: '2024-01-15',
+                score: 95,
+                completedDate: '2024-01-15'
+            },
+            {
+                id: 10,
+                title: 'Leadership Fundamentals',
+                description: 'Essential leadership skills and principles',
+                category: 'Leadership',
+                instructor: 'Jennifer Davis',
+                progress: 100,
+                status: 'Completed',
+                totalVideos: 10,
+                completedVideos: 10,
+                dueDate: '2024-01-20',
+                score: 88,
+                completedDate: '2024-01-20'
+            },
+            {
+                id: 11,
+                title: 'Time Management',
+                description: 'Effective time management strategies',
+                category: 'Productivity',
+                instructor: 'Robert Kim',
+                progress: 100,
+                status: 'Completed',
+                totalVideos: 6,
+                completedVideos: 6,
+                dueDate: '2024-01-25',
+                score: 92,
+                completedDate: '2024-01-25'
+            },
+            {
+                id: 12,
+                title: 'Customer Service Excellence',
+                description: 'Professional customer service skills',
+                category: 'Customer Service',
+                instructor: 'Amanda White',
+                progress: 100,
+                status: 'Completed',
+                totalVideos: 7,
+                completedVideos: 7,
+                dueDate: '2024-01-30',
+                score: 85,
+                completedDate: '2024-01-30'
+            },
+            {
+                id: 13,
+                title: 'Microsoft Excel Advanced',
+                description: 'Advanced Excel techniques and formulas',
+                category: 'Software Training',
+                instructor: 'Carlos Martinez',
+                progress: 100,
+                status: 'Completed',
+                totalVideos: 12,
+                completedVideos: 12,
+                dueDate: '2024-02-05',
+                score: 90,
+                completedDate: '2024-02-05'
+            },
+            {
+                id: 14,
+                title: 'Team Collaboration',
+                description: 'Effective team collaboration strategies',
+                category: 'Team Building',
+                instructor: 'Rachel Green',
+                progress: 100,
+                status: 'Completed',
+                totalVideos: 9,
+                completedVideos: 9,
+                dueDate: '2024-02-10',
+                score: 87,
+                completedDate: '2024-02-10'
+            }
+        ];
+
+        // Function to populate training list
+        function populateTrainingList() {
+            // Sort trainings: open trainings first, then completed trainings
+            const sortedTrainings = [
+                ...trainings.filter(t => t.status !== 'Completed'),
+                ...trainings.filter(t => t.status === 'Completed')
+            ];
+            
+            const list = document.getElementById('trainingsList');
+            list.innerHTML = sortedTrainings.map(training => `
+                <div class="flex items-start space-x-3 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 ${training.status === 'Completed' ? 'bg-green-100' : 'bg-blue-100'} rounded-full flex items-center justify-center">
+                            <i class="fas ${training.status === 'Completed' ? 'fa-check text-green-600' : 'fa-book text-blue-600'} text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-900 cursor-pointer" onclick="openTrainingVideos(${training.id})">
+                                ${training.title}
+                            </h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                    training.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                    training.status === 'In Progress' ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-gray-100 text-gray-800'
+                                }">
+                                    ${training.status}
+                                </span>
+
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1 cursor-pointer" onclick="openTrainingVideos(${training.id})">${training.description}</p>
+                        <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                            <span><i class="fas fa-video mr-1"></i>${training.completedVideos}/${training.totalVideos} videos</span>
+                            <span><i class="fas fa-calendar mr-1"></i>${training.status === 'Completed' ? 'Completed: ' : 'Due: '}${training.status === 'Completed' ? training.completedDate : training.dueDate}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to open training videos page
+        function openTrainingVideos(trainingId) {
+            const training = trainings.find(t => t.id === trainingId);
+            if (training) {
+                console.log(`Opening videos for training: ${training.title}`);
+                // Navigate to video list page with training ID
+                window.location.href = `training-videos.html?training=${trainingId}&title=${encodeURIComponent(training.title)}`;
+            }
+        }
+
+
+
+        // Initialize page when DOM is loaded
+        // User dropdown functionality
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTrainingList();
+        });
+    </script>
+</body>
+</html> 

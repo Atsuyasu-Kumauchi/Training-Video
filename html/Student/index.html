@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Training Platform</title>
+    <link href="../dist/output.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">Training Portal</h1>
+                    </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+                                <nav class="mt-6 px-3">
+                        <div class="space-y-3">
+                            <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                                <i class="fas fa-home w-5 h-5 mr-3"></i>
+                                Dashboard
+                            </a>
+                            <a href="my-trainings.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-book w-5 h-5 mr-3"></i>
+                                My Trainings
+                            </a>
+                            <a href="results.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
+                                Results
+                            </a>
+                            <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-key w-5 h-5 mr-3"></i>
+                                Change Password
+                            </a>
+                        </div>
+                    </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex flex-col transition-all duration-300 min-w-0">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button id="userMenuButton" class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">JD</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">John Doe</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                                
+                                <!-- Dropdown Menu -->
+                                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                                    <a href="change-password.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fas fa-key mr-2"></i>
+                                        Change Password
+                                    </a>
+                                    <div class="border-t border-gray-100 my-1"></div>
+                                    <a href="login.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Total Trainings -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-book text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">Total Trainings</p>
+                                    <p class="text-2xl font-bold text-gray-900">8</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Completed Trainings -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">Completed</p>
+                                    <p class="text-2xl font-bold text-gray-900">6</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- In Progress -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-clock text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-500">In Progress</p>
+                                    <p class="text-2xl font-bold text-gray-900">2</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-lg font-medium text-gray-900">Notifications</h2>
+                            <p class="text-sm text-gray-500 mt-1">Stay updated with your latest activities</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4" id="notificationsList">
+                                <!-- Notifications will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Sample notifications data
+        const notifications = [
+            {
+                id: 1,
+                type: 'training_assigned',
+                title: 'New Training Assigned',
+                message: 'You have been assigned a new training: "Advanced JavaScript Concepts"',
+                timestamp: '2 hours ago',
+                isRead: false,
+                icon: 'fas fa-book',
+                iconColor: 'text-blue-600',
+                bgColor: 'bg-blue-50'
+            },
+            {
+                id: 2,
+                type: 'training_completed',
+                title: 'Training Completed',
+                message: 'Congratulations! You have completed "JavaScript Fundamentals" with a score of 92%',
+                timestamp: '1 day ago',
+                isRead: true,
+                icon: 'fas fa-check-circle',
+                iconColor: 'text-green-600',
+                bgColor: 'bg-green-50'
+            },
+
+        ];
+
+        // Function to populate notifications
+        function populateNotifications() {
+            const list = document.getElementById('notificationsList');
+            
+            list.innerHTML = notifications.map(notification => `
+                <div class="flex items-start space-x-3 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200 ${notification.isRead ? 'opacity-75' : ''}">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 ${notification.bgColor} rounded-full flex items-center justify-center">
+                            <i class="${notification.icon} ${notification.iconColor} text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-900">${notification.title}</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500">${notification.timestamp}</span>
+                                ${!notification.isRead ? `
+                                    <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">${notification.message}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to mark notification as read/unread
+        function markAsRead(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (notification) {
+                notification.isRead = !notification.isRead;
+                populateNotifications();
+            }
+        }
+
+        // Function to delete notification
+        function deleteNotification(notificationId) {
+            const index = notifications.findIndex(n => n.id === notificationId);
+            if (index > -1) {
+                notifications.splice(index, 1);
+                populateNotifications();
+            }
+        }
+
+        // Initialize page when DOM is loaded
+        // User dropdown functionality
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateNotifications();
+        });
+    </script>
+</body>
+</html> 

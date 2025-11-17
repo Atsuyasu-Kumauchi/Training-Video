@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training List - Admin Dashboard</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+        .select2-container {
+            z-index: 9999 !important;
+        }
+        .select2-dropdown {
+            z-index: 9999 !important;
+        }
+        .select2-results {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-sm"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-900">Training Admin</h1>
+                </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-6 px-3">
+                <div class="space-y-3">
+                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-users w-5 h-5 mr-3"></i>
+                        User List
+                    </a>
+                    <a href="tags.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tags w-5 h-5 mr-3"></i>
+                        Tags
+                    </a>
+                    <a href="video-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-video w-5 h-5 mr-3"></i>
+                        Video List
+                    </a>
+                    <a href="training-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-book w-5 h-5 mr-3"></i>
+                        Training List
+                    </a>
+                    <a href="create-test.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
+                        Create Test
+                    </a>
+                    <a href="assignment-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tasks w-5 h-5 mr-3"></i>
+                        Assignment List
+                    </a>
+                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                        <i class="fas fa-clipboard-list w-5 h-5 mr-3"></i>
+                        Assignment Review
+                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
+                    </a>
+                    <a href="departments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-building w-5 h-5 mr-3"></i>
+                        Departments
+                    </a>
+                    <a href="roles.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-user-tag w-5 h-5 mr-3"></i>
+                        Roles
+                    </a>
+                    <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-key w-5 h-5 mr-3"></i>
+                        Change Password
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex flex-col transition-all duration-300 min-w-0">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">A</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Admin User</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Training Programs</h2>
+                        </div>
+                        <button onclick="showAddTrainingModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            <i class="fas fa-plus mr-2"></i>
+                            Add New Training
+                        </button>
+                    </div>
+
+                    <!-- Filters Card -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <div class="px-6 py-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                                    <select class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                        <option value="">All Status</option>
+                                        <option value="active">Active</option>
+                                        <option value="draft">Draft</option>
+                                        <option value="archived">Archived</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" id="searchInput" placeholder="Search by title or description..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                        <button id="searchButton" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Table Card -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full min-w-[800px] divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Training</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Enrolled</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Completed</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Incompleted</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">JavaScript Fundamentals</div>
+                                                <div class="text-sm text-gray-500">Learn the basics of JavaScript programming</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showEnrolledUsers('JavaScript Fundamentals', 45)">
+                                                45
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedUsers('JavaScript Fundamentals', 38)">
+                                                38
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer" onclick="showIncompletedUsers('JavaScript Fundamentals', 7)">
+                                                7
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Active
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewTrainingDetails('JavaScript Fundamentals')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditTrainingModal('JavaScript Fundamentals')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Leadership Skills</div>
+                                                <div class="text-sm text-gray-500">Develop essential leadership competencies</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showEnrolledUsers('Leadership Skills', 28)">
+                                                28
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedUsers('Leadership Skills', 22)">
+                                                22
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer" onclick="showIncompletedUsers('Leadership Skills', 6)">
+                                                6
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Active
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewTrainingDetails('Leadership Skills')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditTrainingModal('Leadership Skills')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Workplace Safety</div>
+                                                <div class="text-sm text-gray-500">Essential safety protocols and procedures</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showEnrolledUsers('Workplace Safety', 156)">
+                                                156
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedUsers('Workplace Safety', 142)">
+                                                142
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer" onclick="showIncompletedUsers('Workplace Safety', 14)">
+                                                14
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Active
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewTrainingDetails('Workplace Safety')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditTrainingModal('Workplace Safety')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Communication Skills</div>
+                                                <div class="text-sm text-gray-500">Improve interpersonal communication</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showEnrolledUsers('Communication Skills', 67)">
+                                                67
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedUsers('Communication Skills', 54)">
+                                                54
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer" onclick="showIncompletedUsers('Communication Skills', 13)">
+                                                13
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                Draft
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewTrainingDetails('Communication Skills')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditTrainingModal('Communication Skills')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Compliance Training</div>
+                                                <div class="text-sm text-gray-500">Legal and regulatory compliance requirements</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showEnrolledUsers('Compliance Training', 89)">
+                                                89
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedUsers('Compliance Training', 76)">
+                                                76
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <button class="font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer" onclick="showIncompletedUsers('Compliance Training', 13)">
+                                                13
+                                            </button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Active
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewTrainingDetails('Compliance Training')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditTrainingModal('Compliance Training')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="px-6 py-3 border-t border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <span>Showing 1 to 5 of 5 training programs</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Previous
+                                    </button>
+                                    <button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md">
+                                        1
+                                    </button>
+                                    <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add New Training Modal -->
+    <div id="addTrainingModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-[9999]">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Add New Training</h3>
+                    <button onclick="closeAddTrainingModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="addTrainingForm" class="space-y-4">
+                    <!-- Training Name -->
+                    <div>
+                        <label for="trainingName" class="block text-sm font-medium text-gray-700 mb-2">Training Name *</label>
+                        <input type="text" id="trainingName" name="trainingName" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                               placeholder="Enter training name">
+                    </div>
+
+                    <!-- Training Description -->
+                    <div>
+                        <label for="trainingDescription" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="trainingDescription" name="trainingDescription" rows="3"
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                  placeholder="Enter training description"></textarea>
+                    </div>
+
+                    <!-- Videos Selection -->
+                    <div>
+                        <label for="trainingVideos" class="block text-sm font-medium text-gray-700 mb-2">Select Videos *</label>
+                        <select id="trainingVideos" name="trainingVideos" multiple required
+                                class="w-full">
+                            <option value="intro-js">Introduction to JavaScript</option>
+                            <option value="advanced-js">Advanced JavaScript Concepts</option>
+                            <option value="react-basics">React Basics</option>
+                            <option value="react-hooks">React Hooks</option>
+                            <option value="node-express">Node.js & Express</option>
+                            <option value="database-design">Database Design</option>
+                            <option value="api-design">API Design Principles</option>
+                            <option value="testing">Testing Strategies</option>
+                            <option value="deployment">Deployment Best Practices</option>
+                            <option value="security">Web Security</option>
+                        </select>
+                    </div>
+
+                    <!-- Users Selection -->
+                    <div>
+                        <label for="trainingUsers" class="block text-sm font-medium text-gray-700 mb-2">Select Users (Optional)</label>
+                        <select id="trainingUsers" name="trainingUsers" multiple
+                                class="w-full">
+                            <option value="user1">John Doe (john.doe@company.com)</option>
+                            <option value="user2">Jane Smith (jane.smith@company.com)</option>
+                            <option value="user3">Mike Johnson (mike.johnson@company.com)</option>
+                            <option value="user4">Sarah Wilson (sarah.wilson@company.com)</option>
+                            <option value="user5">David Brown (david.brown@company.com)</option>
+                            <option value="user6">Lisa Davis (lisa.davis@company.com)</option>
+                            <option value="user7">Tom Miller (tom.miller@company.com)</option>
+                            <option value="user8">Emily Garcia (emily.garcia@company.com)</option>
+                            <option value="user9">Chris Rodriguez (chris.rodriguez@company.com)</option>
+                            <option value="user10">Amanda Taylor (amanda.taylor@company.com)</option>
+                        </select>
+                    </div>
+
+                    <!-- User Groups Selection -->
+                    <div>
+                        <label for="trainingUserGroups" class="block text-sm font-medium text-gray-700 mb-2">Select User Groups (Optional)</label>
+                        <select id="trainingUserGroups" name="trainingUserGroups" multiple
+                                class="w-full">
+                            <option value="group1">IT Development Team</option>
+                            <option value="group2">HR Training Group</option>
+                            <option value="group3">Finance Analysts</option>
+                            <option value="group4">Marketing Team</option>
+                            <option value="group5">Sales Team</option>
+                            <option value="group6">Operations Team</option>
+                        </select>
+                    </div>
+
+
+
+
+
+                    <!-- Due Date -->
+                    <div>
+                        <label for="trainingDueDate" class="block text-sm font-medium text-gray-700 mb-2">Due Date *</label>
+                        <input type="date" id="trainingDueDate" name="trainingDueDate" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+
+                    <!-- Tags -->
+                    <div>
+                        <label for="trainingTags" class="block text-sm font-medium text-gray-700 mb-2">Tags *</label>
+                        <select id="trainingTags" name="trainingTags" multiple required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 min-h-[44px]">
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="SALES">SALES</option>
+                            <option value="MARKETING">MARKETING</option>
+                            <option value="OPERATIONS">OPERATIONS</option>
+                            <option value="FINANCE">FINANCE</option>
+                        </select>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="trainingStatus" class="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+                        <select id="trainingStatus" name="trainingStatus" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            <option value="">Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Draft">Draft</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" onclick="closeAddTrainingModal()"
+                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            Cancel
+                        </button>
+                                            <button type="submit"
+                            class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        Create Training
+                    </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        // Open sidebar on mobile
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        // Close sidebar on mobile
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        // Toggle sidebar on desktop
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        
+        searchButton.addEventListener('click', () => {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                // Here you would implement the actual search functionality
+            } else {
+                alert('Please enter a search term');
+            }
+        });
+        
+        // Allow search on Enter key press
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+
+        // Filter functionality
+        const filterSelects = document.querySelectorAll('select');
+        filterSelects.forEach(select => {
+            select.addEventListener('change', (e) => {
+                // Filter functionality would be implemented here
+            });
+        });
+
+
+
+
+
+        // Training count click functions
+        window.showEnrolledUsers = function(trainingName, count) {
+            // This would open a modal or navigate to a detailed list of enrolled users
+        };
+
+        window.showCompletedUsers = function(trainingName, count) {
+            showCompletedUsersModal(trainingName);
+        };
+
+        window.showIncompletedUsers = function(trainingName, count) {
+            showIncompletedUsersModal(trainingName);
+        };
+
+        window.viewTrainingDetails = function(trainingName) {
+            showTrainingDetailsModal(trainingName);
+        };
+
+        window.showEditTrainingModal = function(trainingName) {
+            
+            // Open the same modal as Add New Training
+            const modal = document.getElementById('addTrainingModal');
+            if (modal) {
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                modal.classList.remove('hidden');
+                
+                // Update modal title
+                const modalTitle = document.querySelector('#addTrainingModal h3');
+                if (modalTitle) {
+                    modalTitle.textContent = `Edit Training - ${trainingName}`;
+                }
+                
+                // Update submit button text
+                const submitBtn = document.querySelector('#addTrainingForm button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.textContent = 'Update Training';
+                }
+                
+                // Populate form with training data
+                populateEditTrainingForm(trainingName);
+                
+                // Initialize Select2 after modal is visible
+                setTimeout(() => {
+                    console.log('Initializing Select2 for edit...');
+                    
+                    // Destroy existing Select2 instances if they exist
+                    if ($('#trainingVideos').hasClass('select2-hidden-accessible')) {
+                        $('#trainingVideos').select2('destroy');
+                        console.log('Destroyed existing trainingVideos Select2');
+                    }
+                    if ($('#trainingUsers').hasClass('select2-hidden-accessible')) {
+                        $('#trainingUsers').select2('destroy');
+                        console.log('Destroyed existing trainingUsers Select2');
+                    }
+                    if ($('#trainingTags').hasClass('select2-hidden-accessible')) {
+                        $('#trainingTags').select2('destroy');
+                        console.log('Destroyed existing trainingTags Select2');
+                    }
+                    // Initialize Select2 for multiple select boxes
+                    $('#trainingVideos').select2({
+                        placeholder: 'Select videos...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0,
+                        dropdownParent: $('#addTrainingModal')
+                    });
+                    console.log('Initialized trainingVideos Select2');
+                    
+                    $('#trainingUsers').select2({
+                        placeholder: 'Select users...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0,
+                        dropdownParent: $('#addTrainingModal')
+                    });
+                    console.log('Initialized trainingUsers Select2');
+                    
+                    $('#trainingUserGroups').select2({
+                        placeholder: 'Select user groups...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0,
+                        dropdownParent: $('#addTrainingModal')
+                    });
+                    console.log('Initialized trainingUserGroups Select2');
+                    
+                    $('#trainingTags').select2({
+                        placeholder: 'Select tags',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0,
+                        dropdownParent: $('#addTrainingModal')
+                    });
+                    console.log('Initialized trainingTags Select2');
+                }, 200);
+            }
+        };
+
+        window.showAddTrainingModal = function() {
+            const modal = document.getElementById('addTrainingModal');
+            if (modal) {
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                modal.classList.remove('hidden');
+                
+                // Initialize Select2 after modal is visible
+                setTimeout(() => {
+                    console.log('Initializing Select2...');
+                    
+                    // Destroy existing Select2 instances if they exist
+                    if ($('#trainingVideos').hasClass('select2-hidden-accessible')) {
+                        $('#trainingVideos').select2('destroy');
+                        console.log('Destroyed existing trainingVideos Select2');
+                    }
+                    if ($('#trainingUsers').hasClass('select2-hidden-accessible')) {
+                        $('#trainingUsers').select2('destroy');
+                        console.log('Destroyed existing trainingUsers Select2');
+                    }
+                    if ($('#trainingTags').hasClass('select2-hidden-accessible')) {
+                        $('#trainingTags').select2('destroy');
+                        console.log('Destroyed existing trainingTags Select2');
+                    }
+                    // Initialize Select2 for multiple select boxes
+                    $('#trainingVideos').select2({
+                        placeholder: 'Select videos...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0,
+                        dropdownParent: $('#addTrainingModal')
+                    });
+                    console.log('Initialized trainingVideos Select2');
+                    
+                    $('#trainingUsers').select2({
+                        placeholder: 'Select users...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0
+                    });
+                    console.log('Initialized trainingUsers Select2');
+                    
+                    $('#trainingUserGroups').select2({
+                        placeholder: 'Select user groups...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0
+                    });
+                    
+                    $('#trainingTags').select2({
+                        placeholder: 'Select tags',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'classic',
+                        minimumResultsForSearch: 0,
+                        dropdownParent: $('#addTrainingModal')
+                    });
+                    console.log('Initialized trainingTags Select2');
+                    console.log('Initialized trainingUserGroups Select2');
+                }, 200);
+            }
+        };
+
+
+
+        function populateEditTrainingForm(trainingName) {
+            // Sample training data - in real app, this would fetch from database
+            const trainingData = {
+                'JavaScript Fundamentals': {
+                    name: 'JavaScript Fundamentals',
+                    description: 'Learn the basics of JavaScript programming language including variables, functions, and control structures.',
+                    category: 'Technical Training',
+                    videos: ['intro-js', 'advanced-js'],
+                    users: ['user1', 'user2', 'user3'],
+                    duration: '4',
+                    dueDate: '2024-03-15',
+                    tags: ['IT'],
+                    status: 'Active'
+                },
+                'Leadership Skills': {
+                    name: 'Leadership Skills',
+                    description: 'Develop essential leadership competencies including communication, decision-making, and team management.',
+                    category: 'Leadership',
+                    videos: ['react-basics', 'react-hooks'],
+                    users: ['user4', 'user5'],
+                    duration: '6',
+                    dueDate: '2024-03-20',
+                    tags: ['HR', 'OPERATIONS'],
+                    status: 'Active'
+                },
+                'Workplace Safety': {
+                    name: 'Workplace Safety',
+                    description: 'Essential safety protocols and procedures for maintaining a safe work environment.',
+                    category: 'Safety Training',
+                    videos: ['node-express', 'database-design'],
+                    users: ['user6', 'user7', 'user8'],
+                    duration: '2',
+                    dueDate: '2024-02-28',
+                    tags: ['OPERATIONS'],
+                    status: 'Active'
+                },
+                'Communication Skills': {
+                    name: 'Communication Skills',
+                    description: 'Improve interpersonal communication skills for better workplace collaboration.',
+                    category: 'Soft Skills',
+                    videos: ['api-design', 'testing'],
+                    users: ['user9', 'user10'],
+                    duration: '3',
+                    dueDate: '2024-03-10',
+                    tags: ['HR', 'SALES'],
+                    status: 'Draft'
+                },
+                'Compliance Training': {
+                    name: 'Compliance Training',
+                    description: 'Legal and regulatory compliance requirements for industry standards.',
+                    category: 'Compliance',
+                    videos: ['deployment', 'security'],
+                    users: ['user1', 'user2', 'user3', 'user4'],
+                    duration: '5',
+                    dueDate: '2024-03-25',
+                    tags: ['FINANCE', 'OPERATIONS'],
+                    status: 'Active'
+                }
+            };
+            
+            const data = trainingData[trainingName];
+            if (data) {
+                // Populate form fields
+                document.getElementById('trainingName').value = data.name;
+                document.getElementById('trainingDescription').value = data.description;
+                document.getElementById('trainingDueDate').value = data.dueDate;
+                document.getElementById('trainingStatus').value = data.status;
+                
+                // Set Select2 values after initialization
+                setTimeout(() => {
+                    $('#trainingVideos').val(data.videos).trigger('change');
+                    $('#trainingUsers').val(data.users).trigger('change');
+                    if (data.tags) {
+                        $('#trainingTags').val(data.tags).trigger('change');
+                    }
+                }, 300);
+            }
+        }
+
+
+
+        function closeAddTrainingModal() {
+            const modal = document.getElementById('addTrainingModal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                modal.style.opacity = '0';
+                modal.classList.add('hidden');
+                
+                // Reset form and Select2 instances
+                const form = document.getElementById('addTrainingForm');
+                if (form) {
+                    form.reset();
+                    
+                    // Clear Select2 selections
+                    $('#trainingVideos').val(null).trigger('change');
+                    $('#trainingUsers').val(null).trigger('change');
+                    $('#trainingTags').val(null).trigger('change');
+                }
+                
+                // Reset modal title and button text
+                const modalTitle = document.querySelector('#addTrainingModal h3');
+                if (modalTitle) {
+                    modalTitle.textContent = 'Add New Training';
+                }
+                
+                const submitBtn = document.querySelector('#addTrainingForm button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.textContent = 'Create Training';
+                }
+            }
+        }
+
+        // Handle form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            // Test if jQuery and Select2 are loaded
+            if (typeof $ === 'undefined') {
+                console.error('jQuery is not loaded!');
+                return;
+            }
+            if (typeof $.fn.select2 === 'undefined') {
+                console.error('Select2 is not loaded!');
+                return;
+            }
+            console.log('jQuery and Select2 are loaded successfully');
+            
+            const form = document.getElementById('addTrainingForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(form);
+                    const tags = $('#trainingTags').val() || [];
+                    const trainingData = {
+                        name: formData.get('trainingName'),
+                        description: formData.get('trainingDescription'),
+                        videos: $('#trainingVideos').val() || [],
+                        users: $('#trainingUsers').val() || [],
+                        userGroups: $('#trainingUserGroups').val() || [],
+                        dueDate: formData.get('trainingDueDate'),
+                        tags: tags,
+                        status: formData.get('trainingStatus')
+                    };
+                    
+                    // Validate required fields
+                    if (!trainingData.name || trainingData.videos.length === 0 || 
+                        !trainingData.dueDate || !trainingData.status || trainingData.tags.length === 0) {
+                        alert('Please fill in all required fields including tags');
+                        return;
+                    }
+                    
+                    // Check if at least one user or user group is selected
+                    if (trainingData.users.length === 0 && trainingData.userGroups.length === 0) {
+                        alert('Please select at least one user or user group');
+                        return;
+                    }
+                    
+                    // Check if this is edit mode
+                    const submitBtn = document.querySelector('#addTrainingForm button[type="submit"]');
+                    const isEditMode = submitBtn && submitBtn.textContent === 'Update Training';
+                    
+                    // Here you would typically send the data to your backend
+                    console.log('Training data to be ' + (isEditMode ? 'updated' : 'created') + ':', trainingData);
+                    
+                    // Show success message
+                    alert('Training ' + (isEditMode ? 'updated' : 'created') + ' successfully!');
+                    
+                    // Close modal
+                    closeAddTrainingModal();
+                });
+            }
+        });
+
+        function showTrainingDetailsModal(trainingName) {
+            const modal = document.getElementById('userDetailsModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            
+            // Set modal title
+            modalTitle.textContent = `Training Details - ${trainingName}`;
+            
+            // Generate training details content based on training name
+            let trainingDetails = getTrainingDetails(trainingName);
+            
+            // Update modal content
+            modalContent.innerHTML = trainingDetails;
+            
+            // Show modal
+            modal.classList.remove('hidden');
+        }
+
+        // Completed Users Modal Functions
+        function showCompletedUsersModal(trainingName) {
+            const modal = document.getElementById('completedUsersModal');
+            const modalTitle = document.getElementById('completedUsersModalTitle');
+            const modalContent = document.getElementById('completedUsersModalContent');
+            
+            // Set modal title
+            modalTitle.textContent = `Completed Users - ${trainingName}`;
+            
+            // Generate completed users content
+            let completedUsersContent = getCompletedUsersContent(trainingName);
+            
+            // Update modal content
+            modalContent.innerHTML = completedUsersContent;
+            
+            // Show modal
+            modal.classList.remove('hidden');
+        }
+
+        function closeCompletedUsersModal() {
+            const modal = document.getElementById('completedUsersModal');
+            modal.classList.add('hidden');
+        }
+
+        // Incompleted Users Modal Functions
+        function showIncompletedUsersModal(trainingName) {
+            const modal = document.getElementById('incompletedUsersModal');
+            const modalTitle = document.getElementById('incompletedUsersModalTitle');
+            const modalContent = document.getElementById('incompletedUsersModalContent');
+            
+            // Set modal title
+            modalTitle.textContent = `Incompleted Users - ${trainingName}`;
+            
+            // Generate incompleted users content
+            let incompletedUsersContent = getIncompletedUsersContent(trainingName);
+            
+            // Update modal content
+            modalContent.innerHTML = incompletedUsersContent;
+            
+            // Show modal
+            modal.classList.remove('hidden');
+        }
+
+        function closeIncompletedUsersModal() {
+            const modal = document.getElementById('incompletedUsersModal');
+            modal.classList.add('hidden');
+        }
+
+        function closeTrainingDetailsModal() {
+            const modal = document.getElementById('userDetailsModal');
+            modal.classList.add('hidden');
+        }
+
+        function getTrainingDetails(trainingName) {
+            // Sample training details - in real app, this would fetch from database
+            const trainingData = {
+                'JavaScript Fundamentals': {
+                    description: 'Learn the basics of JavaScript programming language including variables, functions, and control structures.',
+                    category: 'Technical Training',
+                    duration: '4 hours',
+                    instructor: 'John Smith',
+                    status: 'Active',
+                    createdDate: '2024-01-15',
+                    videos: [
+                        { title: 'Introduction to JavaScript', duration: '15:30', category: 'Programming' },
+                        { title: 'Variables and Data Types', duration: '18:45', category: 'Programming' },
+                        { title: 'Functions and Scope', duration: '22:10', category: 'Programming' },
+                        { title: 'Control Structures', duration: '20:15', category: 'Programming' },
+                        { title: 'Arrays and Objects', duration: '25:20', category: 'Programming' }
+                    ]
+                },
+                'Leadership Skills': {
+                    description: 'Develop essential leadership competencies including communication, decision-making, and team management.',
+                    category: 'Leadership',
+                    duration: '6 hours',
+                    instructor: 'Sarah Johnson',
+                    status: 'Active',
+                    createdDate: '2024-01-10',
+                    videos: [
+                        { title: 'Leadership Fundamentals', duration: '28:15', category: 'Leadership' },
+                        { title: 'Communication Strategies', duration: '32:40', category: 'Leadership' },
+                        { title: 'Decision Making Process', duration: '25:30', category: 'Leadership' },
+                        { title: 'Team Management', duration: '35:20', category: 'Leadership' },
+                        { title: 'Conflict Resolution', duration: '30:45', category: 'Leadership' }
+                    ]
+                },
+                'Workplace Safety': {
+                    description: 'Essential safety protocols and procedures for maintaining a safe work environment.',
+                    category: 'Safety Training',
+                    duration: '2 hours',
+                    instructor: 'Mike Davis',
+                    status: 'Active',
+                    createdDate: '2024-01-08',
+                    videos: [
+                        { title: 'Safety Fundamentals', duration: '18:30', category: 'Safety' },
+                        { title: 'Emergency Procedures', duration: '22:15', category: 'Safety' },
+                        { title: 'Personal Protective Equipment', duration: '15:45', category: 'Safety' },
+                        { title: 'Hazard Identification', duration: '20:10', category: 'Safety' }
+                    ]
+                },
+                'Communication Skills': {
+                    description: 'Improve interpersonal communication skills for better workplace collaboration.',
+                    category: 'Soft Skills',
+                    duration: '3 hours',
+                    instructor: 'Emily Wilson',
+                    status: 'Draft',
+                    createdDate: '2024-01-05',
+                    videos: [
+                        { title: 'Communication Basics', duration: '25:20', category: 'Communication' },
+                        { title: 'Active Listening', duration: '28:15', category: 'Communication' },
+                        { title: 'Non-verbal Communication', duration: '22:30', category: 'Communication' },
+                        { title: 'Difficult Conversations', duration: '30:45', category: 'Communication' }
+                    ]
+                },
+                'Compliance Training': {
+                    description: 'Legal and regulatory compliance requirements for industry standards.',
+                    category: 'Compliance',
+                    duration: '5 hours',
+                    instructor: 'David Brown',
+                    status: 'Active',
+                    createdDate: '2024-01-03',
+                    videos: [
+                        { title: 'Compliance Overview', duration: '30:15', category: 'Compliance' },
+                        { title: 'Regulatory Requirements', duration: '35:20', category: 'Compliance' },
+                        { title: 'Documentation Standards', duration: '28:45', category: 'Compliance' },
+                        { title: 'Audit Procedures', duration: '32:10', category: 'Compliance' },
+                        { title: 'Risk Management', duration: '25:30', category: 'Compliance' }
+                    ]
+                }
+            };
+
+            const training = trainingData[trainingName] || {};
+            
+            return `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <p class="text-sm text-gray-900">${training.description || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                <p class="text-sm text-gray-900">${training.category || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Instructor</label>
+                                <p class="text-sm text-gray-900">${training.instructor || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${training.status === 'Active' ? 'bg-green-100 text-green-800' : training.status === 'Draft' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}">
+                                    ${training.status || 'N/A'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                                <p class="text-sm text-gray-900">${training.duration || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Created Date</label>
+                                <p class="text-sm text-gray-900">${training.createdDate || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Total Videos</label>
+                                <p class="text-sm text-gray-900">${training.videos ? training.videos.length : 0}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-4">
+                        <h4 class="text-lg font-medium text-gray-900 mb-3">Video List</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Video Title</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    ${training.videos ? training.videos.map(video => `
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${video.title}</td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${video.duration}</td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${video.category}</td>
+                                        </tr>
+                                    `).join('') : '<tr><td colspan="3" class="px-4 py-3 text-sm text-gray-500 text-center">No videos available</td></tr>'}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Content generation functions for user modals
+        function getCompletedUsersContent(trainingName) {
+            const completedUsersData = {
+                'JavaScript Fundamentals': [
+                    { name: 'John Doe', email: 'john.doe@company.com', department: 'IT', completionDate: '2024-01-20', score: '95%' },
+                    { name: 'Jane Smith', email: 'jane.smith@company.com', department: 'Marketing', completionDate: '2024-01-22', score: '88%' },
+                    { name: 'Mike Johnson', email: 'mike.johnson@company.com', department: 'Sales', completionDate: '2024-01-25', score: '92%' }
+                ],
+                'Leadership Skills': [
+                    { name: 'Sarah Wilson', email: 'sarah.wilson@company.com', department: 'HR', completionDate: '2024-01-18', score: '90%' },
+                    { name: 'David Brown', email: 'david.brown@company.com', department: 'Finance', completionDate: '2024-01-21', score: '87%' }
+                ],
+                'Workplace Safety': [
+                    { name: 'Lisa Davis', email: 'lisa.davis@company.com', department: 'Operations', completionDate: '2024-01-15', score: '94%' },
+                    { name: 'Tom Miller', email: 'tom.miller@company.com', department: 'Production', completionDate: '2024-01-16', score: '89%' }
+                ],
+                'Communication Skills': [
+                    { name: 'Emily Garcia', email: 'emily.garcia@company.com', department: 'Customer Service', completionDate: '2024-01-19', score: '91%' },
+                    { name: 'Chris Rodriguez', email: 'chris.rodriguez@company.com', department: 'Sales', completionDate: '2024-01-23', score: '86%' }
+                ],
+                'Compliance Training': [
+                    { name: 'Amanda Taylor', email: 'amanda.taylor@company.com', department: 'Legal', completionDate: '2024-01-17', score: '93%' },
+                    { name: 'Robert Lee', email: 'robert.lee@company.com', department: 'Compliance', completionDate: '2024-01-24', score: '88%' }
+                ]
+            };
+
+            const users = completedUsersData[trainingName] || [];
+            
+            return `
+                <div class="space-y-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                ${users.map(user => `
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${user.name}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${user.email}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getIncompletedUsersContent(trainingName) {
+            const incompletedUsersData = {
+                'JavaScript Fundamentals': [
+                    { name: 'Alex Chen', email: 'alex.chen@company.com', department: 'IT', progress: '60%', lastActivity: '2024-01-28' },
+                    { name: 'Maria Garcia', email: 'maria.garcia@company.com', department: 'Design', progress: '45%', lastActivity: '2024-01-27' },
+                    { name: 'Kevin Wong', email: 'kevin.wong@company.com', department: 'Engineering', progress: '30%', lastActivity: '2024-01-26' }
+                ],
+                'Leadership Skills': [
+                    { name: 'Rachel Green', email: 'rachel.green@company.com', department: 'Marketing', progress: '75%', lastActivity: '2024-01-29' },
+                    { name: 'Daniel Kim', email: 'daniel.kim@company.com', department: 'Sales', progress: '20%', lastActivity: '2024-01-25' }
+                ],
+                'Workplace Safety': [
+                    { name: 'Sophie Turner', email: 'sophie.turner@company.com', department: 'Operations', progress: '80%', lastActivity: '2024-01-30' },
+                    { name: 'James Wilson', email: 'james.wilson@company.com', department: 'Production', progress: '55%', lastActivity: '2024-01-28' }
+                ],
+                'Communication Skills': [
+                    { name: 'Emma Thompson', email: 'emma.thompson@company.com', department: 'HR', progress: '40%', lastActivity: '2024-01-27' },
+                    { name: 'Michael Brown', email: 'michael.brown@company.com', department: 'Customer Service', progress: '65%', lastActivity: '2024-01-29' }
+                ],
+                'Compliance Training': [
+                    { name: 'Jessica Lee', email: 'jessica.lee@company.com', department: 'Legal', progress: '70%', lastActivity: '2024-01-30' },
+                    { name: 'Andrew Davis', email: 'andrew.davis@company.com', department: 'Finance', progress: '35%', lastActivity: '2024-01-26' }
+                ]
+            };
+
+            const users = incompletedUsersData[trainingName] || [];
+            
+            return `
+                <div class="space-y-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                ${users.map(user => `
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${user.name}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${user.email}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Add User Modal Functions
+        function showAddUserModal() {
+            const modal = document.getElementById('addUserModal');
+            const modalTitle = document.getElementById('addUserModalTitle');
+            const submitBtn = document.getElementById('addUserSubmitBtn');
+            
+            // Set modal for add mode
+            modalTitle.textContent = 'Add New User';
+            submitBtn.textContent = 'Add User';
+            submitBtn.onclick = submitAddUserForm;
+            
+            // Reset form
+            document.getElementById('addUserForm').reset();
+            
+            modal.classList.remove('hidden');
+        }
+
+        function showEditUserModal(userName) {
+            const modal = document.getElementById('addUserModal');
+            const modalTitle = document.getElementById('addUserModalTitle');
+            const submitBtn = document.getElementById('addUserSubmitBtn');
+            
+            // Set modal for edit mode
+            modalTitle.textContent = `Edit User - ${userName}`;
+            submitBtn.textContent = 'Update User';
+            submitBtn.onclick = () => submitEditUserForm(userName);
+            
+            // Populate form with user data
+            populateUserForm(userName);
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeAddUserModal() {
+            const modal = document.getElementById('addUserModal');
+            modal.classList.add('hidden');
+            // Reset form
+            document.getElementById('addUserForm').reset();
+        }
+
+        function submitAddUserForm() {
+            const form = document.getElementById('addUserForm');
+            const formData = new FormData(form);
+            
+            // Get form values
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const email = formData.get('email');
+            const department = formData.get('department');
+            const role = formData.get('role');
+            const phone = formData.get('phone');
+            const dateOfBirth = formData.get('dateOfBirth');
+            const location = formData.get('location');
+            
+            // Validate required fields
+            if (!firstName || !lastName || !email || !department || !role) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            console.log('Adding new user:', {
+                firstName,
+                lastName,
+                email,
+                department,
+                role,
+                phone,
+                dateOfBirth,
+                location
+            });
+            
+            alert('User added successfully!');
+            closeAddUserModal();
+        }
+
+        function populateUserForm(userName) {
+            // Get user data (same as in getUserDetails)
+            const userData = {
+                'John Doe': {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    email: 'john.doe@example.com',
+                    department: 'IT Department',
+                    role: 'Admin',
+                    phone: '+1 (555) 123-4567',
+                    dateOfBirth: '1985-03-15',
+                    location: 'New York, NY'
+                },
+                'Sarah Wilson': {
+                    firstName: 'Sarah',
+                    lastName: 'Wilson',
+                    email: 'sarah.wilson@example.com',
+                    department: 'HR Department',
+                    role: 'Manager',
+                    phone: '+1 (555) 234-5678',
+                    dateOfBirth: '1990-07-22',
+                    location: 'Los Angeles, CA'
+                },
+                'Mike Johnson': {
+                    firstName: 'Mike',
+                    lastName: 'Johnson',
+                    email: 'mike.johnson@example.com',
+                    department: 'Finance Department',
+                    role: 'Analyst',
+                    phone: '+1 (555) 345-6789',
+                    dateOfBirth: '1988-11-08',
+                    location: 'Chicago, IL'
+                },
+                'Emily Brown': {
+                    firstName: 'Emily',
+                    lastName: 'Brown',
+                    email: 'emily.brown@example.com',
+                    department: 'Marketing Department',
+                    role: 'Specialist',
+                    phone: '+1 (555) 456-7890',
+                    dateOfBirth: '1992-04-12',
+                    location: 'Miami, FL'
+                },
+                'David Lee': {
+                    firstName: 'David',
+                    lastName: 'Lee',
+                    email: 'david.lee@example.com',
+                    department: 'Operations Department',
+                    role: 'Coordinator',
+                    phone: '+1 (555) 567-8901',
+                    dateOfBirth: '1987-09-25',
+                    location: 'Seattle, WA'
+                }
+            };
+
+            const user = userData[userName] || {};
+            
+            // Populate form fields
+            document.getElementById('firstName').value = user.firstName || '';
+            document.getElementById('lastName').value = user.lastName || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('department').value = user.department || '';
+            document.getElementById('role').value = user.role || '';
+            document.getElementById('dateOfBirth').value = user.dateOfBirth || '';
+            document.getElementById('location').value = user.location || '';
+        }
+
+        function submitEditUserForm(userName) {
+            const form = document.getElementById('addUserForm');
+            const formData = new FormData(form);
+            
+            // Get form values
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const email = formData.get('email');
+            const department = formData.get('department');
+            const role = formData.get('role');
+            const phone = formData.get('phone');
+            const dateOfBirth = formData.get('dateOfBirth');
+            const location = formData.get('location');
+            
+            // Validate required fields
+            if (!firstName || !lastName || !email || !department || !role) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            console.log('Updating user:', {
+                userName,
+                firstName,
+                lastName,
+                email,
+                department,
+                role,
+                phone,
+                dateOfBirth,
+                location
+            });
+            
+            alert(`User ${userName} updated successfully!`);
+            closeAddUserModal();
+        }
+    </script>
+
+    <!-- User Details Modal -->
+    <div id="userDetailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-4">
+                    <h3 id="modalTitle" class="text-lg font-medium text-gray-900">User Details</h3>
+                    <button onclick="closeTrainingDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Content -->
+                <div id="modalContent" class="text-sm text-gray-500">
+                    <!-- Content will be dynamically populated -->
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
+                    <button onclick="closeTrainingDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Close modal when clicking outside -->
+    <script>
+        document.getElementById('userDetailsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTrainingDetailsModal();
+            }
+        });
+    </script>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">Add New User</h3>
+                    <button onclick="closeAddUserModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Content -->
+                <form id="addUserForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- First Name -->
+                        <div>
+                            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                        
+                        <!-- Last Name -->
+                        <div>
+                            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                        
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                        
+                        <!-- Phone -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <input type="tel" id="phone" name="phone" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                        
+                        <!-- Department -->
+                        <div>
+                            <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Department *</label>
+                            <select id="department" name="department" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                <option value="">Select Department</option>
+                                <option value="IT Department">IT Department</option>
+                                <option value="HR Department">HR Department</option>
+                                <option value="Finance Department">Finance Department</option>
+                                <option value="Marketing Department">Marketing Department</option>
+                                <option value="Sales Department">Sales Department</option>
+                                <option value="Operations Department">Operations Department</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Role -->
+                        <div>
+                            <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role *</label>
+                            <select id="role" name="role" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                <option value="">Select Role</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Analyst">Analyst</option>
+                                <option value="Specialist">Specialist</option>
+                                <option value="Coordinator">Coordinator</option>
+                                <option value="Student">Student</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Date of Birth -->
+                        <div>
+                            <label for="dateOfBirth" class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                        
+                        <!-- Location -->
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                            <input type="text" id="location" name="location" placeholder="City, State" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
+                    <button onclick="closeAddUserModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button id="addUserSubmitBtn" onclick="submitAddUserForm()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+                        Add User
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Close add user modal when clicking outside -->
+    <script>
+        document.getElementById('addUserModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddUserModal();
+            }
+        });
+    </script>
+
+    <!-- Completed Users Modal -->
+    <div id="completedUsersModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="completedUsersModalTitle" class="text-xl font-medium text-gray-900">Completed Users</h3>
+                    <button onclick="closeCompletedUsersModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Content -->
+                <div id="completedUsersModalContent" class="space-y-4">
+                    <!-- Content will be dynamically populated -->
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
+                    <button onclick="closeCompletedUsersModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incompleted Users Modal -->
+    <div id="incompletedUsersModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="incompletedUsersModalTitle" class="text-xl font-medium text-gray-900">Incompleted Users</h3>
+                    <button onclick="closeIncompletedUsersModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Content -->
+                <div id="incompletedUsersModalContent" class="space-y-4">
+                    <!-- Content will be dynamically populated -->
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
+                    <button onclick="closeIncompletedUsersModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Close modals when clicking outside -->
+    <script>
+        document.getElementById('completedUsersModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCompletedUsersModal();
+            }
+        });
+        
+        document.getElementById('incompletedUsersModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeIncompletedUsersModal();
+            }
+        });
+    </script>
+</body>
+</html> 
