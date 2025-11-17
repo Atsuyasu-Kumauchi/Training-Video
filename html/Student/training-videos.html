@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Videos - Student Portal</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">Training Portal</h1>
+                    </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+                                <nav class="mt-6 px-3">
+                        <div class="space-y-3">
+                            <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-home w-5 h-5 mr-3"></i>
+                                Dashboard
+                            </a>
+                            <a href="my-trainings.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                                <i class="fas fa-book w-5 h-5 mr-3"></i>
+                                My Trainings
+                            </a>
+                            <a href="results.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
+                                Results
+                            </a>
+                            <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-key w-5 h-5 mr-3"></i>
+                                Change Password
+                            </a>
+                        </div>
+                    </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex transition-all duration-300 min-w-0">
+            <!-- Main Content Area -->
+            <div class="flex-1 flex flex-col">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button id="userMenuButton" class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">JD</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">John Doe</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                                
+                                <!-- Dropdown Menu -->
+                                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                                    <a href="change-password.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fas fa-key mr-2"></i>
+                                        Change Password
+                                    </a>
+                                    <div class="border-t border-gray-100 my-1"></div>
+                                    <a href="login.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 id="trainingTitle" class="text-2xl font-bold text-gray-900">Training Videos</h1>
+                            <p id="trainingDescription" class="text-gray-600 mt-1">Watch and learn from your assigned training videos</p>
+                        </div>
+                        <a href="my-trainings.html" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Back to Trainings
+                        </a>
+                    </div>
+
+                    <!-- Training Info Card -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <div class="px-6 py-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0">
+                                        <div id="trainingIcon" class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-book text-blue-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h2 id="trainingName" class="text-lg font-medium text-gray-900">JavaScript Fundamentals</h2>
+                                        <p id="trainingDesc" class="text-sm text-gray-500">Learn the basics of JavaScript programming language</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="text-center">
+                                        <p class="text-sm font-medium text-gray-500">Progress</p>
+                                        <p id="progressText" class="text-lg font-bold text-blue-600">75%</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-sm font-medium text-gray-500">Videos</p>
+                                        <p id="videoCount" class="text-lg font-bold text-gray-900">9/12</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video List -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-lg font-medium text-gray-900">Training Videos</h2>
+                            <p class="text-sm text-gray-500 mt-1">Complete all videos to finish this training</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4" id="videoList">
+                                <!-- Videos will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </main>
+            </div>
+
+            <!-- Right Sidebar - Assignment Review -->
+            <div class="w-80 bg-white shadow-lg border-l border-gray-200 flex flex-col">
+                <!-- Sidebar Header -->
+                <div class="px-4 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                        <i class="fas fa-clipboard-list mr-2 text-primary-600"></i>
+                        Assignment Review
+                        <span id="assignmentCount" class="ml-2 bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded-full">3</span>
+                    </h3>
+                </div>
+
+                <!-- Assignment List -->
+                <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- Assignment Item 1 -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-medium text-xs">JD</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">John Doe</p>
+                                    <p class="text-xs text-gray-500">john.doe@example.com</p>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                Pending
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3">Explain the concept of closures in JavaScript with examples</p>
+                        
+                    </div>
+
+                    <!-- Assignment Item 2 -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-medium text-xs">SW</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Sarah Wilson</p>
+                                    <p class="text-xs text-gray-500">sarah.wilson@example.com</p>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                Pending
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3">Describe the difference between functional and class components</p>
+                    </div>
+
+                    <!-- Assignment Item 3 -->
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-medium text-xs">MJ</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Mike Johnson</p>
+                                    <p class="text-xs text-gray-500">mike.johnson@example.com</p>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                Pending
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3">What are the key qualities of an effective leader?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Sample video data for different trainings
+        const trainingVideos = {
+            1: [ // JavaScript Fundamentals
+                                 {
+                     id: 1,
+                     title: 'Introduction to JavaScript',
+                     description: 'Learn the basics of JavaScript programming',
+                     duration: '15:30',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 2,
+                     title: 'Variables and Data Types',
+                     description: 'Understanding variables, strings, numbers, and booleans',
+                     duration: '22:15',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 3,
+                     title: 'Functions and Scope',
+                     description: 'Creating and using functions in JavaScript',
+                     duration: '28:45',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 4,
+                     title: 'Control Structures',
+                     description: 'If statements, loops, and conditional logic',
+                     duration: '25:10',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 5,
+                     title: 'Arrays and Objects',
+                     description: 'Working with arrays and object literals',
+                     duration: '32:20',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 6,
+                     title: 'DOM Manipulation',
+                     description: 'Interacting with HTML elements using JavaScript',
+                     duration: '35:15',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 7,
+                     title: 'Event Handling',
+                     description: 'Responding to user interactions and events',
+                     duration: '20:30',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 8,
+                     title: 'Asynchronous JavaScript',
+                     description: 'Callbacks, promises, and async/await',
+                     duration: '40:25',
+                     status: 'Completed',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 9,
+                     title: 'Error Handling',
+                     description: 'Try-catch blocks and error management',
+                     duration: '18:45',
+                     status: 'In Progress',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 10,
+                     title: 'ES6 Features',
+                     description: 'Modern JavaScript features and syntax',
+                     duration: '45:10',
+                     status: 'In Progress',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 11,
+                     title: 'Modules and Imports',
+                     description: 'Organizing code with modules',
+                     duration: '22:30',
+                     status: 'Not Started',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 },
+                 {
+                     id: 12,
+                     title: 'Final Project',
+                     description: 'Build a complete JavaScript application',
+                     duration: '60:00',
+                     status: 'Not Started',
+                     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                 }
+            ],
+            2: [ // Project Management Basics
+                {
+                    id: 1,
+                    title: 'Introduction to Project Management',
+                    description: 'Understanding the fundamentals of project management',
+                    duration: '20:15',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 2,
+                    title: 'Project Lifecycle',
+                    description: 'The five phases of project management',
+                    duration: '25:30',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 3,
+                    title: 'Project Planning',
+                    description: 'Creating comprehensive project plans',
+                    duration: '30:45',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 4,
+                    title: 'Risk Management',
+                    description: 'Identifying and managing project risks',
+                    duration: '28:20',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 5,
+                    title: 'Team Management',
+                    description: 'Leading and motivating project teams',
+                    duration: '35:10',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 6,
+                    title: 'Communication Strategies',
+                    description: 'Effective communication in project management',
+                    duration: '22:15',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 7,
+                    title: 'Budget Management',
+                    description: 'Managing project budgets and resources',
+                    duration: '32:40',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                },
+                {
+                    id: 8,
+                    title: 'Project Closure',
+                    description: 'Successfully closing and evaluating projects',
+                    duration: '18:30',
+                    status: 'Not Started',
+                    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                }
+            ]
+        };
+
+        // Training data for reference
+        const trainingData = {
+            1: {
+                title: 'JavaScript Fundamentals',
+                description: 'Learn the basics of JavaScript programming language',
+                progress: 67,
+                completedVideos: 8,
+                totalVideos: 12,
+                status: 'In Progress'
+            },
+            2: {
+                title: 'Project Management Basics',
+                description: 'Essential project management concepts and methodologies',
+                progress: 0,
+                completedVideos: 0,
+                totalVideos: 8,
+                status: 'Not Started'
+            }
+        };
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Function to populate training info and videos
+        function populateTrainingVideos() {
+            const trainingId = parseInt(getUrlParameter('training'));
+            const trainingTitle = getUrlParameter('title');
+            
+            if (!trainingId || !trainingVideos[trainingId]) {
+                alert('Training not found');
+                window.location.href = 'my-trainings.html';
+                return;
+            }
+
+            const videos = trainingVideos[trainingId];
+            const training = trainingData[trainingId];
+            
+            // Update page title and training info
+            document.getElementById('trainingTitle').textContent = trainingTitle;
+            document.getElementById('trainingName').textContent = training.title;
+            document.getElementById('trainingDescription').textContent = training.description;
+            document.getElementById('trainingDesc').textContent = training.description;
+            document.getElementById('progressText').textContent = `${training.progress}%`;
+            document.getElementById('videoCount').textContent = `${training.completedVideos}/${training.totalVideos}`;
+            
+            // Update training icon based on status
+            const trainingIcon = document.getElementById('trainingIcon');
+            if (training.status === 'Completed') {
+                trainingIcon.className = 'w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center';
+                trainingIcon.innerHTML = '<i class="fas fa-check text-green-600 text-xl"></i>';
+            }
+
+            // Populate video list
+            const videoList = document.getElementById('videoList');
+            videoList.innerHTML = videos.map((video, index) => `
+                <div class="flex items-start space-x-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+                    <div class="flex-shrink-0">
+                        <img src="${video.thumbnail}" alt="${video.title}" class="w-24 h-16 object-cover rounded-lg">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-900">${video.title}</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">${video.description}</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <button onclick="${video.status === 'Completed' ? 'openVideoDetails(' + video.id + ')' : 'watchVideo(' + video.id + ')'}" class="inline-flex items-center px-3 py-1 text-xs font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200">
+                                <i class="fas fa-play mr-1"></i>
+                                ${video.status === 'Completed' ? 'Replay' : video.status === 'In Progress' ? 'Continue' : 'Start'}
+                            </button>
+                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium ${
+                                video.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                video.status === 'In Progress' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                            } rounded-full">
+                                <i class="fas ${
+                                    video.status === 'Completed' ? 'fa-check' :
+                                    video.status === 'In Progress' ? 'fa-play' :
+                                    'fa-circle'
+                                } mr-1"></i>
+                                ${video.status}
+                            </span>
+                        </div>
+                    </div>
+                    ${video.status === 'In Progress' ? `
+                        <div class="flex-shrink-0">
+                            <button onclick="startTest()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                <i class="fas fa-clipboard-check mr-2"></i>
+                                Start Test
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+
+
+
+        }
+
+        // Function to watch video
+        function watchVideo(videoId) {
+            console.log(`Watching video: ${videoId}`);
+            alert(`Opening video player for video ${videoId}\n\nThis would launch the video player with the training content.`);
+        }
+
+        // Function to open video details modal
+        function openVideoDetails(videoId) {
+            const trainingId = parseInt(getUrlParameter('training'));
+            const videos = trainingVideos[trainingId];
+            const video = videos.find(v => v.id === videoId);
+            
+            if (!video) {
+                console.error('Video not found');
+                return;
+            }
+            
+            console.log(`Opening video details modal for video: ${videoId}`);
+            
+            // Create and show video details modal
+            const modal = document.createElement('div');
+            modal.id = 'videoDetailsModal';
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-40';
+            modal.innerHTML = `
+                <div class="relative top-10 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">${video.title}</h3>
+                            <button onclick="closeVideoDetailsModal()" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Video Player -->
+                            <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden relative">
+                                <iframe id="videoPlayer" src="${video.videoUrl}" 
+                                        class="w-full h-full" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                                
+                                <!-- Question Overlay on Video -->
+                                <div id="videoQuestionOverlay" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+                                    <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                                        <div class="p-6">
+                                            <!-- Question Header -->
+                                            <div class="flex items-center justify-between mb-6">
+                                                <h3 class="text-xl font-bold text-gray-900">Video Comprehension Question</h3>
+                                                <div class="flex items-center space-x-3">
+                                                    <span class="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">
+                                                        Question <span id="overlayQuestionNumber">1</span> of <span id="overlayTotalQuestions">10</span>
+                                                    </span>
+                                                    <button onclick="closeVideoQuestionOverlay()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                                                        <i class="fas fa-times text-xl"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Question Content -->
+                                            <div class="space-y-6">
+                                                <!-- Question Text -->
+                                                <div>
+                                                    <h4 id="overlayQuestionText" class="text-lg font-medium text-gray-900 mb-4">What is the main concept discussed in the last 3 minutes of the video?</h4>
+                                                </div>
+                                                
+                                                <!-- Answer Options -->
+                                                <div class="space-y-3">
+                                                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 cursor-pointer transition-all duration-200">
+                                                        <input type="radio" name="overlayQuestionAnswer" value="A" class="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300">
+                                                        <span class="ml-4 text-gray-900 font-medium">A) JavaScript fundamentals and basic syntax</span>
+                                                    </label>
+                                                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 cursor-pointer transition-all duration-200">
+                                                        <input type="radio" name="overlayQuestionAnswer" value="B" class="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300">
+                                                        <span class="ml-4 text-gray-900 font-medium">B) Advanced programming concepts and algorithms</span>
+                                                    </label>
+                                                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 cursor-pointer transition-all duration-200">
+                                                        <input type="radio" name="overlayQuestionAnswer" value="C" class="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300">
+                                                        <span class="ml-4 text-gray-900 font-medium">C) Database management and SQL queries</span>
+                                                    </label>
+                                                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 cursor-pointer transition-all duration-200">
+                                                        <input type="radio" name="overlayQuestionAnswer" value="D" class="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300">
+                                                        <span class="ml-4 text-gray-900 font-medium">D) Web development frameworks and libraries</span>
+                                                    </label>
+                                                </div>
+                                                
+                                                <!-- Progress Bar -->
+                                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                                    <div id="overlayQuestionProgress" class="bg-primary-600 h-3 rounded-full transition-all duration-300" style="width: 10%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Action Buttons -->
+                                            <div class="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
+                                                <div class="text-sm text-gray-500 flex items-center">
+                                                    <i class="fas fa-info-circle mr-2"></i>
+                                                    Answer correctly to continue watching
+                                                </div>
+                                                <div class="flex space-x-3">
+                                                    <button onclick="skipOverlayQuestion()" class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200 font-medium">
+                                                        Skip Question
+                                                    </button>
+                                                    <button onclick="submitOverlayQuestionAnswer()" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 font-medium">
+                                                        Submit Answer
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Information -->
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-900 mb-2">Video Description</h4>
+                                <p class="text-gray-700">${video.description}</p>
+                            </div>
+                            
+                            <!-- Video Status -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                                        video.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                                        video.status === 'In Progress' ? 'bg-yellow-100 text-yellow-800' :
+                                        'bg-gray-100 text-gray-800'
+                                    }">
+                                        <i class="fas ${
+                                            video.status === 'Completed' ? 'fa-check' :
+                                            video.status === 'In Progress' ? 'fa-play' :
+                                            'fa-circle'
+                                        } mr-2"></i>
+                                        ${video.status}
+                                    </span>
+                                </div>
+                                
+                                <div class="flex space-x-2">
+                                    <button onclick="showQuestionModal()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+                                        <i class="fas fa-question-circle mr-2"></i>
+                                        Show Question
+                                    </button>
+                                    <button onclick="closeVideoDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeVideoDetailsModal();
+                }
+            });
+        }
+
+        // Function to close video details modal
+        function closeVideoDetailsModal() {
+            const modal = document.getElementById('videoDetailsModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Function to mark video as complete
+        function markVideoComplete(videoId, videoIndex) {
+            const trainingId = parseInt(getUrlParameter('training'));
+            const videos = trainingVideos[trainingId];
+            
+            // Mark the video as completed
+            videos[videoIndex].status = 'Completed';
+            
+            // Check if this is the last video
+            const isLastVideo = videoIndex === videos.length - 1;
+            
+            if (isLastVideo) {
+                // Show completion message after the last video
+                showCompletionMessage();
+            }
+            
+            // Re-populate the video list to reflect the changes
+            populateTrainingVideos();
+            
+            console.log(`Video ${videoId} marked as complete`);
+        }
+
+        // Function to show completion message
+        function showCompletionMessage() {
+            // Create completion message element
+            const completionMessage = document.createElement('div');
+            completionMessage.id = 'completionMessage';
+            completionMessage.className = 'bg-green-50 border border-green-200 rounded-lg p-6 mt-6';
+            completionMessage.innerHTML = `
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-green-600 text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4 flex-1">
+                        <h3 class="text-lg font-medium text-green-800">Training Completed!</h3>
+                        <p class="text-green-700 mt-1">Congratulations! You have successfully completed all videos in this training.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Insert the completion message after the video list
+            const videoList = document.getElementById('videoList');
+            videoList.parentNode.insertBefore(completionMessage, videoList.nextSibling);
+        }
+
+        // Function to start test
+        function startTest() {
+            const trainingId = getUrlParameter('training');
+            const trainingTitle = getUrlParameter('title');
+            console.log(`Starting test for training: ${trainingTitle}`);
+            // Navigate directly to test page with training ID
+            window.location.href = `test.html?training=${trainingId}&title=${encodeURIComponent(trainingTitle)}`;
+        }
+
+        // Initialize page when DOM is loaded
+        // User dropdown functionality
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTrainingVideos();
+        });
+    </script>
+
+    <!-- Start Test Modal -->
+    <div id="startTestModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                    <i class="fas fa-clipboard-check text-green-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mt-4">Start Test</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        Would you like to start the test for this training? This will assess your knowledge of the completed videos.
+                    </p>
+                </div>
+                <div class="flex justify-center space-x-3 mt-6">
+                    <button onclick="closeStartTestModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="proceedToTest()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
+                        Start Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assignment Review Details Modal -->
+    <div id="assignmentReviewModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-[9999]">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-medium text-gray-900">Assignment Review</h3>
+                    <button onclick="closeAssignmentReviewModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Content -->
+                <div class="space-y-6">
+                    <!-- Student Info -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-medium text-sm">JD</span>
+                            </div>
+                            <div>
+                                <h4 id="reviewStudentName" class="text-lg font-medium text-gray-900">John Doe</h4>
+                                <p id="reviewStudentEmail" class="text-sm text-gray-500">john.doe@example.com</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="text-sm font-medium text-gray-700 mb-2">Assignment Title</h5>
+                            <p id="reviewAssignmentTitle" class="text-sm text-gray-900">Explain the concept of closures in JavaScript with examples</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Student Answer -->
+                    <div>
+                        <h4 class="text-lg font-medium text-gray-900 mb-3">Student Answer</h4>
+                        <div id="reviewStudentAnswer" class="bg-gray-50 p-4 rounded-lg border">
+                            <p class="text-sm text-gray-900">A closure in JavaScript is a function that has access to variables in its outer (enclosing) scope even after the outer function has returned. This is a fundamental concept in JavaScript that allows for data privacy and the creation of function factories.</p>
+                            <br>
+                            <p class="text-sm text-gray-900">Example:</p>
+                            <pre class="text-sm text-gray-700 bg-white p-3 rounded border mt-2"><code>function outerFunction(x) {
+    return function innerFunction(y) {
+        return x + y;
+    };
+}
+
+const addFive = outerFunction(5);
+console.log(addFive(3)); // Output: 8</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
+                    <button onclick="closeAssignmentReviewModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="rejectAssignmentReview()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                        <i class="fas fa-times mr-2"></i>
+                        Not Accept
+                    </button>
+                    <button onclick="acceptAssignmentReview()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                        <i class="fas fa-check mr-2"></i>
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Modal -->
+    <div id="questionModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-[9999]">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-medium text-gray-900">Video Comprehension Question</h3>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-500">Question <span id="questionNumber">1</span> of <span id="totalQuestions">10</span></span>
+                        <button onclick="closeQuestionModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Modal Content -->
+                <div class="space-y-6">
+                    <!-- Question -->
+                    <div>
+                        <h4 id="questionText" class="text-lg font-medium text-gray-900 mb-4">What is the main concept discussed in the last 3 minutes of the video?</h4>
+                    </div>
+                    
+                    <!-- Answer Options -->
+                    <div class="space-y-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="radio" name="questionAnswer" value="A" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300">
+                            <span class="ml-3 text-gray-900">A) JavaScript fundamentals and basic syntax</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="radio" name="questionAnswer" value="B" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300">
+                            <span class="ml-3 text-gray-900">B) Advanced programming concepts and algorithms</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="radio" name="questionAnswer" value="C" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300">
+                            <span class="ml-3 text-gray-900">C) Database management and SQL queries</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="radio" name="questionAnswer" value="D" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300">
+                            <span class="ml-3 text-gray-900">D) Web development frameworks and libraries</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="questionProgress" class="bg-primary-600 h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-between items-center mt-8 pt-4 border-t border-gray-200">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Answer correctly to continue watching
+                    </div>
+                    <div class="flex space-x-3">
+                        <button onclick="skipQuestion()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                            Skip Question
+                        </button>
+                        <button onclick="submitQuestionAnswer()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            Submit Answer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function showStartTestModal() {
+            document.getElementById('startTestModal').classList.remove('hidden');
+        }
+
+        function closeStartTestModal() {
+            document.getElementById('startTestModal').classList.add('hidden');
+        }
+
+        function proceedToTest() {
+            closeStartTestModal();
+            startTest();
+        }
+
+        // Question Modal Functions
+        let currentQuestion = 1;
+        let totalQuestions = 10;
+
+        function showQuestionModal() {
+            const overlay = document.getElementById('videoQuestionOverlay');
+            overlay.classList.remove('hidden');
+            
+            // Update question number and progress
+            document.getElementById('overlayQuestionNumber').textContent = currentQuestion;
+            document.getElementById('overlayTotalQuestions').textContent = totalQuestions;
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('overlayQuestionProgress').style.width = progress + '%';
+            
+            // Clear previous selection
+            document.querySelectorAll('input[name="overlayQuestionAnswer"]').forEach(radio => {
+                radio.checked = false;
+            });
+        }
+
+        function closeQuestionModal() {
+            const modal = document.getElementById('questionModal');
+            modal.classList.add('hidden');
+        }
+
+        function closeVideoQuestionOverlay() {
+            const overlay = document.getElementById('videoQuestionOverlay');
+            overlay.classList.add('hidden');
+        }
+
+        function submitQuestionAnswer() {
+            const selectedAnswer = document.querySelector('input[name="questionAnswer"]:checked');
+            
+            if (!selectedAnswer) {
+                alert('Please select an answer before submitting.');
+                return;
+            }
+            
+            // Simulate answer validation (in real app, this would check against correct answer)
+            const isCorrect = Math.random() > 0.3; // 70% chance of being correct for demo
+            
+            if (isCorrect) {
+                alert('Correct! Well done. Continuing with the video...');
+                currentQuestion++;
+                closeQuestionModal();
+            } else {
+                alert('Incorrect answer. Please try again or skip this question.');
+            }
+        }
+
+        function submitOverlayQuestionAnswer() {
+            const selectedAnswer = document.querySelector('input[name="overlayQuestionAnswer"]:checked');
+            
+            if (!selectedAnswer) {
+                alert('Please select an answer before submitting.');
+                return;
+            }
+            
+            // Simulate answer validation (in real app, this would check against correct answer)
+            const isCorrect = Math.random() > 0.3; // 70% chance of being correct for demo
+            
+            if (isCorrect) {
+                alert('Correct! Well done. Continuing with the video...');
+                currentQuestion++;
+                closeVideoQuestionOverlay();
+            } else {
+                alert('Incorrect answer. Please try again or skip this question.');
+            }
+        }
+
+        function skipQuestion() {
+            if (confirm('Are you sure you want to skip this question? You can still continue watching the video.')) {
+                currentQuestion++;
+                closeQuestionModal();
+            }
+        }
+
+        function skipOverlayQuestion() {
+            if (confirm('Are you sure you want to skip this question? You can still continue watching the video.')) {
+                currentQuestion++;
+                closeVideoQuestionOverlay();
+            }
+        }
+
+        // Assignment Review Functions
+        window.viewAssignmentReviewDetails = function(assignmentId) {
+            console.log(`Viewing assignment review details: ${assignmentId}`);
+            
+            // Sample assignment data
+            const assignmentData = {
+                'assignment-1': {
+                    studentName: 'John Doe',
+                    studentEmail: 'john.doe@example.com',
+                    title: 'Explain the concept of closures in JavaScript with examples',
+                    answer: `A closure in JavaScript is a function that has access to variables in its outer (enclosing) scope even after the outer function has returned. This is a fundamental concept in JavaScript that allows for data privacy and the creation of function factories.
+
+Example:
+function outerFunction(x) {
+    return function innerFunction(y) {
+        return x + y;
+    };
+}
+
+const addFive = outerFunction(5);
+console.log(addFive(3)); // Output: 8`
+                },
+                'assignment-2': {
+                    studentName: 'Sarah Wilson',
+                    studentEmail: 'sarah.wilson@example.com',
+                    title: 'Describe the difference between functional and class components',
+                    answer: `Functional components are JavaScript functions that return JSX, while class components are ES6 classes that extend React.Component. Functional components are simpler, have better performance, and are the recommended approach in modern React development.`
+                },
+                'assignment-3': {
+                    studentName: 'Mike Johnson',
+                    studentEmail: 'mike.johnson@example.com',
+                    title: 'What are the key qualities of an effective leader?',
+                    answer: `Effective leaders possess qualities such as clear communication, empathy, integrity, decision-making skills, and the ability to inspire and motivate their team members.`
+                }
+            };
+            
+            const assignment = assignmentData[assignmentId];
+            if (assignment) {
+                // Populate modal with assignment data
+                document.getElementById('reviewStudentName').textContent = assignment.studentName;
+                document.getElementById('reviewStudentEmail').textContent = assignment.studentEmail;
+                document.getElementById('reviewAssignmentTitle').textContent = assignment.title;
+                document.getElementById('reviewStudentAnswer').innerHTML = assignment.answer.replace(/\n/g, '<br>');
+                
+                
+                // Show modal
+                document.getElementById('assignmentReviewModal').classList.remove('hidden');
+            }
+        };
+
+        window.closeAssignmentReviewModal = function() {
+            document.getElementById('assignmentReviewModal').classList.add('hidden');
+        };
+
+        window.acceptAssignmentReview = function() {
+            if (confirm('Are you sure you want to accept this assignment?')) {
+                console.log('Accepting assignment');
+                alert('Assignment accepted successfully!');
+                closeAssignmentReviewModal();
+                // Update the assignment count
+                updateAssignmentCount();
+            }
+        };
+
+        window.rejectAssignmentReview = function() {
+            if (confirm('Are you sure you want to reject this assignment?')) {
+                console.log('Rejecting assignment');
+                alert('Assignment rejected successfully!');
+                closeAssignmentReviewModal();
+                // Update the assignment count
+                updateAssignmentCount();
+            }
+        };
+
+        function updateAssignmentCount() {
+            // Simulate updating the assignment count
+            const currentCount = parseInt(document.getElementById('assignmentCount').textContent);
+            if (currentCount > 0) {
+                document.getElementById('assignmentCount').textContent = currentCount - 1;
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('startTestModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeStartTestModal();
+            }
+        });
+
+        // Close question modal when clicking outside
+        document.addEventListener('click', function(e) {
+            const questionModal = document.getElementById('questionModal');
+            if (e.target === questionModal) {
+                closeQuestionModal();
+            }
+        });
+    </script>
+</body>
+</html> 

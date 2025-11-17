@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Review - Admin Dashboard</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-sm"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-900">Training Admin</h1>
+                </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-6 px-3">
+                <div class="space-y-3">
+                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-users w-5 h-5 mr-3"></i>
+                        User List
+                    </a>
+                    <a href="tags.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tags w-5 h-5 mr-3"></i>
+                        Tags
+                    </a>
+                    <a href="video-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-video w-5 h-5 mr-3"></i>
+                        Video List
+                    </a>
+                    <a href="training-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-book w-5 h-5 mr-3"></i>
+                        Training List
+                    </a>
+                    <a href="create-test.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
+                        Create Test
+                    </a>
+                    <a href="assignment-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tasks w-5 h-5 mr-3"></i>
+                        Assignment List
+                    </a>
+                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                        <i class="fas fa-clipboard-list w-5 h-5 mr-3"></i>
+                        Assignment Review
+                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
+                    </a>
+                    <a href="departments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-building w-5 h-5 mr-3"></i>
+                        Departments
+                    </a>
+                    <a href="roles.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-user-tag w-5 h-5 mr-3"></i>
+                        Roles
+                    </a>
+                    <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-key w-5 h-5 mr-3"></i>
+                        Change Password
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex flex-col transition-all duration-300 min-w-0">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">A</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Admin User</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Assignment Review</h2>
+                            <p class="text-gray-600 mt-1">Review and approve submitted assignments</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Assignment Review Table -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="overflow-x-auto">
+                            <table class="w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignment Title</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">John Doe</div>
+                                                <div class="text-sm text-gray-500">john.doe@example.com</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Explain the concept of closures in JavaScript with examples</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                <i class="fas fa-clock mr-1"></i>
+                                                Pending Review
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2024-01-15 14:30
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewAssignmentDetails('assignment-1')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Sarah Wilson</div>
+                                                <div class="text-sm text-gray-500">sarah.wilson@example.com</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Describe the difference between functional and class components</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                <i class="fas fa-check mr-1"></i>
+                                                Approved
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2024-01-14 09:15
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewAssignmentDetails('assignment-2')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Mike Johnson</div>
+                                                <div class="text-sm text-gray-500">mike.johnson@example.com</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">What are the key qualities of an effective leader?</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                <i class="fas fa-times mr-1"></i>
+                                                Rejected
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2024-01-13 16:45
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewAssignmentDetails('assignment-3')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Emily Brown</div>
+                                                <div class="text-sm text-gray-500">emily.brown@example.com</div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Explain the importance of workplace safety and list 5 safety measures</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                <i class="fas fa-clock mr-1"></i>
+                                                Pending Review
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2024-01-12 11:20
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewAssignmentDetails('assignment-4')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="px-6 py-3 border-t border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <span>Showing 1 to 4 of 4 assignments</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Previous
+                                    </button>
+                                    <button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md">
+                                        1
+                                    </button>
+                                    <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Assignment Details Modal -->
+    <div id="assignmentDetailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="assignmentModalTitle" class="text-xl font-medium text-gray-900">Assignment Details</h3>
+                    <button onclick="closeAssignmentDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Modal Content -->
+                <div class="space-y-6">
+                    <!-- Assignment Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Student Name</label>
+                            <p id="studentName" class="text-sm text-gray-900">John Doe</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <p id="studentEmail" class="text-sm text-gray-900">john.doe@example.com</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Assignment Title</label>
+                            <p id="assignmentTitle" class="text-sm text-gray-900">Explain the concept of closures in JavaScript with examples</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                            <span id="assignmentStatus" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                <i class="fas fa-clock mr-1"></i>
+                                Pending Review
+                            </span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Submitted Date</label>
+                            <p id="submittedDate" class="text-sm text-gray-900">2024-01-15 14:30</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Assignment Answer -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Student Answer</label>
+                        <div id="assignmentAnswer" class="bg-gray-50 p-4 rounded-lg border">
+                            <p class="text-sm text-gray-900">A closure in JavaScript is a function that has access to variables in its outer (enclosing) scope even after the outer function has returned. This is a fundamental concept in JavaScript that allows for data privacy and the creation of function factories.</p>
+                            <br>
+                            <p class="text-sm text-gray-900">Example:</p>
+                            <pre class="text-sm text-gray-700 bg-white p-3 rounded border mt-2"><code>function outerFunction(x) {
+    return function innerFunction(y) {
+        return x + y;
+    };
+}
+
+const addFive = outerFunction(5);
+console.log(addFive(3)); // Output: 8</code></pre>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
+                    <button onclick="closeAssignmentDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="rejectAssignmentFromModal()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                        <i class="fas fa-times mr-2"></i>
+                        Reject
+                    </button>
+                    <button onclick="approveAssignmentFromModal()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                        <i class="fas fa-check mr-2"></i>
+                        Approve
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        // Open sidebar on mobile
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        // Close sidebar on mobile
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        // Toggle sidebar on desktop
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Assignment review functions
+        window.viewAssignmentDetails = function(assignmentId) {
+            console.log(`Viewing assignment details: ${assignmentId}`);
+            
+            // Sample assignment data
+            const assignmentData = {
+                'assignment-1': {
+                    studentName: 'John Doe',
+                    studentEmail: 'john.doe@example.com',
+                    title: 'Explain the concept of closures in JavaScript with examples',
+                    status: 'Pending Review',
+                    submittedDate: '2024-01-15 14:30',
+                    pastReviewer: 'John Smith - IT Manager',
+                    answer: `A closure in JavaScript is a function that has access to variables in its outer (enclosing) scope even after the outer function has returned. This is a fundamental concept in JavaScript that allows for data privacy and the creation of function factories.
+
+Example:
+function outerFunction(x) {
+    return function innerFunction(y) {
+        return x + y;
+    };
+}
+
+const addFive = outerFunction(5);
+console.log(addFive(3)); // Output: 8`
+                },
+                'assignment-2': {
+                    studentName: 'Sarah Wilson',
+                    studentEmail: 'sarah.wilson@example.com',
+                    title: 'Describe the difference between functional and class components',
+                    status: 'Approved',
+                    submittedDate: '2024-01-14 09:15',
+                    pastReviewer: 'Robert Davis - Senior HR Manager',
+                    answer: `Functional components are JavaScript functions that return JSX, while class components are ES6 classes that extend React.Component. Functional components are simpler, have better performance, and are the recommended approach in modern React development.`
+                },
+                'assignment-3': {
+                    studentName: 'Mike Johnson',
+                    studentEmail: 'mike.johnson@example.com',
+                    title: 'What are the key qualities of an effective leader?',
+                    status: 'Rejected',
+                    submittedDate: '2024-01-13 16:45',
+                    pastReviewer: 'William Miller - Senior Finance Manager',
+                    answer: `Effective leaders possess qualities such as clear communication, empathy, integrity, decision-making skills, and the ability to inspire and motivate their team members.`
+                },
+                'assignment-4': {
+                    studentName: 'Emily Brown',
+                    studentEmail: 'emily.brown@example.com',
+                    title: 'Explain the importance of workplace safety and list 5 safety measures',
+                    status: 'Pending Review',
+                    submittedDate: '2024-01-12 11:20',
+                    pastReviewer: 'Emily Garcia - Senior Marketing Manager',
+                    answer: `Workplace safety is crucial for protecting employees and maintaining productivity. Five key safety measures include: 1) Regular safety training, 2) Proper use of personal protective equipment, 3) Maintaining clean and organized workspaces, 4) Following established safety protocols, and 5) Reporting and addressing safety hazards immediately.`
+                }
+            };
+            
+            const assignment = assignmentData[assignmentId];
+            if (assignment) {
+                // Populate modal with assignment data
+                document.getElementById('studentName').textContent = assignment.studentName;
+                document.getElementById('studentEmail').textContent = assignment.studentEmail;
+                document.getElementById('assignmentTitle').textContent = assignment.title;
+                document.getElementById('submittedDate').textContent = assignment.submittedDate;
+                document.getElementById('assignmentAnswer').innerHTML = assignment.answer.replace(/\n/g, '<br>');
+                
+                // Update status badge
+                const statusElement = document.getElementById('assignmentStatus');
+                statusElement.className = assignment.status === 'Approved' ? 
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800' :
+                    assignment.status === 'Rejected' ?
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800' :
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800';
+                statusElement.innerHTML = assignment.status === 'Approved' ? 
+                    '<i class="fas fa-check mr-1"></i>Approved' :
+                    assignment.status === 'Rejected' ?
+                    '<i class="fas fa-times mr-1"></i>Rejected' :
+                    '<i class="fas fa-clock mr-1"></i>Pending Review';
+                
+                // Show modal
+                document.getElementById('assignmentDetailsModal').classList.remove('hidden');
+            }
+        };
+
+        window.closeAssignmentDetailsModal = function() {
+            document.getElementById('assignmentDetailsModal').classList.add('hidden');
+            // Clear form
+            document.getElementById('reviewComments').value = '';
+        };
+
+        window.approveAssignment = function(assignmentId) {
+            if (confirm('Are you sure you want to approve this assignment?')) {
+                console.log(`Approving assignment: ${assignmentId}`);
+                alert('Assignment approved successfully!');
+                // Here you would update the assignment status in the database
+            }
+        };
+
+        window.rejectAssignment = function(assignmentId) {
+            if (confirm('Are you sure you want to reject this assignment?')) {
+                console.log(`Rejecting assignment: ${assignmentId}`);
+                alert('Assignment rejected successfully!');
+                // Here you would update the assignment status in the database
+            }
+        };
+
+        window.approveAssignmentFromModal = function() {
+            console.log('Approving assignment');
+            alert('Assignment approved successfully!');
+            closeAssignmentDetailsModal();
+        };
+
+        window.rejectAssignmentFromModal = function() {
+            console.log('Rejecting assignment');
+            alert('Assignment rejected successfully!');
+            closeAssignmentDetailsModal();
+        };
+
+        // Close modal when clicking outside
+        document.getElementById('assignmentDetailsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAssignmentDetailsModal();
+            }
+        });
+    </script>
+</body>
+</html>

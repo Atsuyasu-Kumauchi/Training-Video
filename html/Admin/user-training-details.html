@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Training Details - Admin Dashboard</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-sm"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-900">Training Admin</h1>
+                </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-6 px-3">
+                <div class="space-y-3">
+                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-users w-5 h-5 mr-3"></i>
+                        User List
+                    </a>
+                    <a href="tags.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tags w-5 h-5 mr-3"></i>
+                        Tags
+                    </a>
+                    <a href="video-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-video w-5 h-5 mr-3"></i>
+                        Video List
+                    </a>
+                    <a href="training-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-book w-5 h-5 mr-3"></i>
+                        Training List
+                    </a>
+                    <a href="create-test.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
+                        Create Test
+                    </a>
+                    <a href="assignment-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-tasks w-5 h-5 mr-3"></i>
+                        Assignment List
+                    </a>
+                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                        <i class="fas fa-clipboard-list w-5 h-5 mr-3"></i>
+                        Assignment Review
+                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
+                    </a>
+                    <a href="departments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-building w-5 h-5 mr-3"></i>
+                        Departments
+                    </a>
+                    <a href="roles.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-user-tag w-5 h-5 mr-3"></i>
+                        Roles
+                    </a>
+                    <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-key w-5 h-5 mr-3"></i>
+                        Change Password
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex flex-col transition-all duration-300 min-w-0">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">A</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">Admin User</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 id="pageTitle" class="text-2xl font-bold text-gray-900">User Training Details</h2>
+                            <p id="pageSubtitle" class="text-gray-600 mt-1">View training progress for this user</p>
+                        </div>
+                        <a href="users.html" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Back to Users
+                        </a>
+                    </div>
+
+                    <!-- User Info Card -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <div class="px-6 py-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 h-12 w-12">
+                                    <div id="userAvatar" class="h-12 w-12 rounded-full bg-primary-600 flex items-center justify-center">
+                                        <span class="text-white font-medium text-lg">JD</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 id="userName" class="text-lg font-medium text-gray-900">John Doe</h3>
+                                    <p id="userEmail" class="text-sm text-gray-500">john.doe@example.com</p>
+                                    <p id="userDepartment" class="text-sm text-gray-500">IT Department</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training List -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-medium text-gray-900">Training Details</h3>
+                            <p class="text-sm text-gray-500 mt-1">All trainings assigned to this user</p>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Training</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Completed Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trainingsTable" class="bg-white divide-y divide-gray-200">
+                                    <!-- Content will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Sample training data
+        const trainingData = {
+            'John Doe': {
+                assignedTrainings: [
+                    {
+                        name: 'JavaScript Fundamentals',
+                        status: 'In Progress',
+                        progress: '75%',
+                        dueDate: '2024-02-15',
+                        category: 'Technical Training'
+                    },
+                    {
+                        name: 'Project Management Basics',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-01',
+                        category: 'Management Training'
+                    },
+                    {
+                        name: 'Cybersecurity Awareness',
+                        status: 'In Progress',
+                        progress: '45%',
+                        dueDate: '2024-02-28',
+                        category: 'Security Training'
+                    },
+                    {
+                        name: 'Data Analysis Fundamentals',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-15',
+                        category: 'Analytics Training'
+                    },
+                    {
+                        name: 'Communication Skills',
+                        status: 'In Progress',
+                        progress: '90%',
+                        dueDate: '2024-02-10',
+                        category: 'Soft Skills Training'
+                    },
+                    {
+                        name: 'Agile Methodology',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-20',
+                        category: 'Project Management'
+                    },
+                    {
+                        name: 'UI/UX Design Principles',
+                        status: 'In Progress',
+                        progress: '30%',
+                        dueDate: '2024-02-25',
+                        category: 'Design Training'
+                    },
+                    {
+                        name: 'Database Management',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-30',
+                        category: 'Technical Training'
+                    }
+                ],
+                completedTrainings: [
+                    {
+                        name: 'Introduction to HTML & CSS',
+                        score: '95%',
+                        completedDate: '2024-01-15',
+                        timeTaken: '2 hours 30 min',
+                        category: 'Web Development'
+                    },
+                    {
+                        name: 'Leadership Fundamentals',
+                        score: '88%',
+                        completedDate: '2024-01-20',
+                        timeTaken: '3 hours 15 min',
+                        category: 'Leadership Training'
+                    },
+                    {
+                        name: 'Time Management',
+                        score: '92%',
+                        completedDate: '2024-01-25',
+                        timeTaken: '1 hour 45 min',
+                        category: 'Productivity Training'
+                    },
+                    {
+                        name: 'Customer Service Excellence',
+                        score: '85%',
+                        completedDate: '2024-01-30',
+                        timeTaken: '2 hours 10 min',
+                        category: 'Customer Service'
+                    },
+                    {
+                        name: 'Microsoft Excel Advanced',
+                        score: '90%',
+                        completedDate: '2024-02-05',
+                        timeTaken: '4 hours 20 min',
+                        category: 'Software Training'
+                    },
+                    {
+                        name: 'Team Collaboration',
+                        score: '87%',
+                        completedDate: '2024-02-10',
+                        timeTaken: '2 hours 55 min',
+                        category: 'Team Building'
+                    }
+                ]
+            },
+            'Sarah Wilson': {
+                assignedTrainings: [
+                    {
+                        name: 'HR Management Fundamentals',
+                        status: 'In Progress',
+                        progress: '80%',
+                        dueDate: '2024-02-20',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Employee Relations',
+                        status: 'In Progress',
+                        progress: '60%',
+                        dueDate: '2024-02-25',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Recruitment Best Practices',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-05',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Performance Management',
+                        status: 'In Progress',
+                        progress: '40%',
+                        dueDate: '2024-03-10',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Workplace Safety',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-15',
+                        category: 'Safety Training'
+                    },
+                    {
+                        name: 'Diversity & Inclusion',
+                        status: 'In Progress',
+                        progress: '70%',
+                        dueDate: '2024-03-20',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Conflict Resolution',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-25',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Benefits Administration',
+                        status: 'In Progress',
+                        progress: '25%',
+                        dueDate: '2024-03-30',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Labor Law Compliance',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-04-05',
+                        category: 'Legal Training'
+                    },
+                    {
+                        name: 'Training Program Development',
+                        status: 'In Progress',
+                        progress: '55%',
+                        dueDate: '2024-04-10',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Employee Engagement',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-04-15',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'HR Analytics',
+                        status: 'In Progress',
+                        progress: '35%',
+                        dueDate: '2024-04-20',
+                        category: 'Analytics Training'
+                    }
+                ],
+                completedTrainings: [
+                    {
+                        name: 'HR Basics',
+                        score: '92%',
+                        completedDate: '2024-01-10',
+                        timeTaken: '3 hours 45 min',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Interview Techniques',
+                        score: '88%',
+                        completedDate: '2024-01-15',
+                        timeTaken: '2 hours 30 min',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Employment Law',
+                        score: '85%',
+                        completedDate: '2024-01-20',
+                        timeTaken: '4 hours 15 min',
+                        category: 'Legal Training'
+                    },
+                    {
+                        name: 'Compensation & Benefits',
+                        score: '90%',
+                        completedDate: '2024-01-25',
+                        timeTaken: '3 hours 20 min',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Performance Appraisals',
+                        score: '87%',
+                        completedDate: '2024-01-30',
+                        timeTaken: '2 hours 55 min',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Workplace Communication',
+                        score: '93%',
+                        completedDate: '2024-02-05',
+                        timeTaken: '2 hours 10 min',
+                        category: 'Communication Training'
+                    },
+                    {
+                        name: 'Employee Onboarding',
+                        score: '89%',
+                        completedDate: '2024-02-10',
+                        timeTaken: '3 hours 40 min',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'HR Documentation',
+                        score: '86%',
+                        completedDate: '2024-02-15',
+                        timeTaken: '2 hours 25 min',
+                        category: 'HR Training'
+                    },
+                    {
+                        name: 'Workplace Ethics',
+                        score: '91%',
+                        completedDate: '2024-02-20',
+                        timeTaken: '1 hour 50 min',
+                        category: 'Ethics Training'
+                    },
+                    {
+                        name: 'HR Technology',
+                        score: '84%',
+                        completedDate: '2024-02-25',
+                        timeTaken: '3 hours 15 min',
+                        category: 'Technology Training'
+                    }
+                ]
+            },
+            'Mike Johnson': {
+                assignedTrainings: [
+                    {
+                        name: 'Financial Analysis',
+                        status: 'In Progress',
+                        progress: '65%',
+                        dueDate: '2024-02-18',
+                        category: 'Finance Training'
+                    },
+                    {
+                        name: 'Budget Planning',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-01',
+                        category: 'Finance Training'
+                    },
+                    {
+                        name: 'Tax Compliance',
+                        status: 'In Progress',
+                        progress: '30%',
+                        dueDate: '2024-03-05',
+                        category: 'Finance Training'
+                    },
+                    {
+                        name: 'Risk Management',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-10',
+                        category: 'Finance Training'
+                    },
+                    {
+                        name: 'Investment Strategies',
+                        status: 'In Progress',
+                        progress: '50%',
+                        dueDate: '2024-03-15',
+                        category: 'Finance Training'
+                    }
+                ],
+                completedTrainings: [
+                    {
+                        name: 'Accounting Basics',
+                        score: '89%',
+                        completedDate: '2024-01-12',
+                        timeTaken: '4 hours 20 min',
+                        category: 'Finance Training'
+                    },
+                    {
+                        name: 'Excel for Finance',
+                        score: '92%',
+                        completedDate: '2024-01-18',
+                        timeTaken: '3 hours 15 min',
+                        category: 'Software Training'
+                    },
+                    {
+                        name: 'Financial Reporting',
+                        score: '87%',
+                        completedDate: '2024-01-25',
+                        timeTaken: '3 hours 45 min',
+                        category: 'Finance Training'
+                    }
+                ]
+            },
+            'Emily Brown': {
+                assignedTrainings: [
+                    {
+                        name: 'Digital Marketing Fundamentals',
+                        status: 'In Progress',
+                        progress: '40%',
+                        dueDate: '2024-02-20',
+                        category: 'Marketing Training'
+                    },
+                    {
+                        name: 'Social Media Marketing',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-01',
+                        category: 'Marketing Training'
+                    },
+                    {
+                        name: 'Content Marketing',
+                        status: 'In Progress',
+                        progress: '25%',
+                        dueDate: '2024-03-05',
+                        category: 'Marketing Training'
+                    }
+                ],
+                completedTrainings: [
+                    {
+                        name: 'Marketing Basics',
+                        score: '85%',
+                        completedDate: '2024-01-15',
+                        timeTaken: '2 hours 30 min',
+                        category: 'Marketing Training'
+                    }
+                ]
+            },
+            'David Lee': {
+                assignedTrainings: [
+                    {
+                        name: 'Operations Management',
+                        status: 'In Progress',
+                        progress: '70%',
+                        dueDate: '2024-02-15',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Supply Chain Management',
+                        status: 'In Progress',
+                        progress: '55%',
+                        dueDate: '2024-02-20',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Quality Assurance',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-01',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Process Improvement',
+                        status: 'In Progress',
+                        progress: '45%',
+                        dueDate: '2024-03-05',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Inventory Management',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-10',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Logistics Management',
+                        status: 'In Progress',
+                        progress: '60%',
+                        dueDate: '2024-03-15',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Vendor Management',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-20',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Performance Metrics',
+                        status: 'In Progress',
+                        progress: '35%',
+                        dueDate: '2024-03-25',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Cost Control',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-03-30',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Team Leadership',
+                        status: 'In Progress',
+                        progress: '80%',
+                        dueDate: '2024-04-05',
+                        category: 'Leadership Training'
+                    },
+                    {
+                        name: 'Safety Management',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-04-10',
+                        category: 'Safety Training'
+                    },
+                    {
+                        name: 'Compliance Management',
+                        status: 'In Progress',
+                        progress: '50%',
+                        dueDate: '2024-04-15',
+                        category: 'Compliance Training'
+                    },
+                    {
+                        name: 'Data Analysis for Operations',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-04-20',
+                        category: 'Analytics Training'
+                    },
+                    {
+                        name: 'Change Management',
+                        status: 'In Progress',
+                        progress: '30%',
+                        dueDate: '2024-04-25',
+                        category: 'Management Training'
+                    },
+                    {
+                        name: 'Strategic Planning',
+                        status: 'Not Started',
+                        progress: '0%',
+                        dueDate: '2024-04-30',
+                        category: 'Strategy Training'
+                    }
+                ],
+                completedTrainings: [
+                    {
+                        name: 'Operations Basics',
+                        score: '91%',
+                        completedDate: '2024-01-10',
+                        timeTaken: '3 hours 20 min',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Project Management',
+                        score: '88%',
+                        completedDate: '2024-01-15',
+                        timeTaken: '4 hours 15 min',
+                        category: 'Project Management'
+                    },
+                    {
+                        name: 'Team Management',
+                        score: '90%',
+                        completedDate: '2024-01-20',
+                        timeTaken: '2 hours 45 min',
+                        category: 'Management Training'
+                    },
+                    {
+                        name: 'Process Mapping',
+                        score: '86%',
+                        completedDate: '2024-01-25',
+                        timeTaken: '3 hours 10 min',
+                        category: 'Operations Training'
+                    },
+                    {
+                        name: 'Performance Management',
+                        score: '89%',
+                        completedDate: '2024-01-30',
+                        timeTaken: '2 hours 55 min',
+                        category: 'Management Training'
+                    },
+                    {
+                        name: 'Communication Skills',
+                        score: '92%',
+                        completedDate: '2024-02-05',
+                        timeTaken: '2 hours 20 min',
+                        category: 'Communication Training'
+                    },
+                    {
+                        name: 'Problem Solving',
+                        score: '87%',
+                        completedDate: '2024-02-10',
+                        timeTaken: '3 hours 30 min',
+                        category: 'Problem Solving'
+                    },
+                    {
+                        name: 'Decision Making',
+                        score: '85%',
+                        completedDate: '2024-02-15',
+                        timeTaken: '2 hours 40 min',
+                        category: 'Management Training'
+                    },
+                    {
+                        name: 'Leadership Skills',
+                        score: '93%',
+                        completedDate: '2024-02-20',
+                        timeTaken: '3 hours 45 min',
+                        category: 'Leadership Training'
+                    },
+                    {
+                        name: 'Conflict Resolution',
+                        score: '88%',
+                        completedDate: '2024-02-25',
+                        timeTaken: '2 hours 15 min',
+                        category: 'Communication Training'
+                    },
+                    {
+                        name: 'Time Management',
+                        score: '90%',
+                        completedDate: '2024-03-01',
+                        timeTaken: '1 hour 50 min',
+                        category: 'Productivity Training'
+                    },
+                    {
+                        name: 'Customer Service',
+                        score: '86%',
+                        completedDate: '2024-03-05',
+                        timeTaken: '2 hours 30 min',
+                        category: 'Customer Service'
+                    }
+                ]
+            }
+        };
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Function to populate user data
+        function populateUserData() {
+            const userName = getUrlParameter('user');
+            const type = getUrlParameter('type'); // 'assigned' or 'completed'
+            
+            if (!userName || !trainingData[userName]) {
+                alert('User not found');
+                window.location.href = 'users.html';
+                return;
+            }
+
+            const user = trainingData[userName];
+            const userInitials = userName.split(' ').map(n => n[0]).join('');
+            
+            // Update page title and user info
+            document.getElementById('pageTitle').textContent = `${userName} - Training Details`;
+            document.getElementById('pageSubtitle').textContent = type === 'completed' ? 'Completed training history' : 'Assigned training progress';
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userAvatar').innerHTML = `<span class="text-white font-medium text-lg">${userInitials}</span>`;
+            
+            // Set user email and department based on user
+            const userEmails = {
+                'John Doe': 'john.doe@example.com',
+                'Sarah Wilson': 'sarah.wilson@example.com',
+                'Mike Johnson': 'mike.johnson@example.com',
+                'Emily Brown': 'emily.brown@example.com',
+                'David Lee': 'david.lee@example.com'
+            };
+            
+            const userDepartments = {
+                'John Doe': 'IT Department',
+                'Sarah Wilson': 'HR Department',
+                'Mike Johnson': 'Finance Department',
+                'Emily Brown': 'Marketing Department',
+                'David Lee': 'Operations Department'
+            };
+            
+            document.getElementById('userEmail').textContent = userEmails[userName] || '';
+            document.getElementById('userDepartment').textContent = userDepartments[userName] || '';
+
+            // Combine all trainings into a single table
+            const allTrainings = [];
+            
+            // Add completed trainings
+            user.completedTrainings.forEach(training => {
+                allTrainings.push({
+                    ...training,
+                    status: 'Complete',
+                    dueDate: '-',
+                    completedDate: training.completedDate
+                });
+            });
+            
+            // Add incomplete trainings
+            user.assignedTrainings.forEach(training => {
+                // Check if this training is not already completed
+                const isCompleted = user.completedTrainings.some(completed => completed.name === training.name);
+                if (!isCompleted) {
+                    allTrainings.push({
+                        ...training,
+                        status: 'Incomplete',
+                        completedDate: '-'
+                    });
+                }
+            });
+            
+            // Populate single trainings table
+            const trainingsTable = document.getElementById('trainingsTable');
+            trainingsTable.innerHTML = allTrainings.map(training => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-8 w-8">
+                                <div class="h-8 w-8 rounded-lg ${training.status === 'Complete' ? 'bg-green-600' : 'bg-blue-600'} flex items-center justify-center">
+                                    <i class="fas ${training.status === 'Complete' ? 'fa-check' : 'fa-book'} text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">${training.name}</div>
+                                <div class="text-sm text-gray-500">${training.category}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            training.status === 'Complete' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }">
+                            ${training.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${training.dueDate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${training.completedDate}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            populateUserData();
+        });
+    </script>
+</body>
+</html> 

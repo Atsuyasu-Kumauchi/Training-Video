@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Student Portal</title>
+    <link href="../dist/output.css" rel="stylesheet">
+    <script src="../dist/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">Training Portal</h1>
+                    </div>
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+                                <nav class="mt-6 px-3">
+                        <div class="space-y-3">
+                            <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-home w-5 h-5 mr-3"></i>
+                                Dashboard
+                            </a>
+                            <a href="my-trainings.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-book w-5 h-5 mr-3"></i>
+                                My Trainings
+                            </a>
+                            <a href="results.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                                <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
+                                Results
+                            </a>
+                            <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                                <i class="fas fa-key w-5 h-5 mr-3"></i>
+                                Change Password
+                            </a>
+                        </div>
+                    </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="flex-1 flex flex-col transition-all duration-300 min-w-0">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <button id="openSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <button id="toggleSidebar" class="hidden lg:block text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <button id="userMenuButton" class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">JD</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">John Doe</span>
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </button>
+                                
+                                <!-- Dropdown Menu -->
+                                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                                    <a href="change-password.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fas fa-key mr-2"></i>
+                                        Change Password
+                                    </a>
+                                    <div class="border-t border-gray-100 my-1"></div>
+                                    <a href="login.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="px-6 py-8">
+                    <!-- Page Header -->
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-gray-900">My Results</h1>
+                        <p class="text-gray-600 mt-1">View your completed training results and test scores</p>
+                    </div>
+
+                    <!-- Results List -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-lg font-medium text-gray-900">Completed Trainings</h2>
+                            <p class="text-sm text-gray-500 mt-1">Your test results and performance details</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4" id="resultsList">
+                                <!-- Results will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Result Details Modal -->
+    <div id="resultModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 id="modalTitle" class="text-lg font-medium text-gray-900">Result Details</h3>
+                    <button onclick="closeResultModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div id="modalContent" class="space-y-6">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        toggleSidebar.addEventListener('click', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.toggle('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                if (!sidebar.contains(e.target) && !openSidebar.contains(e.target)) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        // Sample results data
+        const completedResults = [
+            {
+                id: 1,
+                trainingTitle: 'JavaScript Fundamentals',
+                completedDate: '2024-01-15',
+                score: 85,
+                totalQuestions: 20,
+                correctAnswers: 17,
+                timeTaken: '45:30',
+                status: 'Passed',
+                questions: [
+                    {
+                        id: 1,
+                        question: 'What is JavaScript?',
+                        userAnswer: 'A programming language for web development',
+                        correctAnswer: 'A programming language for web development',
+                        isCorrect: true,
+                        explanation: 'JavaScript is a high-level, interpreted programming language that is one of the core technologies of the World Wide Web.'
+                    },
+                    {
+                        id: 2,
+                        question: 'Which keyword is used to declare a variable in JavaScript?',
+                        userAnswer: 'var',
+                        correctAnswer: 'let, const, or var',
+                        isCorrect: false,
+                        explanation: 'JavaScript supports multiple ways to declare variables: var (function-scoped), let (block-scoped), and const (block-scoped, read-only).'
+                    },
+                    {
+                        id: 3,
+                        question: 'What is the result of 2 + "2" in JavaScript?',
+                        userAnswer: '22',
+                        correctAnswer: '22',
+                        isCorrect: true,
+                        explanation: 'JavaScript performs type coercion. When adding a number and a string, the number is converted to a string and concatenated.'
+                    },
+                    {
+                        id: 4,
+                        question: 'Which method is used to add an element to the end of an array?',
+                        userAnswer: 'push()',
+                        correctAnswer: 'push()',
+                        isCorrect: true,
+                        explanation: 'The push() method adds one or more elements to the end of an array and returns the new length of the array.'
+                    },
+                    {
+                        id: 5,
+                        question: 'What is the purpose of the "use strict" directive?',
+                        userAnswer: 'To enable strict mode for better error checking',
+                        correctAnswer: 'To enable strict mode for better error checking',
+                        isCorrect: true,
+                        explanation: 'The "use strict" directive enables strict mode, which helps catch common coding mistakes and prevents certain unsafe actions.'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                trainingTitle: 'HTML & CSS Basics',
+                completedDate: '2024-01-10',
+                score: 92,
+                totalQuestions: 15,
+                correctAnswers: 14,
+                timeTaken: '32:15',
+                status: 'Passed',
+                questions: [
+                    {
+                        id: 1,
+                        question: 'What does HTML stand for?',
+                        userAnswer: 'HyperText Markup Language',
+                        correctAnswer: 'HyperText Markup Language',
+                        isCorrect: true,
+                        explanation: 'HTML (HyperText Markup Language) is the standard markup language for creating web pages.'
+                    },
+                    {
+                        id: 2,
+                        question: 'Which HTML tag is used to create a hyperlink?',
+                        userAnswer: '<a>',
+                        correctAnswer: '<a>',
+                        isCorrect: true,
+                        explanation: 'The <a> tag defines a hyperlink, which is used to link from one page to another.'
+                    },
+                    {
+                        id: 3,
+                        question: 'What is the purpose of CSS?',
+                        userAnswer: 'To style and layout web pages',
+                        correctAnswer: 'To style and layout web pages',
+                        isCorrect: true,
+                        explanation: 'CSS (Cascading Style Sheets) is used to style and layout web pages, controlling colors, fonts, spacing, and more.'
+                    },
+                    {
+                        id: 4,
+                        question: 'Which CSS property controls the text color?',
+                        userAnswer: 'color',
+                        correctAnswer: 'color',
+                        isCorrect: true,
+                        explanation: 'The color property in CSS is used to set the color of text.'
+                    },
+                    {
+                        id: 5,
+                        question: 'What is the box model in CSS?',
+                        userAnswer: 'A concept that describes how elements are sized and spaced',
+                        correctAnswer: 'A concept that describes how elements are sized and spaced',
+                        isCorrect: true,
+                        explanation: 'The CSS box model describes how elements are sized and spaced, including content, padding, border, and margin.'
+                    }
+                ]
+            }
+        ];
+
+        // Function to populate results list
+        function populateResultsList() {
+            const resultsList = document.getElementById('resultsList');
+            resultsList.innerHTML = completedResults.map(result => `
+                <div class="flex items-start space-x-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-medium text-gray-900">${result.trainingTitle}</h3>
+
+                        </div>
+                        <div class="flex items-center space-x-6 mt-2 text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-1"></i>Completed: ${result.completedDate}</span>
+                        </div>
+                        <div class="mt-3">
+                            <button onclick="viewResultDetails(${result.id})" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                                <i class="fas fa-eye mr-2"></i>
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to view result details
+        function viewResultDetails(resultId) {
+            const result = completedResults.find(r => r.id === resultId);
+            if (!result) return;
+
+            document.getElementById('modalTitle').textContent = `${result.trainingTitle} - Result Details`;
+            
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="border-t pt-6">
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Question Details</h4>
+                    <div class="space-y-4">
+                        ${result.questions.map((question, index) => `
+                            <div class="border border-gray-200 rounded-lg p-4 ${question.isCorrect ? 'bg-green-50' : 'bg-red-50'}">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h5 class="font-medium text-gray-900">Question ${index + 1}</h5>
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                        question.isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    }">
+                                        ${question.isCorrect ? 'Correct' : 'Incorrect'}
+                                    </span>
+                                </div>
+                                <p class="text-gray-700 mb-3">${question.question}</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span class="font-medium text-gray-900">Your Answer:</span>
+                                        <p class="text-gray-700 mt-1">${question.userAnswer}</p>
+                                    </div>
+                                    <div>
+                                        <span class="font-medium text-gray-900">Correct Answer:</span>
+                                        <p class="text-gray-700 mt-1">${question.correctAnswer}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('resultModal').classList.remove('hidden');
+        }
+
+        // Function to close result modal
+        function closeResultModal() {
+            document.getElementById('resultModal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('resultModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeResultModal();
+            }
+        });
+
+        // Initialize page when DOM is loaded
+        // User dropdown functionality
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateResultsList();
+        });
+    </script>
+</body>
+</html> 
