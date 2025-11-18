@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users - Admin Dashboard</title>
+    <title>ユーザー - 管理者ダッシュボード</title>
     <link href="../dist/output.css" rel="stylesheet">
     <script src="../dist/tailwind.js"></script>
     <script>
@@ -48,7 +48,7 @@
                     <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                         <i class="fas fa-graduation-cap text-white text-sm"></i>
                     </div>
-                    <h1 class="text-xl font-bold text-gray-900">Training Admin</h1>
+                    <h1 class="text-xl font-bold text-gray-900">トレーニング管理</h1>
                 </div>
                 <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
@@ -128,7 +128,7 @@
                                     <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                                         <span class="text-white font-medium text-sm">A</span>
                                     </div>
-                                    <span class="text-gray-700 font-medium">Admin User</span>
+                                    <span class="text-gray-700 font-medium">管理者ユーザー</span>
                                     <i class="fas fa-chevron-down text-gray-400"></i>
                                 </button>
                             </div>
@@ -143,25 +143,25 @@
                     <!-- Page Header -->
                     <div class="flex items-center justify-between mb-8">
                         <div>
-                            <h2 class="text-2xl font-bold text-gray-900">Users</h2>
+                            <h2 class="text-2xl font-bold text-gray-900">ユーザー</h2>
                         </div>
                         <div class="flex items-center space-x-3">
                             <!-- CSV Import Button -->
                             <button onclick="importCSV()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 <i class="fas fa-download mr-2"></i>
-                                Import CSV
+                                CSVインポート
                             </button>
                             
                             <!-- CSV Export Button -->
                             <button onclick="exportCSV()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 <i class="fas fa-upload mr-2"></i>
-                                Export CSV
+                                CSVエクスポート
                             </button>
                             
                             <!-- Add New User Button -->
                             <button onclick="showAddUserModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 <i class="fas fa-plus mr-2"></i>
-                                Add New User
+                                新規ユーザー追加
                             </button>
                         </div>
                     </div>
@@ -171,32 +171,32 @@
                         <div class="px-6 py-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">ステータス</label>
                                     <select class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">All Status</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
+                                        <option value="">すべてのステータス</option>
+                                        <option value="active">アクティブ</option>
+                                        <option value="inactive">非アクティブ</option>
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Department</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">部門</label>
                                     <select class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">All Departments</option>
-                                        <option value="it">IT Department</option>
-                                        <option value="hr">HR Department</option>
-                                        <option value="finance">Finance Department</option>
-                                        <option value="marketing">Marketing Department</option>
-                                        <option value="sales">Sales Department</option>
-                                        <option value="operations">Operations Department</option>
+                                        <option value="">すべての部門</option>
+                                        <option value="it">IT部門</option>
+                                        <option value="hr">HR部門</option>
+                                        <option value="finance">財務部門</option>
+                                        <option value="marketing">マーケティング部門</option>
+                                        <option value="sales">営業部門</option>
+                                        <option value="operations">運用部門</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">検索</label>
                                     <div class="flex gap-2">
-                                        <input type="text" id="searchInput" placeholder="Search by name or email..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                        <input type="text" id="searchInput" placeholder="名前またはメールで検索..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                         <button id="searchButton" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-                                            Search
+                                            検索
                                         </button>
                                     </div>
                                 </div>
@@ -211,13 +211,13 @@
                             <table class="w-full min-w-[800px] divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">User</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Email</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/8">Department</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Assigned Training</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Completed Training</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Status</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">ユーザー</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">メール</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/8">部門</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">割り当て済みトレーニング</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">完了済みトレーニング</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">ステータス</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">アクション</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -250,7 +250,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Active
+                                                アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -296,7 +296,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Active
+                                                アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -342,7 +342,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Active
+                                                アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -434,7 +434,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Active
+                                                アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -459,17 +459,17 @@
                         <div class="px-6 py-3 border-t border-gray-200">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center text-sm text-gray-700">
-                                    <span>Showing 1 to 5 of 5 results</span>
+                                    <span>1〜5件 / 全5件を表示</span>
                                 </div>
                                 <div class="flex items-center space-x-2">
                                     <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-                                        Previous
+                                        前へ
                                     </button>
                                     <button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md">
                                         1
                                     </button>
                                     <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-                                        Next
+                                        次へ
                                     </button>
                                 </div>
                             </div>
@@ -574,7 +574,7 @@
             const modalContent = document.getElementById('modalContent');
             
             // Set modal title
-            modalTitle.textContent = `User Details - ${userName}`;
+            modalTitle.textContent = `ユーザー詳細 - ${userName}`;
             
             // Generate user details content based on user name
             let userDetails = getUserDetails(userName);
@@ -663,19 +663,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">メール</label>
                                 <p class="text-sm text-gray-900">${user.email || 'N/A'}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">部門</label>
                                 <p class="text-sm text-gray-900">${user.department || 'N/A'}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">役割</label>
                                 <p class="text-sm text-gray-900">${user.role || 'N/A'}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">ステータス</label>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
                                     ${user.status || 'N/A'}
                                 </span>
@@ -683,31 +683,31 @@
                         </div>
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Employee ID</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">従業員ID</label>
                                 <p class="text-sm text-gray-900">${user.employeeId || 'N/A'}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Join Date</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">入社日</label>
                                 <p class="text-sm text-gray-900">${user.joinDate || 'N/A'}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">タグ</label>
                                 <p class="text-sm text-gray-900">${user.tags && user.tags.length > 0 ? user.tags.join(', ') : 'N/A'}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Administrative Authorities</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">管理権限</label>
                                 <p class="text-sm text-gray-900">${user.adminAuthorities && user.adminAuthorities.length > 0 ? user.adminAuthorities.join(', ') : 'N/A'}</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="border-t border-gray-200 pt-4">
-                        <h4 class="text-lg font-medium text-gray-900 mb-3">Training Progress</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-3">トレーニング進捗</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="bg-blue-50 rounded-lg p-4 cursor-pointer hover:bg-blue-100 transition-colors duration-200" onclick="showAssignedTrainings('${userName}', ${user.assignedTraining || 0})">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-sm font-medium text-blue-900">Assigned Training</p>
+                                        <p class="text-sm font-medium text-blue-900">割り当て済みトレーニング</p>
                                         <p class="text-2xl font-bold text-blue-600">${user.assignedTraining || 0}</p>
                                     </div>
                                     <div class="text-blue-600">
@@ -718,7 +718,7 @@
                             <div class="bg-green-50 rounded-lg p-4 cursor-pointer hover:bg-green-100 transition-colors duration-200" onclick="showCompletedTrainings('${userName}', ${user.completedTraining || 0})">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-sm font-medium text-green-900">Completed Training</p>
+                                        <p class="text-sm font-medium text-green-900">完了済みトレーニング</p>
                                         <p class="text-2xl font-bold text-green-600">${user.completedTraining || 0}</p>
                                     </div>
                                     <div class="text-green-600">
@@ -739,8 +739,8 @@
             const submitBtn = document.getElementById('addUserSubmitBtn');
             
             // Set modal for add mode
-            modalTitle.textContent = 'Add New User';
-            submitBtn.textContent = 'Add User';
+            modalTitle.textContent = '新規ユーザー追加';
+            submitBtn.textContent = 'ユーザーを追加';
             submitBtn.onclick = submitAddUserForm;
             
             // Reset form
@@ -764,8 +764,8 @@
             const submitBtn = document.getElementById('addUserSubmitBtn');
             
             // Set modal for edit mode
-            modalTitle.textContent = `Edit User - ${userName}`;
-            submitBtn.textContent = 'Update User';
+            modalTitle.textContent = `ユーザーを編集 - ${userName}`;
+            submitBtn.textContent = 'ユーザーを更新';
             submitBtn.onclick = () => submitEditUserForm(userName);
             
             // Populate form with user data
@@ -1031,7 +1031,7 @@
             <div class="mt-3">
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between mb-4">
-                    <h3 id="modalTitle" class="text-lg font-medium text-gray-900">User Details</h3>
+                    <h3 id="modalTitle" class="text-lg font-medium text-gray-900">ユーザー詳細</h3>
                     <button onclick="closeUserDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                         <i class="fas fa-times text-xl"></i>
                     </button>
@@ -1045,7 +1045,7 @@
                 <!-- Modal Footer -->
                 <div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
                     <button onclick="closeUserDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-                        Close
+                        閉じる
                     </button>
                 </div>
             </div>
@@ -1067,7 +1067,7 @@
             <div class="mt-3">
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between mb-6">
-                    <h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">Add New User</h3>
+                    <h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">新規ユーザー追加</h3>
                     <button onclick="closeAddUserModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                         <i class="fas fa-times text-xl"></i>
                     </button>
@@ -1078,33 +1078,33 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Last Name -->
                         <div>
-                            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">姓 *</label>
                             <input type="text" id="lastName" name="lastName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
                         
                         <!-- First Name -->
                         <div>
-                            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">名 *</label>
                             <input type="text" id="firstName" name="firstName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
                         
                         <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メール *</label>
                             <input type="email" id="email" name="email" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
                         
                         <!-- Employee ID -->
                         <div>
-                            <label for="employeeId" class="block text-sm font-medium text-gray-700 mb-2">Employee ID *</label>
+                            <label for="employeeId" class="block text-sm font-medium text-gray-700 mb-2">従業員ID *</label>
                             <input type="text" id="employeeId" name="employeeId" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
                         
                         <!-- Department -->
                         <div>
-                            <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Department *</label>
+                            <label for="department" class="block text-sm font-medium text-gray-700 mb-2">部門 *</label>
                             <select id="department" name="department" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                <option value="">Select Department</option>
+                                <option value="">部門を選択</option>
                                 <option value="IT Department">IT Department</option>
                                 <option value="HR Department">HR Department</option>
                                 <option value="Finance Department">Finance Department</option>
@@ -1116,9 +1116,9 @@
                         
                         <!-- Role -->
                         <div>
-                            <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role *</label>
+                            <label for="role" class="block text-sm font-medium text-gray-700 mb-2">役割 *</label>
                             <select id="role" name="role" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                <option value="">Select Role</option>
+                                <option value="">役割を選択</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Manager">Manager</option>
                                 <option value="Analyst">Analyst</option>
@@ -1130,13 +1130,13 @@
                         
                         <!-- Join Date -->
                         <div>
-                            <label for="joinDate" class="block text-sm font-medium text-gray-700 mb-2">Join Date *</label>
+                            <label for="joinDate" class="block text-sm font-medium text-gray-700 mb-2">入社日 *</label>
                             <input type="date" id="joinDate" name="joinDate" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
 
                         <!-- Tags (Multiple) -->
                         <div>
-                            <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                            <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">タグ</label>
                             <select id="tags" name="tags" multiple class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 min-h-[44px]">
                                 <option value="IT">IT</option>
                                 <option value="HR">HR</option>
@@ -1149,13 +1149,13 @@
 
                         <!-- Assignment Review Hierarchy -->
                         <div class="md:col-span-2">
-                            <h4 class="text-lg font-medium text-gray-900 mb-4">Assignment Review Hierarchy</h4>
+                            <h4 class="text-lg font-medium text-gray-900 mb-4">課題レビューハイアラキー</h4>
                             <div class="space-y-4">
                                 <!-- Initial Review by Direct Manager -->
                                 <div>
-                                    <label for="directManager" class="block text-sm font-medium text-gray-700 mb-2">Initial Review by Direct Manager *</label>
+                                    <label for="directManager" class="block text-sm font-medium text-gray-700 mb-2">一次レビュー担当者（直属マネージャー） *</label>
                                     <select id="directManager" name="directManager" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">Select Direct Manager</option>
+                                        <option value="">直属マネージャーを選択</option>
                                         <option value="john.smith@example.com">John Smith - IT Manager</option>
                                         <option value="sarah.johnson@example.com">Sarah Johnson - HR Manager</option>
                                         <option value="mike.wilson@example.com">Mike Wilson - Finance Manager</option>
@@ -1166,9 +1166,9 @@
 
                                 <!-- Second Review by Senior Manager -->
                                 <div>
-                                    <label for="seniorManager" class="block text-sm font-medium text-gray-700 mb-2">Second Review by Senior Manager *</label>
+                                    <label for="seniorManager" class="block text-sm font-medium text-gray-700 mb-2">二次レビュー担当者（シニアマネージャー） *</label>
                                     <select id="seniorManager" name="seniorManager" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">Select Senior Manager</option>
+                                        <option value="">シニアマネージャーを選択</option>
                                         <option value="robert.taylor@example.com">Robert Taylor - Senior IT Manager</option>
                                         <option value="jennifer.davis@example.com">Jennifer Davis - Senior HR Manager</option>
                                         <option value="william.miller@example.com">William Miller - Senior Finance Manager</option>
@@ -1179,9 +1179,9 @@
 
                                 <!-- Last Review by Empower Department -->
                                 <div>
-                                    <label for="empowerDepartment" class="block text-sm font-medium text-gray-700 mb-2">Last Review by Empower Department *</label>
+                                    <label for="empowerDepartment" class="block text-sm font-medium text-gray-700 mb-2">最終レビュー担当者（エンパワー部門） *</label>
                                     <select id="empowerDepartment" name="empowerDepartment" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">Select Empower Department</option>
+                                        <option value="">エンパワー部門を選択</option>
                                         <option value="empower.it@company.com">Empower IT Department</option>
                                         <option value="empower.hr@company.com">Empower HR Department</option>
                                         <option value="empower.finance@company.com">Empower Finance Department</option>
@@ -1194,56 +1194,56 @@
 
                         <!-- Administrative Authorities -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Administrative Authorities</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">管理権限</label>
                             <div class="space-y-2 max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-3">
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authDashboard" name="adminAuthorities" value="dashboard" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authDashboard" class="ml-2 text-sm text-gray-700">Dashboard Access</label>
+                                    <label for="authDashboard" class="ml-2 text-sm text-gray-700">ダッシュボードアクセス</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authUserList" name="adminAuthorities" value="user_list" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authUserList" class="ml-2 text-sm text-gray-700">User List Management</label>
+                                    <label for="authUserList" class="ml-2 text-sm text-gray-700">ユーザー一覧管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authUserGroups" name="adminAuthorities" value="user_groups" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authUserGroups" class="ml-2 text-sm text-gray-700">User Groups Management</label>
+                                    <label for="authUserGroups" class="ml-2 text-sm text-gray-700">ユーザーグループ管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authVideoList" name="adminAuthorities" value="video_list" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authVideoList" class="ml-2 text-sm text-gray-700">Video List Management</label>
+                                    <label for="authVideoList" class="ml-2 text-sm text-gray-700">動画一覧管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authTrainingList" name="adminAuthorities" value="training_list" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authTrainingList" class="ml-2 text-sm text-gray-700">Training List Management</label>
+                                    <label for="authTrainingList" class="ml-2 text-sm text-gray-700">トレーニング一覧管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authCreateTest" name="adminAuthorities" value="create_test" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authCreateTest" class="ml-2 text-sm text-gray-700">Create Test Management</label>
+                                    <label for="authCreateTest" class="ml-2 text-sm text-gray-700">テスト作成管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authDepartments" name="adminAuthorities" value="departments" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authDepartments" class="ml-2 text-sm text-gray-700">Departments Management</label>
+                                    <label for="authDepartments" class="ml-2 text-sm text-gray-700">部門管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authRoles" name="adminAuthorities" value="roles" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authRoles" class="ml-2 text-sm text-gray-700">Roles Management</label>
+                                    <label for="authRoles" class="ml-2 text-sm text-gray-700">役割管理</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="authChangePassword" name="adminAuthorities" value="change_password" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authChangePassword" class="ml-2 text-sm text-gray-700">Change Password Access</label>
+                                    <label for="authChangePassword" class="ml-2 text-sm text-gray-700">パスワード変更アクセス</label>
                                 </div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Select administrative authorities (optional)</p>
+                            <p class="text-xs text-gray-500 mt-1">管理権限を選択（任意）</p>
                         </div>
 
                         <!-- Password Reset by Admin -->
                         <div>
-                            <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-2">Set Password (Admin)</label>
+                            <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-2">パスワード設定（管理者）</label>
                             <div class="relative">
-                                <input type="password" id="adminPassword" name="adminPassword" placeholder="Enter new password" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                <button type="button" id="generatePassword" class="absolute right-2 top-2 text-sm text-primary-600 hover:text-primary-800 font-medium">Generate</button>
+                                <input type="password" id="adminPassword" name="adminPassword" placeholder="新しいパスワードを入力" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                <button type="button" id="generatePassword" class="absolute right-2 top-2 text-sm text-primary-600 hover:text-primary-800 font-medium">生成</button>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Leave empty to let user set their own password</p>
+                            <p class="text-xs text-gray-500 mt-1">空欄のままにすると、ユーザーが自分でパスワードを設定できます</p>
                         </div>
 
                         <!-- Training -->
@@ -1253,10 +1253,10 @@
                 <!-- Modal Footer -->
                 <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
                     <button onclick="closeAddUserModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-                        Cancel
+                        キャンセル
                     </button>
                     <button id="addUserSubmitBtn" onclick="submitAddUserForm()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
-                        Add User
+                        ユーザーを追加
                     </button>
                 </div>
             </div>

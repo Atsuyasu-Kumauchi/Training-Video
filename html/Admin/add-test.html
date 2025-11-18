@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Test - Admin Dashboard</title>
+    <title>新規テスト追加 - 管理者ダッシュボード</title>
     <link href="../dist/output.css" rel="stylesheet">
     <script src="../dist/tailwind.js"></script>
     <script>
@@ -45,7 +45,7 @@
                     <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                         <i class="fas fa-graduation-cap text-white text-sm"></i>
                     </div>
-                    <h1 class="text-xl font-bold text-gray-900">Training Admin</h1>
+                    <h1 class="text-xl font-bold text-gray-900">トレーニング管理</h1>
                 </div>
                 <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
@@ -125,7 +125,7 @@
                                     <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                                         <span class="text-white font-medium text-sm">A</span>
                                     </div>
-                                    <span class="text-gray-700 font-medium">Admin User</span>
+                                    <span class="text-gray-700 font-medium">管理者ユーザー</span>
                                     <i class="fas fa-chevron-down text-gray-400"></i>
                                 </button>
                             </div>
@@ -140,55 +140,55 @@
                     <!-- Page Header -->
                     <div class="flex items-center justify-between mb-8">
                         <div>
-                            <h2 class="text-2xl font-bold text-gray-900" id="pageTitle">Add New Test</h2>
-                            <p class="text-gray-600 mt-1" id="pageDescription">Create a new test with questions and configuration</p>
+                            <h2 class="text-2xl font-bold text-gray-900" id="pageTitle">新規テスト追加</h2>
+                            <p class="text-gray-600 mt-1" id="pageDescription">質問と設定を含む新しいテストを作成</p>
                         </div>
                     </div>
 
                     <!-- Test Creation Form -->
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                         <div class="px-6 py-4 border-b border-gray-200">
-                            <h3 class="text-lg font-medium text-gray-900">Test Information</h3>
+                            <h3 class="text-lg font-medium text-gray-900">テスト情報</h3>
                         </div>
                         
                         <form id="testForm" class="p-6 space-y-6">
                             <!-- Basic Test Details -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label for="testName" class="block text-sm font-medium text-gray-700 mb-2">Test Name *</label>
+                                    <label for="testName" class="block text-sm font-medium text-gray-700 mb-2">テスト名 *</label>
                                     <input type="text" id="testName" name="testName" required 
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                           placeholder="Enter test name">
+                                           placeholder="テスト名を入力">
                                 </div>
                                 
                                 <div>
-                                    <label for="testCategory" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                                    <label for="testCategory" class="block text-sm font-medium text-gray-700 mb-2">カテゴリ *</label>
                                     <select id="testCategory" name="testCategory" required
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">Select Category</option>
-                                        <option value="Programming">Programming</option>
-                                        <option value="Leadership">Leadership</option>
-                                        <option value="Safety">Safety</option>
-                                        <option value="Communication">Communication</option>
-                                        <option value="Compliance">Compliance</option>
+                                        <option value="">カテゴリを選択</option>
+                                        <option value="Programming">プログラミング</option>
+                                        <option value="Leadership">リーダーシップ</option>
+                                        <option value="Safety">安全</option>
+                                        <option value="Communication">コミュニケーション</option>
+                                        <option value="Compliance">コンプライアンス</option>
                                     </select>
                                 </div>
                                 
                                 <div>
-                                    <label for="testDescription" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                    <label for="testDescription" class="block text-sm font-medium text-gray-700 mb-2">説明</label>
                                     <textarea id="testDescription" name="testDescription" rows="3"
                                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                              placeholder="Enter test description"></textarea>
+                                              placeholder="テストの説明を入力"></textarea>
                                 </div>
                                 
                                 <div>
-                                    <label for="testStatus" class="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+                                    <label for="testStatus" class="block text-sm font-medium text-gray-700 mb-2">ステータス *</label>
                                     <select id="testStatus" name="testStatus" required
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                        <option value="">Select Status</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Draft">Draft</option>
-                                        <option value="Archived">Archived</option>
+                                        <option value="">ステータスを選択</option>
+                                        <option value="Active">アクティブ</option>
+                                        <option value="Draft">下書き</option>
+                                        <option value="Archived">アーカイブ済み</option>
                                     </select>
                                 </div>
                             </div>
@@ -198,10 +198,10 @@
                             <!-- Questions Section -->
                             <div class="border-t border-gray-200 pt-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <h4 class="text-lg font-medium text-gray-900">Questions</h4>
+                                    <h4 class="text-lg font-medium text-gray-900">質問</h4>
                                     <button type="button" onclick="addQuestion()" class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                                         <i class="fas fa-plus mr-2"></i>
-                                        Add Question
+                                        質問を追加
                                     </button>
                                 </div>
                                 
@@ -214,10 +214,10 @@
                             <div class="border-t border-gray-200 pt-6">
                                 <div class="flex justify-end space-x-3">
                                     <button type="button" onclick="cancelTest()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                        Cancel
+                                        キャンセル
                                     </button>
                                     <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500" id="submitButton">
-                                        Create Test
+                                        テストを作成
                                     </button>
                                 </div>
                             </div>
@@ -270,7 +270,7 @@
             const questionHtml = `
                 <div class="bg-gray-50 rounded-lg p-4 border border-gray-200" id="question-${questionCounter}">
                     <div class="flex items-center justify-between mb-4">
-                        <h5 class="text-md font-medium text-gray-900">Question ${questionCounter}</h5>
+                        <h5 class="text-md font-medium text-gray-900">質問 ${questionCounter}</h5>
                         <button type="button" onclick="removeQuestion(${questionCounter})" class="text-red-600 hover:text-red-800">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -278,68 +278,68 @@
                     
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Question Text *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">質問文 *</label>
                             <textarea name="question-${questionCounter}-text" required rows="2"
                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                      placeholder="Enter your question here"></textarea>
+                                      placeholder="ここに質問を入力"></textarea>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Question Type *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">質問タイプ *</label>
                             <select name="question-${questionCounter}-type" required onchange="toggleOptions(${questionCounter})"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                <option value="">Select Type</option>
-                                <option value="multiple-choice">Multiple Choice</option>
-                                <option value="true-false">True/False</option>
-                                <option value="short-answer">Short Answer</option>
+                                <option value="">タイプを選択</option>
+                                <option value="multiple-choice">選択問題</option>
+                                <option value="true-false">正誤問題</option>
+                                <option value="short-answer">記述問題</option>
                             </select>
                         </div>
                         
                         <div id="options-${questionCounter}" class="hidden">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Options</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">選択肢</label>
                             <div class="space-y-2">
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" name="correct-${questionCounter}" value="A" required>
-                                    <input type="text" name="option-${questionCounter}-A" placeholder="Option A" 
+                                    <input type="text" name="option-${questionCounter}-A" placeholder="選択肢 A" 
                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                 </div>
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" name="correct-${questionCounter}" value="B" required>
-                                    <input type="text" name="option-${questionCounter}-B" placeholder="Option B" 
+                                    <input type="text" name="option-${questionCounter}-B" placeholder="選択肢 B" 
                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                 </div>
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" name="correct-${questionCounter}" value="C" required>
-                                    <input type="text" name="option-${questionCounter}-C" placeholder="Option C" 
+                                    <input type="text" name="option-${questionCounter}-C" placeholder="選択肢 C" 
                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                 </div>
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" name="correct-${questionCounter}" value="D" required>
-                                    <input type="text" name="option-${questionCounter}-D" placeholder="Option D" 
+                                    <input type="text" name="option-${questionCounter}-D" placeholder="選択肢 D" 
                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                 </div>
                             </div>
                         </div>
                         
                         <div id="true-false-${questionCounter}" class="hidden">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Correct Answer</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">正解</label>
                             <div class="flex space-x-4">
                                 <label class="flex items-center">
                                     <input type="radio" name="correct-${questionCounter}" value="true" required>
-                                    <span class="ml-2 text-sm text-gray-700">True</span>
+                                    <span class="ml-2 text-sm text-gray-700">正</span>
                                 </label>
                                 <label class="flex items-center">
                                     <input type="radio" name="correct-${questionCounter}" value="false" required>
-                                    <span class="ml-2 text-sm text-gray-700">False</span>
+                                    <span class="ml-2 text-sm text-gray-700">誤</span>
                                 </label>
                             </div>
                         </div>
                         
                         <div id="short-answer-${questionCounter}" class="hidden">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Correct Answer</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">正解</label>
                             <input type="text" name="correct-${questionCounter}" 
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                   placeholder="Enter correct answer">
+                                   placeholder="正解を入力">
                         </div>
                     </div>
                 </div>
@@ -394,14 +394,14 @@
             
             // Validate required fields
             if (!testData.name || !testData.category || !testData.status) {
-                alert('Please fill in all required fields');
+                alert('すべての必須項目を入力してください');
                 return;
             }
             
             // Collect questions data
             const questionElements = document.querySelectorAll('[id^="question-"]');
             if (questionElements.length === 0) {
-                alert('Please add at least one question');
+                alert('少なくとも1つの質問を追加してください');
                 return;
             }
             
@@ -435,7 +435,7 @@
             console.log('Test data to be created:', testData);
             
             // Show success message
-            alert('Test created successfully!');
+            alert('テストが正常に作成されました！');
             
             // Redirect to test list
             window.location.href = 'create-test.html';
@@ -445,7 +445,7 @@
 
         // Cancel function
         function cancelTest() {
-            if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
+            if (confirm('キャンセルしてもよろしいですか？すべての変更が失われます。')) {
                 window.location.href = 'create-test.html';
             }
         }
@@ -457,9 +457,9 @@
             
             if (isEditMode) {
                 // Update page title and description
-                document.getElementById('pageTitle').textContent = 'Edit Test';
-                document.getElementById('pageDescription').textContent = 'Modify test details and questions';
-                document.getElementById('submitButton').textContent = 'Update Test';
+                document.getElementById('pageTitle').textContent = 'テストを編集';
+                document.getElementById('pageDescription').textContent = 'テストの詳細と質問を変更';
+                document.getElementById('submitButton').textContent = 'テストを更新';
                 
                 // Populate form with test data
                 populateFormWithTestData(urlParams);
