@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Create Test - Admin Dashboard</title>
+	<title>テスト作成 - 管理者ダッシュボード</title>
 	    <link href="../dist/output.css" rel="stylesheet">
     <script src="../dist/tailwind.js"></script>
 	<script>
@@ -45,7 +45,7 @@
 					<div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
 						<i class="fas fa-graduation-cap text-white text-sm"></i>
 					</div>
-					<h1 class="text-xl font-bold text-gray-900">Training Admin</h1>
+					<h1 class="text-xl font-bold text-gray-900">トレーニング管理</h1>
 				</div>
 				<button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
 					<i class="fas fa-times"></i>
@@ -54,50 +54,50 @@
 			
 			<nav class="mt-6 px-3">
                 <div class="space-y-3">
-                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
                         <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
-                        Dashboard
+                        ダッシュボード
                     </a>
                     <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-users w-5 h-5 mr-3"></i>
-                        User List
+                        ユーザー一覧
                     </a>
                     <a href="tags.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-tags w-5 h-5 mr-3"></i>
-                        Tags
+                        タグ
                     </a>
                     <a href="video-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-video w-5 h-5 mr-3"></i>
-                        Video List
+                        動画一覧
                     </a>
                     <a href="training-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-book w-5 h-5 mr-3"></i>
-                        Training List
+                        トレーニング一覧
                     </a>
                     <a href="create-test.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
-                        Create Test
+                        テスト作成
                     </a>
                     <a href="assignment-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-tasks w-5 h-5 mr-3"></i>
-                        Assignment List
+                        課題一覧
                     </a>
-                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-clipboard-list w-5 h-5 mr-3"></i>
-                        Assignment Review
+                        課題レビュー
                         <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
                     </a>
                     <a href="departments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-building w-5 h-5 mr-3"></i>
-                        Departments
+                        部門
                     </a>
                     <a href="roles.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-user-tag w-5 h-5 mr-3"></i>
-                        Roles
+                        役割
                     </a>
                     <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-key w-5 h-5 mr-3"></i>
-                        Change Password
+                        パスワード変更
                     </a>
                 </div>
             </nav>
@@ -125,7 +125,7 @@
 									<div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
 										<span class="text-white font-medium text-sm">A</span>
 									</div>
-									<span class="text-gray-700 font-medium">Admin User</span>
+									<span class="text-gray-700 font-medium">管理者ユーザー</span>
 									<i class="fas fa-chevron-down text-gray-400"></i>
 								</button>
 							</div>
@@ -140,11 +140,11 @@
 					<!-- Page Header -->
 					<div class="flex items-center justify-between mb-8">
 						<div>
-							<h2 class="text-2xl font-bold text-gray-900">Create Test</h2>
+							<h2 class="text-2xl font-bold text-gray-900">テスト作成</h2>
 						</div>
 						<a href="add-test.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
 							<i class="fas fa-plus mr-2"></i>
-							Create New Test
+							新規テスト作成
 						</a>
 					</div>
 
@@ -153,20 +153,20 @@
 						<div class="px-6 py-4">
 							<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 								<div>
-									<label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+									<label class="block text-sm font-medium text-gray-700 mb-2">ステータス</label>
 									<select class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-										<option value="">All Status</option>
+										<option value="">すべてのステータス</option>
 										<option value="active">Active</option>
 										<option value="draft">Draft</option>
 										<option value="archived">Archived</option>
 									</select>
 								</div>
 								<div>
-									<label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+									<label class="block text-sm font-medium text-gray-700 mb-2">検索</label>
 									<div class="flex gap-2">
-										<input type="text" id="searchInput" placeholder="Search by test name..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+										<input type="text" id="searchInput" placeholder="テスト名で検索..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 										<button id="searchButton" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-											Search
+											検索
 										</button>
 									</div>
 								</div>
@@ -181,10 +181,10 @@
 							<table class="w-full min-w-[800px] divide-y divide-gray-200">
 								<thead class="bg-gray-50">
 									<tr>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Test</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/8">Category</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Status</th>
-										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Actions</th>
+										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">テスト</th>
+										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/8">カテゴリ</th>
+										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">ステータス</th>
+										<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">アクション</th>
 									</tr>
 								</thead>
 								<tbody class="bg-white divide-y divide-gray-200">
@@ -366,17 +366,17 @@
 						<div class="px-6 py-3 border-t border-gray-200">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center text-sm text-gray-700">
-									<span>Showing 1 to 5 of 5 tests</span>
+									<span>1〜5件 / 全5件のテストを表示</span>
 								</div>
 								<div class="flex items-center space-x-2">
 									<button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-										Previous
+										前へ
 									</button>
 									<button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md">
 										1
 									</button>
 									<button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-										Next
+										次へ
 									</button>
 								</div>
 							</div>
@@ -855,8 +855,8 @@
 			const submitBtn = document.getElementById('addUserSubmitBtn');
 			
 			// Set modal for add mode
-			modalTitle.textContent = 'Add New User';
-			submitBtn.textContent = 'Add User';
+			modalTitle.textContent = '新規ユーザー追加';
+			submitBtn.textContent = 'ユーザーを追加';
 			submitBtn.onclick = submitAddUserForm;
 			
 			// Reset form
@@ -871,8 +871,8 @@
 			const submitBtn = document.getElementById('addUserSubmitBtn');
 			
 			// Set modal for edit mode
-			modalTitle.textContent = `Edit User - ${userName}`;
-			submitBtn.textContent = 'Update User';
+			modalTitle.textContent = `ユーザーを編集 - ${userName}`;
+			submitBtn.textContent = 'ユーザーを更新';
 			submitBtn.onclick = () => submitEditUserForm(userName);
 			
 			// Populate form with user data
@@ -1062,7 +1062,7 @@
 				<!-- Modal Footer -->
 				<div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
 					<button onclick="closeTestDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-						Close
+						閉じる
 					</button>
 				</div>
 			</div>
@@ -1084,7 +1084,7 @@
 			<div class="mt-3">
 				<!-- Modal Header -->
 				<div class="flex items-center justify-between mb-6">
-					<h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">Add New User</h3>
+					<h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">新規ユーザー追加</h3>
 					<button onclick="closeAddUserModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
 						<i class="fas fa-times text-xl"></i>
 					</button>
@@ -1095,33 +1095,33 @@
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<!-- First Name -->
 						<div>
-							<label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+							<label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">名 *</label>
 							<input type="text" id="firstName" name="firstName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 						</div>
 						
 						<!-- Last Name -->
 						<div>
-							<label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+							<label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">姓 *</label>
 							<input type="text" id="lastName" name="lastName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 						</div>
 						
 						<!-- Email -->
 						<div>
-							<label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+							<label for="email" class="block text-sm font-medium text-gray-700 mb-2">メール *</label>
 							<input type="email" id="email" name="email" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 						</div>
 						
 						<!-- Phone -->
 						<div>
-							<label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+							<label for="phone" class="block text-sm font-medium text-gray-700 mb-2">電話</label>
 							<input type="tel" id="phone" name="phone" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 						</div>
 						
 						<!-- Department -->
 						<div>
-							<label for="department" class="block text-sm font-medium text-gray-700 mb-2">Department *</label>
+							<label for="department" class="block text-sm font-medium text-gray-700 mb-2">部門 *</label>
 							<select id="department" name="department" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-								<option value="">Select Department</option>
+								<option value="">部門を選択</option>
 								<option value="IT Department">IT Department</option>
 								<option value="HR Department">HR Department</option>
 								<option value="Finance Department">Finance Department</option>
@@ -1133,9 +1133,9 @@
 						
 						<!-- Role -->
 						<div>
-							<label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role *</label>
+							<label for="role" class="block text-sm font-medium text-gray-700 mb-2">役割 *</label>
 							<select id="role" name="role" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-								<option value="">Select Role</option>
+								<option value="">役割を選択</option>
 								<option value="Admin">Admin</option>
 								<option value="Manager">Manager</option>
 								<option value="Analyst">Analyst</option>
@@ -1147,14 +1147,14 @@
 						
 						<!-- Date of Birth -->
 						<div>
-							<label for="dateOfBirth" class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+							<label for="dateOfBirth" class="block text-sm font-medium text-gray-700 mb-2">生年月日</label>
 							<input type="date" id="dateOfBirth" name="dateOfBirth" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 						</div>
 						
 						<!-- Location -->
 						<div>
-							<label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-							<input type="text" id="location" name="location" placeholder="City, State" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+							<label for="location" class="block text-sm font-medium text-gray-700 mb-2">場所</label>
+							<input type="text" id="location" name="location" placeholder="市区町村、都道府県" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
 						</div>
 					</div>
 				</form>
@@ -1162,10 +1162,10 @@
 				<!-- Modal Footer -->
 				<div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
 					<button onclick="closeAddUserModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
-						Cancel
+						キャンセル
 					</button>
 					<button id="addUserSubmitBtn" onclick="submitAddUserForm()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
-						Add User
+						ユーザーを追加
 					</button>
 				</div>
 			</div>

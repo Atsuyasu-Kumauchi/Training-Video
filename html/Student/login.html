@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Training Portal</title>
+    <title>ログイン - トレーニングポータル</title>
     <link href="../dist/output.css" rel="stylesheet">
     <script src="../dist/tailwind.js"></script>
     <script>
@@ -37,8 +37,8 @@
             <div class="mx-auto w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center mb-4">
                 <i class="fas fa-graduation-cap text-white text-2xl"></i>
             </div>
-            <h2 class="text-3xl font-bold text-gray-900">Welcome Back</h2>
-            <p class="mt-2 text-sm text-gray-600">Sign in to your Training Portal account</p>
+            <h2 class="text-3xl font-bold text-gray-900">おかえりなさい</h2>
+            <p class="mt-2 text-sm text-gray-600">トレーニングポータルアカウントにログイン</p>
         </div>
 
         <!-- Login Form -->
@@ -47,7 +47,7 @@
                 <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
+                        メールアドレス
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -58,7 +58,7 @@
                             id="email" 
                             name="email"
                             class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                            placeholder="Enter your email address"
+                            placeholder="メールアドレスを入力"
                             required
                         >
                     </div>
@@ -68,7 +68,7 @@
                 <!-- Password Field -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                        Password
+                        パスワード
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -79,7 +79,7 @@
                             id="password" 
                             name="password"
                             class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                            placeholder="Enter your password"
+                            placeholder="パスワードを入力"
                             required
                         >
                         <button 
@@ -103,12 +103,12 @@
                             class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                         >
                         <label for="rememberMe" class="ml-2 block text-sm text-gray-700">
-                            Remember me
+                            ログイン状態を保持
                         </label>
                     </div>
                     <div class="text-sm">
                         <a href="forgot-password.html" class="font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200">
-                            Forgot password?
+                            パスワードをお忘れですか？
                         </a>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <i class="fas fa-sign-in-alt mr-2"></i>
-                        Sign In
+                        ログイン
                     </button>
                 </div>
 
@@ -130,7 +130,7 @@
                     <div class="flex">
                         <i class="fas fa-exclamation-circle text-red-400 mr-2 mt-0.5"></i>
                         <div>
-                            <h3 class="text-sm font-medium text-red-800">Login Failed</h3>
+                            <h3 class="text-sm font-medium text-red-800">ログイン失敗</h3>
                             <p id="errorMessage" class="text-sm text-red-700 mt-1"></p>
                         </div>
                     </div>
@@ -199,9 +199,9 @@
         document.getElementById('email').addEventListener('blur', function() {
             const email = this.value.trim();
             if (email === '') {
-                showError('email', 'Email is required');
+                showError('email', 'メールアドレスは必須です');
             } else if (!validateEmail(email)) {
-                showError('email', 'Please enter a valid email address');
+                showError('email', '有効なメールアドレスを入力してください');
             } else {
                 hideError('email');
             }
@@ -216,9 +216,9 @@
         document.getElementById('password').addEventListener('blur', function() {
             const password = this.value;
             if (password === '') {
-                showError('password', 'Password is required');
+                showError('password', 'パスワードは必須です');
             } else if (!validatePassword(password)) {
-                showError('password', 'Password must be at least 6 characters');
+                showError('password', 'パスワードは6文字以上である必要があります');
             } else {
                 hideError('password');
             }
@@ -247,18 +247,18 @@
             let isValid = true;
             
             if (email === '') {
-                showError('email', 'Email is required');
+                showError('email', 'メールアドレスは必須です');
                 isValid = false;
             } else if (!validateEmail(email)) {
-                showError('email', 'Please enter a valid email address');
+                showError('email', '有効なメールアドレスを入力してください');
                 isValid = false;
             }
             
             if (password === '') {
-                showError('password', 'Password is required');
+                showError('password', 'パスワードは必須です');
                 isValid = false;
             } else if (!validatePassword(password)) {
-                showError('password', 'Password must be at least 6 characters');
+                showError('password', 'パスワードは6文字以上である必要があります');
                 isValid = false;
             }
             
@@ -268,7 +268,7 @@
             
             // Disable button and show loading state
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing In...';
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>ログイン中...';
             
             // Simulate login process
             setTimeout(() => {
@@ -278,9 +278,9 @@
                     window.location.href = 'index.html';
                 } else {
                     // Failed login
-                    showLoginError('Invalid email or password. Please try again.');
+                    showLoginError('メールアドレスまたはパスワードが正しくありません。もう一度お試しください。');
                     loginBtn.disabled = false;
-                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Sign In';
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>ログイン';
                 }
             }, 1500);
         });

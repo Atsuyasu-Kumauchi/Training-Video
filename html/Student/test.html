@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test - Student Portal</title>
+    <title>テスト - 学生ポータル</title>
     <link href="../dist/output.css" rel="stylesheet">
     <script src="../dist/tailwind.js"></script>
     <script>
@@ -36,14 +36,14 @@
         <div class="px-6 py-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <h1 id="testTitle" class="text-lg font-bold text-gray-900">JavaScript Fundamentals Test</h1>
+                    <h1 id="testTitle" class="text-lg font-bold text-gray-900">JavaScript基礎テスト</h1>
                     <span class="text-sm text-gray-500">|</span>
-                    <span class="text-sm text-gray-500">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></span>
+                    <span class="text-sm text-gray-500">質問 <span id="currentQuestion">1</span> / <span id="totalQuestions">10</span></span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <button onclick="submitTest()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
                         <i class="fas fa-stop mr-2"></i>
-                        Submit Test
+                        テストを提出
                     </button>
                 </div>
             </div>
@@ -69,16 +69,16 @@
                     <div class="flex items-center justify-between">
                         <button id="prevBtn" onclick="previousQuestion()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                             <i class="fas fa-arrow-left mr-2"></i>
-                            Previous
+                            前へ
                         </button>
                         
                         <div class="flex items-center space-x-2">
-                            <span class="text-sm text-gray-500">Question</span>
-                            <span id="questionCounter" class="text-sm font-medium text-gray-900">1 of 10</span>
+                            <span class="text-sm text-gray-500">質問</span>
+                            <span id="questionCounter" class="text-sm font-medium text-gray-900">1 / 10</span>
                         </div>
                         
                         <button id="nextBtn" onclick="nextQuestion()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-                            Next
+                            次へ
                             <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </div>
@@ -237,12 +237,12 @@
             const question = questions[index];
             
             document.getElementById('currentQuestion').textContent = index + 1;
-            document.getElementById('questionCounter').textContent = `${index + 1} of ${questions.length}`;
+            document.getElementById('questionCounter').textContent = `${index + 1} / ${questions.length}`;
             
             const questionContent = document.getElementById('questionContent');
             questionContent.innerHTML = `
                 <div class="mb-6">
-                    <h2 class="text-lg font-medium text-gray-900 mb-4">Question ${index + 1}</h2>
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">質問 ${index + 1}</h2>
                     <p class="text-gray-700 mb-6">${question.question}</p>
                     
                     <div class="space-y-3">
@@ -311,12 +311,12 @@
             
             // Show results
             const resultMessage = `
-Test Results for ${trainingTitle}
+${trainingTitle}のテスト結果
 
-Score: ${score}% (${correctAnswers}/${questions.length} correct)
-Status: ${passed ? 'PASSED' : 'FAILED'}
+スコア: ${score}% (${correctAnswers}/${questions.length} 正解)
+ステータス: ${passed ? '合格' : '不合格'}
 
-${passed ? 'Congratulations! You have passed the test.' : 'You need to score at least 70% to pass. Please review the training materials and try again.'}
+${passed ? 'おめでとうございます！テストに合格しました。' : '合格するには70%以上のスコアが必要です。トレーニング資料を確認して、もう一度お試しください。'}
             `;
             
             alert(resultMessage);
@@ -331,13 +331,13 @@ ${passed ? 'Congratulations! You have passed the test.' : 'You need to score at 
             const trainingTitle = getUrlParameter('title');
             
             if (!trainingId || !testQuestions[trainingId]) {
-                alert('Test not found');
+                alert('テストが見つかりません');
                 window.location.href = 'my-trainings.html';
                 return;
             }
             
             // Update page title
-            document.getElementById('testTitle').textContent = `${trainingTitle} Test`;
+            document.getElementById('testTitle').textContent = `${trainingTitle} テスト`;
             document.getElementById('totalQuestions').textContent = testQuestions[trainingId].length;
             
             // Display first question
@@ -346,7 +346,7 @@ ${passed ? 'Congratulations! You have passed the test.' : 'You need to score at 
             // Warn user before leaving page
             window.addEventListener('beforeunload', function(e) {
                 e.preventDefault();
-                e.returnValue = 'Are you sure you want to leave? Your test progress will be lost.';
+                e.returnValue = 'ページを離れてもよろしいですか？テストの進捗が失われます。';
             });
         });
     </script>

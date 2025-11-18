@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard - Training Platform</title>
+    <title>マイトレーニング - トレーニングプラットフォーム</title>
     <link href="../dist/output.css" rel="stylesheet">
     <script src="../dist/tailwind.js"></script>
     <script>
@@ -39,7 +39,7 @@
                         <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                             <i class="fas fa-graduation-cap text-white text-sm"></i>
                         </div>
-                        <h1 class="text-xl font-bold text-gray-900">Training Portal</h1>
+                        <h1 class="text-xl font-bold text-gray-900">トレーニングポータル</h1>
                     </div>
                 <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
@@ -50,19 +50,19 @@
                         <div class="space-y-3">
                             <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                                 <i class="fas fa-home w-5 h-5 mr-3"></i>
-                                Dashboard
+                                ダッシュボード
                             </a>
                             <a href="my-trainings.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
                                 <i class="fas fa-book w-5 h-5 mr-3"></i>
-                                My Trainings
+                                マイトレーニング
                             </a>
                             <a href="results.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                                 <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
-                                Results
+                                結果
                             </a>
                             <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                                 <i class="fas fa-key w-5 h-5 mr-3"></i>
-                                Change Password
+                                パスワード変更
                             </a>
                         </div>
                     </nav>
@@ -98,12 +98,12 @@
                                 <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
                                     <a href="change-password.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                         <i class="fas fa-key mr-2"></i>
-                                        Change Password
+                                        パスワード変更
                                     </a>
                                     <div class="border-t border-gray-100 my-1"></div>
                                     <a href="login.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
                                         <i class="fas fa-sign-out-alt mr-2"></i>
-                                        Logout
+                                        ログアウト
                                     </a>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                 <div class="px-6 py-8">
                     <!-- Page Header -->
                     <div class="mb-8">
-                        <h1 class="text-2xl font-bold text-gray-900">My Trainings</h1>
+                        <h1 class="text-2xl font-bold text-gray-900">マイトレーニング</h1>
                     </div>
 
                     <!-- Training List -->
@@ -390,15 +390,17 @@
                                     training.status === 'In Progress' ? 'bg-yellow-100 text-yellow-800' :
                                     'bg-gray-100 text-gray-800'
                                 }">
-                                    ${training.status}
+                                    ${training.status === 'Completed' ? '完了' :
+                                    training.status === 'In Progress' ? '進行中' :
+                                    '未開始'}
                                 </span>
 
                             </div>
                         </div>
                         <p class="text-sm text-gray-600 mt-1 cursor-pointer" onclick="openTrainingVideos(${training.id})">${training.description}</p>
                         <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500">
-                            <span><i class="fas fa-video mr-1"></i>${training.completedVideos}/${training.totalVideos} videos</span>
-                            <span><i class="fas fa-calendar mr-1"></i>${training.status === 'Completed' ? 'Completed: ' : 'Due: '}${training.status === 'Completed' ? training.completedDate : training.dueDate}</span>
+                            <span><i class="fas fa-video mr-1"></i>${training.completedVideos}/${training.totalVideos} 動画</span>
+                            <span><i class="fas fa-calendar mr-1"></i>${training.status === 'Completed' ? '完了: ' : '期限: '}${training.status === 'Completed' ? training.completedDate : training.dueDate}</span>
                         </div>
                     </div>
                 </div>
