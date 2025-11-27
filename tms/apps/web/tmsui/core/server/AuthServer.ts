@@ -1,0 +1,54 @@
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const getAuthToken = () => Cookies.get("jwtToken");
+
+const AuthServer = axios.create({
+    baseURL: "https://json-api-free.onrender.com",
+    timeout: 1000 * 60,
+});
+
+AuthServer.interceptors.request.use(
+    (config) => {
+        const token = getAuthToken();
+        if (token) config.headers.Authorization = `Bearer ${token}`;
+        return config;
+    },
+    (error) => Promise.reject(error),
+);
+
+AuthServer.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        // if (!axios.isCancel(error)) {
+        //   const status = error.response?.status;
+        //   const message = error.response?.data?.message || error.message;
+
+        //   if (status === 401) {
+        //     clearAllCache();
+        //     Swal.fire("Unauthorized", "Please log in again.", "warning");
+        //     setTimeout(() => {
+        //       window.location.href = String(process.env.NEXT_PUBLIC_WEB_URL);
+        //     }, 2000);
+        //   } else if (status === 403) {
+        //     Swal.fire(
+        //       "Forbidden",
+        //       "You do not have access to this resource.",
+        //       "error",
+        //     );
+        //   } else if (status === 500) {
+        //     Swal.fire(
+        //       "Server Error",
+        //       message ?? "Something went wrong on the server.",
+        //       "error",
+        //     );
+        //   } else {
+        //     Swal.fire("Error", message ?? "Unknown error", "error");
+        //   }
+        // }
+        return Promise.reject(error);
+    },
+);
+
+export { AuthServer };
+
