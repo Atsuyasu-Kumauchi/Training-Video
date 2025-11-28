@@ -1,3 +1,4 @@
+import useLang from "@/lang";
 import { humanTime, useFormContext } from "@/tmsui";
 import {
   faBook,
@@ -24,6 +25,12 @@ export default function DashboardView() {
     handleSubmit,
   } = useFormContext<TDashboardSchema>();
   const [isOpen, setIsOpen] = useState(false);
+  const [now] = useState(() => Date.now());
+
+  const humanTimeFromHoursAgo = (hoursAgo: number): string =>
+    humanTime(new Date(now - hoursAgo * 60 * 60 * 1000));
+
+  const lang = useLang();
 
   return (
     <div className="px-6 py-8">
@@ -75,7 +82,7 @@ export default function DashboardView() {
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{lang.dashboard.dashboard}</h1>
       </div>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -91,7 +98,7 @@ export default function DashboardView() {
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Total Users</p>
+              <p className="text-sm font-medium text-gray-500">{lang.dashboard.totalNumberOfUsers}</p>
               <p className="text-2xl font-bold text-gray-900">1,247</p>
             </div>
           </div>
@@ -109,7 +116,7 @@ export default function DashboardView() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">
-                Active Trainings
+                {lang.dashboard.activeTraining}
               </p>
               <p className="text-2xl font-bold text-gray-900">24</p>
             </div>
@@ -127,7 +134,7 @@ export default function DashboardView() {
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Total Videos</p>
+              <p className="text-sm font-medium text-gray-500">{lang.dashboard.totalNumberOfVideos}</p>
               <p className="text-2xl font-bold text-gray-900">156</p>
             </div>
           </div>
@@ -139,7 +146,7 @@ export default function DashboardView() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-medium text-gray-900">
-              Recent Activity
+              {lang.dashboard.recentActivity}
             </h3>
           </div>
           <div className="p-6">
@@ -155,13 +162,13 @@ export default function DashboardView() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900">
-                    New user registered
+                    {lang.dashboard.newUserRegistered}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Sarah Wilson joined the platform
+                    {lang.dashboard.sarahWilsonJoinedThePlatform}
                   </p>
                   <p className="text-xs text-gray-400">
-                    {humanTime(new Date(Date.now() - 2 * 60 * 60 * 1000))}
+                    {humanTimeFromHoursAgo(2)}
                   </p>
                 </div>
               </div>
@@ -176,12 +183,12 @@ export default function DashboardView() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900">
-                    Training completed
+                    {lang.dashboard.trainingCompleted}
                   </p>
                   <p className="text-sm text-gray-500">
-                    John Doe completed &quot;JavaScript Fundamentals&quot;
+                    {lang.dashboard.johnDoeHasCompleted}
                   </p>
-                  <p className="text-xs text-gray-400">4 hours ago</p>
+                  <p className="text-xs text-gray-400">{humanTimeFromHoursAgo(4)}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -195,13 +202,12 @@ export default function DashboardView() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900">
-                    New video uploaded
+                    {lang.dashboard.newVideoUploaded}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {" "}
-                    &quot;React Hooks Tutorial&quot; added to library
+                    {lang.dashboard.reactHooksTutorialAddedToLibrary}
                   </p>
-                  <p className="text-xs text-gray-400">6 hours ago</p>
+                  <p className="text-xs text-gray-400">{humanTimeFromHoursAgo(6)}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -215,12 +221,12 @@ export default function DashboardView() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900">
-                    Test created
+                    {lang.dashboard.testCreated}
                   </p>
                   <p className="text-sm text-gray-500">
-                    &quot;Advanced JavaScript Quiz&quot; created
+                    {lang.dashboard.advancedJavaScriptQuizCreated}
                   </p>
-                  <p className="text-xs text-gray-400">1 day ago</p>
+                  <p className="text-xs text-gray-400">{humanTimeFromHoursAgo(24)}</p>
                 </div>
               </div>
             </div>
@@ -229,7 +235,7 @@ export default function DashboardView() {
         {/* Quick Actions */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Quick Actions</h3>
+            <h3 className="text-lg font-medium text-gray-900">{lang.dashboard.quickActions}</h3>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 gap-3">
@@ -241,7 +247,7 @@ export default function DashboardView() {
                   icon={faUsers}
                   className="fas fa-users w-5 h-5 mr-3 text-primary-600"
                 />
-                Manage Users
+                {lang.dashboard.manageTags}
               </a>
               <a
                 href="video-list.html"
@@ -251,7 +257,7 @@ export default function DashboardView() {
                   icon={faVideo}
                   className="fas fa-video w-5 h-5 mr-3 text-primary-600"
                 />
-                Manage Videos
+                {lang.dashboard.manageVideos}
               </a>
               <a
                 href="training-list.html"
@@ -261,7 +267,7 @@ export default function DashboardView() {
                   icon={faBook}
                   className="fas fa-book w-5 h-5 mr-3 text-primary-600"
                 />
-                Manage Trainings
+                {lang.dashboard.manageYourTraining}
               </a>
               <a
                 href="create-test.html"
@@ -271,7 +277,7 @@ export default function DashboardView() {
                   icon={faClipboardCheck}
                   className="fas fa-clipboard-check w-5 h-5 mr-3 text-primary-600"
                 />
-                Create Test
+                {lang.dashboard.createATest}
               </a>
               <a
                 href="add-test.html"
@@ -281,7 +287,7 @@ export default function DashboardView() {
                   icon={faPlusCircle}
                   className="fas fa-plus-circle w-5 h-5 mr-3 text-primary-600"
                 />
-                Add New Test
+                {lang.dashboard.addANewTest}
               </a>
             </div>
           </div>

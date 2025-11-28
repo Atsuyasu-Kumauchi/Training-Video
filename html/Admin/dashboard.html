@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,19 +43,23 @@
         .select2-container {
             z-index: 9999 !important;
         }
+
         .select2-dropdown {
             z-index: 9999 !important;
         }
+
         .select2-results {
             max-height: 200px;
             overflow-y: auto;
         }
     </style>
 </head>
+
 <body class="bg-gray-50">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+        <div id="sidebar"
+            class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
             <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
@@ -66,51 +71,63 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <nav class="mt-6 px-3">
                 <div class="space-y-3">
-                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                    <a href="dashboard.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
                         <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
                         ダッシュボード
                     </a>
-                    <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="users.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-users w-5 h-5 mr-3"></i>
                         ユーザー一覧
                     </a>
-                    <a href="tags.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="tags.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-tags w-5 h-5 mr-3"></i>
                         タグ
                     </a>
-                    <a href="video-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="video-list.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-video w-5 h-5 mr-3"></i>
                         動画一覧
                     </a>
-                    <a href="training-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="training-list.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-book w-5 h-5 mr-3"></i>
                         トレーニング一覧
                     </a>
-                    <a href="create-test.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="create-test.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
                         テスト作成
                     </a>
-                    <a href="assignment-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="assignment-list.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-tasks w-5 h-5 mr-3"></i>
                         課題一覧
                     </a>
-                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="assignment-review.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-clipboard-list w-5 h-5 mr-3"></i>
                         課題レビュー
-                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
+                        <span
+                            class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
                     </a>
-                    <a href="departments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="departments.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-building w-5 h-5 mr-3"></i>
                         部門
                     </a>
-                    <a href="roles.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="roles.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-user-tag w-5 h-5 mr-3"></i>
                         役割
                     </a>
-                    <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="change-password.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-key w-5 h-5 mr-3"></i>
                         パスワード変更
                     </a>
@@ -131,12 +148,13 @@
                             <i class="fas fa-bars text-xl"></i>
                         </button>
                     </div>
-                    
+
                     <div class="flex items-center space-x-4">
                         <!-- User Profile -->
                         <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <button class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                <button
+                                    class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                                     <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                                         <span class="text-white font-medium text-sm">A</span>
                                     </div>
@@ -218,7 +236,8 @@
                                 <div class="space-y-4">
                                     <div class="flex items-start space-x-3">
                                         <div class="flex-shrink-0">
-                                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                            <div
+                                                class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                                                 <i class="fas fa-user-plus text-green-600 text-sm"></i>
                                             </div>
                                         </div>
@@ -230,7 +249,8 @@
                                     </div>
                                     <div class="flex items-start space-x-3">
                                         <div class="flex-shrink-0">
-                                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <div
+                                                class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                                 <i class="fas fa-graduation-cap text-blue-600 text-sm"></i>
                                             </div>
                                         </div>
@@ -242,7 +262,8 @@
                                     </div>
                                     <div class="flex items-start space-x-3">
                                         <div class="flex-shrink-0">
-                                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <div
+                                                class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
                                                 <i class="fas fa-video text-purple-600 text-sm"></i>
                                             </div>
                                         </div>
@@ -254,7 +275,8 @@
                                     </div>
                                     <div class="flex items-start space-x-3">
                                         <div class="flex-shrink-0">
-                                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                            <div
+                                                class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
                                                 <i class="fas fa-clipboard-check text-yellow-600 text-sm"></i>
                                             </div>
                                         </div>
@@ -275,23 +297,28 @@
                             </div>
                             <div class="p-6">
                                 <div class="grid grid-cols-1 gap-3">
-                                    <a href="tags.html" class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <a href="tags.html"
+                                        class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                         <i class="fas fa-tags w-5 h-5 mr-3 text-primary-600"></i>
                                         タグを管理
                                     </a>
-                                    <a href="video-list.html" class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <a href="video-list.html"
+                                        class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                         <i class="fas fa-video w-5 h-5 mr-3 text-primary-600"></i>
                                         動画を管理
                                     </a>
-                                    <a href="training-list.html" class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <a href="training-list.html"
+                                        class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                         <i class="fas fa-book w-5 h-5 mr-3 text-primary-600"></i>
                                         トレーニングを管理
                                     </a>
-                                    <a href="create-test.html" class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <a href="create-test.html"
+                                        class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                         <i class="fas fa-clipboard-check w-5 h-5 mr-3 text-primary-600"></i>
                                         テストを作成
                                     </a>
-                                    <a href="add-test.html" class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                    <a href="add-test.html"
+                                        class="flex items-center p-3 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                         <i class="fas fa-plus-circle w-5 h-5 mr-3 text-primary-600"></i>
                                         新しいテストを追加
                                     </a>
@@ -305,7 +332,8 @@
     </div>
 
     <!-- Add New Training Modal -->
-    <div id="addTrainingModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-[9999]">
+    <div id="addTrainingModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-[9999]">
         <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <div class="flex items-center justify-between mb-4">
@@ -314,29 +342,30 @@
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                
+
                 <form id="addTrainingForm" class="space-y-4">
                     <!-- Training Name -->
                     <div>
                         <label for="trainingName" class="block text-sm font-medium text-gray-700 mb-2">トレーニング名 *</label>
-                        <input type="text" id="trainingName" name="trainingName" required 
-                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                               placeholder="トレーニング名を入力">
+                        <input type="text" id="trainingName" name="trainingName" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                            placeholder="トレーニング名を入力">
                     </div>
 
                     <!-- Training Description -->
                     <div>
                         <label for="trainingDescription" class="block text-sm font-medium text-gray-700 mb-2">説明</label>
                         <textarea id="trainingDescription" name="trainingDescription" rows="3"
-                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                                  placeholder="トレーニングの説明を入力"></textarea>
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                            placeholder="トレーニングの説明を入力"></textarea>
                     </div>
 
                     <!-- Category -->
                     <div>
-                        <label for="trainingCategory" class="block text-sm font-medium text-gray-700 mb-2">カテゴリー *</label>
+                        <label for="trainingCategory" class="block text-sm font-medium text-gray-700 mb-2">カテゴリー
+                            *</label>
                         <select id="trainingCategory" name="trainingCategory" required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                             <option value="">カテゴリーを選択</option>
                             <option value="Technical Training">技術トレーニング</option>
                             <option value="Soft Skills">ソフトスキル</option>
@@ -349,8 +378,7 @@
                     <!-- Videos Selection -->
                     <div>
                         <label for="trainingVideos" class="block text-sm font-medium text-gray-700 mb-2">動画を選択 *</label>
-                        <select id="trainingVideos" name="trainingVideos" multiple required
-                                class="w-full">
+                        <select id="trainingVideos" name="trainingVideos" multiple required class="w-full">
                             <option value="intro-js">Introduction to JavaScript</option>
                             <option value="advanced-js">Advanced JavaScript Concepts</option>
                             <option value="react-basics">React Basics</option>
@@ -367,9 +395,9 @@
 
                     <!-- Users Selection -->
                     <div>
-                        <label for="trainingUsers" class="block text-sm font-medium text-gray-700 mb-2">ユーザーを選択 *</label>
-                        <select id="trainingUsers" name="trainingUsers" multiple required
-                                class="w-full">
+                        <label for="trainingUsers" class="block text-sm font-medium text-gray-700 mb-2">ユーザーを選択
+                            *</label>
+                        <select id="trainingUsers" name="trainingUsers" multiple required class="w-full">
                             <option value="user1">John Doe (john.doe@company.com)</option>
                             <option value="user2">Jane Smith (jane.smith@company.com)</option>
                             <option value="user3">Mike Johnson (mike.johnson@company.com)</option>
@@ -385,9 +413,9 @@
 
                     <!-- Question Set Selection -->
                     <div>
-                        <label for="trainingQuestionSet" class="block text-sm font-medium text-gray-700 mb-2">問題セット *</label>
-                        <select id="trainingQuestionSet" name="trainingQuestionSet" required
-                                class="w-full">
+                        <label for="trainingQuestionSet" class="block text-sm font-medium text-gray-700 mb-2">問題セット
+                            *</label>
+                        <select id="trainingQuestionSet" name="trainingQuestionSet" required class="w-full">
                             <option value="">問題セットを選択</option>
                             <option value="js-basics">JavaScript Basics Quiz</option>
                             <option value="js-advanced">JavaScript Advanced Quiz</option>
@@ -404,17 +432,18 @@
 
                     <!-- Duration -->
                     <div>
-                        <label for="trainingDuration" class="block text-sm font-medium text-gray-700 mb-2">時間（時間） *</label>
+                        <label for="trainingDuration" class="block text-sm font-medium text-gray-700 mb-2">時間（時間）
+                            *</label>
                         <input type="number" id="trainingDuration" name="trainingDuration" min="1" max="100" required
-                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                               placeholder="時間数を入力">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                            placeholder="時間数を入力">
                     </div>
 
                     <!-- Status -->
                     <div>
                         <label for="trainingStatus" class="block text-sm font-medium text-gray-700 mb-2">ステータス *</label>
                         <select id="trainingStatus" name="trainingStatus" required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                             <option value="">ステータスを選択</option>
                             <option value="Active">アクティブ</option>
                             <option value="Draft">下書き</option>
@@ -425,13 +454,13 @@
                     <!-- Form Actions -->
                     <div class="flex justify-end space-x-3 pt-4">
                         <button type="button" onclick="closeAddTrainingModal()"
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
                             キャンセル
                         </button>
-                                            <button type="submit"
+                        <button type="submit"
                             class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                        トレーニングを作成
-                    </button>
+                            トレーニングを作成
+                        </button>
                     </div>
                 </form>
             </div>
@@ -474,7 +503,7 @@
         // Search functionality
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
-        
+
         if (searchButton && searchInput) {
             searchButton.addEventListener('click', () => {
                 const searchTerm = searchInput.value.trim();
@@ -484,7 +513,7 @@
                     alert('検索語を入力してください');
                 }
             });
-            
+
             // Allow search on Enter key press
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -506,20 +535,20 @@
 
 
         // Training count click functions
-        window.showEnrolledUsers = function(trainingName, count) {
+        window.showEnrolledUsers = function (trainingName, count) {
             // This would open a modal or navigate to a detailed list of enrolled users
         };
 
-        window.showCompletedUsers = function(trainingName, count) {
+        window.showCompletedUsers = function (trainingName, count) {
             // This would open a modal or navigate to a detailed list of completed users
         };
 
-        window.viewTrainingDetails = function(trainingName) {
+        window.viewTrainingDetails = function (trainingName) {
             showTrainingDetailsModal(trainingName);
         };
 
-        window.showEditTrainingModal = function(trainingName) {
-            
+        window.showEditTrainingModal = function (trainingName) {
+
             // Open the same modal as Add New Training
             const modal = document.getElementById('addTrainingModal');
             if (modal) {
@@ -527,22 +556,22 @@
                 modal.style.visibility = 'visible';
                 modal.style.opacity = '1';
                 modal.classList.remove('hidden');
-                
+
                 // Update modal title
                 const modalTitle = document.querySelector('#addTrainingModal h3');
                 if (modalTitle) {
                     modalTitle.textContent = `トレーニングを編集 - ${trainingName}`;
                 }
-                
+
                 // Update submit button text
                 const submitBtn = document.querySelector('#addTrainingForm button[type="submit"]');
                 if (submitBtn) {
                     submitBtn.textContent = 'トレーニングを更新';
                 }
-                
+
                 // Populate form with training data
                 populateEditTrainingForm(trainingName);
-                
+
                 // Initialize Select2 after modal is visible
                 setTimeout(() => {
                     // Destroy existing Select2 instances if they exist
@@ -555,7 +584,7 @@
                     if ($('#trainingQuestionSet').hasClass('select2-hidden-accessible')) {
                         $('#trainingQuestionSet').select2('destroy');
                     }
-                    
+
                     // Initialize Select2 for multiple select boxes
                     $('#trainingVideos').select2({
                         placeholder: '動画を選択...',
@@ -564,12 +593,12 @@
                         theme: 'classic',
                         minimumResultsForSearch: 0,
                         dropdownParent: $('#addTrainingModal')
-                    }).on('change', function() {
+                    }).on('change', function () {
                         console.log('Videos changed:', $(this).val());
                         displaySelectedVideos();
                     });
                     console.log('Initialized trainingVideos Select2');
-                    
+
                     $('#trainingUsers').select2({
                         placeholder: 'ユーザーを選択...',
                         allowClear: true,
@@ -579,7 +608,7 @@
                         dropdownParent: $('#addTrainingModal')
                     });
                     console.log('Initialized trainingUsers Select2');
-                    
+
                     // Initialize Select2 for single select box
                     $('#trainingQuestionSet').select2({
                         placeholder: '問題セットを選択...',
@@ -594,18 +623,18 @@
             }
         };
 
-        window.showAddTrainingModal = function() {
+        window.showAddTrainingModal = function () {
             const modal = document.getElementById('addTrainingModal');
             if (modal) {
                 modal.style.display = 'block';
                 modal.style.visibility = 'visible';
                 modal.style.opacity = '1';
                 modal.classList.remove('hidden');
-                
+
                 // Initialize Select2 after modal is visible
                 setTimeout(() => {
                     console.log('Initializing Select2...');
-                    
+
                     // Destroy existing Select2 instances if they exist
                     if ($('#trainingVideos').hasClass('select2-hidden-accessible')) {
                         $('#trainingVideos').select2('destroy');
@@ -619,7 +648,7 @@
                         $('#trainingQuestionSet').select2('destroy');
                         console.log('Destroyed existing trainingQuestionSet Select2');
                     }
-                    
+
                     // Initialize Select2 for multiple select boxes
                     $('#trainingVideos').select2({
                         placeholder: '動画を選択...',
@@ -628,12 +657,12 @@
                         theme: 'classic',
                         minimumResultsForSearch: 0,
                         dropdownParent: $('#addTrainingModal')
-                    }).on('change', function() {
+                    }).on('change', function () {
                         console.log('Videos changed:', $(this).val());
                         displaySelectedVideos();
                     });
                     console.log('Initialized trainingVideos Select2');
-                    
+
                     $('#trainingUsers').select2({
                         placeholder: 'ユーザーを選択...',
                         allowClear: true,
@@ -642,7 +671,7 @@
                         minimumResultsForSearch: 0
                     });
                     console.log('Initialized trainingUsers Select2');
-                    
+
                     // Initialize Select2 for single select box
                     $('#trainingQuestionSet').select2({
                         placeholder: '問題セットを選択...',
@@ -659,16 +688,16 @@
         function displaySelectedVideos() {
             const selectedVideos = $('#trainingVideos').val() || [];
             const displayDiv = document.getElementById('selectedVideosDisplay');
-            
+
             if (displayDiv) {
                 if (selectedVideos.length === 0) {
                     displayDiv.innerHTML = '';
                     return;
                 }
-                
+
                 let html = '<div class="text-sm font-medium text-gray-700 mb-2">選択された動画:</div>';
                 html += '<div class="space-y-1">';
-                
+
                 selectedVideos.forEach(videoId => {
                     const option = document.querySelector(`#trainingVideos option[value="${videoId}"]`);
                     if (option) {
@@ -680,7 +709,7 @@
                                 </div>`;
                     }
                 });
-                
+
                 html += '</div>';
                 displayDiv.innerHTML = html;
             }
@@ -746,7 +775,7 @@
                     status: 'Active'
                 }
             };
-            
+
             const data = trainingData[trainingName];
             if (data) {
                 // Populate form fields
@@ -755,13 +784,13 @@
                 document.getElementById('trainingCategory').value = data.category;
                 document.getElementById('trainingDuration').value = data.duration;
                 document.getElementById('trainingStatus').value = data.status;
-                
+
                 // Set Select2 values after initialization
                 setTimeout(() => {
                     $('#trainingVideos').val(data.videos).trigger('change');
                     $('#trainingUsers').val(data.users).trigger('change');
                     $('#trainingQuestionSet').val(data.questionSet).trigger('change');
-                    
+
                     // Display selected videos
                     displaySelectedVideos();
                 }, 300);
@@ -777,30 +806,30 @@
                 modal.style.visibility = 'hidden';
                 modal.style.opacity = '0';
                 modal.classList.add('hidden');
-                
+
                 // Reset form and Select2 instances
                 const form = document.getElementById('addTrainingForm');
                 if (form) {
                     form.reset();
-                    
+
                     // Clear Select2 selections
                     $('#trainingVideos').val(null).trigger('change');
                     $('#trainingUsers').val(null).trigger('change');
                     $('#trainingQuestionSet').val(null).trigger('change');
-                    
+
                     // Clear selected videos display
                     const displayDiv = document.getElementById('selectedVideosDisplay');
                     if (displayDiv) {
                         displayDiv.innerHTML = '';
                     }
                 }
-                
+
                 // Reset modal title and button text
                 const modalTitle = document.querySelector('#addTrainingModal h3');
                 if (modalTitle) {
                     modalTitle.textContent = '新しいトレーニングを追加';
                 }
-                
+
                 const submitBtn = document.querySelector('#addTrainingForm button[type="submit"]');
                 if (submitBtn) {
                     submitBtn.textContent = 'トレーニングを作成';
@@ -809,7 +838,7 @@
         }
 
         // Handle form submission
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Test if jQuery and Select2 are loaded
             if (typeof $ === 'undefined') {
                 console.error('jQuery is not loaded!');
@@ -820,12 +849,12 @@
                 return;
             }
             console.log('jQuery and Select2 are loaded successfully');
-            
+
             const form = document.getElementById('addTrainingForm');
             if (form) {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', function (e) {
                     e.preventDefault();
-                    
+
                     // Get form data
                     const formData = new FormData(form);
                     const trainingData = {
@@ -838,24 +867,24 @@
                         duration: formData.get('trainingDuration'),
                         status: formData.get('trainingStatus')
                     };
-                    
+
                     // Validate required fields
-                    if (!trainingData.name || !trainingData.category || trainingData.videos.length === 0 || 
+                    if (!trainingData.name || !trainingData.category || trainingData.videos.length === 0 ||
                         trainingData.users.length === 0 || !trainingData.questionSet || !trainingData.duration || !trainingData.status) {
                         alert('必須項目をすべて入力してください');
                         return;
                     }
-                    
+
                     // Check if this is edit mode
                     const submitBtn = document.querySelector('#addTrainingForm button[type="submit"]');
                     const isEditMode = submitBtn && submitBtn.textContent === 'Update Training';
-                    
+
                     // Here you would typically send the data to your backend
                     console.log('Training data to be ' + (isEditMode ? 'updated' : 'created') + ':', trainingData);
-                    
+
                     // Show success message
                     alert('トレーニングが' + (isEditMode ? '更新' : '作成') + 'されました！');
-                    
+
                     // Close modal
                     closeAddTrainingModal();
                 });
@@ -866,16 +895,16 @@
             const modal = document.getElementById('userDetailsModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalContent = document.getElementById('modalContent');
-            
+
             // Set modal title
             modalTitle.textContent = `トレーニング詳細 - ${trainingName}`;
-            
+
             // Generate training details content based on training name
             let trainingDetails = getTrainingDetails(trainingName);
-            
+
             // Update modal content
             modalContent.innerHTML = trainingDetails;
-            
+
             // Show modal
             modal.classList.remove('hidden');
         }
@@ -956,7 +985,7 @@
             };
 
             const training = trainingData[trainingName] || {};
-            
+
             return `
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1032,15 +1061,15 @@
             const modal = document.getElementById('addUserModal');
             const modalTitle = document.getElementById('addUserModalTitle');
             const submitBtn = document.getElementById('addUserSubmitBtn');
-            
+
             // Set modal for add mode
             modalTitle.textContent = '新しいユーザーを追加';
             submitBtn.textContent = 'ユーザーを追加';
             submitBtn.onclick = submitAddUserForm;
-            
+
             // Reset form
             document.getElementById('addUserForm').reset();
-            
+
             modal.classList.remove('hidden');
         }
 
@@ -1048,15 +1077,15 @@
             const modal = document.getElementById('addUserModal');
             const modalTitle = document.getElementById('addUserModalTitle');
             const submitBtn = document.getElementById('addUserSubmitBtn');
-            
+
             // Set modal for edit mode
             modalTitle.textContent = `ユーザーを編集 - ${userName}`;
             submitBtn.textContent = 'ユーザーを更新';
             submitBtn.onclick = () => submitEditUserForm(userName);
-            
+
             // Populate form with user data
             populateUserForm(userName);
-            
+
             modal.classList.remove('hidden');
         }
 
@@ -1070,7 +1099,7 @@
         function submitAddUserForm() {
             const form = document.getElementById('addUserForm');
             const formData = new FormData(form);
-            
+
             // Get form values
             const firstName = formData.get('firstName');
             const lastName = formData.get('lastName');
@@ -1080,20 +1109,20 @@
             const phone = formData.get('phone');
             const dateOfBirth = formData.get('dateOfBirth');
             const location = formData.get('location');
-            
+
             // Validate required fields
             if (!firstName || !lastName || !email || !department || !role) {
                 alert('必須項目をすべて入力してください。');
                 return;
             }
-            
+
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('有効なメールアドレスを入力してください。');
                 return;
             }
-            
+
             console.log('Adding new user:', {
                 firstName,
                 lastName,
@@ -1104,7 +1133,7 @@
                 dateOfBirth,
                 location
             });
-            
+
             alert('ユーザーが正常に追加されました！');
             closeAddUserModal();
         }
@@ -1165,7 +1194,7 @@
             };
 
             const user = userData[userName] || {};
-            
+
             // Populate form fields
             document.getElementById('firstName').value = user.firstName || '';
             document.getElementById('lastName').value = user.lastName || '';
@@ -1180,7 +1209,7 @@
         function submitEditUserForm(userName) {
             const form = document.getElementById('addUserForm');
             const formData = new FormData(form);
-            
+
             // Get form values
             const firstName = formData.get('firstName');
             const lastName = formData.get('lastName');
@@ -1190,20 +1219,20 @@
             const phone = formData.get('phone');
             const dateOfBirth = formData.get('dateOfBirth');
             const location = formData.get('location');
-            
+
             // Validate required fields
             if (!firstName || !lastName || !email || !department || !role) {
                 alert('必須項目をすべて入力してください。');
                 return;
             }
-            
+
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('有効なメールアドレスを入力してください。');
                 return;
             }
-            
+
             console.log('Updating user:', {
                 userName,
                 firstName,
@@ -1215,32 +1244,35 @@
                 dateOfBirth,
                 location
             });
-            
+
             alert(`ユーザー ${userName} が正常に更新されました！`);
             closeAddUserModal();
         }
     </script>
 
     <!-- User Details Modal -->
-    <div id="userDetailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div id="userDetailsModal"
+        class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between mb-4">
                     <h3 id="modalTitle" class="text-lg font-medium text-gray-900">ユーザー詳細</h3>
-                    <button onclick="closeTrainingDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <button onclick="closeTrainingDetailsModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                
+
                 <!-- Modal Content -->
                 <div id="modalContent" class="text-sm text-gray-500">
                     <!-- Content will be dynamically populated -->
                 </div>
-                
+
                 <!-- Modal Footer -->
                 <div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
-                    <button onclick="closeTrainingDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                    <button onclick="closeTrainingDetailsModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
                         閉じる
                     </button>
                 </div>
@@ -1250,7 +1282,7 @@
 
     <!-- Close modal when clicking outside -->
     <script>
-        document.getElementById('userDetailsModal').addEventListener('click', function(e) {
+        document.getElementById('userDetailsModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeTrainingDetailsModal();
             }
@@ -1259,47 +1291,54 @@
 
     <!-- Add User Modal -->
     <div id="addUserModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-white">
+        <div
+            class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between mb-6">
                     <h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">新しいユーザーを追加</h3>
-                    <button onclick="closeAddUserModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <button onclick="closeAddUserModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                
+
                 <!-- Modal Content -->
                 <form id="addUserForm" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- First Name -->
                         <div>
                             <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">名 *</label>
-                            <input type="text" id="firstName" name="firstName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="text" id="firstName" name="firstName" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Last Name -->
                         <div>
                             <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">姓 *</label>
-                            <input type="text" id="lastName" name="lastName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="text" id="lastName" name="lastName" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Email -->
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メール *</label>
-                            <input type="email" id="email" name="email" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="email" id="email" name="email" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Phone -->
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">電話</label>
-                            <input type="tel" id="phone" name="phone" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="tel" id="phone" name="phone"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Department -->
                         <div>
                             <label for="department" class="block text-sm font-medium text-gray-700 mb-2">部門 *</label>
-                            <select id="department" name="department" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <select id="department" name="department" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                 <option value="">部門を選択</option>
                                 <option value="IT Department">IT Department</option>
                                 <option value="HR Department">HR Department</option>
@@ -1309,11 +1348,12 @@
                                 <option value="Operations Department">Operations Department</option>
                             </select>
                         </div>
-                        
+
                         <!-- Role -->
                         <div>
                             <label for="role" class="block text-sm font-medium text-gray-700 mb-2">役割 *</label>
-                            <select id="role" name="role" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <select id="role" name="role" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                 <option value="">役割を選択</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Manager">Manager</option>
@@ -1323,27 +1363,31 @@
                                 <option value="Student">Student</option>
                             </select>
                         </div>
-                        
+
                         <!-- Date of Birth -->
                         <div>
                             <label for="dateOfBirth" class="block text-sm font-medium text-gray-700 mb-2">生年月日</label>
-                            <input type="date" id="dateOfBirth" name="dateOfBirth" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="date" id="dateOfBirth" name="dateOfBirth"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Location -->
                         <div>
                             <label for="location" class="block text-sm font-medium text-gray-700 mb-2">場所</label>
-                            <input type="text" id="location" name="location" placeholder="市区町村、都道府県" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="text" id="location" name="location" placeholder="市区町村、都道府県"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
                     </div>
                 </form>
-                
+
                 <!-- Modal Footer -->
                 <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
-                    <button onclick="closeAddUserModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                    <button onclick="closeAddUserModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
                         キャンセル
                     </button>
-                    <button id="addUserSubmitBtn" onclick="submitAddUserForm()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+                    <button id="addUserSubmitBtn" onclick="submitAddUserForm()"
+                        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
                         ユーザーを追加
                     </button>
                 </div>
@@ -1353,11 +1397,12 @@
 
     <!-- Close add user modal when clicking outside -->
     <script>
-        document.getElementById('addUserModal').addEventListener('click', function(e) {
+        document.getElementById('addUserModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeAddUserModal();
             }
         });
     </script>
 </body>
-</html> 
+
+</html>
