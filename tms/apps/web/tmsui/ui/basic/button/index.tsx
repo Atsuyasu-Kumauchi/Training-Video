@@ -1,4 +1,5 @@
 import { cn } from "@/tmsui/utility";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faArrowLeft,
   faArrowRight,
@@ -18,7 +19,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ComponentProps, ElementType, ReactNode } from "react";
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, IconProp> = {
   chevronRight: faChevronRight,
   chevronLeft: faChevronLeft,
   check: faCheck,

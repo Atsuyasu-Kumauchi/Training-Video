@@ -1,5 +1,6 @@
 import useLang from "@/lang";
-import { humanTime, useFormContext } from "@/tmsui";
+import { Button, humanTime, Modal, UiFormCheckbox, UiFormFiledArray, UiFormInput, UiFormSelect, UiFormTextArea, useFormContext } from "@/tmsui";
+import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
 import {
   faBook,
   faClipboardCheck,
@@ -11,13 +12,8 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { TDashboardSchema } from "./dashboard.type";
-// const data = [
-//     { label: "Name", value: "value" },
-//     { label: "Name 1", value: "value1" },
-//     { label: "Name 2", value: "value2" },
-// ]
 
 export default function DashboardView() {
   const {
@@ -32,53 +28,59 @@ export default function DashboardView() {
 
   const lang = useLang();
 
+  const data = [
+    { label: "Name", value: "value" },
+    { label: "Name 1", value: "value1" },
+    { label: "Name 2", value: "value2" },
+  ]
+
   return (
     <div className="px-6 py-8">
-      {/* <div className="space-y-4 mb-8">
-                <div className="space-y-4">
-                    <UiFormInput<TDashboardSchema> name="name" label="Name" placeholder="Enter your text here.." />
-                    <UiFormSelect2<TDashboardSchema> name="tag" options={data} />
-                    <UiFormSelect<TDashboardSchema> name="department" label="Department" options={data} />
-                    <UiFormTextArea<TDashboardSchema> name="textarea" label="Textarea" />
-                    <UiFormCheckbox<TDashboardSchema> name="checkbox" label="Checkbox" />
-                    <UiFormFiledArray<TDashboardSchema> name="filedArray">
-                        {({ append, fields, remove }) => (
-                            <Fragment>
-                                {fields.map((item, index) => {
-                                    return (
-                                        <div key={item.id}>
-                                            <UiFormInput<TDashboardSchema> name={`filedArray.${index}.label`} label="Label" placeholder="Enter your text here.." />
-                                            <UiFormInput<TDashboardSchema> name={`filedArray.${index}.value`} label="Value" placeholder="Enter your text here.." />
-                                            <Button variant="gradient" color="danger" onClick={() => remove(index)} >Remove</Button>
-                                        </div>
-                                    )
-                                })}
-                                <Button
-                                    onClick={() => append({ label: "", value: "" })}
-                                >Append</Button>
-                            </Fragment>
-                        )}
-                    </UiFormFiledArray>
-                    <div>
-                        <Button type="submit" >Submit</Button>
+      <div className="space-y-4 mb-8">
+        <div className="space-y-4">
+          <UiFormInput<TDashboardSchema> name="name" label="Name" placeholder="Enter your text here.." />
+          <UiFormSelect2<TDashboardSchema> name="tag" options={data} />
+          <UiFormSelect<TDashboardSchema> name="department" label="Department" options={data} />
+          <UiFormTextArea<TDashboardSchema> name="textarea" label="Textarea" />
+          <UiFormCheckbox<TDashboardSchema> name="checkbox" label="Checkbox" />
+          <UiFormFiledArray<TDashboardSchema> name="filedArray">
+            {({ append, fields, remove }) => (
+              <Fragment>
+                {fields.map((item, index) => {
+                  return (
+                    <div key={item.id}>
+                      <UiFormInput<TDashboardSchema> name={`filedArray.${index}.label`} label="Label" placeholder="Enter your text here.." />
+                      <UiFormInput<TDashboardSchema> name={`filedArray.${index}.value`} label="Value" placeholder="Enter your text here.." />
+                      <Button variant="gradient" color="danger" onClick={() => remove(index)} >Remove</Button>
                     </div>
-                </div>
+                  )
+                })}
+                <Button
+                  onClick={() => append({ label: "", value: "" })}
+                >Append</Button>
+              </Fragment>
+            )}
+          </UiFormFiledArray>
+          <div>
+            <Button type="submit" >Submit</Button>
+          </div>
+        </div>
 
-                <Modal
-                    isOpen={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    title="Dashboard"
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          title="Dashboard"
 
-                >
-                    <div>
-                        Hello
-                    </div>
-                </Modal>
-                <div>
-                    <Button onClick={() => setIsOpen(true)} >Open Modal</Button>
-                </div>
+        >
+          <div>
+            Hello
+          </div>
+        </Modal>
+        <div>
+          <Button onClick={() => setIsOpen(true)} >Open Modal</Button>
+        </div>
 
-            </div> */}
+      </div>
 
       {/* Page Header */}
       <div className="mb-8">
