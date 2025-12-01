@@ -1,6 +1,5 @@
 import useLang from "@/lang";
-import { Button, humanTime, Modal, UiFormCheckbox, UiFormFiledArray, UiFormInput, UiFormSelect, UiFormTextArea, useFormContext } from "@/tmsui";
-import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
+import { humanTime, useFormContext } from "@/tmsui";
 import {
   faBook,
   faClipboardCheck,
@@ -12,7 +11,7 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { TDashboardSchema } from "./dashboard.type";
 
 export default function DashboardView() {
@@ -36,7 +35,7 @@ export default function DashboardView() {
 
   return (
     <div className="px-6 py-8">
-      <div className="space-y-4 mb-8">
+      {/* <div className="space-y-4 mb-8">
         <div className="space-y-4">
           <UiFormInput<TDashboardSchema> name="name" label="Name" placeholder="Enter your text here.." />
           <UiFormSelect2<TDashboardSchema> name="tag" options={data} />
@@ -80,7 +79,7 @@ export default function DashboardView() {
           <Button onClick={() => setIsOpen(true)} >Open Modal</Button>
         </div>
 
-      </div>
+      </div> */}
 
       {/* Page Header */}
       <div className="mb-8">
