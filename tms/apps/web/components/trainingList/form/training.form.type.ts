@@ -1,23 +1,13 @@
-import { zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+import { zodInfer, zodObject, zodStringRequired } from "@/tmsui";
 
 export const trainingSchema = zodObject({
   name: zodStringRequired(),
-  description: zodString(),
-  videos: zodStringRequired(),
-  users: zodString(),
-  group: zodString(),
-  status: zodStringRequired(),
 });
 
 export type TTrainingSchema = zodInfer<typeof trainingSchema>;
 
 export const initialValues = {
   name: "",
-  description: "",
-  videos: "",
-  users: "",
-  group: "",
-  status: "",
 };
 
 export const videos = [

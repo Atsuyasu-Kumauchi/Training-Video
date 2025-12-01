@@ -1,11 +1,9 @@
 "use client"
 import dynamic from "next/dynamic";
-const CreateTestComponent = dynamic(() => import("@/components/createTest/createTest.component"), {
-    ssr: false,
-});
+const CreateTestController = dynamic(() => import("@/components/createTest/createTest.controller"));
 
 export default function CreateTestPage() {
     return (
-        <CreateTestComponent />
+        <CreateTestController />
     )
 }

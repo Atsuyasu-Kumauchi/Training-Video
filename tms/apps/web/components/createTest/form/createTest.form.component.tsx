@@ -1,16 +1,18 @@
+import { useLang } from "@/lang";
 import { useSettings } from "@/tmsui/store";
 import { Modal } from "@/tmsui/ui/basic/modal";
 import { UiForm } from "@/tmsui/ui/Form/Form";
 import { TFormHandlerSubmit, TUiFormRef } from "@/tmsui/ui/Form/form.type";
 import { useRef } from "react";
-import { initialValues, trainingSchema, TTrainingSchema } from "./training.form.type";
-import TrainingFormView from "./training.form.view";
+import { createTestSchema, initialValues, TCreateTestSchema } from "./createTest.form.type";
+import CreateTestFormView from "./createTest.form.view";
 
-export default function TrainingFormComponent() {
+export default function CreateTestFormComponent() {
+  const { testCreation } = useLang();
   const { isOpen, setIsOpen } = useSettings();
-  const formRef = useRef<TUiFormRef<TTrainingSchema>>(null);
+  const formRef = useRef<TUiFormRef<TCreateTestSchema>>(null);
 
-  const onSubmitHandler: TFormHandlerSubmit<TTrainingSchema> = (value) => {
+  const onSubmitHandler: TFormHandlerSubmit<TCreateTestSchema> = (value) => {
     console.log(value);
     setIsOpen(false);
   };
@@ -19,15 +21,15 @@ export default function TrainingFormComponent() {
     <Modal
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      title="Add New Training"
+      title={testCreation.form.test}
     >
       <UiForm
-        schema={trainingSchema}
+        schema={createTestSchema}
         initialValues={initialValues}
         onSubmit={onSubmitHandler}
         ref={formRef}
       >
-        <TrainingFormView />
+        <CreateTestFormView />
       </UiForm>
     </Modal>
   )
