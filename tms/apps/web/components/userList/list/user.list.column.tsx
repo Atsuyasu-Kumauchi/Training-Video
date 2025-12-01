@@ -1,19 +1,19 @@
 import { Avatar } from '@/common';
 import { Badge } from '@/common/components/badge';
 import { CUserDto } from '@/common/dto/user.dto';
-import useLang from "@/lang";
+import { LangUser } from '@/lang/user';
 import { TListColumnDef } from '@/tmsui/types';
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const { user } = useLang();
+const { list } = LangUser;
 
 export const userListColumn: TListColumnDef<CUserDto>[] = [
 
   {
     accessorKey: "name",
     enableHiding: false,
-    header: () => user.list.user,
+    header: () => list.user,
     cell: (ctx) => {
       return <Avatar name={ctx.row.original.full_name} />
     }
@@ -21,7 +21,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "email",
     enableHiding: false,
-    header: () => user.list.email,
+    header: () => list.email,
     cell: (ctx) => {
       return <div>{ctx.row.original.email}</div>
     }
@@ -29,7 +29,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "department",
     enableHiding: false,
-    header: () => user.list.department,
+    header: () => list.department,
     cell: (ctx) => {
       return <div>{ctx.row.original.department}</div>
     }
@@ -37,7 +37,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "assigned_training",
     enableHiding: false,
-    header: () => user.list.assignedTraining,
+    header: () => list.assignedTraining,
     cell: (ctx) => {
       return <div>{ctx.row.original.assigned_training}</div>
     }
@@ -45,7 +45,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "completed_training",
     enableHiding: false,
-    header: () => user.list.completedTraining,
+    header: () => list.completedTraining,
     cell: (ctx) => {
       return <div>{ctx.row.original.completed_training}</div>
     }
@@ -53,7 +53,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "status",
     enableHiding: false,
-    header: () => user.list.status,
+    header: () => list.status,
     cell: (ctx) => {
       return <Badge status={ctx.row.original.status} />
     }
@@ -61,7 +61,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "actions",
     enableHiding: false,
-    header: () => user.list.actions,
+    header: () => list.actions,
     cell: (ctx) => {
       return <div className="flex items-center space-x-2">
         <button className="text-blue-600 hover:text-blue-900 transition-colors duration-200">

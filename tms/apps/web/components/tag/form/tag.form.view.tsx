@@ -1,3 +1,4 @@
+import { useLang } from "@/lang";
 import {
   Button,
   Modal,
@@ -5,25 +6,23 @@ import {
   TUiFormRef,
   UiForm,
   UiFormInput,
-  UiFormSelect,
-  UiFormTextArea,
+  UiFormSelect
 } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
 import { useRef } from "react";
 import {
-  departments,
   initialValues,
-  members,
   status,
-  TUserGroupsSchema,
-  userGroupsSchema,
+  tagSchema,
+  TTagSchema
 } from "./tag.form.type";
 
-export default function UserGroupsFormView() {
+export default function TagFormView() {
+  const { tag } = useLang();
   const { isOpen, setIsOpen } = useSettings();
-  const formRef = useRef<TUiFormRef<TUserGroupsSchema>>(null);
+  const formRef = useRef<TUiFormRef<TTagSchema>>(null);
 
-  const onSubmitHandler: TFormHandlerSubmit<TUserGroupsSchema> = (value) => {
+  const onSubmitHandler: TFormHandlerSubmit<TTagSchema> = (value) => {
     console.log(value);
     setIsOpen(false);
   };
@@ -32,50 +31,36 @@ export default function UserGroupsFormView() {
     <Modal
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      title="Add New Group"
+      title={tag.form.title}
     >
       <UiForm
-        schema={userGroupsSchema}
+        schema={tagSchema}
         initialValues={initialValues}
         onSubmit={onSubmitHandler}
         ref={formRef}
       >
-        <div className="px-6 py-8">
-          <div className="space-y-4">
-            <UiFormInput<TUserGroupsSchema>
-              name="name"
-              label="Name"
-              placeholder="Enter your text here.."
-            />
-            <UiFormTextArea<TUserGroupsSchema>
-              name="description"
-              label="Textarea"
-            />
-            <UiFormSelect<TUserGroupsSchema>
-              name="department"
-              label="Department"
-              options={departments}
-            />
-            <UiFormSelect<TUserGroupsSchema>
-              name="members"
-              label="Select Members"
-              options={members}
-            />
-            <UiFormSelect<TUserGroupsSchema>
-              name="status"
-              label="Status"
-              options={status}
-            />
-            <div className="flex justify-end space-x-3 pt-4">
-              <Button
-                type="button"
-                color="neutral"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancle
-              </Button>
-              <Button type="submit">Create Group</Button>
-            </div>
+        <div className="space-y-4">
+          <UiFormInput<TTagSchema>
+            name="name"
+            label={tag.form.tagName}
+            placeholder={tag.form.tagNamePlaceholder}
+            required
+          />
+          <UiFormSelect<TTagSchema>
+            name="status"
+            label={tag.form.status}
+            options={status}
+            required
+          />
+          <div className="flex justify-end space-x-3 pt-4">
+            <Button
+              type="button"
+              color="neutral"
+              onClick={() => setIsOpen(false)}
+            >
+              {tag.form.cancel}
+            </Button>
+            <Button type="submit">{tag.form.createATag}</Button>
           </div>
         </div>
       </UiForm>

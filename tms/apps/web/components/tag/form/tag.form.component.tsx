@@ -1,5 +1,5 @@
-import UserGroupsFormView from "./userGroups.form.view";
+import TagFormView from "./tag.form.view";
 
-export default function UserGroupFormComponent() {
-  return <UserGroupsFormView />;
+export default function TagFormComponent() {
+  return <TagFormView />;
 }
