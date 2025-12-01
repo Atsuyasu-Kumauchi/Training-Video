@@ -1,11 +1,9 @@
 "use client"
 import dynamic from "next/dynamic";
-const VideoListComponent = dynamic(() => import("@/components/videoList/videoList.component"), {
-    ssr: false,
-});
+const VideoController = dynamic(() => import("@/components/videoList/video.controller"));
 
-export default function VideoPage() {
+export default function VideoListPage() {
     return (
-         <VideoListComponent />
+        <VideoController />
     )
 }
