@@ -8,9 +8,9 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { groupsTableData } from "./userGroup.list.type";
+import { groupsTableData } from "./tag.list.type";
 
-export default function UserGroupsListView() {
+export default function TagListView() {
   const { setIsOpen } = useSettings();
   return (
     <div className="px-6 py-8">
@@ -174,11 +174,10 @@ export default function UserGroupsListView() {
                       className=" text-white text-sm"
                     />
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        group.status === "Active"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${group.status === "Active"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                        }`}
                     >
                       {group.status}
                     </span>

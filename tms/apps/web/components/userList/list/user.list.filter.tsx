@@ -1,49 +1,61 @@
+import useLang from "@/lang";
 
-export default function UserListSearch() {
+export default function UserListFilter() {
+    const { user } = useLang();
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
             <div className="px-6 py-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Status
+                            {user.filter.status}
                         </label>
                         <select className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                            <option>All Status</option>
+                            {/* <option>All Status</option>
                             <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="inactive">Inactive</option> */}
+                            <option value="">すべてのステータス</option>
+                            <option value="active">アクティブ</option>
+                            <option value="inactive">非アクティブ</option>
                         </select>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Department
+                            {user.filter.department}
                         </label>
                         <select className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                            <option>All Departments</option>
+                            {/* <option>All Departments</option>
                             <option value="it">IT Department</option>
                             <option value="hr">HR Department</option>
                             <option value="finance">Finance Department</option>
                             <option value="marketing">Marketing Department</option>
                             <option value="sales">Sales Department</option>
-                            <option value="operations">Operations Department</option>
+                            <option value="operations">Operations Department</option> */}
+                            <option value="">すべての部門</option>
+                            <option value="it">IT部門</option>
+                            <option value="hr">HR部門</option>
+                            <option value="finance">財務部門</option>
+                            <option value="marketing">マーケティング部門</option>
+                            <option value="sales">営業部門</option>
+                            <option value="operations">運用部門</option>
                         </select>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Search
+                            {user.filter.search}
                         </label>
                         <div className="flex gap-2">
                             <input
                                 type="text"
                                 id="searchInput"
-                                placeholder="Search by name or email..."
+                                placeholder={user.filter.searchPlaceholder}
                                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                             />
                             <button
                                 id="searchButton"
                                 className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
                             >
-                                Search
+                                {user.filter.search}
                             </button>
                         </div>
                     </div>

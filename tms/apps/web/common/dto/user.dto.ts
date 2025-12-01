@@ -1,4 +1,4 @@
-import { BaseDto, IBaseDto } from "../base.dto";
+import { BaseDto, IBaseDto } from "./base.dto";
 
 export interface IUserDto extends IBaseDto {
     email: string;

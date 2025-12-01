@@ -17,7 +17,7 @@ import {
   status,
   TUserGroupsSchema,
   userGroupsSchema,
-} from "./userGroups.form.type";
+} from "./tag.form.type";
 
 export default function UserGroupsFormView() {
   const { isOpen, setIsOpen } = useSettings();

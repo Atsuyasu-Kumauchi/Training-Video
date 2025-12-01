@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 const UserGroupsComponent = dynamic(
-  () => import("@/components/userGroups/userGroups.component"),
+  () => import("@/components/tag/tag.component"),
   {
     ssr: false,
   }
