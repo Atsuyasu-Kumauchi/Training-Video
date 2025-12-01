@@ -20,6 +20,7 @@ export const sizeClasses = {
 export const UiFormInput = <T extends FieldValues>({
     name,
     label,
+    required,
     ...rest
 }: UiFormTextProps<T>) => {
     const { control } = useFormContext<T>();
@@ -31,7 +32,7 @@ export const UiFormInput = <T extends FieldValues>({
             render={({ field, fieldState: { error } }) => {
                 return (
                     <div>
-                        {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label}</label>}
+                        {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
                         <input
                             className={cn("flex-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500")}
                             id={label}
@@ -39,7 +40,7 @@ export const UiFormInput = <T extends FieldValues>({
                             {...field}
                             {...rest}
                         />
-                        {error && <label className="block text-sm font-medium text-red-700 mb-2">{error?.message}</label>}
+                        {error && <label className="block text-sm font-medium text-red-700 mb-2 mt-1">{error?.message}</label>}
                     </div>
                 )
             }}
