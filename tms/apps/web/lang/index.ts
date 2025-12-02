@@ -1,7 +1,7 @@
+import { ILangAssignmentReview, LangAssignmentReview } from "./assignmentReview";
 import { ILangChangePassword, LangChangePassword } from "./changePassword";
 import { ILangDashboard, LangDashboard } from "./dashboard";
 import { ILangDepartment, LangDepartment } from "./department";
-import { ILangIssueReview, LangIssueReview } from "./issueReview";
 import { ILangListOfIssues, LangListOfIssues } from "./listOfIssues";
 import { ILangMenu, LangMenu } from "./menu";
 import { ILangRole, LangRole } from "./role";
@@ -24,7 +24,7 @@ export type ILang = {
     trainingList: ILangTrainingList;
     testCreation: ILangTestCreation;
     listOfIssues: ILangListOfIssues;
-    issueReview: ILangIssueReview;
+    assignmentReview: ILangAssignmentReview;
     department: ILangDepartment;
     role: ILangRole;
     changePassword: ILangChangePassword;
@@ -39,7 +39,7 @@ export const Lang: ILang = {
     trainingList: LangTrainingList,
     testCreation: LangTestCreation,
     listOfIssues: LangListOfIssues,
-    issueReview: LangIssueReview,
+    assignmentReview: LangAssignmentReview,
     department: LangDepartment,
     role: LangRole,
     changePassword: LangChangePassword

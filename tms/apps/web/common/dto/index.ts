@@ -1,4 +1,5 @@
 export * from './assignmentList.dto';
+export * from './assignmentReview.dto';
 export * from './base.dto';
 export * from './tag.dto';
 export * from './testCreation.dto';
