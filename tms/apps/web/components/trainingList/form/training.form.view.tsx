@@ -1,3 +1,4 @@
+import useLang from "@/lang";
 import {
   Button,
   Modal,
@@ -9,17 +10,20 @@ import {
   UiFormTextArea,
 } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
+import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
 import { useRef } from "react";
 import {
   initialValues,
   members,
   status,
+  tagName,
   trainingSchema,
   TTrainingSchema,
   videos,
 } from "./training.form.type";
 
 export default function TrainingFormView() {
+  const { trainingList } = useLang();
   const { isOpen, setIsOpen } = useSettings();
   const formRef = useRef<TUiFormRef<TTrainingSchema>>(null);
 
@@ -32,7 +36,7 @@ export default function TrainingFormView() {
     <Modal
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      title="Add New Training"
+      title={trainingList.form.title}
     >
       <UiForm
         schema={trainingSchema}
@@ -44,31 +48,37 @@ export default function TrainingFormView() {
           <div className="space-y-4">
             <UiFormInput<TTrainingSchema>
               name="name"
-              label="Name"
-              placeholder="Enter your text here.."
+              label={trainingList.form.trainingName}
+              placeholder={trainingList.form.trainNamePlaceholder}
             />
             <UiFormTextArea<TTrainingSchema>
               name="description"
-              label="Description"
+              label={trainingList.form.explanation}
+              placeholder={trainingList.form.explanationPlaceholder}
             />
             <UiFormSelect<TTrainingSchema>
               name="videos"
-              label="Select Videos"
+              label={trainingList.form.selectVideo}
               options={videos}
             />
             <UiFormSelect<TTrainingSchema>
               name="users"
-              label="Select Users(Optional)"
+              label={trainingList.form.selectUser}
               options={members}
             />
             <UiFormSelect<TTrainingSchema>
               name="group"
-              label="Select User Group(Optional)"
+              label={trainingList.form.selectGroup}
               options={members}
+            />
+            <UiFormSelect2<TTrainingSchema>
+              label={trainingList.form.tags}
+              name="tag"
+              options={tagName}
             />
             <UiFormSelect<TTrainingSchema>
               name="status"
-              label="Status"
+              label={trainingList.form.status}
               options={status}
             />
             <div className="flex justify-end space-x-3 pt-4">
@@ -77,9 +87,12 @@ export default function TrainingFormView() {
                 color="neutral"
                 onClick={() => setIsOpen(false)}
               >
-                Cancle
+                {trainingList.form.cancel}
               </Button>
-              <Button type="submit">Create Training</Button>
+              <Button type="submit">
+                {" "}
+                {trainingList.form.createATraining}
+              </Button>
             </div>
           </div>
         </div>
