@@ -13,7 +13,7 @@ export const initialValues = {
 };
 
 export const status = [
-  { label: "Select Status", value: "value" },
-  { label: "Active", value: "1" },
-  { label: "Inactive", value: "0" },
+  { label: "ステータスを選択", value: "value" },
+  { label: "有効", value: "1" },
+  { label: "無効", value: "0" },
 ];

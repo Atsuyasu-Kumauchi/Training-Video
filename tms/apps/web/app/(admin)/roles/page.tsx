@@ -1,12 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
-const RolesComponent = dynamic(
-  () => import("@/components/roles/roles.component"),
-  {
-    ssr: false,
-  }
-);
+const RolesController = dynamic(() => import("@/components/roles/roles.controller"), { ssr: false });
 
 export default function RolePage() {
-  return <RolesComponent />;
+  return <RolesController />;
 }
