@@ -1,5 +1,6 @@
 import { ASSIGNMENT_LIST } from "../assignmentList.api";
 import { ASSIGNMENT_REVIEW } from "../assignmentReview.api";
+import { DEPARTMENT } from "../department.api";
 import { TAG } from "../tag.api";
 import { TEST_CREATION_LIST } from "../testCreation.api";
 import { TRAINING_LIST } from "../training.api";
@@ -34,5 +35,9 @@ export const ListQueryConfig = {
     ASSIGNMENT_REVIEW_LIST: {
         key: ["AssignmentReview"],
         url: `${ASSIGNMENT_REVIEW.LIST}`
+    },
+    DEPARTMENT_LIST: {
+        key: ["DepartmentList"],
+        url: `${DEPARTMENT.LIST}`
     },
 }
