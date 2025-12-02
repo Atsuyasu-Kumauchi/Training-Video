@@ -34,7 +34,7 @@ export function AdminSidebar() {
     { url: "/video-list", icon: faVideo, title: lang.menu.videoList },
     { url: "/training-list", icon: faBook, title: lang.menu.trainingList },
     { url: "/create-test", icon: faClipboardCheck, title: lang.menu.testCreation },
-    { url: "/issue-list", icon: faTasks, title: lang.menu.listOfIssues },
+    { url: "/assignment-list", icon: faTasks, title: lang.menu.listOfIssues },
     { url: "/issue-review", icon: faClipboardList, title: lang.menu.issuesReview },
     { url: "/departments", icon: faBuilding, title: lang.menu.department },
     { url: "/roles", icon: faUserTag, title: lang.menu.role },

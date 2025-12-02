@@ -1,3 +1,4 @@
+export * from './assignmentList.api';
 export * from './lists';
 export * from './tag.api';
 export * from './testCreation.api';

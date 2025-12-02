@@ -1,3 +1,4 @@
+import { ASSIGNMENT_LIST } from "../assignmentList.api";
 import { TAG } from "../tag.api";
 import { TEST_CREATION_LIST } from "../testCreation.api";
 import { TRAINING_LIST } from "../training.api";
@@ -24,5 +25,9 @@ export const ListQueryConfig = {
     TEST_CREATION_LIST: {
         key: ["TestCreationList"],
         url: `${TEST_CREATION_LIST.LIST}`
+    },
+    ASSIGNMENT_LIST: {
+        key: ["AssignmentList"],
+        url: `${ASSIGNMENT_LIST.LIST}`
     },
 }
