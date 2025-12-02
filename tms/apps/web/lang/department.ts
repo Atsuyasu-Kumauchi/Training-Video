@@ -1,8 +1,18 @@
 export const LangDepartment = {
-    header: {},
+    header: {
+        title: "部署", // Department
+        add: "部署を追加", // Add Department
+    },
     filter: {},
-    list: {},
-    form: {}
+    list: {
+        departmentName: "部署名", // Department Name
+        status: "ステータス", // Status
+        action: "アクション", // Action
+    },
+    form: {
+        departmentName: "部署名", // Department Name
+        status: "ステータス", // Status
+    }
 }
 
 export type ILangDepartment = typeof LangDepartment

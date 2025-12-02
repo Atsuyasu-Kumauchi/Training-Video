@@ -52,11 +52,11 @@ export function getPasswordStrength(password: string) {
     }
 
     // Weak: not enough length or types
-    if (!lengthOK) return { strength: "weak", message: "Too short (min 8 characters)" };
-    if (!hasUpper) return { strength: "weak", message: "Add an uppercase letter" };
-    if (!hasLower) return { strength: "weak", message: "Add a lowercase letter" };
-    if (!hasNumber) return { strength: "weak", message: "Add a number" };
-    if (!hasSpecial) return { strength: "weak", message: "Add a special character" };
+    if (!lengthOK) return { strength: "弱い", message: "Too short (min 8 characters)" };
+    if (!hasUpper) return { strength: "弱い", message: "Add an uppercase letter" };
+    if (!hasLower) return { strength: "弱い", message: "Add a lowercase letter" };
+    if (!hasNumber) return { strength: "弱い", message: "Add a number" };
+    if (!hasSpecial) return { strength: "弱い", message: "Add a special character" };
 
-    return { strength: "weak", message: "Weak password" };
+    return { strength: "弱い", message: "Weak password" };
 }
