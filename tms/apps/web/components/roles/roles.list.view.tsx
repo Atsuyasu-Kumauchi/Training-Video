@@ -1,9 +1,11 @@
+import useLang from "@/lang";
 import { useSettings } from "@/tmsui/store";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { rolesTableData } from "./list/roles.list.type";
 
 export default function RolesListView() {
+  const { role } = useLang();
   const { setIsOpen } = useSettings();
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -12,13 +14,13 @@ export default function RolesListView() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role Name
+                {role.list.roleName}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+                {role.list.status}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
+                {role.list.action}
               </th>
             </tr>
           </thead>
@@ -70,20 +72,20 @@ export default function RolesListView() {
       <div className="px-6 py-3 border-t border-gray-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center text-sm text-gray-700">
-            <span id="paginationInfo">Showing 1 to 5 of 5 results</span>
+            <span id="paginationInfo"> {role.list.pagination}</span>
           </div>
           <div className="flex items-center space-x-2">
             <button
               id="prevBtn"
               className="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Previous
+              {role.list.previous}
             </button>
             <button
               id="nextBtn"
               className="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Next
+              {role.list.next}
             </button>
           </div>
         </div>

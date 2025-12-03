@@ -1,27 +1,19 @@
 import { useLang } from "@/lang";
-import {
-  Button,
-  UiFormInput,
-  UiFormSelect
-} from "@/tmsui";
+import { Button, UiFormInput, UiFormSelect } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
-import {
-  status,
-  TRolesSchema
-} from "./roles.form.type";
+import { status, TRolesSchema } from "./roles.form.type";
 
 export default function RolesFormView() {
   const { setIsOpen } = useSettings();
   const { role } = useLang();
 
   return (
-
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-12">
         <UiFormInput<TRolesSchema>
           name="name"
           label={role.form.roleName}
-          placeholder={role.form.roleName}
+          placeholder={role.form.roleNamePlaceholder}
         />
       </div>
       <div className="col-span-12">
@@ -32,14 +24,10 @@ export default function RolesFormView() {
         />
       </div>
       <div className="col-span-12 flex justify-end space-x-3 pt-4">
-        <Button
-          type="button"
-          color="neutral"
-          onClick={() => setIsOpen(false)}
-        >
+        <Button type="button" color="neutral" onClick={() => setIsOpen(false)}>
           {role.form.cancel}
         </Button>
-        <Button type="submit">{role.form.createRole}</Button>
+        <Button type="submit">{role.form.subBtn}</Button>
       </div>
     </div>
   );
