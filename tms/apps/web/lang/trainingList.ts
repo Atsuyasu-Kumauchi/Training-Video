@@ -1,7 +1,7 @@
 export const LangTrainingList = {
   header: {
     title: "トレーニングプログラム", // Training Program
-    addNewTraining: "新しいトレーニングを追加", // Add New Training
+    addNewTraining: " 新規トレーニング追加", //   New training added
   },
   filter: {
     status: "ステータス", // Status
