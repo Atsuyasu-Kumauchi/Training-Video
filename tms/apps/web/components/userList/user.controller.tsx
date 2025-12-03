@@ -1,3 +1,4 @@
+"use client"
 import UserFormComponent from './form/user.form.component'
 import UserListComponent from './list/user.list.component'
 import UserListFilter from './list/user.list.filter'

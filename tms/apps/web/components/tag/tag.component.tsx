@@ -1,3 +1,4 @@
+"use client"
 import TagFormComponent from "./form/tag.form.component";
 import TagListComponent from "./list/tag.list.component";
 import TagListFilter from "./list/tag.list.filter";

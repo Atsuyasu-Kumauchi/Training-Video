@@ -12,8 +12,19 @@ export type UiFormSelectProps<T extends FieldValues> = {
     name: Path<T>;
     label?: string;
     required?: boolean;
-    options: Ioption[]
+    options: Ioption[];
+    placeholder?: string;
 } & React.ComponentPropsWithoutRef<"select">;
+
+// Generates a random key string of a given length
+export function generateRandomKey(length: number = 16): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let key = '';
+    for (let i = 0; i < length; i++) {
+        key += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return key;
+}
 
 
 export const UiFormSelect = <T extends FieldValues>({
@@ -22,6 +33,7 @@ export const UiFormSelect = <T extends FieldValues>({
     label,
     className,
     required,
+    placeholder,
     ...rest
 }: UiFormSelectProps<T>) => {
     const { control } = useFormContext<T>();
@@ -40,8 +52,9 @@ export const UiFormSelect = <T extends FieldValues>({
                             {...field}
                             {...rest}
                         >
+                            <option value="">{placeholder}</option>
                             {options.map((option) => {
-                                return (<option key={option.value} value={option.value}>{option.label}</option>)
+                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option.value}>{option.label}</option>)
                             })}
                         </select>
                         {error && <label className="block text-sm font-medium text-red-700 mb-2 mt-1">{error?.message}</label>}

@@ -1,3 +1,4 @@
+"use client"
 import AssignmentFormComponent from "./form/assignmentList.form.component";
 import AssignmentListComponent from "./list/assignmentList.list.component";
 import AssignmentListHeader from "./list/assignmentList.list.header";

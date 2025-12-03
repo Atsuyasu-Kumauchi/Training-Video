@@ -1,3 +1,4 @@
+"use client"
 import { TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
 import { useRef } from "react";
 import { dashboardSchema, initialValues, TDashboardSchema } from "./dashboard.type";

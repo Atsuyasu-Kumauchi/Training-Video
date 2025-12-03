@@ -1,3 +1,4 @@
+"use client"
 import RolesFormComponent from "./form/roles.form.component";
 import RolesListComponent from "./list/roles.list.component";
 import RolesListHeader from "./list/roles.list.header";

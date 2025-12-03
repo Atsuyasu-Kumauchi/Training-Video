@@ -1,3 +1,4 @@
+"use client"
 import VideoListFormComponent from "./form/videoList.form.component";
 import VideoListFilter from "./list/video.filter";
 import VideoListHeader from "./list/video.header";

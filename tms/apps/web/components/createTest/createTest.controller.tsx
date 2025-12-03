@@ -1,4 +1,4 @@
-import CreateTestFormComponent from "./form/createTest.form.component";
+"use client"
 import CreateTestListComponent from "./list/createTest.list.component";
 import CreateTestListFilter from "./list/createTest.list.filter";
 import CreateTestListHeader from "./list/createTest.list.header";
@@ -9,7 +9,6 @@ export default function CreateTestController() {
             <CreateTestListHeader />
             <CreateTestListFilter />
             <CreateTestListComponent />
-            <CreateTestFormComponent />
         </div>
     )
 }

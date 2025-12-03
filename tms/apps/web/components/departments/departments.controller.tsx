@@ -1,3 +1,4 @@
+"use client"
 import DepartmentsFormComponent from "./form/departments.form.component";
 import DepartmentsListComponent from "./list/departments.list.component";
 import DepartmentsListHeader from "./list/departments.list.header";

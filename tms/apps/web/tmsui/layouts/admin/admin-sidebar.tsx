@@ -60,7 +60,7 @@ export function AdminSidebar() {
               className="fas fa-graduation-cap text-white text-sm"
             />
           </div>
-          <h1 className="text-xl font-bold text-gray-900">Training Admin</h1>
+          <h1 className="text-xl font-bold text-gray-900">トレーニング管理</h1>
         </div>
         {/* Close button only visible on mobile */}
         <button
