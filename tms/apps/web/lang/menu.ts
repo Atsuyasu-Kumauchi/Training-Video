@@ -10,6 +10,10 @@ export const LangMenu = {
     department:     "部門", // department
     role:           "役割", // roles    
     changePassword: "パスワード変更", // change-password
+
+    // Student
+    myTrainings: "マイトレーニング", // My Training
+    results: "結果", // Results
 }
 
 export type ILangMenu = typeof LangMenu
