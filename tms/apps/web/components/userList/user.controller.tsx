@@ -15,7 +15,7 @@ export default function UserController() {
                 <UserListComponent />
                 <UserFormComponent />
                 {/* Pagination */}
-                <div className="px-6 py-3 border-t border-gray-200">
+                {/* <div className="px-6 py-3 border-t border-gray-200">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center text-sm text-gray-700">
                             <span>1〜5件 / 全5件を表示</span>
@@ -32,7 +32,7 @@ export default function UserController() {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

@@ -25,15 +25,19 @@ export const LangTestCreation = {
     explanation: "説明", //explanation
     explanationPlaceholder: "テストの説明を入力", //Enter a description for the test
     status: "ステータス", //status *
+    statusPlaceholder: "ステータスを選択", //Select a status
+   
     questionHeader: "質問", //question
-    questionNo: "質問 1", //Question 1
-    questionPlaceholder: "ここに質問を入力", //Enter your question here
+    addQuestion: "質問を追加", //Add a question
+    questionNo: "質問", //Question
     question: "質問文", //Question
+    questionPlaceholder: "質問文を入力", //Enter your question
     questionType: "質問タイプ *", //Question Type *
-    correctAnswer: "正解", //correct answer
-    answerPlaceholder: "正解を入力", //Enter the correct answer
+    questionTypePlaceholder: "質問タイプを選択", //Select a question type
+ 
     cancel: "キャンセル", //cancel
-    createATest: "", //
+    createATest: "テストを作成", //create a test
+    updateTest: "テストを更新", //update a test
   },
 };
 
