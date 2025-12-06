@@ -52,7 +52,10 @@ CREATE TABLE "tbl_user" (
   "role_id" INTEGER,
   "date_of_birth" DATE,
   "location" VARCHAR(100),
+  "username" VARCHAR(100) UNIQUE NOT NULL,
   "password" VARCHAR(255) NOT NULL,
+  "privatekey" VARCHAR(255),
+  "status" VARCHAR(20) DEFAULT 'disabled' CHECK (status IN ('enabled', 'disabled'))
   "created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   "modified" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
