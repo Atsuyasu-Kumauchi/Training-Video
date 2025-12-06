@@ -3,13 +3,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DepartmentsModule } from './departments/departments.module';
+import { DepartmentModule } from './department/department.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
+      load: [
+        () => ({
+          appname: 'com.offproapp.tvs',
+          secretkey: process.env.SECRET_KEY || 'OPEN_SECRET'
+        })
+      ]
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -26,7 +33,8 @@ import { DepartmentsModule } from './departments/departments.module';
       }),
       inject: [ConfigService],
     }),
-    DepartmentsModule,
+    DepartmentModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
