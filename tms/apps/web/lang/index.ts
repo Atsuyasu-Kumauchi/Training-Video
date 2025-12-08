@@ -5,6 +5,7 @@ import { ILangDepartment, LangDepartment } from "./department";
 import { ILangListOfIssues, LangListOfIssues } from "./listOfIssues";
 import { ILangMenu, LangMenu } from "./menu";
 import { ILangRole, LangRole } from "./role";
+import { ILangStudent, LangStudent } from "./students";
 import { ILangTag, LangTag } from "./tag";
 import { ILangTestCreation, LangTestCreation } from "./testCreation";
 import { ILangTrainingList, LangTrainingList } from "./trainingList";
@@ -28,6 +29,7 @@ export type ILang = {
     department: ILangDepartment;
     role: ILangRole;
     changePassword: ILangChangePassword;
+    student: ILangStudent;
 }
 
 export const Lang: ILang = {
@@ -42,7 +44,8 @@ export const Lang: ILang = {
     assignmentReview: LangAssignmentReview,
     department: LangDepartment,
     role: LangRole,
-    changePassword: LangChangePassword
+    changePassword: LangChangePassword,
+    student: LangStudent,
 }
 
 

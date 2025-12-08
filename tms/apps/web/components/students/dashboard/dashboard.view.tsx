@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function StudentsDashboardView() {
 
-
   return (
     <div className="px-6 py-8">
       {/* Page Header */}
