@@ -50,7 +50,7 @@ export const Modal = ({
                             <DialogPanel className="w-11/12 md:w-3/4 lg:w-1/2 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                 {/* Header */}
                                 {(title || showCloseButton) && (
-                                    <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+                                    <div className="flex items-center justify-between  border-gray-200 pb-4">
                                         {title && (
                                             <DialogTitle
                                                 as="h3"

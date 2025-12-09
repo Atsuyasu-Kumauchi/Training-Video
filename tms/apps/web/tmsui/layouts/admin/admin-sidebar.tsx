@@ -1,18 +1,21 @@
 "use client";
+import useLang from "@/lang";
 import { cn } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
 import {
   faBook,
   faBuilding,
   faClipboardCheck,
+  faClipboardList,
   faGraduationCap,
   faKey,
   faTachometerAlt,
+  faTags,
+  faTasks,
   faTimes,
-  faUserFriends,
   faUsers,
   faUserTag,
-  faVideo,
+  faVideo
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -21,16 +24,21 @@ import { usePathname } from "next/navigation";
 export function AdminSidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setIsSidebarOpen } = useSettings();
+
+  const lang = useLang();
+
   const sidebar = [
-    { url: "/dashboard", icon: faTachometerAlt, title: "Dashboard" },
-    { url: "/users", icon: faUsers, title: "User List" },
-    { url: "/user-groups", icon: faUserFriends, title: "User Groups" },
-    { url: "/video-list", icon: faVideo, title: "Video List" },
-    { url: "/training-list", icon: faBook, title: "Training List" },
-    { url: "/create-test", icon: faClipboardCheck, title: "Create Test" },
-    { url: "/departments", icon: faBuilding, title: "Departments" },
-    { url: "/roles", icon: faUserTag, title: "Roles" },
-    { url: "/change-password", icon: faKey, title: "Change Password" },
+    { url: "/dashboard", icon: faTachometerAlt, title: lang.menu.dashboard },
+    { url: "/users", icon: faUsers, title: lang.menu.userList },
+    { url: "/tags", icon: faTags, title: lang.menu.tag },
+    { url: "/video-list", icon: faVideo, title: lang.menu.videoList },
+    { url: "/training-list", icon: faBook, title: lang.menu.trainingList },
+    { url: "/create-test", icon: faClipboardCheck, title: lang.menu.testCreation },
+    { url: "/assignment-list", icon: faTasks, title: lang.menu.listOfIssues },
+    { url: "/assignment-review", icon: faClipboardList, title: lang.menu.assignmentReview },
+    { url: "/departments", icon: faBuilding, title: lang.menu.department },
+    { url: "/roles", icon: faUserTag, title: lang.menu.role },
+    { url: "/change-password", icon: faKey, title: lang.menu.changePassword },
   ];
 
   return (
@@ -52,7 +60,7 @@ export function AdminSidebar() {
               className="fas fa-graduation-cap text-white text-sm"
             />
           </div>
-          <h1 className="text-xl font-bold text-gray-900">Training Admin</h1>
+          <h1 className="text-xl font-bold text-gray-900">トレーニング管理</h1>
         </div>
         {/* Close button only visible on mobile */}
         <button
@@ -73,7 +81,7 @@ export function AdminSidebar() {
                 className={cn(
                   "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200",
                   pathname === item.url &&
-                    " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600"
+                  " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600"
                 )}
               >
                 <FontAwesomeIcon
