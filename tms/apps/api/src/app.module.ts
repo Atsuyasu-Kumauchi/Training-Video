@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DepartmentModule } from './department/department.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_FILTER } from '@nestjs/core';
+import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptionFilter';
 
 @Module({
   imports: [
@@ -37,6 +39,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],
 })
 export class AppModule {}

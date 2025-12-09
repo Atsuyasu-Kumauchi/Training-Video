@@ -2,6 +2,8 @@ import { Controller, Post, Body, Request, UseGuards, Get, HttpStatus, HttpExcept
 import { AuthService } from './auth.service';
 import { JwtActiveAuthGuard, JwtAuthGuard } from './jwt-auth.guard';
 import { LoginDto, SignUpDto } from './auth.dto';
+import { throwHttpException } from 'src/common/exception/exception.util';
+import { InvalidCredential, UserNotFound } from './auth.service.exceptions';
 
 
 @Controller('auth')
@@ -11,23 +13,35 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('authenticator-qr')
   async authenticatorQr(@Req() req) {
-    const qr = await this.authService.authenticatorQr(req.user.username);
-    if (qr) return qr;
-    throw new HttpException('QR Generate Failed!', HttpStatus.INTERNAL_SERVER_ERROR);
+    try {
+      return await this.authService.authenticatorQr(req.user.username);
+    } catch (e) {
+      if (e instanceof UserNotFound)
+        throwHttpException("Unknown user!", HttpStatus.UNPROCESSABLE_ENTITY, e);
+      throw e;
+    }
   }
 
   @Post('login-totp')
   async loginWithTotp(@Body() loginDto: LoginDto) {
-    const token = await this.authService.loginWithTotp(loginDto);
-    if (token) return token;
-    throw new HttpException('Invalid Credential!', HttpStatus.UNAUTHORIZED);
+    try {
+      return await this.authService.loginWithTotp(loginDto);
+    } catch (e) {
+      if (e instanceof UserNotFound || e instanceof InvalidCredential)
+        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+      throw e;
+    }
   }
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
-    const token = await this.authService.login(loginDto);
-    if (token) return token;
-    throw new HttpException('Invalid Credential!', HttpStatus.UNAUTHORIZED);
+    try {
+      return await this.authService.login(loginDto);
+    } catch (e) {
+      if (e instanceof UserNotFound || e instanceof InvalidCredential)
+        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+      throw e;
+    }
   }
 
   @Post('signup')
@@ -35,36 +49,63 @@ export class AuthController {
     if (await this.authService.userExists(signUpDto.username))
       throw new HttpException("User Exists!", HttpStatus.CONFLICT);
 
-    const token = await this.authService.signup(signUpDto);
-    if (token) return token;
-
-    throw new HttpException('Signup Failed!', HttpStatus.INTERNAL_SERVER_ERROR);
+    return await this.authService.signup(signUpDto);
   }
 
   @Get('resend-mailpass')
   async resendMailpass(@Query('email') email: string) {
-    const mailbody = await this.authService.resendMailpass(email);
-    if (!mailbody) throw new HttpException('Failed Resend!', HttpStatus.INTERNAL_SERVER_ERROR);
-    return mailbody;
+    try {
+      return await this.authService.resendMailpass(email);
+    } catch (e) {
+      if (e instanceof UserNotFound)
+        throwHttpException("Unknown account!", HttpStatus.UNPROCESSABLE_ENTITY, e);
+      throw e;
+    }
   }
 
   @Post('verify-email')
   async verifyEmail(@Body('email') email: string, @Body('mailpass') mailpass: string, @Body('sig') sig: string) {
-    const ok = await this.authService.verifyEmail(email, mailpass, sig);
-    if (!ok) throw new HttpException('Invalid Credential!', HttpStatus.UNAUTHORIZED);
+    try {
+      await this.authService.verifyEmail(email, mailpass, sig);
+    } catch (e) {
+      if (e instanceof UserNotFound || e instanceof InvalidCredential)
+        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+      throw e;
+    }
   }
 
   @Get('init-recovery')
   async initRecovery(@Query('email') email) {
-    const mailbody = await this.authService.initRecovery(email);
-    if (!mailbody) throw new HttpException('Failed send!', HttpStatus.INTERNAL_SERVER_ERROR);
-    return mailbody;
+    try {
+      return await this.authService.initRecovery(email);
+    } catch (e) {
+      if (e instanceof UserNotFound)
+        throwHttpException("Unknown user!", HttpStatus.UNPROCESSABLE_ENTITY, e);
+      throw e;
+    }
   }
 
   @Post('reset-password')
   async resetPassword(@Body('email') email: string, @Body('otp') otp: string, @Body('sig') sig: string, @Body('newpassword') p: string) {
-    const ok = await this.authService.resetPassword(email, otp, sig, p);
-    if (!ok) throw new HttpException('Invalid Credential!', HttpStatus.UNAUTHORIZED);
+    try {
+      await this.authService.resetPassword(email, otp, sig, p);
+    } catch (e) {
+      if (e instanceof UserNotFound || e instanceof InvalidCredential)
+        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+      throw e;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('change-password')
+  async changePassword(@Req() req, @Body('password') password: string, @Body('newpassword') newpassword: string) {
+    try {
+      await this.authService.changePassword(req.user.username, password, newpassword);
+    } catch (e) {
+      if (e instanceof UserNotFound || e instanceof InvalidCredential)
+        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+      throw e;
+    }
   }
 
   @UseGuards(JwtActiveAuthGuard)

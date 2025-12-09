@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Role } from 'src/role/role.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm';
 
 
 @Entity('tbl_user')
@@ -18,8 +19,18 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   privatekey: string;
 
+  @Column({ name: 'is_admin', type: 'boolean', default: false })
+  isAdmin: boolean;
+
   @Column({ type: 'varchar', length: 20, default: 'disabled' })
   status: 'enabled' | 'disabled';
+
+  @Column({ type: 'integer', nullable: true })
+  roleId: number;
+
+  @ManyToOne(_ => Role, role => role.users)
+  @JoinColumn({ name: 'roleId' })
+  role: Role;
 
   @CreateDateColumn()
   created: Date;

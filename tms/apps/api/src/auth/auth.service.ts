@@ -7,6 +7,8 @@ import * as qrcode from 'qrcode';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/user.entity';
+import { throwSe } from 'src/common/exception/exception.util';
+import { InvalidCredential, UserNotFound } from './auth.service.exceptions';
 
 
 function dateToOtp(date: Date): string {
@@ -53,52 +55,48 @@ export class AuthService {
     return !!await this.userService.findByUsername(username);
   }
 
-  async validateUser(username: string, password: string): Promise<User|null> {
-    const user = await this.userService.findByUsername(username);
+  async validateUser(username: string, password: string): Promise<User> {
+    const user = await this.userService.findByUsername(username) || throwSe(UserNotFound);
 
-    if (user && await comparePassword(password, user.password)) return user;
+    if (await comparePassword(password, user.password)) return user;
 
-    return null;
+    throwSe(InvalidCredential);
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string }|null> {
+  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.validateUser(loginDto.username, loginDto.password);
-    return user && {
-      accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', sub: user.userId }),
-    };
+    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', sub: user.userId }) };
   }
 
   async initRecovery(email: string) {
-    const user = await this.userService.findByEmail(email);
-    if (!user) return null;
+    const user = await this.userService.findByEmail(email) || throwSe(UserNotFound);
 
     const otp = dateToOtp(new Date());
     return { otp, key: await newUserVerifySig(user, otp) };
   }
 
   async resetPassword(email: string, otp: string, sig: string, newpassword: string) {
-    const user = await this.userService.findByEmail(email);
-    if (!user) return null;
+    const user = await this.userService.findByEmail(email) || throwSe(UserNotFound);
 
-    if (user && await comparePassword(newUserVerifySigRaw(user, otp), sig) && diffMinutes(otpToDate(otp), new Date()) < 720) {
+    if (await comparePassword(newUserVerifySigRaw(user, otp), sig) && diffMinutes(otpToDate(otp), new Date()) < 720) {
       user.password = await hashPassword(newpassword);
       user.privatekey = authenticator.generateSecret();
       await this.userService.saveUser(user);
       return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', sub: user.userId }) };
     }
-    return null;
+
+    throwSe(InvalidCredential);
   }
 
-  async loginWithTotp(loginDto: LoginDto): Promise<{ accessToken: string }|null> {
-    const user = await this.userService.findByUsername(loginDto.username);
+  async loginWithTotp(loginDto: LoginDto): Promise<{ accessToken: string }> {
+    const user = await this.userService.findByUsername(loginDto.username) || throwSe(UserNotFound);
 
-    if (user && authenticator.verify({ token: loginDto.password, secret: user.privatekey || '' }))
-      return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', sub: user.userId }) };
+    authenticator.verify({ token: loginDto.password, secret: user.privatekey || '' }) || throwSe(InvalidCredential);
 
-    return null;
+    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', sub: user.userId }) };
   }
 
-  async signup(signUpDto: SignUpDto): Promise<{ accessToken: string, __mailbody: Object }|null> {
+  async signup(signUpDto: SignUpDto): Promise<{ accessToken: string, __mailbody: Object }> {
     const user = await this.userService.create({
       ...signUpDto,
       password: await hashPassword(signUpDto.password),
@@ -115,32 +113,39 @@ export class AuthService {
   }
 
   async resendMailpass(email: string) {
-    const user = await this.userService.findByEmail(email);
-    if (!user) return null;
+    const user = await this.userService.findByEmail(email) || throwSe(UserNotFound);
 
     const mailpass = dateToOtp(new Date());
     return { mailpass, sig: await newUserVerifySig(user, mailpass) };
   }
 
   async verifyEmail(email: string, mailpass: string, sig: string) {
-    const user = await this.userService.findByEmail(email);
-    if (user && await comparePassword(newUserVerifySigRaw(user, mailpass), sig) && diffMinutes(otpToDate(mailpass), new Date()) < 720) {
+    const user = await this.userService.findByEmail(email) || throwSe(UserNotFound);
+
+    if (await comparePassword(newUserVerifySigRaw(user, mailpass), sig) && diffMinutes(otpToDate(mailpass), new Date()) < 720) {
       user.status = "enabled";
-      return !!await(this.userService.saveUser(user));
+      return !!await this.userService.saveUser(user);
     }
-    return false;
+
+    throwSe(InvalidCredential);
   }
 
-  async authenticatorQr(username: string): Promise<string|null> {
-    const user = await this.userService.findByUsername(username);
+  async authenticatorQr(username: string): Promise<string> {
+    const user = await this.userService.findByUsername(username) || throwSe(UserNotFound);
 
-    return user && new Promise((res, rej) => {
+    return new Promise((res, rej) => {
       const keyuri = totp.keyuri(user.username, this.configService.getOrThrow<string>('appname'), user.privatekey || '');
       qrcode.toDataURL(keyuri, (err, url) => {
         if (err) rej(err);
         else res(url)
       });
     });
+  }
+
+  async changePassword(username: string, password: string, newpassword: string) {
+    const user = await this.validateUser(username, password);
+    user.password = await hashPassword(newpassword);
+    await this.userService.saveUser(user);
   }
 
 }

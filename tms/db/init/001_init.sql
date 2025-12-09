@@ -55,6 +55,7 @@ CREATE TABLE "tbl_user" (
   "username" VARCHAR(100) UNIQUE NOT NULL,
   "password" VARCHAR(255) NOT NULL,
   "privatekey" VARCHAR(255),
+  "is_admin" BOOLEAN DEFAULT true,
   "status" VARCHAR(20) DEFAULT 'disabled' CHECK (status IN ('enabled', 'disabled'))
   "created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   "modified" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
