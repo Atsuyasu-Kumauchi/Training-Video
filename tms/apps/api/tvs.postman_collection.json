@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "df7e3bf4-7e49-47c4-b383-13a74b39e1a0",
+		"_postman_id": "c6c27d54-0be0-456c-8483-badee54f7f06",
 		"name": "tvs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "34581829"
@@ -43,7 +43,7 @@
 								}
 							}
 						},
-						"url": "{{server_address}}/{{auth_controller}}/signup"
+						"url": "{{server_address}}/{{dir_auth}}/signup"
 					},
 					"response": []
 				},
@@ -81,7 +81,42 @@
 								}
 							}
 						},
-						"url": "{{server_address}}/{{auth_controller}}/login"
+						"url": "{{server_address}}/{{dir_auth}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tvs_jwt}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server_address}}/{{dir_auth}}/profile"
 					},
 					"response": []
 				},
@@ -119,7 +154,7 @@
 								}
 							}
 						},
-						"url": "{{server_address}}/{{auth_controller}}/verify-email"
+						"url": "{{server_address}}/{{dir_auth}}/verify-email"
 					},
 					"response": []
 				},
@@ -155,12 +190,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server_address}}/{{auth_controller}}/resend-mailpass?email=samax.mw@gmail.com",
+							"raw": "{{server_address}}/{{dir_auth}}/resend-mailpass?email=samax.mw@gmail.com",
 							"host": [
 								"{{server_address}}"
 							],
 							"path": [
-								"{{auth_controller}}",
+								"{{dir_auth}}",
 								"resend-mailpass"
 							],
 							"query": [
@@ -170,41 +205,6 @@
 								}
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "profile",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{tvs_jwt}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{server_address}}/{{auth_controller}}/profile"
 					},
 					"response": []
 				},
@@ -240,18 +240,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server_address}}/{{auth_controller}}/init-recovery?email={{auth_recovery_mail}}",
+							"raw": "{{server_address}}/{{dir_auth}}/init-recovery?email=samax.mw@gmail.com",
 							"host": [
 								"{{server_address}}"
 							],
 							"path": [
-								"{{auth_controller}}",
+								"{{dir_auth}}",
 								"init-recovery"
 							],
 							"query": [
 								{
 									"key": "email",
-									"value": "{{auth_recovery_mail}}"
+									"value": "samax.mw@gmail.com"
 								}
 							]
 						}
@@ -292,7 +292,7 @@
 								}
 							}
 						},
-						"url": "{{server_address}}/{{auth_controller}}/reset-password"
+						"url": "{{server_address}}/{{dir_auth}}/reset-password"
 					},
 					"response": []
 				},
@@ -327,7 +327,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{server_address}}/{{auth_controller}}/authenticator-qr"
+						"url": "{{server_address}}/{{dir_auth}}/authenticator-qr"
 					},
 					"response": []
 				},
@@ -365,7 +365,51 @@
 								}
 							}
 						},
-						"url": "{{server_address}}/{{auth_controller}}/login-totp"
+						"url": "{{server_address}}/{{dir_auth}}/login-totp"
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tvs_jwt}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"max_9200Xa\",\n  \"newpassword\": \"max_9200X\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server_address}}/{{dir_auth}}/change-password"
 					},
 					"response": []
 				}
@@ -405,7 +449,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{server_address}}/{{department_controller}}"
+						"url": "{{server_address}}/{{dir_department}}"
 					},
 					"response": []
 				},
@@ -443,7 +487,7 @@
 								}
 							}
 						},
-						"url": "{{server_address}}/{{department_controller}}"
+						"url": "{{server_address}}/{{dir_department}}"
 					},
 					"response": []
 				},
@@ -472,7 +516,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{server_address}}/{{department_controller}}/{{department_id}}"
+						"url": "{{server_address}}/{{dir_department}}/1"
 					},
 					"response": []
 				}
@@ -505,6 +549,10 @@
 	],
 	"variable": [
 		{
+			"key": "server_address",
+			"value": ""
+		},
+		{
 			"key": "auth_controller",
 			"value": ""
 		},
@@ -513,8 +561,9 @@
 			"value": ""
 		},
 		{
-			"key": "server_address",
-			"value": ""
+			"key": "tvs_jwt",
+			"value": "",
+			"type": "default"
 		}
 	]
 }
