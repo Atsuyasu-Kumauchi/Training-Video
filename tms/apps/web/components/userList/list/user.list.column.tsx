@@ -2,9 +2,12 @@ import { Avatar } from '@/common';
 import { Badge } from '@/common/components/badge';
 import { CUserDto } from '@/common/dto/user.dto';
 import { LangUser } from '@/lang/user';
+import { Button } from '@/tmsui';
 import { TListColumnDef } from '@/tmsui/types';
+import { TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui/ui/UIBasicModal';
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
 
 const { list } = LangUser;
 
@@ -63,18 +66,27 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.actions,
     cell: (ctx) => {
-      return <div className="flex items-center space-x-2">
-        <button className="text-blue-600 hover:text-blue-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faEye} />
-        </button>
-        <button className="text-primary-600 hover:text-primary-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
-        <button className="text-red-600 hover:text-red-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      </div>
+      return <UserActions />
     }
   }
 ]
 
+export const UserActions = () => {
+  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  return (
+    <div className="flex items-center space-x-2">
+      <Button onClick={() => modalRef.current.modalOpen()}>
+        <FontAwesomeIcon icon={faEye} />
+      </Button>
+      <UiBasicModal modalRef={modalRef} title="User Details" description="User Details" body={<div>User Details</div>} />
+      <Button onClick={() => modalRef.current.modalOpen()}>
+        <FontAwesomeIcon icon={faEdit} />
+      </Button>
+      <Button>
+        <FontAwesomeIcon icon={faTrash} />
+      </Button>
+
+
+    </div>
+  )
+}
