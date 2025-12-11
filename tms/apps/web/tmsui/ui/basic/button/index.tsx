@@ -10,13 +10,16 @@ import {
   faCircleNotch,
   faDownload,
   faEdit,
+  faPaperPlane,
   faPlus,
   faPrint,
+  fas,
   faSave,
   faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { ComponentProps, ElementType, ReactNode } from "react";
 
 const iconMap: Record<string, IconProp> = {
@@ -34,6 +37,7 @@ const iconMap: Record<string, IconProp> = {
   draft: faEdit, // Placeholder
   edit: faEdit,
   print: faPrint,
+  paperPlane: faPaperPlane,
 };
 
 const colorVariants = {
@@ -204,7 +208,7 @@ export const Button = ({
     <button type={type} className={buttonClasses} disabled={disabled} {...rest}>
       {loading && (
         <FontAwesomeIcon
-          icon={faCircleNotch}
+          icon={fas.faSpinner}
           spin
           size={size === "sm" ? "sm" : size === "lg" ? "lg" : "1x"}
         />
@@ -268,7 +272,7 @@ export const LinkButton = ({
   target,
   rel,
   onClick,
-  as: Component = "a",
+  as: Component = Link,
   ...rest
 }: LinkButtonProps) => {
   const colorClass =

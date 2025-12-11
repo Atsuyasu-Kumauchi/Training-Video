@@ -1,8 +1,8 @@
 "use client";
 import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
-import { parseAuthTokens, setAuthTokens } from '@/tmsui/core/server/localStorage';
+import { setAuthTokens } from '@/tmsui/core/server/localStorage';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Path } from 'react-hook-form';
 import { finalLoginSchema, initialValues, LoginSchema, loginSchema, loginStep1Schema } from './login.type';
 import LoginView from './login.view';
@@ -10,7 +10,6 @@ import LoginView from './login.view';
 
 
 export default function LoginComponent() {
-
     const [step, setStep] = useState(1);
     const formRef = useRef<TUiFormRef<LoginSchema>>(null);
 
@@ -35,12 +34,9 @@ export default function LoginComponent() {
         onSuccess: (data) => {
             if (data?.accessToken) {
                 setAuthTokens("accessToken", data.accessToken);
-                setAuthTokens("role", "student");
+                window.location.reload();
             }
-        },
-        onError: (error) => {
-            console.log(error);
-        },
+        }
     });
 
     const onSubmit: TFormHandlerSubmit<LoginSchema> = (value) => {
@@ -50,27 +46,22 @@ export default function LoginComponent() {
         }
     };
 
-    useEffect(() => {
-        const tokens = parseAuthTokens();
-        if (tokens) {
-            console.log(tokens);
-        }
-    }, [mutation.isSuccess]);
-
     return (
-        <div className="flex items-center justify-center h-screen">
-            <UiForm
-                ref={formRef}
-                schema={finalLoginSchema} initialValues={initialValues} onSubmit={onSubmit}>
-                <LoginView
-                    formRef={formRef}
-                    step={step}
-                    nextStep={nextStep}
-                    isPending={mutation.isPending}
-                    isError={mutation.isError}
-                    errorMessage={mutation?.error?.message || ''}
-                />
-            </UiForm>
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="max-w-md w-full">
+                <UiForm
+                    ref={formRef}
+                    schema={finalLoginSchema} initialValues={initialValues} onSubmit={onSubmit}>
+                    <LoginView
+                        formRef={formRef}
+                        step={step}
+                        nextStep={nextStep}
+                        isPending={mutation.isPending}
+                        isError={mutation.isError}
+                        errorMessage={mutation?.error?.message || ''}
+                    />
+                </UiForm>
+            </div>
         </div>
     )
 }

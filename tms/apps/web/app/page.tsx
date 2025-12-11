@@ -1,4 +1,4 @@
-import LoginComponent from "@/components/auth/student/login/login.component";
+import LoginComponent from "@/components/auth/login/login.component";
 
 export default function Home() {
   return (

@@ -1,4 +1,5 @@
 import { ILangAssignmentReview, LangAssignmentReview } from "./assignmentReview";
+import { ILangAuth, LangAuth } from "./auth";
 import { ILangChangePassword, LangChangePassword } from "./changePassword";
 import { ILangDashboard, LangDashboard } from "./dashboard";
 import { ILangDepartment, LangDepartment } from "./department";
@@ -30,6 +31,7 @@ export type ILang = {
     role: ILangRole;
     changePassword: ILangChangePassword;
     student: ILangStudent;
+    auth: ILangAuth;
 }
 
 export const Lang: ILang = {
@@ -46,6 +48,7 @@ export const Lang: ILang = {
     role: LangRole,
     changePassword: LangChangePassword,
     student: LangStudent,
+    auth: LangAuth,
 }
 
 

@@ -1,8 +1,9 @@
 "use client";
+import { removeAuthTokens } from "@/tmsui/core/server/localStorage";
 import { useSettings } from "@/tmsui/store";
 import { faBars, faChevronDown, faKey, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Button, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 export function StudentHeader() {
   const { toggleSidebar, setIsSidebarOpen } = useSettings();
@@ -53,13 +54,16 @@ export function StudentHeader() {
                 </MenuItem>
                 <div className="border-t border-gray-100 my-1" />
                 <MenuItem>
-                  <a
-                    href="login.html"
-                    className={`px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center`}
+                  <Button
+                    onClick={() => {
+                      removeAuthTokens();
+                      window.location.reload();
+                    }}
+                    className={`px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center w-full`}
                   >
                     <FontAwesomeIcon icon={faSignOut} className="mr-2" />
                     ログアウト
-                  </a>
+                  </Button>
                 </MenuItem>
               </MenuItems>
             </Menu>
