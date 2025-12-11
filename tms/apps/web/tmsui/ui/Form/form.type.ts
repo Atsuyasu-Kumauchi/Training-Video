@@ -13,6 +13,7 @@ export type TUiFormRef<T extends FieldValues> = {
     form: UseFormReturn<T>;
     onClear: () => void;
     setError: UseFormReturn<T>["setError"];
+    trigger: UseFormReturn<T>["trigger"];
 };
 
 export type TFormHandlerSubmit<T> = SubmitHandler<T> & FormEventHandler<HTMLFormElement>;

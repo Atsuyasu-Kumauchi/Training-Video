@@ -16,7 +16,7 @@ export type TSettingsStore = SettingsState & SettingsActions;
 
 export const initialSettingsState: SettingsState = {
   isOpen: false,
-  isSidebarOpen: false,
+  isSidebarOpen: true,
 };
 
 export const useSettings = create<TSettingsStore>()(

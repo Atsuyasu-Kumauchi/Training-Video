@@ -49,7 +49,6 @@ function StudentWrapper({ children, rightSidebar }: IStudentWrapper) {
   // Auto-hide sidebar on mobile route change
   SidebarAutohide();
 
-  console.log(rightSidebar);
 
   return (
     <div className="flex h-screen">

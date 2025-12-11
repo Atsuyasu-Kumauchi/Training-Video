@@ -3,9 +3,12 @@ import Cookies from "js-cookie";
 
 const getAuthToken = () => Cookies.get("jwtToken");
 
-const AuthServer = axios.create({
-    baseURL: "https://json-api-free.onrender.com",
+export const AuthServer = axios.create({
+    baseURL: process.env.BASE_URL,
     timeout: 1000 * 60,
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
 AuthServer.interceptors.request.use(
@@ -50,5 +53,4 @@ AuthServer.interceptors.response.use(
     },
 );
 
-export { AuthServer };
 

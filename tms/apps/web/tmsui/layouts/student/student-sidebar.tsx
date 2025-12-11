@@ -18,6 +18,8 @@ export function StudentSidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setIsSidebarOpen } = useSettings();
 
+  console.log('isSidebarOpen', isSidebarOpen);
+
   const lang = useLang();
 
   const sidebar = [

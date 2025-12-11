@@ -28,17 +28,17 @@ export function AdminSidebar() {
   const lang = useLang();
 
   const sidebar = [
-    { url: "/dashboard", icon: faTachometerAlt, title: lang.menu.dashboard },
-    { url: "/users", icon: faUsers, title: lang.menu.userList },
-    { url: "/tags", icon: faTags, title: lang.menu.tag },
-    { url: "/video-list", icon: faVideo, title: lang.menu.videoList },
-    { url: "/training-list", icon: faBook, title: lang.menu.trainingList },
-    { url: "/create-test", icon: faClipboardCheck, title: lang.menu.testCreation },
-    { url: "/assignment-list", icon: faTasks, title: lang.menu.listOfIssues },
-    { url: "/assignment-review", icon: faClipboardList, title: lang.menu.assignmentReview },
-    { url: "/departments", icon: faBuilding, title: lang.menu.department },
-    { url: "/roles", icon: faUserTag, title: lang.menu.role },
-    { url: "/change-password", icon: faKey, title: lang.menu.changePassword },
+    { url: "/admin/dashboard", icon: faTachometerAlt, title: lang.menu.dashboard },
+    { url: "/admin/users", icon: faUsers, title: lang.menu.userList },
+    { url: "/admin/tags", icon: faTags, title: lang.menu.tag },
+    { url: "/admin/video-list", icon: faVideo, title: lang.menu.videoList },
+    { url: "/admin/training-list", icon: faBook, title: lang.menu.trainingList },
+    { url: "/admin/create-test", icon: faClipboardCheck, title: lang.menu.testCreation },
+    { url: "/admin/assignment-list", icon: faTasks, title: lang.menu.listOfIssues },
+    { url: "/admin/assignment-review", icon: faClipboardList, title: lang.menu.assignmentReview },
+    { url: "/admin/departments", icon: faBuilding, title: lang.menu.department },
+    { url: "/admin/roles", icon: faUserTag, title: lang.menu.role },
+    { url: "/admin/change-password", icon: faKey, title: lang.menu.changePassword },
   ];
 
   return (

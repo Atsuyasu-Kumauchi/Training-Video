@@ -83,6 +83,7 @@ export const UiForm = <T, TSchema extends ZodType<FieldValues>>({
             form: methods,
             onClear: onClear,
             setError: methods.setError,
+            trigger: methods.trigger,
         };
     });
 
