@@ -22,6 +22,9 @@ export class User {
   @Column({ name: 'is_admin', type: 'boolean', default: false })
   isAdmin: boolean;
 
+  @Column( { name: 'reset_pwd', type: 'boolean', default: false })
+  resetPwd: boolean;
+
   @Column({ type: 'varchar', length: 20, default: 'disabled' })
   status: 'enabled' | 'disabled';
 

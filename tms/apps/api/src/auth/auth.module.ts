@@ -4,12 +4,15 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
-import { UserModule } from '../user/user.moduel'
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtActiveAuthGuard, JwtAuthGuard } from './jwt-auth.guard';
+import { VerifyUser, JwtAuthGuard, IsAdmin } from './auth.guard';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/common/entities/user.entity';
+
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -18,11 +21,10 @@ import { JwtActiveAuthGuard, JwtAuthGuard } from './jwt-auth.guard';
         secret: configService.getOrThrow<string>('secretkey'),
         signOptions: { expiresIn: '5h' }
       })
-    }),
-    UserModule
+    })
   ],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard, JwtActiveAuthGuard],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, VerifyUser, IsAdmin],
   controllers: [AuthController],
-  exports: [JwtAuthGuard, JwtActiveAuthGuard]
+  exports: [JwtAuthGuard, VerifyUser, IsAdmin]
 })
 export class AuthModule {}
