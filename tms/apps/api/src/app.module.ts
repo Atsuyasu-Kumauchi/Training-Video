@@ -7,6 +7,7 @@ import { DepartmentModule } from './department/department.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_FILTER } from '@nestjs/core';
 import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptionFilter';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
@@ -15,8 +16,9 @@ import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptio
       envFilePath: '.env',
       load: [
         () => ({
-          appname: 'com.offproapp.tvs',
-          secretkey: process.env.SECRET_KEY || 'OPEN_SECRET'
+          appname: process.env.APPNAME || 'com.offproapp.tvs',
+          secretkey: process.env.SECRET_KEY || 'OPEN_SECRET',
+          verify_signup: process.env.VERIFY_SIGNUP || false
         })
       ]
     }),
@@ -36,7 +38,8 @@ import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptio
       inject: [ConfigService],
     }),
     DepartmentModule,
-    AuthModule
+    AuthModule,
+    RoleModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],

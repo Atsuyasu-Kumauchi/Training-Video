@@ -1,9 +1,9 @@
-import { Controller, Post, Body, Request, UseGuards, Get, HttpStatus, HttpException, Req, Query } from '@nestjs/common';
+import { Controller, Post, Body, Request, UseGuards, Get, HttpStatus, HttpException, Req, Query, HttpCode } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { JwtActiveAuthGuard, JwtAuthGuard } from './jwt-auth.guard';
+import { VerifyUser, JwtAuthGuard } from './auth.guard';
 import { LoginDto, SignUpDto } from './auth.dto';
 import { throwHttpException } from 'src/common/exception/exception.util';
-import { InvalidCredential, UserNotFound } from './auth.service.exceptions';
+import { InvalidCredential, UserNotFound } from './auth.exceptions';
 
 
 @Controller('auth')
@@ -11,10 +11,10 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('authenticator-qr')
-  async authenticatorQr(@Req() req) {
+  @Get('totp-qr')
+  async totpQr(@Req() req) {
     try {
-      return await this.authService.authenticatorQr(req.user.username);
+      return await this.authService.totpQr(req.user.username);
     } catch (e) {
       if (e instanceof UserNotFound)
         throwHttpException("Unknown user!", HttpStatus.UNPROCESSABLE_ENTITY, e);
@@ -23,6 +23,7 @@ export class AuthController {
   }
 
   @Post('login-totp')
+  @HttpCode(HttpStatus.OK)
   async loginWithTotp(@Body() loginDto: LoginDto) {
     try {
       return await this.authService.loginWithTotp(loginDto);
@@ -34,6 +35,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: LoginDto) {
     try {
       return await this.authService.login(loginDto);
@@ -64,6 +66,7 @@ export class AuthController {
   }
 
   @Post('verify-email')
+  @HttpCode(HttpStatus.OK)
   async verifyEmail(@Body('email') email: string, @Body('mailpass') mailpass: string, @Body('sig') sig: string) {
     try {
       await this.authService.verifyEmail(email, mailpass, sig);
@@ -86,6 +89,7 @@ export class AuthController {
   }
 
   @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
   async resetPassword(@Body('email') email: string, @Body('otp') otp: string, @Body('sig') sig: string, @Body('newpassword') p: string) {
     try {
       await this.authService.resetPassword(email, otp, sig, p);
@@ -98,6 +102,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('change-password')
+  @HttpCode(HttpStatus.OK)
   async changePassword(@Req() req, @Body('password') password: string, @Body('newpassword') newpassword: string) {
     try {
       await this.authService.changePassword(req.user.username, password, newpassword);
@@ -108,7 +113,7 @@ export class AuthController {
     }
   }
 
-  @UseGuards(JwtActiveAuthGuard)
+  @UseGuards(JwtAuthGuard, VerifyUser)
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;

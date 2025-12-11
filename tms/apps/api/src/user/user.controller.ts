@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Param, Body, HttpStatus, HttpCode, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, HttpStatus, HttpCode, NotFoundException, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Messages } from 'src/common/constants';
+import { IsAdmin, JwtAuthGuard } from 'src/auth/auth.guard';
 
 
+@UseGuards(JwtAuthGuard, IsAdmin)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
