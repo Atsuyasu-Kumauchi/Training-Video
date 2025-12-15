@@ -14,8 +14,8 @@ export class CreateDepartmentDto {
   })
   name: string;
 
-  @IsBoolean({ message: Messages.MSG1_EX('boolean')})
-  @IsNotEmpty({ message: Messages.MSG2 })
+  @IsBoolean({ message: Messages.MSG1_EX('status', 'boolean')})
+  @IsNotEmpty({ message: Messages.MSG2_EX('status') })
   status: boolean;
 }
 
