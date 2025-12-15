@@ -39,28 +39,6 @@ export class DepartmentService {
 
     queryBuilder.addOrderBy(`Department.${query.sortBy}`, query.sortDirection);
 
-    // .where
-    // const findOptions: FindManyOptions<Department> = {
-    //   take: limit,
-    //   skip: skip,
-    //   // Default order, customize as needed
-    //   order: { createdAt: 'DESC' }, 
-    // };
-
-    // if (query.search) {
-    //   // Create a complex 'where' clause using TypeORM's 'Like' operator 
-    //   // to search across multiple fields (e.g., name and email)
-    //   findOptions.where = [
-    //     { name: Like(`%${query.search}%`) },
-    //     { email: Like(`%${query.search}%`) },
-    //   ];
-    // }
-    
-    // If you had a 'status' filter in DTO:
-    // if (query.status) {
-    //     findOptions.where = { ...findOptions.where, status: query.status };
-    // }
-
     const [result, resultCount] = await queryBuilder.getManyAndCount();
 
     return {
@@ -93,8 +71,8 @@ export class DepartmentService {
     await this.departmentRepository.remove(department);
   }
 
-  save(department: Partial<Department>) {
-    this.departmentRepository.existsBy({ departmentId: department.departmentId }) || throwSe(NotFoundException);
-    this.departmentRepository.save(department);
+  async save(id: number, department: Partial<Department>) {
+    await this.departmentRepository.existsBy({ departmentId: id }) || throwSe(NotFoundException);
+    return await this.departmentRepository.save(department);
   }
 }

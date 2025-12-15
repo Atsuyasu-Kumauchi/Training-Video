@@ -18,16 +18,16 @@ export class DepartmentController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<DepartmentDto> {
-    return this.departmentService.findOne(+id);
+    return await this.departmentService.findOne(+id);
   }
 
   @Post()
   async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<DepartmentDto> {
-    return this.departmentService.create(createDepartmentDto);
+    return await this.departmentService.create(createDepartmentDto);
   }
 
-  @Put()
-  async save(@Body() department: Partial<Department>) {
-    return this.departmentService.save(department);
+  @Put(':id')
+  async save(@Param('id') id: number, @Body() department: Partial<Department>) {
+    return await this.departmentService.save(id, department);
   }
 }
