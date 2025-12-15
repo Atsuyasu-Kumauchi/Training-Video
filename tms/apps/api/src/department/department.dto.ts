@@ -1,5 +1,7 @@
-import { IsString, IsNotEmpty, MinLength, MaxLength, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, MinLength, MaxLength, Matches, IsBoolean, IsOptional, IsEnum, IsNumber, IsPositive, Min } from 'class-validator';
 import { Messages } from 'src/common/constants';
+import { SortDirection } from 'src/common/enums/SortDirection';
 
 
 export class CreateDepartmentDto {
@@ -11,6 +13,10 @@ export class CreateDepartmentDto {
     message: Messages.MSG5
   })
   name: string;
+
+  @IsBoolean({ message: Messages.MSG1_EX('boolean')})
+  @IsNotEmpty({ message: Messages.MSG2 })
+  status: boolean;
 }
 
 export class DepartmentDto {
@@ -19,4 +25,31 @@ export class DepartmentDto {
   status: boolean;
   created: Date;
   modified: Date;
+}
+
+export class DepartmentQueryDto {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @Type(() => Boolean)
+  @IsBoolean()
+  status: boolean = true;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  pageIndex: number = 0;
+
+  @Type(() => Number)
+  @IsNumber()
+  @IsPositive()
+  pageSize: number = 10;
+
+  @IsString()
+  sortBy: string = "departmentId";
+
+  @IsOptional()
+  @IsEnum(SortDirection)
+  sortDirection: SortDirection = SortDirection.Descending;
 }
