@@ -8,8 +8,9 @@ export class Messages {
 
   // Department validation messages
   static readonly MSG1 = 'Department name must be a string';
-  static readonly MSG1_EX = typename => `Department name must be a ${typename}`;
+  static readonly MSG1_EX = (field: string, typename: string) => `Department ${field} must be a ${typename}`;
   static readonly MSG2 = 'Department name is required';
+  static readonly MSG2_EX = (field: string) => `Department ${field} is required`;
   static readonly MSG3 = 'Department name must be at least 2 characters long';
   static readonly MSG4 = 'Department name cannot exceed 100 characters';
   static readonly MSG5 = 'Department name can only contain letters, numbers, spaces, hyphens, and underscores';
