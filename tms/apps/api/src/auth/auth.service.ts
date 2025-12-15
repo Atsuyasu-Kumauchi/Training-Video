@@ -106,6 +106,7 @@ export class AuthService {
       resetPwd: pwdIsDummy,
       isAdmin
     });
+    await this.userRepository.save(user);
 
     const mailpass = dateToOtp(new Date());
     console.log(mailpass, await newUserVerifySig(user, mailpass)); // TODO: send emailVirifyCode
