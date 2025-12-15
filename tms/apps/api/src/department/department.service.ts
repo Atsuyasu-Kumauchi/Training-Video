@@ -34,8 +34,8 @@ export class DepartmentService {
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-    queryBuilder.where({ status: query.status })
-    if (query.name) queryBuilder.andWhere("Department.name like :name", { name: `${query.name}` });
+    queryBuilder.where({ status: query.statusFilter })
+    if (query.nameFilter) queryBuilder.andWhere("Department.name like :name", { name: `${query.nameFilter}` });
 
     queryBuilder.addOrderBy(`Department.${query.sortBy}`, query.sortDirection);
 
@@ -70,7 +70,9 @@ export class DepartmentService {
       pageCount: Math.ceil(resultCount / query.pageSize),
       resultCount,
       sortBy: query.sortBy,
-      sortDirection: query.sortDirection
+      sortDirection: query.sortDirection,
+      nameFilter: query.nameFilter,
+      statusFilter: query.statusFilter
     };
   }
 

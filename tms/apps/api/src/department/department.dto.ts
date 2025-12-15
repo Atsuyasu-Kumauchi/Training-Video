@@ -30,11 +30,11 @@ export class DepartmentDto {
 export class DepartmentQueryDto {
   @IsOptional()
   @IsString()
-  name?: string;
+  nameFilter?: string;
 
   @Type(() => Boolean)
   @IsBoolean()
-  status: boolean = true;
+  statusFilter: boolean = true;
 
   @Type(() => Number)
   @IsNumber()
