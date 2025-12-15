@@ -1,9 +1,13 @@
-import { CDepartmentDto } from '@/common';
+import { CDepartmentDto, IDepartmentDto } from '@/common';
 import { Badge } from '@/common/components/badge';
 import { LangDepartment } from '@/lang/department';
 import { TListColumnDef } from '@/tmsui/types';
+import { Button } from '@/tmsui/ui/basic/button';
+import { TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui/ui/UIBasicModal';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import DepartmentsFormComponent from '../form/departments.form.component';
 
 const { list } = LangDepartment;
 
@@ -29,16 +33,28 @@ export const departmentsListColumn: TListColumnDef<CDepartmentDto>[] = [
     accessorKey: "actions",
     enableHiding: false,
     header: () => list.action,
-    cell: (ctx) => {
-      return <div className="flex items-center space-x-2">
-        <button className="text-primary-600 hover:text-primary-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
-        <button className="text-red-600 hover:text-red-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      </div>
-    }
+    cell: (ctx) => <ActionDepartment {...ctx.row.original} />
   }
 ]
 
+export const ActionDepartment = (department: IDepartmentDto) => {
+  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  const editDepartment = () => modalRef.current.modalOpen();
+  const deleteDepartment = () => modalRef.current.modalOpen();
+  return (
+    <div className="flex items-center space-x-1">
+      <Button onClick={editDepartment} variant="ghost" color='primary' className='p-0'>
+        <FontAwesomeIcon icon={faEdit} />
+      </Button>
+      <Button onClick={deleteDepartment} color='danger' variant="ghost" className='p-1' disabled>
+        <FontAwesomeIcon icon={faTrash} />
+      </Button>
+      <UiBasicModal
+        modalRef={modalRef}
+        title="Edit Department"
+        description="Edit Department"
+        body={<DepartmentsFormComponent modalRef={modalRef} editData={department} />}
+      />
+    </div>
+  )
+}

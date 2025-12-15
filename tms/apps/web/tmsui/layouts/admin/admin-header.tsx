@@ -1,10 +1,11 @@
 "use client";
 import { removeAuthTokens } from "@/tmsui/core/server/localStorage";
 import { useSettings } from "@/tmsui/store";
-import { Button } from "@/tmsui/ui";
+import { Button, LinkButton } from "@/tmsui/ui";
 import { faBars, faChevronDown, faKey, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import Link from "next/link";
 
 export function AdminHeader() {
   const { toggleSidebar, setIsSidebarOpen } = useSettings();
@@ -54,13 +55,15 @@ export function AdminHeader() {
               </MenuButton>
               <MenuItems className="absolute right-0 focus:outline-none mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                 <MenuItem>
-                  <a
-                    href="change-password.html"
-                    className={`px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center`}
+                  <LinkButton
+                    as={Link}
+                    href="/admin/change-password"
+                    variant="ghost"
+                    className={`px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-start`}
                   >
                     <FontAwesomeIcon icon={faKey} className="mr-2" />
                     パスワード変更
-                  </a>
+                  </LinkButton>
                 </MenuItem>
                 <div className="border-t border-gray-100 my-1" />
                 <MenuItem>

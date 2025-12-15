@@ -1,7 +1,6 @@
 "use client";
 import { AUTH } from '@/common';
-import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
-import { setAuthTokens } from '@/tmsui/core/server/localStorage';
+import { AuthServer, parseJwt, setAuthTokens, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -27,8 +26,12 @@ export default function StudentLoginComponent() {
         },
         onSuccess: (data) => {
             if (data?.accessToken) {
-                setAuthTokens("tms_token", data.accessToken);
-                window.location.href = "/totp-qr";
+                const user = parseJwt(data.accessToken);
+                if (!user?.isAdmin) {
+                    setAuthTokens("tms_token", data.accessToken);
+                    window.location.href = "/totp-qr";
+                }
+
             }
         },
         onError: (error) => {

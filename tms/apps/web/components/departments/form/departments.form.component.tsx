@@ -1,28 +1,42 @@
-import { DEPARTMENT } from "@/common";
-import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
-import { useMutation } from "@tanstack/react-query";
+import { DEPARTMENT, IDepartmentDto, ListQueryConfig } from "@/common";
+import { AuthServer, TFormHandlerSubmit, TUiBasicModalRef, TUiFormRef, UiForm } from "@/tmsui";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
   departmentsSchema,
-  initialValues,
-  TDepartmentsSchema,
+  TDepartmentsSchema
 } from "./departments.form.type";
 import DepartmentsFormView from "./departments.form.view";
 
-export default function DepartmentsFormComponent() {
+type DepartmentProps = {
+  modalRef: React.RefObject<TUiBasicModalRef>;
+  editData?: IDepartmentDto;
+}
+
+export default function DepartmentsFormComponent({ modalRef, editData }: DepartmentProps) {
+  const isEdit = Boolean(editData?.departmentId);
   const formRef = useRef<TUiFormRef<TDepartmentsSchema>>(null);
+  const queryClient = useQueryClient();
+
+  const mutationKey = isEdit ? ["departments-update"] : ["departments-create"];
+  const mutationUrl = isEdit ? DEPARTMENT.UPDATE(editData?.departmentId ?? 0) : DEPARTMENT.CREATE;
 
   const mutation = useMutation({
-    mutationKey: ["departments-create"],
+    mutationKey,
     mutationFn: (data: TDepartmentsSchema) => {
       return AuthServer({
-        method: "POST",
-        url: DEPARTMENT.CREATE,
-        data,
+        method: isEdit ? "PUT" : "POST",
+        url: mutationUrl,
+        data: {
+          name: data.name,
+          status: Boolean(data.status),
+        },
       });
     },
     onSuccess: () => {
       formRef.current?.reset();
+      modalRef.current?.modalClose();
+      queryClient.invalidateQueries({ queryKey: ListQueryConfig.DEPARTMENT_LIST.key });
     },
   });
 
@@ -31,6 +45,7 @@ export default function DepartmentsFormComponent() {
     if (data) {
       mutation.mutate({
         name: data.name,
+        status: data.status as string,
       } as TDepartmentsSchema);
     }
   };
@@ -38,7 +53,13 @@ export default function DepartmentsFormComponent() {
   return (
     <UiForm
       schema={departmentsSchema}
-      initialValues={initialValues}
+      initialValues={isEdit ? {
+        name: editData?.name ?? "",
+        status: editData?.status ? "true" : "false",
+      } : {
+        name: "",
+        status: "",
+      } as TDepartmentsSchema}
       onSubmit={onSubmitHandler}
       ref={formRef}
     >

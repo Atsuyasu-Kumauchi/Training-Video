@@ -27,7 +27,7 @@ export default function DepartmentsListHeader() {
                 <UiBasicModal
                     modalRef={modalRef}
                     title={department.form.title}
-                    body={<DepartmentsFormComponent />}
+                    body={<DepartmentsFormComponent modalRef={modalRef} />}
                 />
             </div>
         </Fragment>

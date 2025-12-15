@@ -8,19 +8,13 @@ interface IQueryConfig {
 }
 
 export interface ApiResponse<TData> {
-  nonce: number;
-  status: number;
-  message: string;
-  error: null | string;
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-    totalPages: number;
-    totalElements: number;
-    first: boolean;
-    last: boolean;
-  };
-  items: TData[];
+  pageIndex: number;
+  pageSize: number;
+  pageCount: number;
+  resultCount: number;
+  sortBy: string;
+  sortDirection: string;
+  data: TData[];
 }
 
 interface IUseFetchListQueryProps {
@@ -63,8 +57,8 @@ export function useFetchListQuery<TData>({
       signal?.addEventListener("abort", () => cancelSource.cancel());
 
       const params = {
-        page: pageIndex + 1,
-        per_page: pageSize,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
         // q: globalFilter,
         // ...Object.entries(filters ?? {})
         //   .filter(([, value]) => value !== undefined && value !== null)
@@ -95,13 +89,13 @@ export function useFetchListQuery<TData>({
 
       try {
         const response = await server.get<ApiResponse<TData>>(baseUrl ?? "", {
-          // params,
+          params,
           cancelToken: cancelSource.token,
         });
 
         return {
           ...response.data,
-          items: response?.data.items ?? [],
+          data: response?.data.data ?? [],
 
         }
       } catch (error: unknown) {
@@ -112,19 +106,13 @@ export function useFetchListQuery<TData>({
         }
 
         return {
-          nonce: 0,
-          status: 500,
-          message: "Canceled or failed request",
-          error: error.message ?? "Request failed",
-          pageable: {
-            pageNumber: 0,
-            pageSize,
-            totalPages: 0,
-            totalElements: 0,
-            first: true,
-            last: true,
-          },
-          items: [],
+          pageIndex: 0,
+          pageSize: 0,
+          pageCount: 0,
+          resultCount: 0,
+          sortBy: "",
+          sortDirection: "",
+          data: [],
         };
       }
     },

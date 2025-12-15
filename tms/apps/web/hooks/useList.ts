@@ -97,9 +97,9 @@ export function useList<TData, TValue = unknown>({
     });
 
     const table = useReactTable({
-        data: data?.items || [],
+        data: data?.data || [],
         columns,
-        pageCount: data?.pageable?.totalPages ?? -1,
+        pageCount: data?.pageCount ?? -1,
         state: {
             sorting,
             columnFilters,
