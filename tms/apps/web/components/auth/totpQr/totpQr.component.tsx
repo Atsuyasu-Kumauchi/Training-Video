@@ -1,7 +1,6 @@
 "use client";
-import { parseJwt } from '@/proxy';
-import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
-import { getAuthTokens, setAuthTokens } from '@/tmsui/core/server/localStorage';
+import { AUTH } from '@/common';
+import { AuthServer, getAuthTokens, parseJwt, setAuthTokens, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
@@ -16,10 +15,9 @@ export default function TotpQrComponent() {
     const mutation = useMutation({
         mutationKey: ["totp-qr"],
         mutationFn: async (value: { username: string, password: string }) => {
-            const url = "/auth/login-totp";
             const response = await AuthServer({
                 method: "POST",
-                url,
+                url: AUTH.LOGIN_TOTP,
                 data: value,
             });
             await wait();

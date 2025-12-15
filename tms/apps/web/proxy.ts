@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function parseJwt(token: string) {
-  const payload = token?.split(".")[1];
-  const decoded = atob(payload);
-  return JSON.parse(decoded);
-}
 
 export function proxy(request: NextRequest) {
   // const { pathname } = request.nextUrl;
@@ -37,6 +32,6 @@ export function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = {
-  matcher: ["/admin/:path*", "/student/:path*", "/"],
-};
+// export const config = {
+//   matcher: ["/admin/:path*", "/student/:path*", "/"],
+// };

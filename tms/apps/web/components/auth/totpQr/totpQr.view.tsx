@@ -1,3 +1,4 @@
+import { AUTH } from "@/common";
 import useLang from "@/lang";
 import { AuthServer, Button, cn, UiFormInput } from "@/tmsui";
 import { faGraduationCap, fas, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +17,7 @@ export default function TotpQrView(props: TTotpQrViewSchema) {
         queryFn: async () => {
             const response = await AuthServer({
                 method: "GET",
-                url: "/auth/totp-qr",
+                url: AUTH.TOTP_QR,
             });
             return response.data;
         },

@@ -2,11 +2,11 @@ import { zodInfer, zodObject, zodPasswordRequired, zodStringRequired } from "@/t
 
 // Schema for changing password with custom validation for matching passwords
 export const changePasswordSchema = zodObject({
-    oldPassword: zodStringRequired(),
-    newPassword: zodPasswordRequired(),
+    password: zodStringRequired(),
+    newpassword: zodPasswordRequired(),
     confirmPassword: zodStringRequired(),
 }).superRefine((data, ctx) => {
-    if (data.newPassword !== data.confirmPassword) {
+    if (data.newpassword !== data.confirmPassword) {
         ctx.addIssue({
             code: "custom",
             path: ["confirmPassword"],
@@ -18,8 +18,8 @@ export const changePasswordSchema = zodObject({
 export type ChangePasswordType = zodInfer<typeof changePasswordSchema>;
 
 export const changePasswordDefault: ChangePasswordType = {
-    oldPassword: "",
-    newPassword: "",
+    password: "",
+    newpassword: "",
     confirmPassword: "",
 };
 

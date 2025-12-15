@@ -16,14 +16,14 @@ export default function ChangePasswordFormView() {
                 <div id="changePasswordForm" className="p-6 space-y-6">
                     {/* Current Password */}
                     <UiFormInputPassword<ChangePasswordType>
-                        name="oldPassword"
+                        name="password"
                         label={changePassword.form.currentPassword}
                         placeholder={changePassword.form.currentPasswordPlaceholder}
                     />
                     {/* New Password with Strength Meter */}
                     <div>
                         <UiFormInputPassword<ChangePasswordType>
-                            name="newPassword"
+                            name="newpassword"
                             label={changePassword.form.newPassword}
                             placeholder={changePassword.form.newPasswordPlaceholder}
                             getPasswordStrength={getPasswordStrength}

@@ -1,4 +1,5 @@
 "use client";
+import { AUTH } from "@/common";
 import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -11,7 +12,11 @@ export default function ForgotPasswordComponent() {
     const query = useMutation({
         mutationKey: ["forgot-password"],
         mutationFn: async (email: string) => {
-            const response = await AuthServer.get("/auth/init-recovery", { params: { email: email } });
+            const response = await AuthServer({
+                method: "GET",
+                url: AUTH.INIT_RECOVERY,
+                params: { email: email },
+            });
             await wait(1000);
             return response.data;
         },

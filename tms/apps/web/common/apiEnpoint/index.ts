@@ -1,5 +1,6 @@
 export * from './assignmentList.api';
 export * from './assignmentReview.api';
+export * from './auth';
 export * from './changePassword.api';
 export * from './department.api';
 export * from './lists';

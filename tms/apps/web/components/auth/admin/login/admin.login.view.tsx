@@ -95,7 +95,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
                 </div>
             </div>
             {/* Error Message */}
-            <div id="error-message" className="hidden bg-red-50 border border-red-200 rounded-md mt-4 p-4">
+            {errorMessage && <div id="error-message" className="bg-red-50 border border-red-200 rounded-md mt-4 p-4">
                 <div className="flex">
                     <div className="flex-shrink-0">
                         <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
             {/* Footer */}
             <div className="text-center mt-4">
                 <p className="text-xs text-gray-500">

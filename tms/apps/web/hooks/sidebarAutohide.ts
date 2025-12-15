@@ -7,7 +7,6 @@ export default function SidebarAutohide() {
   const { setIsSidebarOpen } = useSettings();
 
   useEffect(() => {
-    // Only hide on mobile
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
     }

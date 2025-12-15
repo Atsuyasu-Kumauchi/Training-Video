@@ -1,6 +1,6 @@
-import useLang from "@/lang";
-import { TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
-import { useSettings } from "@/tmsui/store";
+import { DEPARTMENT } from "@/common";
+import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
+import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
   departmentsSchema,
@@ -10,16 +10,32 @@ import {
 import DepartmentsFormView from "./departments.form.view";
 
 export default function DepartmentsFormComponent() {
-  const { department } = useLang();
-  const { isOpen, setIsOpen } = useSettings();
   const formRef = useRef<TUiFormRef<TDepartmentsSchema>>(null);
 
-  const onSubmitHandler: TFormHandlerSubmit<TDepartmentsSchema> = (value) => {
-    console.log(value);
-    setIsOpen(false);
-  };
-  return (
+  const mutation = useMutation({
+    mutationKey: ["departments-create"],
+    mutationFn: (data: TDepartmentsSchema) => {
+      return AuthServer({
+        method: "POST",
+        url: DEPARTMENT.CREATE,
+        data,
+      });
+    },
+    onSuccess: () => {
+      formRef.current?.reset();
+    },
+  });
 
+  const onSubmitHandler: TFormHandlerSubmit<TDepartmentsSchema> = (value) => {
+    const data = value as TDepartmentsSchema;
+    if (data) {
+      mutation.mutate({
+        name: data.name,
+      } as TDepartmentsSchema);
+    }
+  };
+
+  return (
     <UiForm
       schema={departmentsSchema}
       initialValues={initialValues}

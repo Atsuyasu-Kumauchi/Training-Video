@@ -12,3 +12,9 @@ export const removeAuthTokens = () => {
     Cookies.remove('tms_token');
 };
 
+export function parseJwt(token: string) {
+    const payload = token?.split(".")[1];
+    const decoded = atob(payload);
+    return JSON.parse(decoded);
+  }
+

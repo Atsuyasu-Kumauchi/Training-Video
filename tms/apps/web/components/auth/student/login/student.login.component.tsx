@@ -1,7 +1,10 @@
 "use client";
+import { AUTH } from '@/common';
 import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { setAuthTokens } from '@/tmsui/core/server/localStorage';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { initialValues, StudentLoginSchema, studentLoginSchema } from './student.login.type';
 import StudentLoginView from './student.login.view';
@@ -10,13 +13,13 @@ import StudentLoginView from './student.login.view';
 
 export default function StudentLoginComponent() {
     const formRef = useRef<TUiFormRef<StudentLoginSchema>>(null);
+    const navigate = useRouter();
     const mutation = useMutation({
         mutationKey: ["student-login"],
         mutationFn: async (value: StudentLoginSchema) => {
-            const url = "/auth/login";
             const response = await AuthServer({
                 method: "POST",
-                url,
+                url: AUTH.LOGIN,
                 data: value,
             });
             await wait();
@@ -30,7 +33,11 @@ export default function StudentLoginComponent() {
         },
         onError: (error) => {
             console.log(error);
-            formRef.current?.form?.reset()
+            if ((error as AxiosError).response?.status === 401) {
+                formRef.current?.form?.reset()
+                navigate.push("/");
+
+            }
         }
     });
 
