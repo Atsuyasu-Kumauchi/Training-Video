@@ -15,6 +15,7 @@ import {
   faPrint,
   fas,
   faSave,
+  faSignInAlt,
   faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -38,6 +39,7 @@ const iconMap: Record<string, IconProp> = {
   edit: faEdit,
   print: faPrint,
   paperPlane: faPaperPlane,
+  login: faSignInAlt,
 };
 
 const colorVariants = {

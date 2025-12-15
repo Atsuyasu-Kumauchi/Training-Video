@@ -1,25 +1,11 @@
 export interface IBaseDto {
-    id: string;
-    version: number;
-    createdAt: string;
-    updatedAt: string;
-    createdByUser?: string;
-    updatedByUser?: string;
-
-    active: boolean | null;
-    deleted: boolean;
+    created: string;
+    modified: string;
 }
 
 export abstract class BaseDto implements IBaseDto {
-    id: string = "";
-    version: number = 0;
-    createdAt: string = "";
-    updatedAt: string = "";
-    createdByUser?: string;
-    updatedByUser?: string;
-
-    active: boolean | null = null;
-    deleted: boolean = false;
+    created: string = "";
+    modified: string = "";
 
     abstract setAdditionalKey(): void;
 }

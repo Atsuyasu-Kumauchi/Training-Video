@@ -5,7 +5,7 @@ import { UiFormRadio } from "@/tmsui/ui/UiFormRadio";
 import { faCircleNotch, faExclamationCircle, faGraduationCap, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { LoginSchema, TLoginViewSchema } from "./login.type";
+import { LoginSchema, TLoginViewSchema } from "./student.login.type";
 
 
 export default function LoginView(props: TLoginViewSchema) {

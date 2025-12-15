@@ -4,8 +4,8 @@ import { setAuthTokens } from '@/tmsui/core/server/localStorage';
 import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { Path } from 'react-hook-form';
-import { finalLoginSchema, initialValues, LoginSchema, loginSchema, loginStep1Schema } from './login.type';
-import LoginView from './login.view';
+import { finalLoginSchema, initialValues, LoginSchema, loginSchema, loginStep1Schema } from './student.login.type';
+import LoginView from './student.login.view';
 
 
 

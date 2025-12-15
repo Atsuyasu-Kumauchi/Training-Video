@@ -1,7 +1,7 @@
-import LoginComponent from "@/components/auth/login/login.component";
+import StudentLoginComponent from "@/components/auth/student/login/student.login.component";
 
 export default function Home() {
   return (
-    <LoginComponent />
+    <StudentLoginComponent />
   );
 }

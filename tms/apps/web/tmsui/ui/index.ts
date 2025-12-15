@@ -1,5 +1,6 @@
 export * from './basic';
 export * from './Form';
+export * from './UIBasicModal';
 export * from './UiFormCheckbox';
 export * from './UiFormFiledArray';
 export * from './UiFormInput';

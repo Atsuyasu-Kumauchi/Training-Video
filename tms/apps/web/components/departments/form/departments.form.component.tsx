@@ -1,5 +1,5 @@
 import useLang from "@/lang";
-import { Modal, TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
+import { TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
 import { useRef } from "react";
 import {
@@ -19,19 +19,14 @@ export default function DepartmentsFormComponent() {
     setIsOpen(false);
   };
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      title={department.form.title}
+
+    <UiForm
+      schema={departmentsSchema}
+      initialValues={initialValues}
+      onSubmit={onSubmitHandler}
+      ref={formRef}
     >
-      <UiForm
-        schema={departmentsSchema}
-        initialValues={initialValues}
-        onSubmit={onSubmitHandler}
-        ref={formRef}
-      >
-        <DepartmentsFormView />
-      </UiForm>
-    </Modal>
+      <DepartmentsFormView />
+    </UiForm>
   );
 }

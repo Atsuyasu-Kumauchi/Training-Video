@@ -2,13 +2,13 @@ import { BaseDto, IBaseDto } from "./base.dto";
 
 export interface IDepartmentDto extends IBaseDto {
     name: string;
-    status: string;
+    status: boolean;
 }
 
 
 export class CDepartmentDto extends BaseDto implements IDepartmentDto {
     name: string = "";
-    status: string = "";
+    status: boolean = true;
 
     setAdditionalKey(): void {  // 
     }

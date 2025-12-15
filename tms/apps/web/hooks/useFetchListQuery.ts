@@ -95,7 +95,7 @@ export function useFetchListQuery<TData>({
 
       try {
         const response = await server.get<ApiResponse<TData>>(baseUrl ?? "", {
-          params,
+          // params,
           cancelToken: cancelSource.token,
         });
 
@@ -104,7 +104,7 @@ export function useFetchListQuery<TData>({
           items: response?.data.items ?? [],
 
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         if (axios.isCancel(error)) {
           console.warn("Cancelled request:", error.message);
         } else {

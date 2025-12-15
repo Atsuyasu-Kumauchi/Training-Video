@@ -22,7 +22,7 @@ export const departmentsListColumn: TListColumnDef<CDepartmentDto>[] = [
     enableHiding: false,
     header: () => list.status,
     cell: (ctx) => {
-      return <Badge status={ctx.row.original.status} />
+      return <Badge status={ctx.row.original.status ? "Active" : "Inactive"} />
     }
   },
   {

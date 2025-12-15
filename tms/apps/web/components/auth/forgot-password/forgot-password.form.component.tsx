@@ -11,7 +11,7 @@ export default function ForgotPasswordComponent() {
     const query = useMutation({
         mutationKey: ["forgot-password"],
         mutationFn: async (email: string) => {
-            const response = await AuthServer.get("/init-recovery", { params: { email: email } });
+            const response = await AuthServer.get("/auth/init-recovery", { params: { email: email } });
             await wait(1000);
             return response.data;
         },

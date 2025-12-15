@@ -1,7 +1,8 @@
 "use client"
+import { cn } from "@/tmsui/utility";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Controller, FieldValues, Path } from "react-hook-form";
 import { useFormContext } from "../useFormContext";
 
@@ -11,6 +12,7 @@ export type UiFormInputPasswordProps<T extends FieldValues> = {
     required?: boolean;
     placeholder?: string;
     getPasswordStrength?: (password: string) => { strength: string; message: string };
+    startIcon?: ReactElement;
 } & React.ComponentPropsWithoutRef<"input">;
 
 export const UiFormInputPassword = <T extends FieldValues>({
@@ -19,6 +21,7 @@ export const UiFormInputPassword = <T extends FieldValues>({
     required,
     placeholder,
     getPasswordStrength,
+    startIcon,
     ...rest
 }: UiFormInputPasswordProps<T>) => {
     const { control } = useFormContext<T>();
@@ -41,12 +44,19 @@ export const UiFormInputPassword = <T extends FieldValues>({
                             </label>
                         )}
                         <div className="relative">
+                            {startIcon &&
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    {startIcon}
+                                </div>
+                            }
                             <input
                                 type={showPassword ? "text" : "password"}
                                 id={name}
                                 required={required}
                                 placeholder={placeholder}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                                className={cn("w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200",
+                                    startIcon && "pl-10",
+                                )}
                                 {...field}
                                 {...rest}
                             />
