@@ -37,7 +37,7 @@ export class DepartmentService {
     queryBuilder.where({ status: query.status })
     if (query.name) queryBuilder.andWhere("Department.name like :name", { name: `${query.name}` });
 
-    queryBuilder.addOrderBy(query.sortBy, query.sortDirection);
+    queryBuilder.addOrderBy(`Department.${query.sortBy}`, query.sortDirection);
 
     // .where
     // const findOptions: FindManyOptions<Department> = {
