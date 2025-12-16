@@ -9,7 +9,7 @@ import { User } from 'src/common/entities/user.entity';
 import { throwSe } from 'src/common/exception/exception.util';
 import { InvalidCredential, UserNotFound } from './auth.exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { type DeepPartial, Repository } from 'typeorm';
 
 
 function dateToOtp(date: Date): string {
@@ -33,7 +33,7 @@ function diffMinutes(date1: Date, date2: Date) {
   return Math.floor(diffMs / 60000);
 }
 
-async function newUserVerifySig(user: User, verifyPass: string) {
+async function newUserVerifySig(user: DeepPartial<User>, verifyPass: string) {
   return await hashPassword(verifyPass + user.privatekey);
 }
 
@@ -66,7 +66,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.validateUser(loginDto.username, loginDto.password);
-    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
+    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
   }
 
   async initRecovery(email: string) {
@@ -83,7 +83,7 @@ export class AuthService {
       user.password = await hashPassword(newpassword);
       user.privatekey = authenticator.generateSecret();
       await this.userRepository.save(user);
-      return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', resetPwd: false, isAdmin: user.isAdmin, sub: user.userId }) };
+      return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: false, isAdmin: user.isAdmin, sub: user.userId }) };
     }
 
     throwSe(InvalidCredential);
@@ -94,27 +94,31 @@ export class AuthService {
 
     authenticator.verify({ token: loginDto.password, secret: user.privatekey || '' }) || throwSe(InvalidCredential);
 
-    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
+    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
   }
 
-  async signup(signUpDto: SignUpDto, isAdmin: boolean = false, pwdIsDummy: boolean = false): Promise<{ accessToken: string, __mailbody: Object }> {
-    const user = await this.userRepository.create({
-      ...signUpDto,
-      password: await hashPassword(signUpDto.password),
-      privatekey: authenticator.generateSecret(),
-      status: this.configService.getOrThrow('verify_signup') ? 'disabled' : 'enabled',
-      resetPwd: pwdIsDummy,
-      isAdmin
-    });
+  async signup(signUpDto: SignUpDto, isAdmin: boolean = false): Promise<{ accessToken: string, __mailbody: Object }> {
+    const user = await this.createAuthUser(signUpDto, isAdmin, false);
     await this.userRepository.save(user);
 
     const mailpass = dateToOtp(new Date());
     console.log(mailpass, await newUserVerifySig(user, mailpass)); // TODO: send emailVirifyCode
 
     return {
-      accessToken: this.jwtService.sign({ username: user.username, enabled: user.status === 'enabled', resetPwd: pwdIsDummy, isAdmin, sub: user.userId }),
+      accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }),
       __mailbody: { mailpass, sig: await newUserVerifySig(user, mailpass) }
     };
+  }
+
+  async createAuthUser(signUpDto: SignUpDto, isAdmin: boolean, pwdIsDummy: boolean) {
+    return this.userRepository.create({
+      ...signUpDto,
+      password: await hashPassword(signUpDto.password),
+      privatekey: authenticator.generateSecret(),
+      status: this.configService.getOrThrow('verify_signup') ? false : true,
+      resetPwd: pwdIsDummy,
+      isAdmin
+    });
   }
 
   async resendMailpass(email: string) {
@@ -128,7 +132,7 @@ export class AuthService {
     const user = await this.userRepository.findOneBy({ email }) || throwSe(UserNotFound);
 
     if (await comparePassword(newUserVerifySigRaw(user, mailpass), sig) && diffMinutes(otpToDate(mailpass), new Date()) < 720) {
-      user.status = "enabled";
+      user.status = true;
       return !!await this.userRepository.save(user);
     }
 

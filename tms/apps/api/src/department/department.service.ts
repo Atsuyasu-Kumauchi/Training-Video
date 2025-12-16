@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, Repository } from 'typeorm';
+import { type DeepPartial, Repository } from 'typeorm';
 import { Department } from './department.entity';
 import { CreateDepartmentDto, DepartmentQueryDto } from './department.dto';
 import { Messages } from '../common/constants/messages';
@@ -34,32 +34,10 @@ export class DepartmentService {
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-    queryBuilder.where({ status: query.status })
-    if (query.name) queryBuilder.andWhere("Department.name like :name", { name: `${query.name}` });
+    queryBuilder.where({ status: query.statusFilter });
+    if (query.nameFilter) queryBuilder.andWhere("Department.name like :name", { name: `%${query.nameFilter}%` });
 
     queryBuilder.addOrderBy(`Department.${query.sortBy}`, query.sortDirection);
-
-    // .where
-    // const findOptions: FindManyOptions<Department> = {
-    //   take: limit,
-    //   skip: skip,
-    //   // Default order, customize as needed
-    //   order: { createdAt: 'DESC' }, 
-    // };
-
-    // if (query.search) {
-    //   // Create a complex 'where' clause using TypeORM's 'Like' operator 
-    //   // to search across multiple fields (e.g., name and email)
-    //   findOptions.where = [
-    //     { name: Like(`%${query.search}%`) },
-    //     { email: Like(`%${query.search}%`) },
-    //   ];
-    // }
-    
-    // If you had a 'status' filter in DTO:
-    // if (query.status) {
-    //     findOptions.where = { ...findOptions.where, status: query.status };
-    // }
 
     const [result, resultCount] = await queryBuilder.getManyAndCount();
 
@@ -70,14 +48,14 @@ export class DepartmentService {
       pageCount: Math.ceil(resultCount / query.pageSize),
       resultCount,
       sortBy: query.sortBy,
-      sortDirection: query.sortDirection
+      sortDirection: query.sortDirection,
+      nameFilter: query.nameFilter,
+      statusFilter: query.statusFilter
     };
   }
 
   async findOne(id: number): Promise<Department> {
-    const department = await this.departmentRepository.findOne({
-      where: { departmentId: id, status: true },
-    });
+    const department = await this.departmentRepository.findOne({ where: { departmentId: id } });
 
     if (!department) {
       throw new NotFoundException(Messages.MSG10);
@@ -91,8 +69,8 @@ export class DepartmentService {
     await this.departmentRepository.remove(department);
   }
 
-  save(department: Partial<Department>) {
-    this.departmentRepository.existsBy({ departmentId: department.departmentId }) || throwSe(NotFoundException);
-    this.departmentRepository.save(department);
+  async save(id: number, department: DeepPartial<Department>) {
+    await this.departmentRepository.existsBy({ departmentId: id }) || throwSe(NotFoundException);
+    return await this.departmentRepository.save({ ...department, departmentId: id });
   }
 }

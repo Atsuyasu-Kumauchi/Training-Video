@@ -57,7 +57,7 @@ CREATE TABLE "tbl_user" (
   "privatekey" VARCHAR(255),
   "is_admin" BOOLEAN DEFAULT true,
   "reset_pwd" BOOLEAN DEFAULT false,
-  "status" VARCHAR(20) DEFAULT 'disabled' CHECK (status IN ('enabled', 'disabled'))
+  "status" BOOLEAN DEFAULT true,
   "created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   "modified" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Param, Body, HttpStatus, HttpCode, UseGuards, Put, Query } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseGuards, Put, Query } from '@nestjs/common';
 import { DepartmentService } from './department.service';
-import { DepartmentDto, DepartmentQueryDto } from "./department.dto";
+import { DepartmentQueryDto } from "./department.dto";
 import { CreateDepartmentDto } from './department.dto';
 import { IsAdmin, JwtAuthGuard, VerifyUser } from 'src/auth/auth.guard';
 import { Department } from './department.entity';
+import { type DeepPartial } from 'typeorm';
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
@@ -17,17 +18,17 @@ export class DepartmentController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<DepartmentDto> {
-    return this.departmentService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Department> {
+    return await this.departmentService.findOne(+id);
   }
 
   @Post()
-  async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<DepartmentDto> {
-    return this.departmentService.create(createDepartmentDto);
+  async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<Department> {
+    return await this.departmentService.create(createDepartmentDto);
   }
 
-  @Put()
-  async save(@Body() department: Partial<Department>) {
-    return this.departmentService.save(department);
+  @Put(':id')
+  async save(@Param('id') id: number, @Body() department: DeepPartial<Department>) {
+    return await this.departmentService.save(id, department);
   }
 }

@@ -14,27 +14,19 @@ export class CreateDepartmentDto {
   })
   name: string;
 
-  @IsBoolean({ message: Messages.MSG1_EX('boolean')})
-  @IsNotEmpty({ message: Messages.MSG2 })
+  @IsBoolean({ message: Messages.MSG1_EX('status', 'boolean')})
+  @IsNotEmpty({ message: Messages.MSG2_EX('status') })
   status: boolean;
-}
-
-export class DepartmentDto {
-  departmentId: number;
-  name: string;
-  status: boolean;
-  created: Date;
-  modified: Date;
 }
 
 export class DepartmentQueryDto {
   @IsOptional()
   @IsString()
-  name?: string;
+  nameFilter?: string;
 
   @Type(() => Boolean)
   @IsBoolean()
-  status: boolean = true;
+  statusFilter: boolean = true;
 
   @Type(() => Number)
   @IsNumber()
