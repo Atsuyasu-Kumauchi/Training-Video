@@ -23,6 +23,7 @@ export class Messages {
 
   // Department error messages
   static readonly MSG10 = 'Department not found';
+  static readonly MSG10_EX = (subject: string) => `${subject} not found`;
   static readonly MSG11 = 'Failed to create department';
   static readonly MSG12 = 'Failed to update department';
   static readonly MSG13 = 'Failed to delete department';

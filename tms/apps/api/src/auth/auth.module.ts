@@ -25,6 +25,6 @@ import { User } from 'src/common/entities/user.entity';
   ],
   providers: [AuthService, JwtStrategy, JwtAuthGuard, VerifyUser, IsAdmin],
   controllers: [AuthController],
-  exports: [JwtAuthGuard, VerifyUser, IsAdmin]
+  exports: [AuthService, JwtAuthGuard, VerifyUser, IsAdmin]
 })
 export class AuthModule {}

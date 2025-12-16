@@ -34,8 +34,8 @@ export class DepartmentService {
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-    queryBuilder.where({ status: query.statusFilter })
-    if (query.nameFilter) queryBuilder.andWhere("Department.name like :name", { name: `${query.nameFilter}` });
+    queryBuilder.where({ status: query.statusFilter });
+    if (query.nameFilter) queryBuilder.andWhere("Department.name like :name", { name: `%${query.nameFilter}%` });
 
     queryBuilder.addOrderBy(`Department.${query.sortBy}`, query.sortDirection);
 
@@ -55,9 +55,7 @@ export class DepartmentService {
   }
 
   async findOne(id: number): Promise<Department> {
-    const department = await this.departmentRepository.findOne({
-      where: { departmentId: id, status: true },
-    });
+    const department = await this.departmentRepository.findOne({ where: { departmentId: id } });
 
     if (!department) {
       throw new NotFoundException(Messages.MSG10);
