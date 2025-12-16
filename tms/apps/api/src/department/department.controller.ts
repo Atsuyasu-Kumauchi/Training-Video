@@ -4,6 +4,7 @@ import { DepartmentDto, DepartmentQueryDto } from "./department.dto";
 import { CreateDepartmentDto } from './department.dto';
 import { IsAdmin, JwtAuthGuard, VerifyUser } from 'src/auth/auth.guard';
 import { Department } from './department.entity';
+import { type DeepPartial } from 'typeorm';
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
@@ -27,7 +28,7 @@ export class DepartmentController {
   }
 
   @Put(':id')
-  async save(@Param('id') id: number, @Body() department: Partial<Department>) {
+  async save(@Param('id') id: number, @Body() department: DeepPartial<Department>) {
     return await this.departmentService.save(id, department);
   }
 }
