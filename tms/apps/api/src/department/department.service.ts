@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, Repository } from 'typeorm';
+import { type DeepPartial, Repository } from 'typeorm';
 import { Department } from './department.entity';
 import { CreateDepartmentDto, DepartmentQueryDto } from './department.dto';
 import { Messages } from '../common/constants/messages';
@@ -71,8 +71,8 @@ export class DepartmentService {
     await this.departmentRepository.remove(department);
   }
 
-  async save(id: number, department: Partial<Department>) {
+  async save(id: number, department: DeepPartial<Department>) {
     await this.departmentRepository.existsBy({ departmentId: id }) || throwSe(NotFoundException);
-    return await this.departmentRepository.save(department);
+    return await this.departmentRepository.save({ ...department, departmentId: id });
   }
 }
