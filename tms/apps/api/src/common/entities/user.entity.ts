@@ -25,8 +25,8 @@ export class User {
   @Column( { name: 'reset_pwd', type: 'boolean', default: false })
   resetPwd: boolean;
 
-  @Column({ type: 'varchar', length: 20, default: 'disabled' })
-  status: 'enabled' | 'disabled';
+  @Column({ type: 'boolean', default: true })
+  status: boolean;
 
   @Column({ type: 'integer', nullable: true })
   roleId: number;

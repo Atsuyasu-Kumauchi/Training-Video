@@ -1,4 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString, IsStrongPassword, Matches, MaxLength, MinLength } from "class-validator";
+import { Type } from "class-transformer";
+import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsStrongPassword, Matches, MaxLength, Min, MinLength } from "class-validator";
+import { SortDirection } from "src/common/enums/SortDirection";
 
 
 export class CreateUserDto {
@@ -14,7 +16,35 @@ export class CreateUserDto {
     @IsNotEmpty()
     email: string;
 
+    @IsNotEmpty()
     @IsStrongPassword()
     password: string;
 
+}
+
+export class UserQueryDto {
+  @IsOptional()
+  @IsString()
+  simplenameFilter?: string;
+
+  @Type(() => Boolean)
+  @IsBoolean()
+  statusFilter: boolean = true;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  pageIndex: number = 0;
+
+  @Type(() => Number)
+  @IsNumber()
+  @IsPositive()
+  pageSize: number = 10;
+
+  @IsString()
+  sortBy: string = "userId";
+
+  @IsOptional()
+  @IsEnum(SortDirection)
+  sortDirection: SortDirection = SortDirection.Descending;
 }

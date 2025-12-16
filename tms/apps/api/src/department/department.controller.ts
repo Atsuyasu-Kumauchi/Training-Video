@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Param, Body, UseGuards, Put, Query } from '@nestjs/common';
 import { DepartmentService } from './department.service';
-import { DepartmentDto, DepartmentQueryDto } from "./department.dto";
+import { DepartmentQueryDto } from "./department.dto";
 import { CreateDepartmentDto } from './department.dto';
 import { IsAdmin, JwtAuthGuard, VerifyUser } from 'src/auth/auth.guard';
 import { Department } from './department.entity';
@@ -18,12 +18,12 @@ export class DepartmentController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<DepartmentDto> {
+  async findOne(@Param('id') id: string): Promise<Department> {
     return await this.departmentService.findOne(+id);
   }
 
   @Post()
-  async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<DepartmentDto> {
+  async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<Department> {
     return await this.departmentService.create(createDepartmentDto);
   }
 

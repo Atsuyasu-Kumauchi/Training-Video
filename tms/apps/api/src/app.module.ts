@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_FILTER } from '@nestjs/core';
 import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptionFilter';
 import { RoleModule } from './role/role.module';
+import { UserModule } from './user/user.moduel';
 
 @Module({
   imports: [
@@ -39,7 +40,8 @@ import { RoleModule } from './role/role.module';
     }),
     DepartmentModule,
     AuthModule,
-    RoleModule
+    RoleModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],

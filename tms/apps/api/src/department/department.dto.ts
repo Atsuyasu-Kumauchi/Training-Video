@@ -19,14 +19,6 @@ export class CreateDepartmentDto {
   status: boolean;
 }
 
-export class DepartmentDto {
-  departmentId: number;
-  name: string;
-  status: boolean;
-  created: Date;
-  modified: Date;
-}
-
 export class DepartmentQueryDto {
   @IsOptional()
   @IsString()
