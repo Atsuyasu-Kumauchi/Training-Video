@@ -50,24 +50,24 @@ export class RoleService {
     }
 
     async create(createRoleDto: CreateRoleDto): Promise<Role> {
-        const existingUser = await this.roleRepository.findOne({
+        const existingRole = await this.roleRepository.findOne({
             where: { name: createRoleDto.name },
         });
 
-        if (existingUser) {
+        if (existingRole) {
             throw new ConflictException(Messages.MSG6);
         }
 
-        const department = this.roleRepository.create({
+        const role = this.roleRepository.create({
             ...createRoleDto,
         });
 
-        return this.roleRepository.save(department);
+        return this.roleRepository.save(role);
     }
 
-    async save(id: number, user: DeepPartial<Role>) {
+    async save(id: number, role: DeepPartial<Role>) {
         await this.roleRepository.existsBy({ roleId: id }) || throwSe(NotFoundException);
-        return await this.roleRepository.save({ ...user, userId: id });
+        return await this.roleRepository.save({ ...role, roleId: id });
     }
 
 }

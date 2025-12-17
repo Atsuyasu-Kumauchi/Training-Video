@@ -26,8 +26,8 @@ export class RoleController {
     }
 
     @Put(':id')
-    async save(@Param('id') id: number, @Body() department: DeepPartial<Role>) {
-        return await this.roleService.save(id, department);
+    async save(@Param('id') id: number, @Body() role: DeepPartial<Role>) {
+        return await this.roleService.save(id, role);
     }
 
 }
