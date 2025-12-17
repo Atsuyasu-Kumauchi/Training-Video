@@ -14,8 +14,8 @@ export class CreateDepartmentDto {
   })
   name: string;
 
-  @IsBoolean({ message: Messages.MSG1_EX('status', 'boolean')})
-  @IsNotEmpty({ message: Messages.MSG2_EX('status') })
+  @IsBoolean({ message: Messages.MSG1_EX('Department', 'status', 'boolean')})
+  @IsNotEmpty({ message: Messages.MSG2_EX('Department', 'status') })
   status: boolean;
 }
 
@@ -39,7 +39,7 @@ export class DepartmentQueryDto {
   pageSize: number = 10;
 
   @IsString()
-  sortBy: string = "departmentId";
+  sortBy: string = "Department.departmentId".split(".")[1];
 
   @IsOptional()
   @IsEnum(SortDirection)

@@ -42,7 +42,7 @@ export class UserQueryDto {
   pageSize: number = 10;
 
   @IsString()
-  sortBy: string = "userId";
+  sortBy: string = "User.userId".split(".")[1];
 
   @IsOptional()
   @IsEnum(SortDirection)

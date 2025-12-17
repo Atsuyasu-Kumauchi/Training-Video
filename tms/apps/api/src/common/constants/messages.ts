@@ -8,9 +8,9 @@ export class Messages {
 
   // Department validation messages
   static readonly MSG1 = 'Department name must be a string';
-  static readonly MSG1_EX = (field: string, typename: string) => `Department ${field} must be a ${typename}`;
+  static readonly MSG1_EX = (module: string, field: string, typename: string) => `${module} ${field} must be a ${typename}`;
   static readonly MSG2 = 'Department name is required';
-  static readonly MSG2_EX = (field: string) => `Department ${field} is required`;
+  static readonly MSG2_EX = (module: string, field: string) => `${module} ${field} is required`;
   static readonly MSG3 = 'Department name must be at least 2 characters long';
   static readonly MSG4 = 'Department name cannot exceed 100 characters';
   static readonly MSG5 = 'Department name can only contain letters, numbers, spaces, hyphens, and underscores';
@@ -23,7 +23,7 @@ export class Messages {
 
   // Department error messages
   static readonly MSG10 = 'Department not found';
-  static readonly MSG10_EX = (subject: string) => `${subject} not found`;
+  static readonly MSG10_EX = (module: string) => `${module} not found`;
   static readonly MSG11 = 'Failed to create department';
   static readonly MSG12 = 'Failed to update department';
   static readonly MSG13 = 'Failed to delete department';
