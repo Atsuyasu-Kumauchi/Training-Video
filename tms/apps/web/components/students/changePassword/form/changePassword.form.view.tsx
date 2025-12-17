@@ -1,14 +1,14 @@
 import useStudentLang from "@/lang/students";
 import { Button } from "@/tmsui";
 import { UiFormInputPassword } from "@/tmsui/ui/UiFormInputPassword";
-import { faCircle, faKey } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ChangePasswordType,
   getPasswordStrength,
 } from "./changePassword.form.type";
 
-export default function ChangePasswordFormView() {
+export default function ChangePasswordFormView({ isPwdPending }: { isPwdPending: boolean }) {
   const { changePassword } = useStudentLang();
   return (
     <div className="flex-1 overflow-y-auto bg-gray-50">
@@ -75,9 +75,11 @@ export default function ChangePasswordFormView() {
               <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isPwdPending}
+                  loading={isPwdPending}
+                  startIcon="key"
+                  className="w-full"
                 >
-                  <FontAwesomeIcon icon={faKey} className=" text-sm mr-2" />
                   {changePassword.form.changePassword}
                 </Button>
               </div>

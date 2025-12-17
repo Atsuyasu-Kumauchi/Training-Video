@@ -66,7 +66,7 @@ export function StudentSidebar() {
                 key={index}
                 href={item.url}
                 className={cn(
-                  "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200",
+                  "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-all duration-200  active:scale-95 active:text-primary-700 ",
                   pathname === item.url &&
                   " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600"
                 )}

@@ -1,6 +1,6 @@
 "use client";
 import { AUTH } from '@/common';
-import { AuthServer, parseJwt, setAuthTokens, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
+import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -24,22 +24,22 @@ export default function StudentLoginComponent() {
             await wait();
             return response.data;
         },
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             if (data?.accessToken) {
-                const user = parseJwt(data.accessToken);
-                if (!user?.isAdmin) {
-                    setAuthTokens("tms_token", data.accessToken);
+                const user = decodeJwtClient<{ isAdmin: boolean }>(data.accessToken || "");
+                if (user?.isAdmin === false) {
+                    await setAuthToken({ name: "tms_token", value: data.accessToken });
+                    await setAuthToken({ name: "tms_step", value: "1" });
                     window.location.href = "/totp-qr";
+                } else {
+                    throw new Error("User is not a student");
                 }
-
             }
         },
         onError: (error) => {
-            console.log(error);
             if ((error as AxiosError).response?.status === 401) {
                 formRef.current?.form?.reset()
                 navigate.push("/");
-
             }
         }
     });
@@ -49,6 +49,7 @@ export default function StudentLoginComponent() {
             mutation.mutate(value as StudentLoginSchema);
         }
     };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center">

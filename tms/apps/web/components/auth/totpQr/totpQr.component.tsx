@@ -1,17 +1,22 @@
 "use client";
 import { AUTH } from '@/common';
-import { AuthServer, getAuthTokens, parseJwt, setAuthTokens, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
+import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { initialValues, totpQrSchema, TotpQrSchema } from './totpQr.type';
 import TotpQrView from './totpQr.view';
 
-export default function TotpQrComponent() {
-    const formRef = useRef<TUiFormRef<TotpQrSchema>>(null);
+type TTotpQrComponentProps = {
+    isAdmin?: boolean;
+    resetPwd?: boolean;
+    username: string;
+}
+
+export default function TotpQrComponent(props: TTotpQrComponentProps) {
+    const { resetPwd, username } = props;
     const navigate = useRouter();
-    const token = getAuthTokens();
-    const user = token ? (parseJwt(token)) : "";
+    const formRef = useRef<TUiFormRef<TotpQrSchema>>(null);
     const mutation = useMutation({
         mutationKey: ["totp-qr"],
         mutationFn: async (value: { username: string, password: string }) => {
@@ -23,10 +28,11 @@ export default function TotpQrComponent() {
             await wait();
             return response.data;
         },
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             if (data?.accessToken) {
-                setAuthTokens("tms_token", data.accessToken);
-                const user = parseJwt(data.accessToken);
+                await setAuthToken({ name: "tms_token", value: data.accessToken });
+                await setAuthToken({ name: "tms_step", value: "2" });
+                const user = decodeJwtClient<{ isAdmin: boolean }>(data.accessToken || "");
                 if (user?.isAdmin) {
                     navigate.push("/admin/dashboard");
                 } else {
@@ -39,12 +45,12 @@ export default function TotpQrComponent() {
         },
     });
 
-    const onSubmit: TFormHandlerSubmit<TotpQrSchema> = (value) => {
+    const onSubmit: TFormHandlerSubmit<TotpQrSchema> = async (value) => {
         if (value) {
             const formData = value as TotpQrSchema;
 
             mutation.mutate({
-                username: user?.username,
+                username: username,
                 password: formData.password,
             });
         }
@@ -59,7 +65,7 @@ export default function TotpQrComponent() {
                         isPending={mutation.isPending}
                         isError={mutation.isError}
                         errorMessage={mutation?.error?.message || ''}
-                        isResetPwd={user?.resetPwd || false}
+                        isResetPwd={resetPwd || false}
                     />
                 </UiForm>
             </div>

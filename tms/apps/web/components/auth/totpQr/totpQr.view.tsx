@@ -23,6 +23,7 @@ export default function TotpQrView(props: TTotpQrViewSchema) {
         },
         enabled: !!isResetPwd,
     });
+
     return (
         <div className="space-y-8">
             <div className="text-center">

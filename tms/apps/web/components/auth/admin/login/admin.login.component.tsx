@@ -1,7 +1,6 @@
 "use client"
 import { AUTH } from '@/common';
-import { AuthServer, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
-import { setAuthTokens } from '@/tmsui/core/server/localStorage';
+import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRef } from 'react';
@@ -10,7 +9,6 @@ import AdminLoginView from './admin.login.view';
 
 export default function AdminLoginComponent() {
     const formRef = useRef<TUiFormRef<TAdminLoginSchema>>(null);
-
     const mutation = useMutation({
         mutationKey: ["admin-login"],
         mutationFn: async (value: TAdminLoginSchema) => {
@@ -22,10 +20,14 @@ export default function AdminLoginComponent() {
             await wait();
             return response.data;
         },
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             if (data?.accessToken) {
-                setAuthTokens("tms_token", data.accessToken);
-                window.location.href = "/totp-qr";
+                const user = decodeJwtClient<{ isAdmin: boolean }>(data.accessToken || "");
+                if (user?.isAdmin) {
+                    await setAuthToken({ name: "tms_token", value: data.accessToken });
+                    await setAuthToken({ name: "tms_step", value: "1" });
+                    window.location.href = "/totp-qr";
+                }
             }
         },
         onError: () => {

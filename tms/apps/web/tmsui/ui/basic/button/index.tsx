@@ -10,6 +10,7 @@ import {
   faCircleNotch,
   faDownload,
   faEdit,
+  faKey,
   faPaperPlane,
   faPlus,
   faPrint,
@@ -40,6 +41,7 @@ const iconMap: Record<string, IconProp> = {
   print: faPrint,
   paperPlane: faPaperPlane,
   login: faSignInAlt,
+  key: faKey,
 };
 
 const colorVariants = {

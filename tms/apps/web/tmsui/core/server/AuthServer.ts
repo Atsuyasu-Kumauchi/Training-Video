@@ -1,8 +1,6 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+import { getAuthToken } from "./server-cookie";
 
-
-const getAuthToken = () => Cookies.get("tms_token"); 
 
 export const AuthServer = axios.create({
     baseURL: process.env.BASE_URL,
@@ -13,8 +11,8 @@ export const AuthServer = axios.create({
 });
 
 AuthServer.interceptors.request.use(
-    (config) => {
-        const token = getAuthToken();
+    async (config) => {
+        const token = await getAuthToken("tms_token");
         if (token) config.headers.Authorization = `Bearer ${token}`;
         return config;
     },

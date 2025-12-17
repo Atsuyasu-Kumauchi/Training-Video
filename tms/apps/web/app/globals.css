@@ -59,3 +59,8 @@ body {
 .react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
   @apply bg-white text-black;
 }
+
+
+/* #sidebar a:active{
+  color: red !important;
+} */

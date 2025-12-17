@@ -1,5 +1,5 @@
 "use client";
-import { removeAuthTokens } from "@/tmsui/core/server/localStorage";
+import { deleteAuthToken } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
 import { LinkButton } from "@/tmsui/ui";
 import { faBars, faChevronDown, faKey, faSignOut } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,13 @@ import Link from "next/link";
 
 export function StudentHeader() {
   const { toggleSidebar, setIsSidebarOpen } = useSettings();
+
+  const removeAuthTokens = async () => {
+    await deleteAuthToken("tms_token");
+    await deleteAuthToken("tms_step");
+    window.location.reload();
+  }
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="flex items-center justify-between px-6 py-4">
@@ -59,10 +66,7 @@ export function StudentHeader() {
                 <div className="border-t border-gray-100 my-1" />
                 <MenuItem>
                   <Button
-                    onClick={() => {
-                      removeAuthTokens();
-                      window.location.reload();
-                    }}
+                    onClick={removeAuthTokens}
                     className={`px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center w-full`}
                   >
                     <FontAwesomeIcon icon={faSignOut} className="mr-2" />
