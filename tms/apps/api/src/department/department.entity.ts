@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('tbl_department')
+@Entity('departments')
 export class Department {
   @PrimaryGeneratedColumn({ name: 'department_id' })
   departmentId: number;
