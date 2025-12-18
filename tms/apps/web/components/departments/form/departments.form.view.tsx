@@ -1,10 +1,8 @@
 import useLang from "@/lang";
 import { Button, UiFormInput, UiFormSelect } from "@/tmsui";
-import { useSettings } from "@/tmsui/store";
-import { status, TDepartmentsSchema } from "./departments.form.type";
+import { status, TDepartmentsFormViewProps, TDepartmentsSchema } from "./departments.form.type";
 
-export default function DepartmentsFormView() {
-  const { setIsOpen } = useSettings();
+export default function DepartmentsFormView({ modalRef, isPending }: TDepartmentsFormViewProps) {
   const { department } = useLang();
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -21,14 +19,15 @@ export default function DepartmentsFormView() {
           name="status"
           label={department.form.status}
           options={status}
+          placeholder={department.form.status}
           required
         />
       </div>
       <div className="col-span-12 flex justify-end space-x-3 pt-4">
-        <Button type="button" color="neutral" onClick={() => setIsOpen(false)}>
+        <Button type="button" color="neutral" onClick={() => modalRef.current.modalClose()}>
           {department.form.cancel}
         </Button>
-        <Button type="submit"> {department.form.subBtn}</Button>
+        <Button type="submit" disabled={isPending} loading={isPending}> {department.form.subBtn}</Button>
       </div>
     </div>
   );

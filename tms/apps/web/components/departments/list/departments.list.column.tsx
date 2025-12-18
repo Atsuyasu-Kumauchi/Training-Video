@@ -1,5 +1,6 @@
 import { CDepartmentDto, IDepartmentDto } from '@/common';
 import { Badge } from '@/common/components/badge';
+import useLang from '@/lang';
 import { LangDepartment } from '@/lang/department';
 import { TListColumnDef } from '@/tmsui/types';
 import { Button } from '@/tmsui/ui/basic/button';
@@ -39,20 +40,18 @@ export const departmentsListColumn: TListColumnDef<CDepartmentDto>[] = [
 
 export const ActionDepartment = (department: IDepartmentDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
-  const editDepartment = () => modalRef.current.modalOpen();
-  const deleteDepartment = () => modalRef.current.modalOpen();
+  const { department: departmentLang } = useLang();
   return (
     <div className="flex items-center space-x-1">
-      <Button onClick={editDepartment} variant="ghost" color='primary' className='p-0'>
+      <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0'>
         <FontAwesomeIcon icon={faEdit} />
       </Button>
-      <Button onClick={deleteDepartment} color='danger' variant="ghost" className='p-1' disabled>
+      <Button onClick={() => modalRef.current.modalOpen()} color='danger' variant="ghost" className='p-1' disabled>
         <FontAwesomeIcon icon={faTrash} />
       </Button>
       <UiBasicModal
         modalRef={modalRef}
-        title="Edit Department"
-        description="Edit Department"
+        title={departmentLang.form.editTitle}
         body={<DepartmentsFormComponent modalRef={modalRef} editData={department} />}
       />
     </div>

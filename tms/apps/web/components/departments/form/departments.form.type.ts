@@ -1,4 +1,9 @@
-import { zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+import { TUiBasicModalRef, zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+
+export type TDepartmentsFormViewProps = {
+  modalRef: React.RefObject<TUiBasicModalRef>;
+  isPending: boolean;
+}
 
 export const departmentsSchema = zodObject({
   name: zodStringRequired(),
@@ -7,13 +12,15 @@ export const departmentsSchema = zodObject({
 
 export type TDepartmentsSchema = zodInfer<typeof departmentsSchema>;
 
+export const departmentKeys = Object.keys( departmentsSchema.shape ) as (keyof zodInfer<typeof departmentsSchema>)[];
+
 export const initialValues = {
   name: "",
   status: "",
 };
 
+// active and inactive
 export const status = [
-  { label: "Select Status", value: "" },
-  { label: "Active", value: "true" },
-  { label: "Inactive", value: "false" },
+  { label: "アクティブ", value: "true" },
+  { label: "非アクティブ", value: "false" },
 ];

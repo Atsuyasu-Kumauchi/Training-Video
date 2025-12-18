@@ -3,7 +3,7 @@ import { Button } from "@/tmsui";
 import { UiFormInputPassword } from "@/tmsui/ui/UiFormInputPassword";
 import { ChangePasswordType, getPasswordStrength } from "./changePassword.form.type";
 
-export default function ChangePasswordFormView() {
+export default function ChangePasswordFormView({ isPwdPending }: { isPwdPending: boolean }) {
     const { changePassword } = useLang();
     return (
         <div className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
@@ -41,7 +41,7 @@ export default function ChangePasswordFormView() {
                         <Button type="button" variant="outline" className="  text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50  transition-colors duration-200">
                             {changePassword.form.cancel}
                         </Button>
-                        <Button type="submit">
+                        <Button type="submit" disabled={isPwdPending} loading={isPwdPending}>
                             {changePassword.form.updatePassword}
                         </Button>
                     </div>

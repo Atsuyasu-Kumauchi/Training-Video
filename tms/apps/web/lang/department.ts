@@ -13,7 +13,9 @@ export const LangDepartment = {
     departmentName: "部署名", // Department Name
     departmentNamePlaceholder: "部門名を入力", // Enter department name
     status: "ステータス", // Status
+    statusPlaceholder: "ステータスを選択", // Select status
     title: "部門追加", //Add Department
+    editTitle: "部門を編集", //Edit Department
     cancel: "キャンセル", //cancel
     subBtn: "部門を追加", //Add a department
   },
