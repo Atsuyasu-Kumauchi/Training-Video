@@ -20,7 +20,7 @@ export class UserService {
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-    queryBuilder.where({ status: query.statusFilter ? 'enabled' : 'disabled' });
+    queryBuilder.where({ status: query.statusFilter ? true : false });
     if (query.simplenameFilter) {
       queryBuilder.andWhere(new Brackets(qb => {
         qb.where("User.username like :username", { username: `%${query.simplenameFilter}%` })
