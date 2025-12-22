@@ -121,6 +121,14 @@ export class AuthService {
     });
   }
 
+  async updateAuthUser(user: DeepPartial<User>) {
+    if (user.password) {
+      user.password = await hashPassword(user.password);
+      user.resetPwd = false;
+    }
+    return user;
+  }
+
   async resendMailpass(email: string) {
     const user = await this.userRepository.findOneBy({email}) || throwSe(UserNotFound);
 
