@@ -47,12 +47,18 @@ export const UiFormInput = <T extends FieldValues>({
                     <div>
                         {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
                         <div className="relative">
-                            {startIcon && <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                {startIcon}
-                            </div>}
+                            {startIcon && (
+                                <div
+                                    className="absolute inset-y-0 left-0 pl-3 flex items-center"
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    {startIcon}
+                                </div>
+                            )}
                             <input
                                 id={label}
-                                className={cn("w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200",
+                                className={cn(
+                                    "w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200",
                                     startIcon && "pl-10",
                                     endIcon && "pr-10",
                                     error && "border-red-700 focus:ring-red-600 focus:border-red-600",
@@ -62,9 +68,14 @@ export const UiFormInput = <T extends FieldValues>({
                                 {...rest}
                             />
 
-                            {endIcon && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                {endIcon}
-                            </div>}
+                            {endIcon && (
+                                <div
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    {endIcon}
+                                </div>
+                            )}
                         </div>
                         {error && <label className="block text-sm font-medium text-red-700 mb-2 mt-1">{error?.message}</label>}
                     </div>

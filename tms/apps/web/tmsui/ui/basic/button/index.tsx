@@ -10,6 +10,7 @@ import {
   faCircleNotch,
   faDownload,
   faEdit,
+  faEye,
   faKey,
   faPaperPlane,
   faPlus,
@@ -35,13 +36,15 @@ const iconMap: Record<string, IconProp> = {
   download: faDownload,
   save: faSave,
   update: faCircle, // Placeholder - FA doesn't have exact update icon
-  delete: faTrash,
   draft: faEdit, // Placeholder
+  view: faEye,
   edit: faEdit,
+  delete: faTrash,
   print: faPrint,
   paperPlane: faPaperPlane,
   login: faSignInAlt,
   key: faKey,
+
 };
 
 const colorVariants = {

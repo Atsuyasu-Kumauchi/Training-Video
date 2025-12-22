@@ -1,7 +1,7 @@
 import { ListQueryConfig } from "@/common";
 import { CUserDto } from "@/common/dto";
 import { useList } from "@/hooks/useList";
-import UserView from "../user.view";
+import { ListTable } from "@/tmsui";
 import { userListColumn } from "./user.list.column";
 
 export default function UserListComponent() {
@@ -11,8 +11,6 @@ export default function UserListComponent() {
     })
 
     return (
-
-        // <ListTable {...listHook} />
-        <UserView />
+        <ListTable {...listHook} />
     )
 }

@@ -1,49 +1,70 @@
+import { IUserDto } from "@/common";
 import {
-  zodArray,
+  pickFormData,
+  TFormComponentSchema, TFormViewSchema,
   zodInfer,
   zodObject,
-  zodString,
-  zodStringRequired,
+  zodStringRequired
 } from "@/tmsui";
 
+export type TUserFormComponentSchema = TFormComponentSchema<TUserSchema> & {
+  isEdit: boolean;
+  editData?: IUserDto;
+}
+
+export type TUserFormViewSchema = TFormViewSchema<TUserSchema>  
+
 export const userSchema = zodObject({
-  lastName: zodStringRequired(),
-  givenName: zodStringRequired(),
+  username: zodStringRequired(),
   email: zodStringRequired(),
-  employeeId: zodStringRequired(),
-  department: zodStringRequired(),
-  role: zodStringRequired(),
-  dateOfHire: zodStringRequired(),
-  tag: zodArray(
-    zodObject({
-      value: zodStringRequired(),
-      label: zodStringRequired(),
-    })
-  ).min(1, "This filed is required"),
-  firstReview: zodStringRequired(),
-  secondReview: zodStringRequired(),
-  finalReview: zodStringRequired(),
-  password: zodString(),
-  checkbox: zodStringRequired(),
+  password: zodStringRequired(),
+  // lastName: zodStringRequired(),
+  // givenName: zodStringRequired(),
+  // email: zodStringRequired(),
+  // employeeId: zodStringRequired(),
+  // department: zodStringRequired(),
+  // role: zodStringRequired(),
+  // dateOfHire: zodStringRequired(),
+  // tag: zodArray(
+  //   zodObject({
+  //     value: zodStringRequired(),
+  //     label: zodStringRequired(),
+  //   })
+  // ).min(1, "This filed is required"),
+  // firstReview: zodStringRequired(),
+  // secondReview: zodStringRequired(),
+  // finalReview: zodStringRequired(),
+  // password: zodString(),
+  // checkbox: zodStringRequired(),
 });
 
 export type TUserSchema = zodInfer<typeof userSchema>;
 
+export const userKeys = Object.keys( userSchema.shape ) as (keyof zodInfer<typeof userSchema>)[];
+
+
 export const initialValues: TUserSchema = {
-  lastName: "",
-  givenName: "",
+  username: "",
   email: "",
-  employeeId: "",
-  department: "",
-  role: "",
-  dateOfHire: "",
-  tag: [],
-  firstReview: "",
-  secondReview: "",
-  finalReview: "",
   password: "",
-  checkbox: "",
+  // lastName: "",
+  // givenName: "",
+  // email: "",
+  // employeeId: "",
+  // department: "",
+  // role: "",
+  // dateOfHire: "",
+  // tag: [],
+  // firstReview: "",
+  // secondReview: "",
+  // finalReview: "",
+  // password: "",
+  // checkbox: "",
 };
+
+export const defaultValues = (isEdit: boolean, editData: IUserDto): Partial<TUserSchema> => {
+  return isEdit ? pickFormData(editData as unknown as TUserSchema, userKeys as (keyof TUserSchema)[]) : initialValues;
+}
 
 export const department = [
   { label: "部門を選択", value: "Draft" }, //Select a department

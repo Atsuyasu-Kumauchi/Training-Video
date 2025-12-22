@@ -5,13 +5,13 @@ import { ROLE } from "../role.api";
 import { TAG } from "../tag.api";
 import { TEST_CREATION_LIST } from "../testCreation.api";
 import { TRAINING_LIST } from "../training.api";
-import { POSTS } from "../user.api";
+import { USERS } from "../user.api";
 import { VIDEO_LIST } from "../videoList.api";
 
 export const ListQueryConfig = {
     USER: {
-        key: ["User"],
-        url: `${POSTS.LIST}`
+        key: ["UserList"],
+        url: `${USERS.LIST}`
     },
     TAG: {
         key: ["Tag"],

@@ -13,9 +13,11 @@ export const LangRole = {
   },
   form: {
     title: "役割追加", //Add Role
+    editTitle: "役割を編集", //Edit Role
     roleName: "役割名", // Role Name
     roleNamePlaceholder: "役割名を入力", //Enter the role name
     status: "ステータス", // Status
+    statusPlaceholder: "ステータスを選択", // Select Status
     cancel: "キャンセル", // Cancel
     createRole: "役割を作成", // Create Role
     updateRole: "役割を更新", // Update Role

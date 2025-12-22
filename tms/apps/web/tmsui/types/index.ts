@@ -1,7 +1,7 @@
 import { Column, ColumnDef, Table } from "@tanstack/react-table";
 import { ComponentType, RefObject } from "react";
 import { FieldValues } from "react-hook-form";
-import { TUiFormRef } from "../ui";
+import { TUiBasicModalRef, TUiFormRef } from "../ui";
 
 export type TListColumnDef<TData, TValue = unknown> = ColumnDef<TData, TValue> & {
     filterComponent?: ComponentType<{
@@ -10,6 +10,18 @@ export type TListColumnDef<TData, TValue = unknown> = ColumnDef<TData, TValue> &
     }>;
 };
 
+export type TFormComponentSchema<FormType extends FieldValues> = {
+    formRef?: RefObject<TUiFormRef<FormType> | null>;
+    modalRef?: RefObject<TUiBasicModalRef | null>;
+    isLoading?: boolean;
+    isPending?: boolean;
+    isEdit?: boolean;
+};
+
 export type TFormViewSchema<FormType extends FieldValues> = {
-    formRef: RefObject<TUiFormRef<FormType> | null>;
-  };
+    formRef?: RefObject<TUiFormRef<FormType> | null>;
+    modalRef?: RefObject<TUiBasicModalRef | null>;
+    isLoading?: boolean;
+    isPending?: boolean;
+    isEdit?: boolean;
+};

@@ -1,34 +1,46 @@
-import useLang from "@/lang";
-import { Modal, TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
-import { useSettings } from "@/tmsui/store";
+import { IRoleDto, ListQueryConfig, ROLE } from "@/common";
+import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
+import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
-import { initialValues, rolesSchema, TRolesSchema } from "./roles.form.type";
+import { defaultValues, rolesSchema, TRolesFormComponentSchema, TRolesSchema } from "./roles.form.type";
 import RolesFormView from "./roles.form.view";
 
-export default function RolesFormComponent() {
-  const { role } = useLang();
-  const { isOpen, setIsOpen } = useSettings();
+export default function RolesFormComponent({ modalRef, isEdit, editData }: TRolesFormComponentSchema) {
+
   const formRef = useRef<TUiFormRef<TRolesSchema>>(null);
 
+  const mutation = useMutation({
+    mutationKey: isEdit ? ["roles-update"] : ["roles-create"],
+    mutationFn: async (data: TRolesSchema) => {
+      const response = await AuthServer({
+        method: isEdit ? "PUT" : "POST",
+        url: isEdit ? ROLE.UPDATE(editData?.roleId?.toString() ?? "0") : ROLE.CREATE,
+        data,
+      });
+      await wait();
+      return response.data;
+    },
+    onSuccess: () => {
+      formRef.current?.reset();
+      modalRef?.current?.modalClose();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ListQueryConfig.ROLE_LIST.key });
+    },
+  });
+
   const onSubmitHandler: TFormHandlerSubmit<TRolesSchema> = (value) => {
-    console.log(value);
-    setIsOpen(false);
+    mutation.mutate(value as TRolesSchema);
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      title={role.form.title}
+    <UiForm
+      schema={rolesSchema}
+      initialValues={defaultValues(isEdit, editData as IRoleDto)}
+      onSubmit={onSubmitHandler}
+      ref={formRef}
     >
-      <UiForm
-        schema={rolesSchema}
-        initialValues={initialValues}
-        onSubmit={onSubmitHandler}
-        ref={formRef}
-      >
-        <RolesFormView />
-      </UiForm>
-    </Modal>
+      <RolesFormView modalRef={modalRef} isPending={mutation.isPending} isEdit={isEdit} />
+    </UiForm>
   );
 }

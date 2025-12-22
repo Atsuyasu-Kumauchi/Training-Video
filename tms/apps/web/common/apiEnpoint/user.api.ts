@@ -1,8 +1,8 @@
 import { BASE_URL } from "./baseUrl";
-const POSTS_API_ENPOINT = "users";
-export const POSTS = {
-    LIST: `${BASE_URL}${POSTS_API_ENPOINT}`,
-    CREATE: `${BASE_URL}${POSTS_API_ENPOINT}`,
-    UPDATE: (id: string) => `${BASE_URL}${POSTS_API_ENPOINT}/${id}`,
-    DELETE: (id: string) => `${BASE_URL}${POSTS_API_ENPOINT}/${id}`,
+const USERS_API_END_POINT = "users";
+export const USERS = {
+    LIST: `${BASE_URL}${USERS_API_END_POINT}`,
+    CREATE: `${BASE_URL}${USERS_API_END_POINT}`,
+    UPDATE: (id: string) => `${BASE_URL}${USERS_API_END_POINT}/${id}`,
+    DELETE: (id: string) => `${BASE_URL}${USERS_API_END_POINT}/${id}`,
 };
