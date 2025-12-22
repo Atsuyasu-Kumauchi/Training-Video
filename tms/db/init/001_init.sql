@@ -40,7 +40,7 @@ CREATE TABLE tags (
 );
 
 -- User table
-CREATE TABLE "tbl_user" (
+CREATE TABLE "users" (
     user_id SERIAL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE trainings (
 CREATE INDEX idx_tbl_training_videos ON trainings USING gin (videos jsonb_path_ops);
 
 -- User Training table
-CREATE TABLE tbl_user_training (
+CREATE TABLE user_trainings (
     user_training_id SERIAL PRIMARY KEY,
     training_id INTEGER REFERENCES trainings(training_id) ON DELETE CASCADE,
     user_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
