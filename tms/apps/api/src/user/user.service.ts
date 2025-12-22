@@ -66,6 +66,7 @@ export class UserService {
 
   async save(id: number, user: DeepPartial<User>) {
     await this.userRepository.existsBy({ userId: id }) || throwSe(NotFoundException);
+    await this.authService.updateAuthUser(user);
     return await this.userRepository.save({ ...user, userId: id });
   }
 
