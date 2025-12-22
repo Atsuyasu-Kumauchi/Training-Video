@@ -2,7 +2,7 @@ import { User } from "src/common/entities/user.entity";
 import { Column, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity('tbl_role')
+@Entity('roles')
 export class Role {
     @PrimaryGeneratedColumn({ name: 'role_id' })
     roleId: number;

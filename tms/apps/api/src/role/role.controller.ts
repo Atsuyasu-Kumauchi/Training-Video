@@ -1,10 +1,12 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { RoleService } from "./role.service";
 import { Role } from "./role.entity";
 import { CreateRoleDto, RoleQueryDto } from "./role.dto";
 import { type DeepPartial } from "typeorm";
+import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
 
 
+@UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
 @Controller('roles')
 export class RoleController {
 
