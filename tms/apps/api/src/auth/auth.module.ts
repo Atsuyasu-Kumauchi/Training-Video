@@ -8,11 +8,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { VerifyUser, JwtAuthGuard, IsAdmin } from './auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/common/entities/user.entity';
+import { UriPermission, UserUriPermission } from './auth.entity';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, UriPermission, UserUriPermission]),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

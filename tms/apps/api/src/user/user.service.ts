@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Brackets, DeepPartial, Repository } from 'typeorm';
 import { User } from '../common/entities/user.entity';
@@ -14,6 +14,12 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly authService: AuthService
   ) {}
+
+  async getReviewers() {
+    return (await this.userRepository.find({ where: { isReviewer: true }, relations: { role: true, } })).map(u => ({
+      userId: u.userId, firstName: u.firstName, lastName: u.lastName, roleName: u.role.name
+    }));
+  }
 
   async findAll(query: UserQueryDto) {
     const queryBuilder = this.userRepository.createQueryBuilder();
@@ -60,7 +66,7 @@ export class UserService {
       throw new ConflictException(Messages.DUPLICAT_ENTRY('User'));
     }
 
-    const user = await this.authService.createAuthUser(createUserDto, false, true);;
+    const user = await this.authService.createAuthUser(createUserDto, false, true);
     return await this.userRepository.save(user);
   }
 

@@ -1,5 +1,5 @@
 import { User } from "src/common/entities/user.entity";
-import { Column, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 @Entity('roles')
@@ -13,8 +13,11 @@ export class Role {
     @Column({ type: 'boolean', default: true })
     status: boolean;
 
-    @DeleteDateColumn()
-    deletedAt?: Date;
+    @CreateDateColumn()
+    created: Date;
+
+    @UpdateDateColumn()
+    modified: Date;
 
     @OneToMany(_ => User, user => user.role)
     users: User[]

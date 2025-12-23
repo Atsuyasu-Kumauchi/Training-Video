@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { comparePassword, hashPassword } from './hash.util';
 import { LoginDto, SignUpDto } from './auth.dto';
@@ -9,7 +9,8 @@ import { User } from 'src/common/entities/user.entity';
 import { throwSe } from 'src/common/exception/exception.util';
 import { InvalidCredential, UserNotFound } from './auth.exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
-import { type DeepPartial, Repository } from 'typeorm';
+import { type DeepPartial, Not, Repository } from 'typeorm';
+import { UriPermission, UserUriPermission } from './auth.entity';
 
 
 function dateToOtp(date: Date): string {
@@ -45,11 +46,24 @@ function newUserVerifySigRaw(user: User, verifyPass: string) {
 @Injectable()
 export class AuthService {
 
-  constructor(private jwtService: JwtService, private configService: ConfigService, @InjectRepository(User) private userRepository: Repository<User>) {
+  constructor(private jwtService: JwtService, private configService: ConfigService, 
+    @InjectRepository(User) private userRepository: Repository<User>, 
+    @InjectRepository(UriPermission) private uriPermissionRepository: Repository<UriPermission>, 
+    @InjectRepository(UserUriPermission) private userUriPermissionRepository: Repository<UserUriPermission>) {
+
     authenticator.options = {
       window: 1,
       step: 30
     };
+
+  }
+
+  async getUriPermissions() {
+    return await this.uriPermissionRepository.find();
+  }
+
+  async getUserUriPermissions(userId: number) {
+    return await this.userUriPermissionRepository.findBy({ user: { userId } });
   }
 
   async userExists(username: string) {
@@ -112,6 +126,10 @@ export class AuthService {
 
   async createAuthUser(signUpDto: SignUpDto, isAdmin: boolean, pwdIsDummy: boolean) {
     return this.userRepository.create({
+      firstName: '',
+      lastName: '',
+      role: { roleId: 1 },
+      department: { departmentId: 1 },
       ...signUpDto,
       password: await hashPassword(signUpDto.password),
       privatekey: authenticator.generateSecret(),
