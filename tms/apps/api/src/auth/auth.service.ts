@@ -128,8 +128,9 @@ export class AuthService {
     return this.userRepository.create({
       firstName: '',
       lastName: '',
-      role: { roleId: 1 },
-      department: { departmentId: 1 },
+      roleId: 1,
+      departmentId: 1,
+      employeeId: '',
       ...signUpDto,
       password: await hashPassword(signUpDto.password),
       privatekey: authenticator.generateSecret(),
