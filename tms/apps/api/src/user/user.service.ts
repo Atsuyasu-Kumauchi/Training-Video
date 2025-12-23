@@ -22,7 +22,10 @@ export class UserService {
   }
 
   async findAll(query: UserQueryDto) {
-    const queryBuilder = this.userRepository.createQueryBuilder();
+    const queryBuilder = this.userRepository.createQueryBuilder('User');
+
+    queryBuilder.leftJoin('User.role', 'Role').addSelect(['Role.roleId', 'Role.name']);
+    queryBuilder.leftJoin('User.department', 'Department').addSelect(['Department.departmentId', 'Department.name']);
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
