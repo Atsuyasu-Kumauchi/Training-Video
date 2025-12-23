@@ -20,6 +20,24 @@ export class CreateUserDto {
     @IsStrongPassword()
     password: string;
 
+    @IsNotEmpty()
+    firstName: string;
+
+    @IsNotEmpty()
+    lastName: string;
+
+    @IsNotEmpty()
+    roleId: number;
+
+    @IsNotEmpty()
+    departmentId: number;
+
+    @IsNotEmpty()
+    employeeId: string;
+
+    @IsNotEmpty()
+    isReviewer: boolean = false;
+
 }
 
 export class UserQueryDto {

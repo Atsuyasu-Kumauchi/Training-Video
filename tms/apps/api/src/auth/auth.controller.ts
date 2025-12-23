@@ -119,4 +119,10 @@ export class AuthController {
     return req.user;
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('uri-permissions')
+  async getUriPermissions(@Body() req) {
+    return await this.authService.getUriPermissions();
+  }
+
 }

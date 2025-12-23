@@ -40,7 +40,7 @@ CREATE TABLE tags (
 );
 
 -- User table
-CREATE TABLE "users" (
+CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -54,6 +54,8 @@ CREATE TABLE "users" (
     password VARCHAR(255) NOT NULL,
     privatekey VARCHAR(255),
     is_admin BOOLEAN DEFAULT true,
+    is_reviewer BOOLEAN DEFAULT false,
+    employee_id VARCHAR(100) NOT NULL,
     reset_pwd BOOLEAN DEFAULT false,
     status BOOLEAN DEFAULT true,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -85,6 +87,7 @@ CREATE TABLE user_uri_permissions (
     user_uri_permission_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
     uri_permission_id INTEGER REFERENCES uri_permissions(uri_permission_id) ON DELETE CASCADE,
+    has_permission BOOLEAN DEFAULT true,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, uri_permission_id)
 );
