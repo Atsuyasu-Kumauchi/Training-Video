@@ -1,4 +1,10 @@
-import { zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+import {
+  zodArray,
+  zodInfer,
+  zodObject,
+  zodString,
+  zodStringRequired,
+} from "@/tmsui";
 
 export const trainingSchema = zodObject({
   name: zodStringRequired(),
@@ -7,6 +13,12 @@ export const trainingSchema = zodObject({
   users: zodString(),
   group: zodString(),
   status: zodStringRequired(),
+  tag: zodArray(
+    zodObject({
+      value: zodStringRequired(),
+      label: zodStringRequired(),
+    })
+  ).min(1, "This filed is required"),
 });
 
 export type TTrainingSchema = zodInfer<typeof trainingSchema>;
@@ -18,6 +30,7 @@ export const initialValues = {
   users: "",
   group: "",
   status: "",
+  tag: [],
 };
 
 export const videos = [
@@ -36,8 +49,18 @@ export const members = [
   { label: "Diana Prince", value: "diana_prince" },
 ];
 
+export const tagName = [
+  { label: "IT", value: "IT" },
+  { label: "HR", value: "HR" },
+  { label: "SALES ", value: "SALES" },
+  { label: "MARKETING", value: "MARKETING" },
+  { label: "OPERATIONS", value: "OPERATIONS" },
+  { label: "FINANCE", value: "FINANCE" },
+];
+
 export const status = [
-  { label: "Select Status", value: "value" },
-  { label: "Active", value: "1" },
-  { label: "Inactive", value: "0" },
+  { label: "ステータスを選択", value: "value" }, //Select a status
+  { label: "アクティブ", value: "1" }, //active
+  { label: "下書き", value: "0" }, //draft
+  { label: "アーカイブ", value: "0" }, //archive
 ];

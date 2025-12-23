@@ -1,22 +1,22 @@
-import { Avatar } from '@/common'
-import { Badge } from '@/common/components/badge'
-import { CUserDto } from '@/common/dto/users'
-import { TListColumnDef } from '@/tmsui/types'
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Avatar } from '@/common';
+import { Badge } from '@/common/components/badge';
+import { CUserDto } from '@/common/dto/user.dto';
+import { LangUser } from '@/lang/user';
+import { Button } from '@/tmsui';
+import { TListColumnDef } from '@/tmsui/types';
+import { TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui/ui/UIBasicModal';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+
+const { list } = LangUser;
 
 export const userListColumn: TListColumnDef<CUserDto>[] = [
-  {
-    accessorKey: "ser",
-    size: 50,
-    enableHiding: false,
-    header: () => "SL",
-    cell: (ctx) => <div>{ctx.row.index + 1}</div>,
-  },
+
   {
     accessorKey: "name",
     enableHiding: false,
-    header: () => "User",
+    header: () => list.user,
     cell: (ctx) => {
       return <Avatar name={ctx.row.original.full_name} />
     }
@@ -24,7 +24,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "email",
     enableHiding: false,
-    header: () => "Email",
+    header: () => list.email,
     cell: (ctx) => {
       return <div>{ctx.row.original.email}</div>
     }
@@ -32,7 +32,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "department",
     enableHiding: false,
-    header: () => "Department",
+    header: () => list.department,
     cell: (ctx) => {
       return <div>{ctx.row.original.department}</div>
     }
@@ -40,7 +40,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "assigned_training",
     enableHiding: false,
-    header: () => "Assigned Training",
+    header: () => list.assignedTraining,
     cell: (ctx) => {
       return <div>{ctx.row.original.assigned_training}</div>
     }
@@ -48,7 +48,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "completed_training",
     enableHiding: false,
-    header: () => "Completed Training",
+    header: () => list.completedTraining,
     cell: (ctx) => {
       return <div>{ctx.row.original.completed_training}</div>
     }
@@ -56,7 +56,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "status",
     enableHiding: false,
-    header: () => "Status",
+    header: () => list.status,
     cell: (ctx) => {
       return <Badge status={ctx.row.original.status} />
     }
@@ -64,20 +64,29 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
   {
     accessorKey: "actions",
     enableHiding: false,
-    header: () => "Actions",
+    header: () => list.actions,
     cell: (ctx) => {
-      return <div className="flex items-center space-x-2">
-        <button className="text-blue-600 hover:text-blue-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faEye} />
-        </button>
-        <button className="text-primary-600 hover:text-primary-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
-        <button className="text-red-600 hover:text-red-900 transition-colors duration-200">
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      </div>
+      return <UserActions />
     }
   }
 ]
 
+export const UserActions = () => {
+  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  return (
+    <div className="flex items-center space-x-2">
+      <Button onClick={() => modalRef.current.modalOpen()}>
+        <FontAwesomeIcon icon={faEye} />
+      </Button>
+      <UiBasicModal modalRef={modalRef} title="User Details" description="User Details" body={<div>User Details</div>} />
+      <Button onClick={() => modalRef.current.modalOpen()}>
+        <FontAwesomeIcon icon={faEdit} />
+      </Button>
+      <Button>
+        <FontAwesomeIcon icon={faTrash} />
+      </Button>
+
+
+    </div>
+  )
+}

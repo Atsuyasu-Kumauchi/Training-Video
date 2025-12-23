@@ -1,12 +1,9 @@
-import { AdminLayout } from "@/tmsui"
+import { AdminLayout } from "@/tmsui";
 
 type IAdminLayout = {
     children: React.ReactNode
-
 }
 
 export default function layout({ children }: IAdminLayout) {
-    return (
-        <AdminLayout>{children}</AdminLayout>
-    )
+    return (<AdminLayout>{children}</AdminLayout>)
 }

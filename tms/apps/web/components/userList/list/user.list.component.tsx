@@ -1,7 +1,7 @@
 import { ListQueryConfig } from "@/common";
 import { CUserDto } from "@/common/dto";
 import { useList } from "@/hooks/useList";
-import { ListTable } from "@/tmsui";
+import UserView from "../user.view";
 import { userListColumn } from "./user.list.column";
 
 export default function UserListComponent() {
@@ -10,5 +10,9 @@ export default function UserListComponent() {
         query: ListQueryConfig.USER
     })
 
-    return <ListTable {...listHook} />
+    return (
+
+        // <ListTable {...listHook} />
+        <UserView />
+    )
 }

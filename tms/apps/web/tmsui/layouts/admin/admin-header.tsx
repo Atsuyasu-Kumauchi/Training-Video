@@ -34,7 +34,7 @@ export function AdminHeader() {
                 <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                   <span className="text-white font-medium text-sm">A</span>
                 </div>
-                <span className="text-gray-700 font-medium">Admin User</span>
+                <span className="text-gray-700 font-medium">管理者ユーザー</span>
                 <i className="fas fa-chevron-down text-gray-400" />
               </button>
             </div>
