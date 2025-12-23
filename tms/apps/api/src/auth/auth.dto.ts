@@ -15,11 +15,7 @@ export class LoginDto {
 
 export class SignUpDto {
 
-    @IsString()
     @IsNotEmpty()
-    @MinLength(3)
-    @MaxLength(25)
-    @Matches(/^[a-zA-Z0-9]+$/)
     username: string;
 
     @IsEmail()

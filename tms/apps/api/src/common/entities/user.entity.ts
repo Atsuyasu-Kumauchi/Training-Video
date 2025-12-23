@@ -42,14 +42,14 @@ export class User {
   @Column({ type: 'boolean', default: true })
   status: boolean;
 
-  @Column({ type: 'integer' })
+  @Column({ name: 'role_id', type: 'integer' })
   roleId: number;
 
   @ManyToOne(_ => Role, role => role.users)
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
-  @Column({ type: 'integer' })
+  @Column({ name: 'department_id', type: 'integer' })
   departmentId: number;
 
   @ManyToOne(_ => Department, department => department.users)
