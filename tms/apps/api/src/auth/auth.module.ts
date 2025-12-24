@@ -7,7 +7,7 @@ import { AuthController } from './auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { VerifyUser, JwtAuthGuard, IsAdmin } from './auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/common/entities/user.entity';
+import { User } from 'src/user/user.entity';
 import { UriPermission, UserUriPermission } from './auth.entity';
 
 

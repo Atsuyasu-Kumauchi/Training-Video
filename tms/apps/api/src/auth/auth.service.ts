@@ -5,7 +5,7 @@ import { LoginDto, SignUpDto } from './auth.dto';
 import { authenticator, totp } from 'otplib';
 import * as qrcode from 'qrcode';
 import { ConfigService } from '@nestjs/config';
-import { User } from 'src/common/entities/user.entity';
+import { User } from 'src/user/user.entity';
 import { throwSe } from 'src/common/exception/exception.util';
 import { InvalidCredential, UserNotFound } from './auth.exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
