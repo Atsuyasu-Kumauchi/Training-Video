@@ -6,10 +6,12 @@ import { Messages } from '../common/constants/messages';
 import { CreateUserDto, UserQueryDto } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { throwSe } from 'src/common/exception/exception.util';
+import { Tag } from 'src/tag/tag.entity';
 
 
 @Injectable()
 export class UserService {
+
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly authService: AuthService
@@ -22,7 +24,11 @@ export class UserService {
   }
 
   async findAll(query: UserQueryDto) {
-    const queryBuilder = this.userRepository.createQueryBuilder();
+    const queryBuilder = this.userRepository.createQueryBuilder('User');
+
+    queryBuilder.leftJoin('User.role', 'Role').addSelect(['Role.roleId', 'Role.name']);
+    queryBuilder.leftJoin('User.department', 'Department').addSelect(['Department.departmentId', 'Department.name']);
+    queryBuilder.leftJoin('User.tags', 'Tag').addSelect(['Tag.tagId', 'Tag.name']);
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
@@ -39,7 +45,11 @@ export class UserService {
     const [result, resultCount] = await queryBuilder.getManyAndCount();
 
     return {
-      data: result,
+      data: result.map(u => {
+        const user = u as any;
+        user.userTags = user.tags.map((t: Tag) => t.tagId);
+        return user;
+      }),
       pageIndex: query.pageIndex,
       pageSize: query.pageSize,
       pageCount: Math.ceil(resultCount / query.pageSize),
@@ -51,8 +61,9 @@ export class UserService {
     };
   }
 
-  async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { userId: id } });
+  async findOne(id: number): Promise<User & { userTags: number[] }> {
+    const user = await this.userRepository.findOne({ where: { userId: id } }) as any;
+    user.userTags = user.tags.map((t: Tag) => t.tagId);
 
     if (!user) {
       throw new NotFoundException(Messages.MSG10_EX('User'));
@@ -61,18 +72,20 @@ export class UserService {
     return user;
   }
 
-  async create<T extends CreateUserDto>(createUserDto: T): Promise<User> {
+  async create<T extends CreateUserDto>(createUserDto: T): Promise<User & { userTags: number[] }> {
     if (await this.userRepository.existsBy({ username: createUserDto.username })) {
       throw new ConflictException(Messages.DUPLICAT_ENTRY('User'));
     }
 
     const user = await this.authService.createAuthUser(createUserDto, false, true);
-    return await this.userRepository.save(user);
+    user.tags = createUserDto.userTags.map(t => ({ tagId: t } as Tag));
+    return { ...(await this.userRepository.save(user) as any), tags: undefined, userTags: createUserDto.userTags } ;
   }
 
-  async save(id: number, user: DeepPartial<User>) {
+  async save(id: number, user: DeepPartial<User>, userTags: number[]) {
     await this.userRepository.existsBy({ userId: id }) || throwSe(NotFoundException);
     await this.authService.updateAuthUser(user);
+    user.tags = userTags.map(t => ({ tagId: t } as Tag));
     return await this.userRepository.save({ ...user, userId: id });
   }
 

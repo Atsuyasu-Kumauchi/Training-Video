@@ -131,6 +131,7 @@ export class AuthService {
       roleId: 1,
       departmentId: 1,
       employeeId: '',
+      joinDate: new Date(),
       ...signUpDto,
       password: await hashPassword(signUpDto.password),
       privatekey: authenticator.generateSecret(),

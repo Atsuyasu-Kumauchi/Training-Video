@@ -30,7 +30,7 @@ export class DepartmentService {
   }
 
   async findAll(query: DepartmentQueryDto) {
-    const queryBuilder = this.departmentRepository.createQueryBuilder();
+    const queryBuilder = this.departmentRepository.createQueryBuilder('Department');
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 

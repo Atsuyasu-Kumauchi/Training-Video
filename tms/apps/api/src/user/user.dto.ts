@@ -23,6 +23,9 @@ export class CreateUserDto {
     lastName: string;
 
     @IsNotEmpty()
+    userTags: number[];
+
+    @IsNotEmpty()
     roleId: number;
 
     @IsNotEmpty()

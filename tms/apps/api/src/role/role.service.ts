@@ -15,7 +15,7 @@ export class RoleService {
     ) { }
 
     async findAll(query: RoleQueryDto) {
-        const queryBuilder = this.roleRepository.createQueryBuilder();
+        const queryBuilder = this.roleRepository.createQueryBuilder('Role');
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 

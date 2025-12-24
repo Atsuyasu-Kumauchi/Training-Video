@@ -11,7 +11,7 @@ import { type DeepPartial } from 'typeorm';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/reviewers')
+  @Get('reviewers')
   async getReviewers() {
     return await this.userService.getReviewers();
   }
@@ -22,17 +22,17 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User> {
+  async findOne(@Param('id') id: string): Promise<User & { userTags: number[] }> {
     return await this.userService.findOne(+id);
   }
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
 
   @Put(':id')
-  async save(@Param('id') id: number, @Body() user: DeepPartial<User>) {
-    return await this.userService.save(id, user);
+  async save(@Param('id') id: number, @Body() user: DeepPartial<User> & { userTags: number[] }) {
+    return await this.userService.save(id, user, user.userTags);
   }
 }
