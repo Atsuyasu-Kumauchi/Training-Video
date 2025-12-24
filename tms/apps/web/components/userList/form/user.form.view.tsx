@@ -1,23 +1,19 @@
-import { IDepartmentDto, IRoleDto, ListQueryConfig } from "@/common";
+import { IDepartmentDto, IRoleDto, ITagDto, ListQueryConfig } from "@/common";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { Button, passwordGenerate, UiFormInput, UiFormSelect, useFormContext } from "@/tmsui";
+import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
 import { TUserFormViewSchema, TUserSchema } from "./user.form.type";
 
 export default function UserFormView({ modalRef, isPending }: TUserFormViewSchema) {
   const { user } = useLang();
-  const { setValue } = useFormContext<TUserSchema>();
+  const { setValue, trigger } = useFormContext<TUserSchema>();
 
   const generatePassword = () => {
     const password = passwordGenerate()
     setValue("password", password);
+    trigger("password");
   }
-
-  // const roleOptions = useFetchList<IRoleDto[]>({
-  //   query: ListQueryConfig.ROLE_LIST
-  // })
-  // console.log("roleOptions", roleOptions);
-
   return (
     <>
       <div className="grid grid-cols-12 gap-4">
@@ -79,20 +75,27 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
           />
         </div>
 
-        {/* <div className="col-span-12 md:col-span-6">
+        <div className="col-span-12 md:col-span-6">
           <UiFormInput<TUserSchema>
-            name="dateOfHire"
+            name="joinDate"
             label={user.form.dateOfHire}
             placeholder=""
+            required
+            type="date"
           />
         </div>
         <div className="col-span-12 md:col-span-6">
           <UiFormSelect2<TUserSchema>
             label={user.form.tag}
-            name="tag"
-            options={tag}
+            name="userTags"
+            isMulti
+            options={useFetchList<ITagDto[]>({
+              query: ListQueryConfig.TAG_LIST,
+              keyName: { label: "name", value: "tagId" }
+            })}
           />
         </div>
+        {/* 
         <div className="col-span-12">
           <h4 className="text-lg font-medium text-gray-900 mb-4">
             {user.form.issueReview}
@@ -180,3 +183,4 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
     </>
   );
 }
+

@@ -1,17 +1,16 @@
 import { ListQueryConfig } from "@/common";
 import { CTagDto } from "@/common/dto";
 import { useList } from "@/hooks/useList";
-import TagTableDemo from "../tagTableDemo";
+import { ListTable } from "@/tmsui";
 import { tagListColumn } from "./tag.list.column";
 
 export default function TagListComponent() {
   const listHook = useList<CTagDto>({
     columns: tagListColumn,
-    query: ListQueryConfig.TAG
+    query: ListQueryConfig.TAG_LIST
   })
 
   return (
-    <TagTableDemo />
-    // <ListTable {...listHook} />
+    <ListTable {...listHook} />
   )
 }

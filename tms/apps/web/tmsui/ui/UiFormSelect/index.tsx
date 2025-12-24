@@ -47,7 +47,11 @@ export const UiFormSelect = <T extends FieldValues>({
                     <div>
                         {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
                         <select
-                            className={cn("block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500", className)}
+                            className={cn(
+                                "block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500",
+                                className,
+                                error && "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            )}
                             id={label}
                             {...field}
                             {...rest}

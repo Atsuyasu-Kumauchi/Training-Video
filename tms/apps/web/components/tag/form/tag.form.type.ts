@@ -1,21 +1,32 @@
-import { zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+import { ITagDto } from "@/common";
+import { pickFormData, TFormComponentSchema, TFormViewSchema, zodBooleanRequired, zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+
+export type TTagFormComponentSchema = TFormComponentSchema<TTagSchema> & {
+  isEdit: boolean;
+  editData?: ITagDto;
+  isPending: boolean;
+}
+
+export type TTagFormViewSchema = TFormViewSchema<TTagSchema>
 
 export const tagSchema = zodObject({
   name: zodStringRequired(),
-  status: zodStringRequired(),
+  status: zodBooleanRequired(),
 });
 
 export type TTagSchema = zodInfer<typeof tagSchema>;
+export const tagKeys = Object.keys(tagSchema.shape) as (keyof zodInfer<typeof tagSchema>)[];
 
 export const initialValues = {
   name: "",
-  status: "",
+  status: true,
 };
 
-
+export const defaultValues = (isEdit: boolean, editData: ITagDto): Partial<TTagSchema> => {
+  return isEdit ? pickFormData(editData as unknown as TTagSchema, tagKeys as (keyof TTagSchema)[]) : initialValues;
+}
 
 export const status = [
-  { label: "すべてのステータス", value: "" },
-  { label: "アクティブ", value: "1" },
-  { label: "非アクティブ", value: "0" },
+  { label: "アクティブ", value: true },
+  { label: "非アクティブ", value: false },
 ];

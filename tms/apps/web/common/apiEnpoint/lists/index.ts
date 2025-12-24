@@ -13,8 +13,8 @@ export const ListQueryConfig = {
         key: ["UserList"],
         url: `${USERS.LIST}`
     },
-    TAG: {
-        key: ["Tag"],
+    TAG_LIST: {
+        key: ["TagList"],
         url: `${TAG.LIST}`
     },
     VIDEO_LIST: {
