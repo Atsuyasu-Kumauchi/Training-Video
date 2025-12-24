@@ -7,7 +7,7 @@ import { userListColumn } from "./user.list.column";
 export default function UserListComponent() {
     const listHook = useList<CUserDto>({
         columns: userListColumn,
-        query: ListQueryConfig.USER
+        query: ListQueryConfig.USER,
     })
 
     return (

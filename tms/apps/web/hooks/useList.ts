@@ -46,10 +46,9 @@ export function useList<TData, TValue = unknown>({
     sortBy = "updatedAt:desc",
     staleTime,
 }: IUseListTableOptions<TData, TValue>) {
+
     const [sorting, setSortingState] = useState<SortingState>([]);
-    const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>(
-        [],
-    );
+    const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
     const [globalFilter, setGlobalFilterState] = useState("");
@@ -58,22 +57,14 @@ export function useList<TData, TValue = unknown>({
         pageSize: pageSize,
     });
 
-    const setPageIndexZero = () => {
-        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-    };
+    const setPageIndexZero = () => setPagination((prev) => ({ ...prev, pageIndex: 0 }));
 
-    const setSorting = (
-        updater: SortingState | ((old: SortingState) => SortingState),
-    ) => {
+    const setSorting = (updater: SortingState | ((old: SortingState) => SortingState)) => {
         setSortingState(updater);
         setPageIndexZero();
     };
 
-    const setColumnFilters = (
-        updater:
-            | ColumnFiltersState
-            | ((old: ColumnFiltersState) => ColumnFiltersState),
-    ) => {
+    const setColumnFilters = (updater: | ColumnFiltersState | ((old: ColumnFiltersState) => ColumnFiltersState),) => {
         setColumnFiltersState(updater);
         setPageIndexZero();
     };
@@ -87,13 +78,13 @@ export function useList<TData, TValue = unknown>({
         query,
         pageIndex: pagination.pageIndex,
         pageSize: pagination.pageSize,
+        server,
+        staleTime,
         globalFilter,
         sorting,
         columnFilters,
         filters,
-        server,
         sortBy,
-        staleTime,
     });
 
     const table = useReactTable({

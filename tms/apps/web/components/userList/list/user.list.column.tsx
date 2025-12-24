@@ -19,7 +19,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     header: () => list.user,
     cell: (ctx) => {
       return <Avatar name={ctx.row.original.username} />
-    }
+    },
   },
   {
     accessorKey: "email",
@@ -95,13 +95,13 @@ export const UserEdit = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { user: userLang } = useLang();
   const isEdit = !!user.userId || false;
+
   return (
     <>
       <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />
       <UiBasicModal
         modalRef={modalRef}
-        // title={userLang.form.editTitle}
-        title="Edit User"
+        title={userLang.form.editUser}
         body={<UserFormComponent isEdit={isEdit} editData={user} modalRef={modalRef} />}
       />
     </>

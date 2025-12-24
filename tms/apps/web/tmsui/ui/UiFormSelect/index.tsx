@@ -3,7 +3,7 @@ import { cn } from "@/tmsui/utility";
 import { Controller, FieldValues, Path } from "react-hook-form";
 import { useFormContext } from "../useFormContext";
 
-type Ioption = {
+export type IOption = {
     label: string;
     value: string | number | boolean;
 }
@@ -12,7 +12,7 @@ export type UiFormSelectProps<T extends FieldValues> = {
     name: Path<T>;
     label?: string;
     required?: boolean;
-    options: Ioption[];
+    options: IOption[];
     placeholder?: string;
 } & React.ComponentPropsWithoutRef<"select">;
 
@@ -54,7 +54,7 @@ export const UiFormSelect = <T extends FieldValues>({
                         >
                             <option value="">{placeholder}</option>
                             {options.map((option) => {
-                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option.value.toString()}>{option.label}</option>)
+                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option.value as string}>{option.label}</option>)
                             })}
                         </select>
                         {error && <label className="block text-sm font-medium text-red-700 mb-2 mt-1">{error?.message}</label>}

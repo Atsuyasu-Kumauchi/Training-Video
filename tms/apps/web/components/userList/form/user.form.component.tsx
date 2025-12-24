@@ -47,8 +47,6 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
             formRef.current?.reset();
             modalRef?.current?.modalClose?.();
         },
-
-        // 🔹 4️⃣ Finally server data sync
         onSettled: () => {
             queryClient.invalidateQueries({
                 queryKey: ListQueryConfig.USER.key,
@@ -56,7 +54,8 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         },
     })
     const onSubmit: TFormHandlerSubmit<TUserSchema> = (value) => {
-        userMutation.mutate(value as TUserSchema);
+        const username = value?.email;
+        userMutation.mutate({ ...value, username } as TUserSchema);
     }
 
     return (

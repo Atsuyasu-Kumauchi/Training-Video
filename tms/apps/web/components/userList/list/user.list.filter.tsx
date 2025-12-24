@@ -2,6 +2,15 @@ import useLang from "@/lang";
 
 export default function UserListFilter() {
     const { user } = useLang();
+    const onStatusFilterChange = (value: string) => {
+        console.log(value);
+    }
+    const onDepartmentFilterChange = (value: string) => {
+        console.log(value);
+    }
+    const onSearchFilterChange = (value: string) => {
+        console.log(value);
+    }
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
             <div className="px-6 py-4">
@@ -10,10 +19,8 @@ export default function UserListFilter() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.status}
                         </label>
-                        <select className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                            {/* <option>All Status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option> */}
+                        <select onChange={(e) => onStatusFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+
                             <option value="">すべてのステータス</option>
                             <option value="active">アクティブ</option>
                             <option value="inactive">非アクティブ</option>
@@ -23,7 +30,7 @@ export default function UserListFilter() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.department}
                         </label>
-                        <select className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        <select onChange={(e) => onDepartmentFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                             {/* <option>All Departments</option>
                             <option value="it">IT Department</option>
                             <option value="hr">HR Department</option>

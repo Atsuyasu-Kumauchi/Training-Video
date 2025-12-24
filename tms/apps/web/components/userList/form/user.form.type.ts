@@ -2,8 +2,10 @@ import { IUserDto } from "@/common";
 import {
   pickFormData,
   TFormComponentSchema, TFormViewSchema,
+  zodBoolean,
   zodInfer,
   zodObject,
+  zodString,
   zodStringRequired
 } from "@/tmsui";
 
@@ -12,16 +14,30 @@ export type TUserFormComponentSchema = TFormComponentSchema<TUserSchema> & {
   editData?: IUserDto;
 }
 
-export type TUserFormViewSchema = TFormViewSchema<TUserSchema>  
+export type TUserFormViewSchema = TFormViewSchema<TUserSchema>
 
 export const userSchema = zodObject({
-  username: zodStringRequired(),
+  username: zodString(),
   email: zodStringRequired(),
   password: zodStringRequired(),
-  // lastName: zodStringRequired(),
-  // givenName: zodStringRequired(),
-  // email: zodStringRequired(),
-  // employeeId: zodStringRequired(),
+  firstName: zodStringRequired(),
+  lastName: zodStringRequired(),
+  employeeId: zodStringRequired(),
+  roleId: zodStringRequired(),
+  departmentId: zodStringRequired(),
+  isReviewer: zodBoolean()
+
+  // "username": "samax92",
+  // "email": "samax92@gmail.com",
+  // "password": "max_9200X",
+  // "firstName": "Haiat",
+  // "lastName": "Shabbir",
+  // "roleId": "1",
+  // "departmentId": 1,
+  // "employeeId": "x123",
+  // "isReviewer": true
+
+
   // department: zodStringRequired(),
   // role: zodStringRequired(),
   // dateOfHire: zodStringRequired(),
@@ -40,13 +56,19 @@ export const userSchema = zodObject({
 
 export type TUserSchema = zodInfer<typeof userSchema>;
 
-export const userKeys = Object.keys( userSchema.shape ) as (keyof zodInfer<typeof userSchema>)[];
+export const userKeys = Object.keys(userSchema.shape) as (keyof zodInfer<typeof userSchema>)[];
 
 
 export const initialValues: TUserSchema = {
   username: "",
   email: "",
   password: "",
+  firstName: "",
+  lastName: "",
+  employeeId: "",
+  roleId: "",
+  departmentId: "",
+  isReviewer: false,
   // lastName: "",
   // givenName: "",
   // email: "",
@@ -67,8 +89,7 @@ export const defaultValues = (isEdit: boolean, editData: IUserDto): Partial<TUse
 }
 
 export const department = [
-  { label: "部門を選択", value: "Draft" }, //Select a department
-  { label: "IT Department", value: "IT Department" },
+  { label: "IT Department", value: "1" },
   { label: "HR Department", value: "HR Department" },
   { label: "Finance Department", value: "Finance Department" },
   { label: "Marketing Department", value: "Marketing Department" },
@@ -76,8 +97,8 @@ export const department = [
   { label: "Operations Department", value: "Operations Department" },
 ];
 export const role = [
-  { label: "役割を選択", value: "Draft" }, //Select a role
-  { label: "Admin", value: "Admin" },
+
+  { label: "Admin", value: "1" },
   { label: "Manager", value: "Manager" },
   { label: "Analyst", value: "Analyst" },
   { label: "Specialist", value: "Specialist" },

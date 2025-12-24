@@ -1,6 +1,7 @@
+import { IDepartmentDto, IRoleDto, ListQueryConfig } from "@/common";
+import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
-import { Button, UiFormInput, useFormContext } from "@/tmsui";
-import { passwordGenerate } from "@/tmsui/utility/functions/passwordGenerate";
+import { Button, passwordGenerate, UiFormInput, UiFormSelect, useFormContext } from "@/tmsui";
 import { TUserFormViewSchema, TUserSchema } from "./user.form.type";
 
 export default function UserFormView({ modalRef, isPending }: TUserFormViewSchema) {
@@ -12,45 +13,29 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
     setValue("password", password);
   }
 
+  // const roleOptions = useFetchList<IRoleDto[]>({
+  //   query: ListQueryConfig.ROLE_LIST
+  // })
+  // console.log("roleOptions", roleOptions);
+
   return (
     <>
       <div className="grid grid-cols-12 gap-4">
 
         <div className="col-span-12 md:col-span-6">
           <UiFormInput<TUserSchema>
-            name="username"
-            label="Username"
-            placeholder="Enter your username"
-          />
-        </div>
-        <div className="col-span-12 md:col-span-6">
-          <UiFormInput<TUserSchema>
-            name="email"
-            label="Email"
-            placeholder="Enter your email"
-          />
-        </div>
-        <div className="col-span-12">
-          <UiFormInput<TUserSchema>
-            name="password"
-            label="Password"
-            placeholder="Enter your password"
-            endIcon={<div className=" text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={generatePassword}>Generate Password</div>}
-          />
-        </div>
-
-        {/*    <div className="col-span-12 md:col-span-6">
-          <UiFormInput<TUserSchema>
             name="lastName"
             label={user.form.lastName}
             placeholder=""
+            required
           />
         </div>
         <div className="col-span-12 md:col-span-6">
           <UiFormInput<TUserSchema>
-            name="givenName"
+            name="firstName"
             label={user.form.givenName}
             placeholder=""
+            required
           />
         </div>
         <div className="col-span-12 md:col-span-6">
@@ -58,6 +43,7 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
             name="email"
             label={user.form.email}
             placeholder=""
+            required
           />
         </div>
         <div className="col-span-12 md:col-span-6">
@@ -65,23 +51,35 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
             name="employeeId"
             label={user.form.employeeId}
             placeholder=""
+            required
           />
         </div>
         <div className="col-span-12 md:col-span-6">
           <UiFormSelect<TUserSchema>
-            name="department"
+            name="departmentId"
             label={user.form.department}
-            options={department}
+            options={useFetchList<IDepartmentDto[]>({
+              query: ListQueryConfig.DEPARTMENT_LIST,
+              keyName: { label: "name", value: "departmentId" }
+            })}
+            placeholder={user.form.departmentPlaceholder}
+            required
           />
         </div>
         <div className="col-span-12 md:col-span-6">
           <UiFormSelect<TUserSchema>
-            name="role"
+            name="roleId"
             label={user.form.role}
-            options={role}
+            options={useFetchList<IRoleDto[]>({
+              query: ListQueryConfig.ROLE_LIST,
+              keyName: { label: "name", value: "roleId" }
+            })}
+            placeholder={user.form.rolePlaceholder}
+            required
           />
         </div>
-        <div className="col-span-12 md:col-span-6">
+
+        {/* <div className="col-span-12 md:col-span-6">
           <UiFormInput<TUserSchema>
             name="dateOfHire"
             label={user.form.dateOfHire}
@@ -162,6 +160,14 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
             </p>
           </div>
         </div> */}
+        <div className="col-span-12">
+          <UiFormInput<TUserSchema>
+            name="password"
+            label={user.form.passSetting}
+            placeholder={user.form.passSettingPlaceholder}
+            endIcon={<div className=" text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={generatePassword}>{user.form.generatePassword}</div>}
+          />
+        </div>
 
 
         <div className="col-span-12 flex justify-end space-x-3">
