@@ -1,7 +1,8 @@
 import { Role } from 'src/role/role.entity';
 import { UserUriPermission } from 'src/auth/auth.entity';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { Department } from 'src/department/department.entity';
+import { Tag } from 'src/tag/tag.entity';
 
 
 @Entity('users')
@@ -27,8 +28,11 @@ export class User {
   @Column({ name: 'is_reviewer', type: 'boolean', default: false })
   isReviewer: boolean;
 
-  @Column({ name: 'employee_id', type: 'varchar', length: 100 })
+  @Column({ name: 'employee_id', type: 'varchar', length: 100, unique: true })
   employeeId: string;
+
+  @Column({ name: 'join_date', type: 'date' })
+  joinDate: Date;
 
   @Column({ name: 'first_name', type: 'varchar', length: 100 })
   firstName: string;
@@ -58,6 +62,20 @@ export class User {
 
   @OneToMany(() => UserUriPermission, (userUriPermission) => userUriPermission.user)
   userUriPermissions: UserUriPermission[];
+
+  @ManyToMany(() => Tag, (tag) => tag.users)
+  @JoinTable({
+    name: "user_tags",
+    joinColumn: {
+      name: "user_id",
+      referencedColumnName: "userId",
+    },
+    inverseJoinColumn: {
+      name: "tag_id",
+      referencedColumnName: "tagId",
+    },
+  })
+  tags: Tag[];
 
   @CreateDateColumn()
   created: Date;
