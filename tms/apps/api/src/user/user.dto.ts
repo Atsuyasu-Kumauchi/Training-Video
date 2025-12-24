@@ -35,6 +35,9 @@ export class CreateUserDto {
     employeeId: string;
 
     @IsNotEmpty()
+    joinDate: Date;
+
+    @IsNotEmpty()
     isReviewer: boolean = false;
 
 }
