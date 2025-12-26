@@ -1,37 +1,53 @@
-import useLang from "@/lang";
-import { Modal, TFormHandlerSubmit, TUiFormRef, UiForm } from "@/tmsui";
-import { useSettings } from "@/tmsui/store/settings";
+
+import { ListQueryConfig, VIDEO_LIST } from "@/common/apiEnpoint";
+import { IVideoListDto } from "@/common/dto";
+import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
+import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
-  initialValues,
+  defaultValues,
+  TVideoListFormComponentSchema,
   TVideoListSchema,
   videoListSchema,
 } from "./videoList.form.type";
 import VideoListFormView from "./videoList.form.view";
 
-export default function VideoListFormComponent() {
-  const { videoList } = useLang();
-  const { isOpen, setIsOpen } = useSettings();
+export default function VideoListFormComponent({ modalRef, editData, isEdit }: TVideoListFormComponentSchema) {
+
   const formRef = useRef<TUiFormRef<TVideoListSchema>>(null);
+  const videoListMutation = useMutation({
+    mutationKey: isEdit ? ["video-list-update"] : ["video-list-create"],
+    mutationFn: async (data: TVideoListSchema) => {
+      const response = await AuthServer({
+        method: isEdit ? "PUT" : "POST",
+        url: isEdit ? VIDEO_LIST.UPDATE(editData?.videoId?.toString() ?? "0") : VIDEO_LIST.CREATE,
+        data,
+      });
+      await wait();
+      return response.data;
+    },
+    onSuccess: () => {
+      formRef.current?.reset();
+      modalRef?.current?.modalClose();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ListQueryConfig.VIDEO_LIST.key });
+    },
+  });
 
   const onSubmit: TFormHandlerSubmit<TVideoListSchema> = (value) => {
     console.log("value of video list form", value);
+    videoListMutation.mutate(value as TVideoListSchema);
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      title={videoList.form.title}
+    <UiForm
+      schema={videoListSchema}
+      initialValues={defaultValues(isEdit, editData as IVideoListDto)}
+      onSubmit={onSubmit}
+      ref={formRef}
     >
-      <UiForm
-        schema={videoListSchema}
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        ref={formRef}
-      >
-        <VideoListFormView />
-      </UiForm>
-    </Modal>
+      <VideoListFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} />
+    </UiForm>
   );
 }

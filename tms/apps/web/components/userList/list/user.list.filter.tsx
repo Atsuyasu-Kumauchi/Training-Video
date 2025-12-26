@@ -1,35 +1,18 @@
+import { IDepartmentDto, ListQueryConfig } from "@/common";
+import { ISelectConvertProps, useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-// export function setGlobalFilterValue(value: string): void {
-//     const router = useRouter();
-//     const searchParams = useSearchParams();
-//     console.log("value=====", value);
-//     const updateQuery = (key: string, value: string) => {
-//         const params = new URLSearchParams(searchParams.toString());
-//         if (value) {
-//             params.set(key, value);
-//         } else {
-//             params.delete(key);
-//         }
-
-//         router.push(`?${params.toString()}`);
-//     };
-
-//     return updateQuery;
-
-// }
-
 export default function UserListFilter() {
     const { user } = useLang();
-
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const status = searchParams.get("statusFilter") ?? "";
     const department = searchParams.get("departmentIdFilter") ?? "";
     const search = searchParams.get("simplenameFilter") ?? "";
+
     const [searchText, setSearchText] = useState(search);
 
     const updateQuery = (key: string, value: string) => {
@@ -51,10 +34,6 @@ export default function UserListFilter() {
         updateQuery("departmentIdFilter", value);
     }
 
-    // const onSearchFilterChange = () => {
-    //     setGlobalFilterValue(searchText ?? "");
-    // }
-
     const onSearchFilterChange = () => {
         updateQuery("simplenameFilter", searchText);
     }
@@ -63,6 +42,11 @@ export default function UserListFilter() {
         setSearchText("");   // input clear
         router.push("?");    // all query param delete
     }
+
+    const departmentList = useFetchList<IDepartmentDto[]>({
+        query: ListQueryConfig.DEPARTMENT_LIST,
+        keyName: { label: "name", value: "departmentId" }
+    })
 
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
@@ -87,14 +71,15 @@ export default function UserListFilter() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.department}
                         </label>
-                        <select value={department} onChange={(e) => onDepartmentFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        <select
+                            value={department}
+                            onChange={(e) => onDepartmentFilterChange(e.target.value)}
+                            className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                        >
                             <option value="">すべての部門</option>
-                            <option value="it">IT部門</option>
-                            <option value="hr">HR部門</option>
-                            <option value="finance">財務部門</option>
-                            <option value="marketing">マーケティング部門</option>
-                            <option value="sales">営業部門</option>
-                            <option value="operations">運用部門</option>
+                            {departmentList.map((department: ISelectConvertProps, index: number) => (
+                                <option key={index} value={department.value}>{department.label}</option>
+                            ))}
                         </select>
                     </div>
                     <div>

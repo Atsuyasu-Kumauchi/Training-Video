@@ -1,46 +1,52 @@
-import { zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+import { IVideoListDto } from "@/common";
+import { pickFormData, TFormComponentSchema, TFormViewSchema, zodArray, zodBoolean, zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+
+export type TVideoListFormComponentSchema = TFormComponentSchema<TVideoListSchema> & {
+  editData?: Partial<IVideoListDto>;
+}
+
+export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema>
 
 export const videoListSchema = zodObject({
-  title: zodStringRequired(),
-  explanation: zodStringRequired(),
-  category: zodStringRequired(),
-  status: zodString(),
-  problemSetOne: zodStringRequired(),
-  problemSetTwo: zodStringRequired(),
-  problemSetThree: zodStringRequired(),
-  problemSetFour: zodStringRequired(),
-  assignment: zodStringRequired(),
+  name: zodStringRequired(),
+  description: zodStringRequired(),
+  audienceTags: zodArray(zodString()),
+  assignmentId: zodStringRequired(),
   uploadType: zodString(),
-  youtubeUrl: zodString(),
+  videoUrl: zodString(),
+  fileName: zodString(),
+  fileDirectory: zodString(),
+  status: zodBoolean(),
 });
 
-export type TVideoListSchema = zodInfer<typeof videoListSchema>;
 
-export const initialValues: TVideoListSchema = {
-  title: "",
-  explanation: "",
-  status: "",
-  category: "",
-  problemSetOne: "",
-  problemSetTwo: "",
-  problemSetThree: "",
-  problemSetFour: "",
-  assignment: "",
+export type TVideoListSchema = zodInfer<typeof videoListSchema>;
+export const videoListKeys = Object.keys(videoListSchema.shape) as (keyof zodInfer<typeof videoListSchema>)[];
+
+const initialValues: TVideoListSchema = {
+  name: "",
+  description: "",
+  audienceTags: [],
+  assignmentId: "",
   uploadType: "file",
-  youtubeUrl: "",
+  videoUrl: "",
+  fileName: "",
+  fileDirectory: "",
+  status: false,
 };
-export const status = [
-  { label: "下書き", value: "Draft" }, //draft
+
+export const defaultValues = (isEdit?: boolean, editData?: Partial<IVideoListDto>): Partial<TVideoListSchema> => {
+  return isEdit ? pickFormData(editData as unknown as TVideoListSchema, videoListKeys as (keyof TVideoListSchema)[]) : initialValues;
+}
+
+
+
+export const videoStatus = [
   { label: "公開済み", value: "Published" }, //Published
   { label: "アーカイブ済み", value: "Archived" }, //Archived
 ];
-export const category = [
-  { label: "カテゴリを選択", value: "value" }, //Select a category
-  { label: "トレーニング", value: "training" }, //training
-  { label: "チュートリアル", value: "tutorial" }, //tutorial
-  { label: "プレゼンテーション", value: "presentation" }, //presentation
-  { label: "デモ", value: "demo" }, //demo
-];
+
+
 export const questionSet = [
   { label: "問題セットを選択", value: "value" }, //Select a problem set
   { label: "JavaScript Basics Quiz", value: "javascript-basics" },

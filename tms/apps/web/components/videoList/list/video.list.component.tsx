@@ -1,6 +1,6 @@
 import { CVideoListDto, ListQueryConfig } from "@/common";
 import { useList } from "@/hooks/useList";
-import VideoListView from "../videoList.view";
+import { ListTable } from "@/tmsui";
 import { videoListColumn } from "./video.list.column";
 
 export default function VideoListComponent() {
@@ -10,7 +10,6 @@ export default function VideoListComponent() {
     })
 
     return (
-        <VideoListView />
-        // <ListTable {...listHook} />
+        <ListTable {...listHook} />
     )
 }

@@ -1,8 +1,8 @@
 import { BASE_URL } from "./baseUrl";
-const VIDEO_LIST_API_ENPOINT = "video-list";
+const VIDEO_LIST_API_END_POINT = "videos";
 export const VIDEO_LIST = {
-    LIST: `${BASE_URL}${VIDEO_LIST_API_ENPOINT}`,
-    CREATE: `${BASE_URL}${VIDEO_LIST_API_ENPOINT}`,
-    UPDATE: (id: string) => `${BASE_URL}${VIDEO_LIST_API_ENPOINT}/${id}`,
-    DELETE: (id: string) => `${BASE_URL}${VIDEO_LIST_API_ENPOINT}/${id}`,
+    LIST: `${BASE_URL}${VIDEO_LIST_API_END_POINT}`,
+    CREATE: `${BASE_URL}${VIDEO_LIST_API_END_POINT}`,
+    UPDATE: (id: string) => `${BASE_URL}${VIDEO_LIST_API_END_POINT}/${id}`,
+    DELETE: (id: string) => `${BASE_URL}${VIDEO_LIST_API_END_POINT}/${id}`,
 };

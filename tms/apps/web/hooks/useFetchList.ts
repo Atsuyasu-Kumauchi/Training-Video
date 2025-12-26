@@ -2,7 +2,7 @@ import { AuthServer, selectConvert } from "@/tmsui";
 import { useQuery } from "@tanstack/react-query";
 import axios, { CancelTokenSource } from "axios";
 
-interface ISelectConvertProps {
+export interface ISelectConvertProps {
   label: string;
   value: string;
 }

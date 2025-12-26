@@ -13,9 +13,8 @@ export default function UserListComponent() {
         filters: {
             statusFilter: searchParams.get("statusFilter"),
             departmentIdFilter: searchParams.get("departmentIdFilter"),
-            simplenameFilter: searchParams.get("simplenameFilter"),
+            simplenameFilter: searchParams.get("simplenameFilter")
         }
-
     })
 
     return (

@@ -1,14 +1,11 @@
-// File: src/components/UiFormSelect2.tsx
 "use client";
 
 import { Controller, FieldValues, Path } from "react-hook-form";
 import Select, { MultiValue } from "react-select";
+import { IOption } from "../shared/types";
 import { useFormContext } from "../useFormContext";
 
-
-export type IOption = { value: string | number | boolean; label: string };
-
-export type UiFormSelectProps<T extends FieldValues> = {
+export type UiFormSelect2Props<T extends FieldValues> = {
     name: Path<T>;
     label?: string;
     required?: boolean;
@@ -17,16 +14,15 @@ export type UiFormSelectProps<T extends FieldValues> = {
     placeholder?: string;
 };
 
-export function UiFormSelect2<T extends FieldValues>({
+export const UiFormSelect2 = <T extends FieldValues>({
     name,
     label,
     required = false,
     options,
     isMulti = false,
     placeholder = "Select an option",
-}: UiFormSelectProps<T>) {
-    const { control, formState: { errors } } = useFormContext<T>();
-    console.log(errors);
+}: UiFormSelect2Props<T>) => {
+    const { control } = useFormContext<T>();
     return (
         <Controller
             name={name}

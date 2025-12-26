@@ -21,7 +21,7 @@ export const LangVideoList = {
     title: "新規動画追加", // New videos added
     videoTitle: "動画タイトル", //Video Title
     explanation: "説明", // explanation
-    category: "カテゴリ", // category
+    audienceTags: "タグ", // tags
     status: "ステータス", // status
     problemSetTitle: "問題セット", //Problem Set
     problemSetOne: "問題セット 1 (0-3分)", //Problem Set 1 (0-3 minutes)

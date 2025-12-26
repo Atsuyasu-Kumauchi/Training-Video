@@ -1,10 +1,12 @@
 
 import { Badge } from '@/common/components/badge';
-import { CVideoListDto } from '@/common/dto/videoList.dto';
+import { CVideoListDto, IVideoListDto } from '@/common/dto/videoList.dto';
+import useLang from '@/lang';
 import { LangVideoList } from '@/lang/videoList';
+import { Button, TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui';
 import { TListColumnDef } from '@/tmsui/types';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import VideoListFormComponent from '../form/videoList.form.component';
 
 const { list } = LangVideoList;
 
@@ -54,19 +56,51 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
         accessorKey: "actions",
         enableHiding: false,
         header: () => list.actions,
-        cell: () => {
+        cell: (ctx) => {
             return <div className="flex items-center space-x-2">
-                <button className="text-blue-600 hover:text-blue-900 transition-colors duration-200">
-                    <FontAwesomeIcon icon={faEye} />
-                </button>
-                <button className="text-primary-600 hover:text-primary-900 transition-colors duration-200">
-                    <FontAwesomeIcon icon={faEdit} />
-                </button>
-                <button className="text-red-600 hover:text-red-900 transition-colors duration-200">
-                    <FontAwesomeIcon icon={faTrash} />
-                </button>
+                <VideoView {...ctx.row.original} />
+                <VideoEdit {...ctx.row.original} />
+                <VideoDelete />
             </div>
         }
     }
 ]
+
+
+export const VideoView = (video: IVideoListDto) => {
+    const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+    return (
+        <div className="flex items-center space-x-2">
+            <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='view' />
+            <UiBasicModal
+                modalRef={modalRef}
+                title="User View"
+                body={<div>User View</div>}
+            />
+        </div>
+    )
+}
+export const VideoEdit = (video: IVideoListDto) => {
+    const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+    const { videoList } = useLang();
+    const isEdit = !!video.videoId || false;
+
+    return (
+        <>
+            <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />
+            <UiBasicModal
+                modalRef={modalRef}
+                title={videoList.form.title}
+                body={<VideoListFormComponent isEdit={isEdit} editData={video} modalRef={modalRef} />}
+            />
+        </>
+    )
+}
+export const VideoDelete = () => {
+    return (
+        <>
+            <Button color='danger' variant="ghost" className='p-0' disabled startIcon='delete' />
+        </>
+    )
+}
 

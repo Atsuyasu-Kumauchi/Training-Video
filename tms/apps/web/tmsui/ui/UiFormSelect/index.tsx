@@ -1,12 +1,8 @@
 "use client"
 import { cn } from "@/tmsui/utility";
 import { Controller, FieldValues, Path } from "react-hook-form";
+import { IOption } from "../shared/types";
 import { useFormContext } from "../useFormContext";
-
-export type IOption = {
-    label: string;
-    value: string | number | boolean;
-}
 
 export type UiFormSelectProps<T extends FieldValues> = {
     name: Path<T>;

@@ -1,6 +1,7 @@
 import { BaseDto, IBaseDto } from "./base.dto";
 
 export interface IVideoListDto extends IBaseDto {
+    videoId: string;
     title: string;
     category: string;
     playback_time: string;
@@ -10,6 +11,7 @@ export interface IVideoListDto extends IBaseDto {
 
 
 export class CVideoListDto extends BaseDto implements IVideoListDto {
+    videoId: string = "";
     title: string = "";
     category: string = "";
     playback_time: string = "";
