@@ -1,4 +1,4 @@
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsArray, IsBoolean, IsEnum, IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
 import { Messages } from "src/common/constants";
 import { SortDirection } from "src/common/enums/SortDirection";
@@ -51,7 +51,7 @@ export class VideoQueryDto {
   @IsArray()
   tagsFilter?: string[];
 
-  @Type(() => Boolean)
+  @Transform(arg => arg.value === 'true')
   @IsBoolean()
   statusFilter: boolean = true;
 

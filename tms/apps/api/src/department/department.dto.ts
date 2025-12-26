@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { IsString, IsNotEmpty, MinLength, MaxLength, Matches, IsBoolean, IsOptional, IsEnum, IsNumber, IsPositive, Min } from 'class-validator';
 import { Messages } from 'src/common/constants';
 import { SortDirection } from 'src/common/enums/SortDirection';
@@ -24,7 +24,7 @@ export class DepartmentQueryDto {
   @IsString()
   nameFilter?: string;
 
-  @Type(() => Boolean)
+  @Transform(arg => arg.value === 'true')
   @IsBoolean()
   statusFilter: boolean = true;
 
