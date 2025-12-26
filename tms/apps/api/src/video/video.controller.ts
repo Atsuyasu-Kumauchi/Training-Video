@@ -12,13 +12,13 @@ export class VideoController {
 
     constructor(private readonly videoService: VideoService) { }
 
-    @Post()
+    @Post("uploads")
     async upload(@Req() req: Request, @Headers('x-file-name') fileName: string, @Headers('x-upload-id') uploadId: string) {
         const metadata = await this.videoService.handleUpload(req, fileName, uploadId);
         return { uploadId: metadata.uploadId, fileName: metadata.fileName, playbackUrl: `/static/${metadata.uploadId}${metadata.fileExt}` };
     }
 
-    @Get(':uploadId')
+    @Get('uploads/:uploadId')
     async getMetadata(@Param('uploadId') uploadId: string) {
         const metadata = await this.videoService.findVideo(uploadId);
         return { uploadId: metadata.uploadId, fileName: metadata.fileName, playbackUrl: `/static/${metadata.uploadId}${metadata.fileExt}` };
