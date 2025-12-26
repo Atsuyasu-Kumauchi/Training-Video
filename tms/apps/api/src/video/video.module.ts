@@ -1,17 +1,24 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Video } from "./video.entity";
 import { VideoService } from "./video.service";
 import { VideoController } from "./video.controller";
+import { RawBodyMiddleware } from "./raw-body.middleware";
 import { AuthModule } from "src/auth/auth.module";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import path from "path";
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Video]), AuthModule, ServeStaticModule.forRoot({ rootPath: path.join(process.cwd(), 'public'), serveRoot: '/static' })],
+    imports: [TypeOrmModule.forFeature([Video]), AuthModule, ServeStaticModule.forRoot({ rootPath: path.join(process.cwd(), 'public', 'static'), serveRoot: '/static' })],
     controllers: [VideoController],
     providers: [VideoService],
     exports: [VideoService]
 })
-export class VideoModule {}
+export class VideoModule implements NestModule {
+
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(RawBodyMiddleware).forRoutes({ path: 'videos/uploads', method: RequestMethod.POST });
+    }
+
+}

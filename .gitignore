@@ -29,4 +29,4 @@ build/
 .env.*.local
 
 # ignore public/static directory
-public/static/*
+**/public/static/*

@@ -12,7 +12,7 @@ import { pipeline } from "stream/promises";
 
 @Injectable()
 export class VideoService {
-    private readonly uploadDir = path.join(process.cwd(), 'public');
+    private readonly uploadDir = path.join(process.cwd(), 'public', 'static');
 
     constructor(@InjectRepository(Video) private readonly videoRepository: Repository<Video>) {
         if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
