@@ -38,7 +38,8 @@ export class DepartmentQueryDto {
   @IsPositive()
   pageSize: number = 10;
 
-  @IsString()
+  @Type(() => Number)
+  @IsNumber()
   sortBy: string = "Department.departmentId".split(".")[1];
 
   @IsOptional()

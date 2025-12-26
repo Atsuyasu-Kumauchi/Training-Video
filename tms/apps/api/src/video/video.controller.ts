@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Put, Query, Req, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Headers, Param, Post, Put, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { VideoService } from "./video.service";
 import { Video } from "./video.entity";
 import { CreateVideoDto, VideoQueryDto } from "./video.dto";
@@ -14,35 +14,15 @@ export class VideoController {
 
     constructor(private readonly videoService: VideoService) { }
 
-    @Post("upload")
-    async uploadVideo(@Req() req: Request) {
-        const contentType = req.headers['content-type'] || '';
-        let extension = '';
-        if (contentType.includes('mp4')) extension = '.mp4';
-        else if (contentType.includes('webm')) extension = '.webm';
-        else if (contentType.includes('ogg')) extension = '.ogg';
-        else extension = ''; // fallback, no extension
-
-        // const result = await this.videoUploadService.saveFile(req, 'video' + extension);
-        return {
-            // uploadId: result.uploadId,
-            // fileName: result.fileName,
-        };
+    @Post()
+    async upload(@Req() req: Request, @Headers('x-file-name') fileName: string, @Headers('x-upoad-id') uploadId: string) {
+        const name = fileName || 'upload.mp4';
+        return await this.videoService.handleUpload(req, fileName, uploadId);
     }
 
-    // GET /video-uploads/:uploadId
     @Get(':uploadId')
-    async getVideo(@Param('uploadId') uploadId: string, @Res() res: Response) {
-        // const video = this.videoUploadService.findOne(uploadId);
-        // if (!video) {
-        //     throw new BadRequestException('Upload not found');
-        // }
-
-        // const filePath = this.videoUploadService.getFilePath(video.fileName);
-        // const fileStream = fs.createReadStream(filePath);
-
-        // res.setHeader('Content-Disposition', `attachment; filename="${video.fileName}"`);
-        // fileStream.pipe(res);
+    getMetadata(@Param('uploadId') uploadId: string) {
+        return this.videoService.findVideo(uploadId);
     }
 
     @Get()

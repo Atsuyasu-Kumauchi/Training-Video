@@ -1,25 +1,63 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { type DeepPartial, Repository } from "typeorm";
 import { Video } from "./video.entity";
 import { throwSe } from "src/common/exception/exception.util";
-import { CreateVideoDto, VideoQueryDto } from "./video.dto";
+import { CreateVideoDto, type VideoMetadata, VideoQueryDto } from "./video.dto";
 import { Messages } from "src/common/constants";
+import { tmpdir } from "os";
+import * as path from 'path';
+import * as fs from 'fs';
+import { pipeline } from "stream/promises";
 
 
 @Injectable()
 export class VideoService {
+    private readonly uploadDir = path.join(tmpdir(), 'tvs-uploads');
 
-    constructor(
-        @InjectRepository(Video) private readonly videoRepository: Repository<Video>
-    ) { }
+    constructor(@InjectRepository(Video) private readonly videoRepository: Repository<Video>) {
+        if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
+    }
+
+    async handleUpload(req: any, fileName: string, uploadId: string): Promise<VideoMetadata> {
+        const cleanId = uploadId.replace(/[\\/.]/g, '');
+        const fileExt = path.extname(fileName).toLowerCase() || '.mp4';
+
+        const filePath = path.join(this.uploadDir, `${cleanId}${fileExt}`);
+        const metaPath = path.join(this.uploadDir, `${cleanId}.json`);
+
+        try {
+            const writeStream = fs.createWriteStream(filePath);
+            await pipeline(req, writeStream);
+
+            const metadata: VideoMetadata = { uploadId: cleanId, fileName, path: filePath };
+            await fs.promises.writeFile(metaPath, JSON.stringify(metadata));
+
+            return metadata;
+        } catch (error) {
+            if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+            throw new InternalServerErrorException('Failed to upload video');
+        }
+    }
+
+    async findVideo(uploadId: string): Promise<VideoMetadata> {
+        const cleanId = uploadId.replace(/[\\/.]/g, '');
+        const metaPath = path.join(this.uploadDir, `${cleanId}.json`);
+
+        try {
+            const data = await fs.promises.readFile(metaPath, 'utf8');
+            return JSON.parse(data);
+        } catch (error) {
+            throw new NotFoundException(`Upload with ID ${cleanId} not found`);
+        }
+    }
 
     async findAll(query: VideoQueryDto) {
         const queryBuilder = this.videoRepository.createQueryBuilder('Video');
 
         queryBuilder.where({ status: query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Video.name like :name", { name: `%${query.nameFilter}%` });
-        if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags && :tags",  { tags: query.tagsFilter });
+        if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags && :tags", { tags: query.tagsFilter });
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
@@ -64,7 +102,7 @@ export class VideoService {
             ...createVideoDto
         });
 
-        return this.videoRepository.save({...video });
+        return this.videoRepository.save({ ...video });
     }
 
     async save(id: number, video: DeepPartial<Video>) {

@@ -46,9 +46,9 @@ export class VideoQueryDto {
   @IsString()
   nameFilter?: string;
 
-  @IsOptional()
   @IsString({ each: true })
   @IsArray()
+  @IsOptional()
   tagsFilter?: string[];
 
   @Transform(arg => arg.value === 'true')
@@ -71,4 +71,10 @@ export class VideoQueryDto {
   @IsOptional()
   @IsEnum(SortDirection)
   sortDirection: SortDirection = SortDirection.Descending;
+}
+
+export interface VideoMetadata {
+    uploadId: string;
+    fileName: string;
+    path: string;
 }
