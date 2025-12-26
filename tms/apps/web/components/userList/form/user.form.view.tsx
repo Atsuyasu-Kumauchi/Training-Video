@@ -5,7 +5,7 @@ import { Button, passwordGenerate, UiFormInput, UiFormSelect, useFormContext } f
 import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
 import { TUserFormViewSchema, TUserSchema } from "./user.form.type";
 
-export default function UserFormView({ modalRef, isPending }: TUserFormViewSchema) {
+export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormViewSchema) {
   const { user } = useLang();
   const { setValue, trigger } = useFormContext<TUserSchema>();
 
@@ -177,7 +177,9 @@ export default function UserFormView({ modalRef, isPending }: TUserFormViewSchem
           <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>
             {user.form.cancel}
           </Button>
-          <Button type="submit" disabled={isPending} loading={isPending}> {user.form.addAUser}</Button>
+          <Button type="submit" disabled={isPending} loading={isPending}>
+            {isEdit ? user.form.updateUser : user.form.addAUser}
+          </Button>
         </div>
       </div>
     </>

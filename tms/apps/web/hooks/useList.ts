@@ -13,6 +13,7 @@ import {
     VisibilityState,
 } from "@tanstack/react-table";
 import { AxiosInstance } from "axios";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useFetchListQuery } from "./useFetchListQuery";
 
@@ -47,11 +48,14 @@ export function useList<TData, TValue = unknown>({
     staleTime,
 }: IUseListTableOptions<TData, TValue>) {
 
+
+    const searchParams = useSearchParams();
+
     const [sorting, setSortingState] = useState<SortingState>([]);
     const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
-    const [globalFilter, setGlobalFilterState] = useState("");
+    // const [globalFilter, setGlobalFilterState] = useState("");
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: pageSize,
@@ -69,10 +73,10 @@ export function useList<TData, TValue = unknown>({
         setPageIndexZero();
     };
 
-    const setGlobalFilter = (value: string) => {
-        setGlobalFilterState(value);
-        setPageIndexZero();
-    };
+    // const setGlobalFilter = (value: string) => {
+    //     setGlobalFilterState(value);
+    //     setPageIndexZero();
+    // };
 
     const { data, isLoading, isError, error } = useFetchListQuery<TData>({
         query,
@@ -80,7 +84,6 @@ export function useList<TData, TValue = unknown>({
         pageSize: pagination.pageSize,
         server,
         staleTime,
-        globalFilter,
         sorting,
         columnFilters,
         filters,
@@ -96,12 +99,12 @@ export function useList<TData, TValue = unknown>({
             columnFilters,
             columnVisibility,
             rowSelection,
-            globalFilter,
+            // globalFilter,
             pagination,
         },
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
-        onGlobalFilterChange: setGlobalFilter,
+        // onGlobalFilterChange: setGlobalFilter,
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
@@ -117,8 +120,8 @@ export function useList<TData, TValue = unknown>({
     return {
         table,
         columns,
-        globalFilter,
-        setGlobalFilter,
+        // globalFilter,
+        // setGlobalFilter,
         isLoading,
         isError,
         error,

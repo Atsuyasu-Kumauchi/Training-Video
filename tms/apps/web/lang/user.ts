@@ -7,6 +7,7 @@ export const LangUser = {
   },
 
   filter: {
+    clearFilters: "クリア", // Clear Filters
     status: "ステータス", // Status
     department: "部署", // Department
     search: "検索", // Search
@@ -48,6 +49,7 @@ export const LangUser = {
     generatePassword: "生成", //Generate Password
     cancel: "キャンセル", // Cancel
     addAUser: "ユーザーを追加", //Add a user
+    updateUser: "ユーザーを更新", //Update user
   },
 };
 

@@ -21,10 +21,10 @@ interface IUseFetchListQueryProps {
   query: IQueryConfig;
   pageIndex: number;
   pageSize: number;
-  globalFilter: string;
   sorting: { id: string; desc: boolean }[];
   columnFilters: { id: string; value: unknown }[];
   filters?: Record<string, string | number | boolean | undefined | null>;
+  searchQuery?: Record<string, string>;
   server?: AxiosInstance;
   sortBy?: string;
   staleTime?: number;
@@ -34,12 +34,8 @@ export function useFetchListQuery<TData>({
   query,
   pageIndex,
   pageSize,
-  globalFilter,
-  sorting,
-  columnFilters,
   filters,
   server = AuthServer,
-  sortBy = "updatedAt:desc",
   staleTime = 1000 * 60 * 5,
 }: IUseFetchListQueryProps) {
   return useQuery<ApiResponse<TData>>({
@@ -47,28 +43,24 @@ export function useFetchListQuery<TData>({
       ...query.key,
       pageIndex,
       pageSize,
-      globalFilter,
-      sorting,
-      columnFilters,
       filters,
     ],
     queryFn: async ({ signal }) => {
       const cancelSource: CancelTokenSource = axios.CancelToken.source();
       signal?.addEventListener("abort", () => cancelSource.cancel());
-
       const params = {
         pageIndex: pageIndex,
         pageSize: pageSize,
-        // q: globalFilter,
-        // ...Object.entries(filters ?? {})
-        //   .filter(([, value]) => value !== undefined && value !== null)
-        //   .reduce(
-        //     (acc, [key, value]) => {
-        //       acc[key] = String(value);
-        //       return acc;
-        //     },
-        //     {} as Record<string, string>,
-        //   ),
+        ...Object.entries(filters ?? {})
+          .filter(([, value]) => value !== undefined && value !== null)
+          .reduce(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {} as Record<string, string>,
+          ),
+
         // sortBy: [
         //   ...(sortBy ? sortBy.split(",").filter(Boolean) : []),
         //   ...sorting.map((s) => `${s.id}:${s.desc ? "desc" : "asc"}`),

@@ -1,16 +1,69 @@
 import useLang from "@/lang";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+
+// export function setGlobalFilterValue(value: string): void {
+//     const router = useRouter();
+//     const searchParams = useSearchParams();
+//     console.log("value=====", value);
+//     const updateQuery = (key: string, value: string) => {
+//         const params = new URLSearchParams(searchParams.toString());
+//         if (value) {
+//             params.set(key, value);
+//         } else {
+//             params.delete(key);
+//         }
+
+//         router.push(`?${params.toString()}`);
+//     };
+
+//     return updateQuery;
+
+// }
 
 export default function UserListFilter() {
     const { user } = useLang();
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const status = searchParams.get("statusFilter") ?? "";
+    const department = searchParams.get("departmentIdFilter") ?? "";
+    const search = searchParams.get("simplenameFilter") ?? "";
+    const [searchText, setSearchText] = useState(search);
+
+    const updateQuery = (key: string, value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (value) {
+            params.set(key, value);
+        } else {
+            params.delete(key);
+        }
+
+        router.push(`?${params.toString()}`);
+    };
+
     const onStatusFilterChange = (value: string) => {
-        console.log(value);
+        updateQuery("statusFilter", value);
     }
+
     const onDepartmentFilterChange = (value: string) => {
-        console.log(value);
+        updateQuery("departmentIdFilter", value);
     }
-    const onSearchFilterChange = (value: string) => {
-        console.log(value);
+
+    // const onSearchFilterChange = () => {
+    //     setGlobalFilterValue(searchText ?? "");
+    // }
+
+    const onSearchFilterChange = () => {
+        updateQuery("simplenameFilter", searchText);
     }
+
+    const onClearFilterChange = () => {
+        setSearchText("");   // input clear
+        router.push("?");    // all query param delete
+    }
+
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
             <div className="px-6 py-4">
@@ -19,25 +72,22 @@ export default function UserListFilter() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.status}
                         </label>
-                        <select onChange={(e) => onStatusFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                        <select
+                            value={status}
+                            onChange={(e) => onStatusFilterChange(e.target.value)}
+                            className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                        >
 
                             <option value="">すべてのステータス</option>
-                            <option value="active">アクティブ</option>
-                            <option value="inactive">非アクティブ</option>
+                            <option value="true">アクティブ</option>
+                            <option value="false">非アクティブ</option>
                         </select>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.department}
                         </label>
-                        <select onChange={(e) => onDepartmentFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                            {/* <option>All Departments</option>
-                            <option value="it">IT Department</option>
-                            <option value="hr">HR Department</option>
-                            <option value="finance">Finance Department</option>
-                            <option value="marketing">Marketing Department</option>
-                            <option value="sales">Sales Department</option>
-                            <option value="operations">Operations Department</option> */}
+                        <select value={department} onChange={(e) => onDepartmentFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                             <option value="">すべての部門</option>
                             <option value="it">IT部門</option>
                             <option value="hr">HR部門</option>
@@ -57,12 +107,29 @@ export default function UserListFilter() {
                                 id="searchInput"
                                 placeholder={user.filter.searchPlaceholder}
                                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
                             />
+                        </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2 opacity-0">
+                            .
+                        </label>
+                        <div className="flex gap-2">
                             <button
+                                onClick={() => onSearchFilterChange()}
                                 id="searchButton"
                                 className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
                             >
                                 {user.filter.search}
+                            </button>
+                            <button
+                                onClick={() => onClearFilterChange()}
+                                id="searchButton"
+                                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+                            >
+                                {user.filter.clearFilters}
                             </button>
                         </div>
                     </div>
@@ -71,3 +138,5 @@ export default function UserListFilter() {
         </div>
     )
 }
+
+

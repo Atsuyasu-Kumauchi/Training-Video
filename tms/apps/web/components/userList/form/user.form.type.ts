@@ -12,8 +12,7 @@ import {
 } from "@/tmsui";
 
 export type TUserFormComponentSchema = TFormComponentSchema<TUserSchema> & {
-  isEdit: boolean;
-  editData?: IUserDto;
+  editData?: Partial<IUserDto>;
 }
 
 export type TUserFormViewSchema = TFormViewSchema<TUserSchema>
@@ -28,7 +27,7 @@ export const userSchema = zodObject({
   roleId: zodStringRequired(),
   departmentId: zodStringRequired(),
   isReviewer: zodBoolean(),
-  userTags: zodArray(zodNumber()),
+  userTags: zodArray(zodNumber().transform(Number)),
   joinDate: zodStringRequired(),
 });
 
@@ -51,7 +50,7 @@ export const initialValues: TUserSchema = {
   joinDate: "",
 };
 
-export const defaultValues = (isEdit: boolean, editData: IUserDto): Partial<TUserSchema> => {
+export const defaultValues = (isEdit?: boolean, editData?: Partial<IUserDto>): Partial<TUserSchema> => {
   return isEdit ? pickFormData(editData as unknown as TUserSchema, userKeys as (keyof TUserSchema)[]) : initialValues;
 }
 
