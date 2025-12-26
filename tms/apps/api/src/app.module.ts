@@ -10,6 +10,7 @@ import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptio
 import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.moduel';
 import { TagModule } from './tag/tag.module';
+import { VideoModule } from './video/video.module';
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { TagModule } from './tag/tag.module';
     AuthModule,
     RoleModule,
     UserModule,
-    TagModule
+    TagModule,
+    VideoModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],
