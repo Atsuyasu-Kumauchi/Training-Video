@@ -55,9 +55,10 @@ export class UserQueryDto {
   @IsBoolean()
   statusFilter: boolean = true;
 
-  @IsOptional()
+  @Type(() => Number)
   @IsNumber()
-  departmentIdFilter: number;
+  @IsOptional()
+  departmentIdFilter?: number;
 
   @Type(() => Number)
   @IsNumber()
