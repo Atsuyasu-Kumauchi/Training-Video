@@ -4,8 +4,6 @@ import { Video } from "./video.entity";
 import { CreateVideoDto, VideoQueryDto } from "./video.dto";
 import { type DeepPartial } from "typeorm";
 import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { tmpdir } from "os";
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
@@ -16,7 +14,6 @@ export class VideoController {
 
     @Post()
     async upload(@Req() req: Request, @Headers('x-file-name') fileName: string, @Headers('x-upoad-id') uploadId: string) {
-        const name = fileName || 'upload.mp4';
         return await this.videoService.handleUpload(req, fileName, uploadId);
     }
 
