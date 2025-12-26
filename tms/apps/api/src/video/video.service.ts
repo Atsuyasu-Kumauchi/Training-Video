@@ -35,7 +35,8 @@ export class VideoService {
             resultCount,
             sortBy: query.sortBy,
             sortDirection: query.sortDirection,
-            nameFilter: query.nameFilter,
+            tagsFilter: query.tagsFilter || null,
+            nameFilter: query.nameFilter || null,
             statusFilter: query.statusFilter
         };
     }

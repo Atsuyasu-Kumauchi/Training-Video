@@ -34,7 +34,7 @@ export class RoleService {
             resultCount,
             sortBy: query.sortBy,
             sortDirection: query.sortDirection,
-            nameFilter: query.nameFilter,
+            nameFilter: query.nameFilter || null,
             statusFilter: query.statusFilter
         };
     }

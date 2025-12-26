@@ -39,6 +39,7 @@ export class UserService {
           .orWhere("User.email like :email", { email: `%${query.simplenameFilter}`});
       }));
     }
+    if (query.departmentIdFilter) queryBuilder.where({ "User.departmentId = :departmentId": query.departmentIdFilter });
 
     queryBuilder.addOrderBy(`User.${query.sortBy}`, query.sortDirection);
 
@@ -56,7 +57,8 @@ export class UserService {
       resultCount,
       sortBy: query.sortBy,
       sortDirection: query.sortDirection,
-      simplenameFilter: query.simplenameFilter,
+      departmentIdFilter: query.departmentIdFilter || null,
+      simplenameFilter: query.simplenameFilter || null,
       statusFilter: query.statusFilter
     };
   }
