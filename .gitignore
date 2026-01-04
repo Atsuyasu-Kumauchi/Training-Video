@@ -28,4 +28,5 @@ build/
 .env.local
 .env.*.local
 
-
+# ignore public/static directory
+**/public/static/*

@@ -5,7 +5,6 @@ import { Video } from "./video.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateVideoDto, type VideoMetadata, VideoQueryDto } from "./video.dto";
 import { Messages } from "src/common/constants";
-import { tmpdir } from "os";
 import * as path from 'path';
 import * as fs from 'fs';
 import { pipeline } from "stream/promises";
@@ -13,7 +12,7 @@ import { pipeline } from "stream/promises";
 
 @Injectable()
 export class VideoService {
-    private readonly uploadDir = path.join(tmpdir(), 'tvs-uploads');
+    private readonly uploadDir = path.join(process.cwd(), 'public', 'static');
 
     constructor(@InjectRepository(Video) private readonly videoRepository: Repository<Video>) {
         if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
@@ -27,10 +26,9 @@ export class VideoService {
         const metaPath = path.join(this.uploadDir, `${cleanId}.json`);
 
         try {
-            const writeStream = fs.createWriteStream(filePath);
-            await pipeline(req, writeStream);
+            await pipeline(req, fs.createWriteStream(filePath));
 
-            const metadata: VideoMetadata = { uploadId: cleanId, fileName, path: filePath };
+            const metadata: VideoMetadata = { uploadId: cleanId, fileName, fileExt, path: filePath };
             await fs.promises.writeFile(metaPath, JSON.stringify(metadata));
 
             return metadata;

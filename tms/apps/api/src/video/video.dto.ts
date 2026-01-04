@@ -77,4 +77,5 @@ export interface VideoMetadata {
     uploadId: string;
     fileName: string;
     path: string;
+    fileExt: string;
 }
