@@ -12,7 +12,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # Build outputs
-dist/
+dist/*
+!dist/output.css
+!dist/tailwind.js
 build/
 *.log
 
