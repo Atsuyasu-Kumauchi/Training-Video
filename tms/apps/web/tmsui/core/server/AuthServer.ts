@@ -53,3 +53,6 @@ AuthServer.interceptors.request.use(
 // );
 
 
+export const MediaServer = (path: string | "") => {
+    return process.env.BASE_URL + path
+}

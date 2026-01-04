@@ -1,5 +1,5 @@
 import { IVideoListDto } from "@/common";
-import { pickFormData, TFormComponentSchema, TFormViewSchema, zodArray, zodBoolean, zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+import { pickFormData, TFormComponentSchema, TFormViewSchema, zodArray, zodBooleanRequired, zodInfer, zodNumberRequired, zodObject, zodString, zodStringRequired } from "@/tmsui";
 
 export type TVideoListFormComponentSchema = TFormComponentSchema<TVideoListSchema> & {
   editData?: Partial<IVideoListDto>;
@@ -10,13 +10,18 @@ export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema>
 export const videoListSchema = zodObject({
   name: zodStringRequired(),
   description: zodStringRequired(),
-  audienceTags: zodArray(zodString()),
-  assignmentId: zodStringRequired(),
+  audienceTags: zodArray(zodStringRequired()).nonempty(),
+  assignmentId: zodNumberRequired(),
   uploadType: zodString(),
   videoUrl: zodString(),
+  fileResponse: zodObject({
+    "uploadId": zodString(),
+    "fileName": zodString(),
+    "playbackUrl": zodString(),
+  }).optional(),
   fileName: zodString(),
   fileDirectory: zodString(),
-  status: zodBoolean(),
+  status: zodBooleanRequired(),
 });
 
 
@@ -31,21 +36,23 @@ const initialValues: TVideoListSchema = {
   uploadType: "file",
   videoUrl: "",
   fileName: "",
+  fileResponse: {
+    "uploadId": "",
+    "fileName": "",
+    "playbackUrl": "",
+  },
   fileDirectory: "",
-  status: false,
+  status: true,
 };
 
 export const defaultValues = (isEdit?: boolean, editData?: Partial<IVideoListDto>): Partial<TVideoListSchema> => {
   return isEdit ? pickFormData(editData as unknown as TVideoListSchema, videoListKeys as (keyof TVideoListSchema)[]) : initialValues;
 }
 
-
-
 export const videoStatus = [
-  { label: "公開済み", value: "Published" }, //Published
-  { label: "アーカイブ済み", value: "Archived" }, //Archived
+  { label: "アクティブ", value: true },
+  { label: "非アクティブ", value: false },
 ];
-
 
 export const questionSet = [
   { label: "問題セットを選択", value: "value" }, //Select a problem set
@@ -57,12 +64,11 @@ export const questionSet = [
   { label: "Leadership Assessment", value: "leadership-assessment" },
 ];
 export const assignment = [
-  { label: "課題を選択", value: "assignment-1" }, //Select an issue
-  { label: "Assignment 1: JavaScript Fundamentals", value: "assignment-1" },
-  { label: "Assignment 2: React Components", value: "assignment-2" },
-  { label: "Assignment 3: CSS Grid Layout", value: "assignment-3" },
-  { label: "Assignment 4: Node.js API Development", value: "assignment-4" },
-  { label: "Assignment 5: Database Design", value: "assignment-5" },
-  { label: "Assignment 6: Leadership Skills", value: "assignment-6" },
-  { label: "Assignment 7: Safety Protocols", value: "assignment-7" },
+  { label: "Assignment 1: JavaScript Fundamentals", value: 1 },
+  { label: "Assignment 2: React Components", value: 2 },
+  { label: "Assignment 3: CSS Grid Layout", value: 3 },
+  { label: "Assignment 4: Node.js API Development", value: 4 },
+  { label: "Assignment 5: Database Design", value: 5 },
+  { label: "Assignment 6: Leadership Skills", value: 6 },
+  { label: "Assignment 7: Safety Protocols", value: 7 },
 ];

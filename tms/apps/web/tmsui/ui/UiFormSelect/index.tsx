@@ -53,8 +53,8 @@ export const UiFormSelect = <T extends FieldValues>({
                             {...rest}
                         >
                             <option value="">{placeholder}</option>
-                            {options.map((option) => {
-                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option.value as string}>{option.label}</option>)
+                            {options?.map((option: IOption) => {
+                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option.value as string | number}>{option.label}</option>)
                             })}
                         </select>
                         {error && <label className="block text-sm font-medium text-red-700 mb-2 mt-1">{error?.message}</label>}

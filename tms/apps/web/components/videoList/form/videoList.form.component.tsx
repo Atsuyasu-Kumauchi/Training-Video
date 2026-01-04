@@ -36,8 +36,14 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
   });
 
   const onSubmit: TFormHandlerSubmit<TVideoListSchema> = (value) => {
-    console.log("value of video list form", value);
-    videoListMutation.mutate(value as TVideoListSchema);
+    const modifiedValue = {
+      ...value,
+      testId: 1,
+      fileName: value.fileResponse?.fileName,
+      videoUrl: value.fileResponse?.playbackUrl,
+    };
+    delete modifiedValue.fileResponse;
+    videoListMutation.mutate(modifiedValue as TVideoListSchema);
   };
 
   return (

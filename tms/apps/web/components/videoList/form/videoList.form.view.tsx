@@ -2,8 +2,12 @@ import { ListQueryConfig } from "@/common/apiEnpoint";
 import { ITagDto } from "@/common/dto";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
-import { Button, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea } from "@/tmsui";
+import { Button, UiFormFileUpload, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea, useFormContext } from "@/tmsui";
 import { useSettings } from "@/tmsui/store/settings";
+import { UiFormRadio } from "@/tmsui/ui/UiFormRadio";
+import { faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faCloudUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react/jsx-runtime";
 import {
   assignment,
@@ -11,11 +15,13 @@ import {
   TVideoListSchema,
   videoStatus
 } from "./videoList.form.type";
-import VideoListFormUpload from "./videoList.form.upload";
 
 export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoListFormViewSchema) {
   const { setIsOpen } = useSettings();
   const { videoList } = useLang();
+  const { formState: { errors } } = useFormContext<TVideoListSchema>();
+
+  console.log("errors", errors);
 
   return (
     <Fragment>
@@ -37,7 +43,7 @@ export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoL
             label={videoList.form.audienceTags}
             options={useFetchList<ITagDto[]>({
               query: ListQueryConfig.TAG_LIST,
-              keyName: { label: "name", value: "tagId" }
+              keyName: { label: "name", value: "name" }
             })}
             placeholder={'カテゴリを選択'}
           />
@@ -82,7 +88,47 @@ export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoL
           placeholder={videoList.form.assignment}
         />
 
-        <VideoListFormUpload />
+        <div className="border-t border-b border-gray-200 py-4 my-6">
+          <h4 className="text-lg font-medium text-gray-900 mb-4"> {videoList.form.uploadTitle} </h4>
+          <div className="space-y-4">
+            <UiFormRadio<TVideoListSchema>
+              name="uploadType"
+              value="file"
+              label={
+                <span className="flex items-center gap-2">
+                  <FontAwesomeIcon
+                    icon={faCloudUpload}
+                    className="mr-2 text-sm"
+                  />
+                  {videoList.form.upVfile}
+                </span>
+              }
+            />
+            <UiFormRadio<TVideoListSchema>
+              name="uploadType"
+              value="youtube"
+              label={
+                <span className="flex items-center gap-2">
+                  <FontAwesomeIcon
+                    icon={faYoutube}
+                    className="mr-2 text-red-600"
+                  />
+                  {videoList.form.upYoutube}
+                </span>
+              }
+            />
+          </div>
+        </div>
+
+        <UiFormFileUpload<TVideoListSchema>
+          name="fileResponse"
+          title={videoList.form.upVTitle}
+          label={videoList.form.upVSubTitle}
+          description={videoList.form.upVFileUploaderTitle}
+          placeholder={videoList.form.upVSubTitle}
+        />
+
+        {/* <VideoListFormUpload /> */}
 
         <div className="flex justify-end space-x-3 pt-4">
           <Button

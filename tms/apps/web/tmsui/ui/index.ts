@@ -4,6 +4,7 @@ export * from './shared/types';
 export * from './UIBasicModal';
 export * from './UiFormCheckbox';
 export * from './UiFormFiledArray';
+export * from './UiFormFileUpload';
 export * from './UiFormInput';
 export * from './UiFormSelect';
 export * from './UiFormSelect2';

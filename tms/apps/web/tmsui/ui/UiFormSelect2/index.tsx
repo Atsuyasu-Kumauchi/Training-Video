@@ -12,6 +12,7 @@ export type UiFormSelect2Props<T extends FieldValues> = {
     options: IOption[];
     isMulti?: boolean;
     placeholder?: string;
+    getValue?: 'label' | 'value';
 };
 
 export const UiFormSelect2 = <T extends FieldValues>({
@@ -21,6 +22,7 @@ export const UiFormSelect2 = <T extends FieldValues>({
     options,
     isMulti = false,
     placeholder = "Select an option",
+    getValue = 'label',
 }: UiFormSelect2Props<T>) => {
     const { control } = useFormContext<T>();
     return (

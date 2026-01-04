@@ -3,9 +3,11 @@ import { Badge } from '@/common/components/badge';
 import { CVideoListDto, IVideoListDto } from '@/common/dto/videoList.dto';
 import useLang from '@/lang';
 import { LangVideoList } from '@/lang/videoList';
-import { Button, TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui';
-import { TListColumnDef } from '@/tmsui/types';
+import { Button, formateDate, TListColumnDef, TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
+import VideoDetailsComponent from '../details/video.details.component';
 import VideoListFormComponent from '../form/videoList.form.component';
 
 const { list } = LangVideoList;
@@ -16,24 +18,36 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
         accessorKey: "title",
         enableHiding: false,
         header: () => list.video,
-        cell: (ctx) => {
-            return <div>{ctx.row.original.title}</div>
+        cell: ({ row: { original } }) => {
+            return (
+                <div className="flex items-center">
+                    <div className="flex-shrink-0 h-16 w-24">
+                        <div className="h-16 w-24 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <FontAwesomeIcon icon={fas.faPlay} />
+                        </div>
+                    </div>
+                    <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">{original?.name}</div>
+                        <div className="text-sm text-gray-500">{original?.description}</div>
+                    </div>
+                </div>
+            )
         }
     },
-    {
-        accessorKey: "category",
-        enableHiding: false,
-        header: () => list.category,
-        cell: (ctx) => {
-            return <div>{ctx.row.original.category}</div>
-        }
-    },
+    // {
+    //     accessorKey: "category",
+    //     enableHiding: false,
+    //     header: () => list.category,
+    //     cell: (ctx) => {
+    //         return <div>{ctx.row.original.category}</div>
+    //     }
+    // },
     {
         accessorKey: "playbackTime",
         enableHiding: false,
         header: () => list.playbackTime,
         cell: (ctx) => {
-            return <div>{ctx.row.original.playback_time}</div>
+            return <div>{ctx.row.original.playbackTime}</div>
         }
     },
     {
@@ -41,7 +55,7 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
         enableHiding: false,
         header: () => list.uploadDate,
         cell: (ctx) => {
-            return <div>{ctx.row.original.upload_date}</div>
+            return <div>{formateDate(ctx.row.original.created)}</div>
         }
     },
     {
@@ -49,7 +63,7 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
         enableHiding: false,
         header: () => list.status,
         cell: (ctx) => {
-            return <Badge status={ctx.row.original.status} />
+            return <Badge status={ctx.row.original.status ? "Active" : "Inactive"} />
         }
     },
     {
@@ -74,12 +88,13 @@ export const VideoView = (video: IVideoListDto) => {
             <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='view' />
             <UiBasicModal
                 modalRef={modalRef}
-                title="User View"
-                body={<div>User View</div>}
+                title={"Video Details - " + video?.name}
+                body={<VideoDetailsComponent editData={video} modalRef={modalRef} />}
             />
         </div>
     )
 }
+
 export const VideoEdit = (video: IVideoListDto) => {
     const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
     const { videoList } = useLang();
@@ -96,6 +111,7 @@ export const VideoEdit = (video: IVideoListDto) => {
         </>
     )
 }
+
 export const VideoDelete = () => {
     return (
         <>

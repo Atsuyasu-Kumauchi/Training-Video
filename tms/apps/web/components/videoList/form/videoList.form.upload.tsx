@@ -12,7 +12,7 @@ export default function VideoListFormUpload() {
   const { videoList } = useLang();
 
   const selectedMode = useWatch({ control, name: "uploadType" });
-  const youtubeUrl = useWatch({ control, name: "youtubeUrl" });
+  const youtubeUrl = useWatch({ control, name: "videoUrl" });
 
   // Extract videoId from YouTube URL
   const getYouTubeEmbedUrl = (url?: string) => {
@@ -111,7 +111,7 @@ export default function VideoListFormUpload() {
           </h4>
           <div className="space-y-4">
             <UiFormInput<TVideoListSchema>
-              name="youtubeUrl"
+              name="videoUrl"
               label={videoList.form.upYoutubeSubTitle}
               placeholder="https://www.youtube.com/watch?v=..."
             />
