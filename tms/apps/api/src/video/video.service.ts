@@ -93,7 +93,7 @@ export class VideoService {
         });
 
         if (existingVideo) {
-            throw new ConflictException(Messages.MSG6);
+            throw new ConflictException(Messages.DUPLICAT_ENTRY("Video"));
         }
 
         const video = this.videoRepository.create({
