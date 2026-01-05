@@ -130,7 +130,7 @@ export class AuthService {
       lastName: '',
       roleId: 1,
       departmentId: 1,
-      employeeId: '',
+      employeeId: `em_${Date.now()}`,
       joinDate: new Date(),
       ...signUpDto,
       password: await hashPassword(signUpDto.password),

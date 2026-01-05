@@ -25,7 +25,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsNumber({}, { each: true })
     @IsArray()
-    userTags: number[];
+    userTagIds: number[];
 
     @IsNotEmpty()
     @IsNumber()

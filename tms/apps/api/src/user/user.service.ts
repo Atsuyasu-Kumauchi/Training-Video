@@ -80,8 +80,8 @@ export class UserService {
     }
 
     const user = await this.authService.createAuthUser(createUserDto, false, true);
-    user.tags = createUserDto.userTags.map(t => ({ tagId: t } as Tag));
-    return { ...(await this.userRepository.save(user) as any), tags: undefined, userTags: createUserDto.userTags } ;
+    user.tags = createUserDto.userTagIds.map(t => ({ tagId: t } as Tag));
+    return { ...(await this.userRepository.save(user) as any), tags: undefined, userTags: createUserDto.userTagIds } ;
   }
 
   async save(id: number, user: DeepPartial<User>, userTags: number[]) {

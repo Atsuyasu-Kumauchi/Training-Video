@@ -3,6 +3,7 @@ import { UserUriPermission } from 'src/auth/auth.entity';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { Department } from 'src/department/department.entity';
 import { Tag } from 'src/tag/tag.entity';
+import { Training } from 'src/training/training.entity';
 
 
 @Entity('users')
@@ -76,6 +77,20 @@ export class User {
     },
   })
   tags: Tag[];
+
+  // @ManyToMany(() => Training, (training) => training.users)
+  // @JoinTable({
+  //   name: "user_trainings",
+  //   joinColumn: {
+  //     name: "user_id",
+  //     referencedColumnName: "userId",
+  //   },
+  //   inverseJoinColumn: {
+  //     name: "training_id",
+  //     referencedColumnName: "trainingId",
+  //   },
+  // })
+  // trainings: any;
 
   @CreateDateColumn()
   created: Date;
