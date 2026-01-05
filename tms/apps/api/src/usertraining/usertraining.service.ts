@@ -20,6 +20,8 @@ export class UserTrainingService {
     async findAll(query: UserTrainingQueryDto) {
         const queryBuilder = this.userTrainingRepository.createQueryBuilder('UserTraining');
 
+        queryBuilder.leftJoinAndSelect("UserTraining.training", "training");
+
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
         // queryBuilder.where({ status: query.statusFilter });
@@ -43,7 +45,7 @@ export class UserTrainingService {
     }
 
     async findOne(id: number): Promise<UserTraining> {
-        const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id } });
+        const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id }, relations: { training: true } });
 
         if (!userTraining) {
             throw new NotFoundException(Messages.MSG10_EX('UserTraining'));

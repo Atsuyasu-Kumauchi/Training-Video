@@ -64,9 +64,6 @@ export class User {
   @OneToMany(() => UserUriPermission, (userUriPermission) => userUriPermission.user)
   userUriPermissions: UserUriPermission[];
 
-  @Column({ name: 'completed_videos', type: "jsonb", default: () => "'[]'::jsonb", nullable: true })
-  completedVideos: any[] = [];
-
   @ManyToMany(() => Tag, (tag) => tag.users)
   @JoinTable({
     name: "user_tags",

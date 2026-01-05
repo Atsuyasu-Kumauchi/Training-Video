@@ -36,8 +36,8 @@ export class CreateVideoDto {
     @IsArray()
     audienceTags: string[];
 
-    @IsBoolean({ message: Messages.MSG1_EX('Role', 'status', 'boolean') })
-    @IsNotEmpty({ message: Messages.MSG2_EX('Role', 'status') })
+    @IsBoolean({ message: Messages.MSG1_EX('Video', 'status', 'boolean') })
+    @IsNotEmpty({ message: Messages.MSG2_EX('Video', 'status') })
     status: boolean;
 }
 

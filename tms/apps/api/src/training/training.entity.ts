@@ -10,13 +10,13 @@ export class Training {
     @Column({ type: 'varchar' })
     name: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'text', nullable: true })
     desription: string;
 
     @Column({ name: 'videos', type: "jsonb", default: () => "'[]'::jsonb" })
     videos: any[] = [];
 
-    @Column({ type: 'date' })
+    @Column({ type: 'date', nullable: true })
     deadline: Date;
 
     @Column({ type: 'boolean', default: true })

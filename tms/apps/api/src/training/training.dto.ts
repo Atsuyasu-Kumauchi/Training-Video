@@ -15,9 +15,6 @@ export class CreateTrainingDto {
     @IsArray()
     videos: number[] = [];
 
-    @IsArray()
-    users: number[];
-
     @IsDate()
     deadline: Date;
 
