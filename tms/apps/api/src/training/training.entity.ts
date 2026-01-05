@@ -19,6 +19,6 @@ export class Training {
     @UpdateDateColumn()
     modified: Date;
 
-    @ManyToMany(() => User, (user) => user.trainings)
-    users: User[];
+    // @ManyToMany(() => User, (user) => user.trainings)
+    // users: User[];
 }
