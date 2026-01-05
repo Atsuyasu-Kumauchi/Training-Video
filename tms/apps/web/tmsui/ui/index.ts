@@ -9,5 +9,6 @@ export * from './UiFormInput';
 export * from './UiFormSelect';
 export * from './UiFormSelect2';
 export * from './UiFormTextArea';
+export * from './UiFormYTUpload';
 export * from './useFormContext';
 

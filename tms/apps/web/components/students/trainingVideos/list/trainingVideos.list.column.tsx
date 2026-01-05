@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import TrainingVideoPlayerComponent from "../player/trainingVideo.player.component";
 import { TrainingVideosListSidebar } from "./trainingVideos.list.sidebar";
 
 const videoList = [
@@ -141,10 +142,12 @@ interface VideoDetails {
 }
 
 export default function TrainingVideosListColumn() {
+
   const { myTraining } = useStudentLang();
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { setSidebarContent } = useStudentRightBar();
   const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null);
+
   useEffect(() => {
     setSidebarContent(TrainingVideosListSidebar());
     return () => {
@@ -159,21 +162,24 @@ export default function TrainingVideosListColumn() {
       setVideoDetails(video);
     }
   };
+
   const watchVideo = (videoId: number) => {
     console.log(`Watching video: ${videoId}`);
   };
+
   const startTest = () => {
     console.log(`Starting test`);
   };
 
   console.log("videoDetails", videoDetails);
+
   return (
     <>
       <UiBasicModal
         modalRef={modalRef}
         title={videoDetails?.title}
         description={videoDetails?.description}
-        body={<div>動画詳細</div>}
+        body={<TrainingVideoPlayerComponent />}
       />
 
       <div className="px-6 py-8">
@@ -265,7 +271,6 @@ export default function TrainingVideosListColumn() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-medium text-gray-900">
-              {" "}
               {myTraining.list.training_videos}
             </h2>
             <p className="text-sm text-gray-500 mt-1">

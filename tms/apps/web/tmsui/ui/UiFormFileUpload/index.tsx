@@ -33,19 +33,13 @@ export const UiFormFileUpload = <T extends FieldValues>({
     const uploadMutation = useMutation({
         mutationKey: ['upload-file'],
         mutationFn: async (file: File) => {
-            // Use FormData to send file, and set headers according to browser/file upload requirements.
-            const formData = new FormData();
-            formData.append('file', file);
-            // Only standard headers should be set directly, use custom header values that comply with ISO-8859-1 (ASCII subset)
-            // Remove file.name from custom header - instead, include in FormData or ensure valid values
-            // If must use header, encode file.name to ISO-8859-1 safe value:
-            const safeFileName = encodeURIComponent(file.name);
             const response = await AuthServer({
                 method: 'POST',
                 url: 'videos/uploads',
-                data: formData,
+                data: file,
                 headers: {
-                    'x-file-name': safeFileName,
+                    "Content-Type": "application/octet-stream",
+                    'x-file-name': encodeURIComponent(file.name),
                     'x-upload-id': await getAuthToken('x-upload-id') || '',
                 },
                 onUploadProgress: (event) => {

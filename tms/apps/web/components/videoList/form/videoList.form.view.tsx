@@ -2,12 +2,13 @@ import { ListQueryConfig } from "@/common/apiEnpoint";
 import { ITagDto } from "@/common/dto";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
-import { Button, UiFormFileUpload, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea, useFormContext } from "@/tmsui";
+import { Button, UiFormFileUpload, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea, UiFormYTUpload, useFormContext } from "@/tmsui";
 import { useSettings } from "@/tmsui/store/settings";
 import { UiFormRadio } from "@/tmsui/ui/UiFormRadio";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faCloudUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useWatch } from "react-hook-form";
 import { Fragment } from "react/jsx-runtime";
 import {
   assignment,
@@ -19,9 +20,10 @@ import {
 export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoListFormViewSchema) {
   const { setIsOpen } = useSettings();
   const { videoList } = useLang();
-  const { formState: { errors } } = useFormContext<TVideoListSchema>();
+  const { formState: { errors }, control } = useFormContext<TVideoListSchema>();
 
   console.log("errors", errors);
+  const videoFileType = useWatch({ control, name: "uploadType" });
 
   return (
     <Fragment>
@@ -120,13 +122,21 @@ export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoL
           </div>
         </div>
 
-        <UiFormFileUpload<TVideoListSchema>
+        {videoFileType === "file" && <UiFormFileUpload<TVideoListSchema>
           name="fileResponse"
           title={videoList.form.upVTitle}
           label={videoList.form.upVSubTitle}
           description={videoList.form.upVFileUploaderTitle}
           placeholder={videoList.form.upVSubTitle}
-        />
+        />}
+
+        {videoFileType === "youtube" && <UiFormYTUpload<TVideoListSchema>
+          name="fileResponse"
+          title={videoList.form.upVTitle}
+          label={videoList.form.upVSubTitle}
+          description={videoList.form.upVFileUploaderTitle}
+          placeholder={videoList.form.upVSubTitle}
+        />}
 
         {/* <VideoListFormUpload /> */}
 

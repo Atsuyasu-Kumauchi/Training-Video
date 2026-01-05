@@ -54,6 +54,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         },
     })
     const onSubmit: TFormHandlerSubmit<TUserSchema> = (value) => {
+        console.log(value)
         const username = value?.email;
         userMutation.mutate({ ...value, username } as TUserSchema);
     }

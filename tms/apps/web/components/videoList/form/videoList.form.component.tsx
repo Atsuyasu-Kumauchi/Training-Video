@@ -36,6 +36,8 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
   });
 
   const onSubmit: TFormHandlerSubmit<TVideoListSchema> = (value) => {
+    console.log(value);
+
     const modifiedValue = {
       ...value,
       testId: 1,

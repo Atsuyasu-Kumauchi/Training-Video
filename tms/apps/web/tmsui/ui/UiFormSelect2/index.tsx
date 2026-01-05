@@ -57,6 +57,7 @@ export const UiFormSelect2 = <T extends FieldValues>({
                             </label>
                         )}
                         <Select<IOption, boolean>
+                            instanceId={String(name)}
                             isMulti={isMulti}
                             options={options}
                             placeholder={placeholder}

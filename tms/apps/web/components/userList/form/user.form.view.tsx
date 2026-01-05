@@ -87,7 +87,7 @@ export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormV
         <div className="col-span-12 md:col-span-6">
           <UiFormSelect2<TUserSchema>
             label={user.form.tag}
-            name="userTags"
+            name="userTagIds"
             isMulti
             options={useFetchList<ITagDto[]>({
               query: ListQueryConfig.TAG_LIST,

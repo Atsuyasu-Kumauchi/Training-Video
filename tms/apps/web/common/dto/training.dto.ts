@@ -1,6 +1,7 @@
 import { BaseDto, IBaseDto } from "./base.dto";
 
 export interface ITrainingsDto extends IBaseDto {
+    trainingId: string;
     training: string;
     register: string;
     completion: string;
@@ -11,6 +12,7 @@ export interface ITrainingsDto extends IBaseDto {
 
 
 export class CTrainingsDto extends BaseDto implements ITrainingsDto {
+    trainingId: string = "";
     training: string = "";
     register: string = "";
     completion: string = "";

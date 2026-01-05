@@ -18,30 +18,30 @@ export const trainingListColumn: TListColumnDef<CTrainingsDto>[] = [
             return <div>{ctx.row.original.training}</div>
         }
     },
-    {
-        accessorKey: "register",
-        enableHiding: false,
-        header: () => list.registered,
-        cell: (ctx) => {
-            return <div>{ctx.row.original.register}</div>
-        }
-    },
-    {
-        accessorKey: "completion",
-        enableHiding: false,
-        header: () => list.completion,
-        cell: (ctx) => {
-            return <div>{ctx.row.original.completion}</div>
-        }
-    },
-    {
-        accessorKey: "incomplete",
-        enableHiding: false,
-        header: () => list.incomplete,
-        cell: (ctx) => {
-            return <div>{ctx.row.original.incomplete}</div>
-        }
-    },
+    // {
+    //     accessorKey: "register",
+    //     enableHiding: false,
+    //     header: () => list.registered,
+    //     cell: (ctx) => {
+    //         return <div>{ctx.row.original.register}</div>
+    //     }
+    // },
+    // {
+    //     accessorKey: "completion",
+    //     enableHiding: false,
+    //     header: () => list.completion,
+    //     cell: (ctx) => {
+    //         return <div>{ctx.row.original.completion}</div>
+    //     }
+    // },
+    // {
+    //     accessorKey: "incomplete",
+    //     enableHiding: false,
+    //     header: () => list.incomplete,
+    //     cell: (ctx) => {
+    //         return <div>{ctx.row.original.incomplete}</div>
+    //     }
+    // },
     {
         accessorKey: "status",
         enableHiding: false,

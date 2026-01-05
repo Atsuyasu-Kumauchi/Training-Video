@@ -1,36 +1,41 @@
+import { ITrainingsDto } from "@/common";
 import {
+  TFormComponentSchema,
+  TFormViewSchema,
   zodArray,
+  zodBoolean,
   zodInfer,
+  zodNumberRequired,
   zodObject,
   zodString,
   zodStringRequired,
 } from "@/tmsui";
 
+export type TTrainingFormComponentSchema = TFormComponentSchema<TTrainingSchema> & {
+  editData?: Partial<ITrainingsDto>;
+}
+
+export type TTrainingFormViewSchema = TFormViewSchema<TTrainingSchema>
+
 export const trainingSchema = zodObject({
   name: zodStringRequired(),
-  description: zodString(),
-  videos: zodStringRequired(),
-  users: zodString(),
-  group: zodString(),
-  status: zodStringRequired(),
-  tag: zodArray(
-    zodObject({
-      value: zodStringRequired(),
-      label: zodStringRequired(),
-    })
-  ).min(1, "This filed is required"),
+  desription: zodString(),
+  videos: zodArray(zodNumberRequired()),
+  users: zodArray(zodNumberRequired()),
+  deadline: zodString(),
+  status: zodBoolean(),
 });
+
 
 export type TTrainingSchema = zodInfer<typeof trainingSchema>;
 
 export const initialValues = {
   name: "",
-  description: "",
-  videos: "",
-  users: "",
-  group: "",
-  status: "",
-  tag: [],
+  desription: "",
+  videos: [],
+  users: [],
+  deadline: "",
+  status: true,
 };
 
 export const videos = [
@@ -59,8 +64,6 @@ export const tagName = [
 ];
 
 export const status = [
-  { label: "ステータスを選択", value: "value" }, //Select a status
-  { label: "アクティブ", value: "1" }, //active
-  { label: "下書き", value: "0" }, //draft
-  { label: "アーカイブ", value: "0" }, //archive
+  { label: "Active", value: true },
+  { label: "Inactive", value: false },
 ];
