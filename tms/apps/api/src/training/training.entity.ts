@@ -1,5 +1,5 @@
-import { User } from "src/user/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserTraining } from "src/usertraining/usertraining.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 @Entity('trainings')
@@ -10,6 +10,15 @@ export class Training {
     @Column({ type: 'varchar' })
     name: string;
 
+    @Column({ type: 'varchar' })
+    desription: string;
+
+    @Column({ name: 'videos', type: "jsonb", default: () => "'[]'::jsonb" })
+    videos: any[] = [];
+
+    @Column({ type: 'date' })
+    deadline: Date;
+
     @Column({ type: 'boolean', default: true })
     status: boolean;
 
@@ -19,6 +28,6 @@ export class Training {
     @UpdateDateColumn()
     modified: Date;
 
-    // @ManyToMany(() => User, (user) => user.trainings)
-    // users: User[];
+    @OneToMany(() => UserTraining, userTraining => userTraining.training)
+    userTrainings: UserTraining[];
 }

@@ -30,8 +30,8 @@ export class Video {
     @Column({ name: 'file_directory', type: 'varchar' })
     fileDirectory: string;
 
-    @Column({ name: 'audience_tags', type: 'jsonb', default: () => "'[]'", nullable: false })
-    audienceTags: string[];
+    @Column({ name: 'audience_tags', type: 'jsonb', default: () => "'[]'::jsonb", nullable: false })
+    audienceTags: string[] = [];
 
     @Column({ type: 'boolean', default: true })
     status: boolean;

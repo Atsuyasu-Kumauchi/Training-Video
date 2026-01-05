@@ -3,7 +3,7 @@ import { UserUriPermission } from 'src/auth/auth.entity';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { Department } from 'src/department/department.entity';
 import { Tag } from 'src/tag/tag.entity';
-import { Training } from 'src/training/training.entity';
+import { UserTraining } from 'src/usertraining/usertraining.entity';
 
 
 @Entity('users')
@@ -41,7 +41,7 @@ export class User {
   @Column({ name: 'last_name', type: 'varchar', length: 100 })
   lastName: string;
 
-  @Column( { name: 'reset_pwd', type: 'boolean', default: false })
+  @Column({ name: 'reset_pwd', type: 'boolean', default: false })
   resetPwd: boolean;
 
   @Column({ type: 'boolean', default: true })
@@ -64,6 +64,9 @@ export class User {
   @OneToMany(() => UserUriPermission, (userUriPermission) => userUriPermission.user)
   userUriPermissions: UserUriPermission[];
 
+  @Column({ name: 'completed_videos', type: "jsonb", default: () => "'[]'::jsonb", nullable: true })
+  completedVideos: any[] = [];
+
   @ManyToMany(() => Tag, (tag) => tag.users)
   @JoinTable({
     name: "user_tags",
@@ -78,19 +81,8 @@ export class User {
   })
   tags: Tag[];
 
-  // @ManyToMany(() => Training, (training) => training.users)
-  // @JoinTable({
-  //   name: "user_trainings",
-  //   joinColumn: {
-  //     name: "user_id",
-  //     referencedColumnName: "userId",
-  //   },
-  //   inverseJoinColumn: {
-  //     name: "training_id",
-  //     referencedColumnName: "trainingId",
-  //   },
-  // })
-  // trainings: any;
+  @OneToMany(() => UserTraining, userTraining => userTraining.user)
+  userTrainings: UserTraining[];
 
   @CreateDateColumn()
   created: Date;

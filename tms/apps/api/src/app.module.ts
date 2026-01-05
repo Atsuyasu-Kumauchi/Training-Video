@@ -11,6 +11,8 @@ import { RoleModule } from './role/role.module';
 import { UserModule } from './user/user.moduel';
 import { TagModule } from './tag/tag.module';
 import { VideoModule } from './video/video.module';
+import { UserTrainingModule } from './usertraining/usertraining.module';
+import { TrainingModule } from './training/training.module';
 
 @Module({
   imports: [
@@ -45,7 +47,9 @@ import { VideoModule } from './video/video.module';
     RoleModule,
     UserModule,
     TagModule,
-    VideoModule
+    VideoModule,
+    UserTrainingModule,
+    TrainingModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],

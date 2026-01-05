@@ -3,7 +3,7 @@ import { IsArray, IsBoolean, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, I
 import { Messages } from "src/common/constants";
 import { SortDirection } from "src/common/enums/SortDirection";
 
-export class CreateTrainingDto {
+export class CreateUserTrainingDto {
     @IsString()
     @IsNotEmpty()
     name: string;
@@ -18,15 +18,15 @@ export class CreateTrainingDto {
     @IsArray()
     users: number[];
 
-    @IsDate()
+    @IsNotEmpty()
     deadline: Date;
 
-    @IsBoolean({ message: Messages.MSG1_EX('Training', 'status', 'boolean') })
-    @IsNotEmpty({ message: Messages.MSG2_EX('Training', 'status') })
+    @IsBoolean({ message: Messages.MSG1_EX('UserTraining', 'status', 'boolean') })
+    @IsNotEmpty({ message: Messages.MSG2_EX('UserTraining', 'status') })
     status: boolean;
 }
 
-export class TrainingQueryDto {
+export class UserTrainingQueryDto {
   @IsOptional()
   @IsString()
   nameFilter?: string;
@@ -46,7 +46,7 @@ export class TrainingQueryDto {
   pageSize: number = 10;
 
   @IsString()
-  sortBy: string = "Training.trainingId".split(".")[1];
+  sortBy: string = "UserTraining.userTrainingId".split(".")[1];
 
   @IsOptional()
   @IsEnum(SortDirection)
