@@ -32,7 +32,9 @@ export class UserTrainingService {
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
         return {
-            data: result,
+            data: result.map(ut => ({
+                ...ut.training, userId: ut.userId, progress: ut.progress
+            })),
             pageIndex: query.pageIndex,
             pageSize: query.pageSize,
             pageCount: Math.ceil(resultCount / query.pageSize),
