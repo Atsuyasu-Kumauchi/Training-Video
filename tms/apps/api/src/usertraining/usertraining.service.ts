@@ -34,11 +34,13 @@ export class UserTrainingService {
 
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
+        const fakedProgress = ut => [...(ut.progress && []), ...ut.training.videos.map(v => ({ [v]: Math.random() * 10 > 5 }))];
+
         return {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
+                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress(ut) }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,
@@ -61,7 +63,9 @@ export class UserTrainingService {
         }
 
         const ut = { ...userTraining };
-        return { ...ut.training, videos: await this.videoService.lookupVideos(userTraining?.training.videos), trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] };
+        const videos = await this.videoService.lookupVideos(userTraining?.training.videos);
+        const fakedProgress = [...(ut.progress && []), ...videos.map(v => ({ [v.videoId]: Math.random() * 10 > 5 }))];
+        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress }] };
     }
 
     async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
