@@ -11,7 +11,7 @@ export class Training {
     name: string;
 
     @Column({ type: 'text', nullable: true })
-    desription: string;
+    description: string;
 
     @Column({ name: 'videos', type: "jsonb", default: () => "'[]'::jsonb" })
     videos: any[] = [];
