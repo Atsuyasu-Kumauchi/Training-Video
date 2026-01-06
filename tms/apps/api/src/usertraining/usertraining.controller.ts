@@ -20,7 +20,7 @@ export class UserTrainingController {
     }
 
     @Get(':id')
-    async findOne(@Req() req, @Param('id') id: string): Promise<UserTraining> {
+    async findOne(@Req() req, @Param('id') id: string) {
         return this.userTrainingService.findOne(+id, req.user.isAdmin ? undefined : req.user.userId);
     }
 
