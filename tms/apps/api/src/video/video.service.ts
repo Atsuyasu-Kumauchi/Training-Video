@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, Repository } from "typeorm";
+import { type DeepPartial, In, Repository } from "typeorm";
 import { Video } from "./video.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateVideoDto, type VideoMetadata, VideoQueryDto } from "./video.dto";
@@ -48,6 +48,10 @@ export class VideoService {
         } catch (error) {
             throw new NotFoundException(`Upload with ID ${cleanId} not found`);
         }
+    }
+
+    async lookupVideos(videoIds: number[] = []) {
+        return await this.videoRepository.find({ where: { videoId: In(videoIds) } });
     }
 
     async findAll(query: VideoQueryDto) {
