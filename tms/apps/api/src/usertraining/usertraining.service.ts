@@ -7,6 +7,7 @@ import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto"
 import { Messages } from "src/common/constants";
 import { TrainingService } from "src/training/training.service";
 import { Training } from "src/training/training.entity";
+import { reduceCollection } from "src/common/util";
 
 
 @Injectable()
@@ -32,9 +33,13 @@ export class UserTrainingService {
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
         return {
-            data: result.map(ut => ({
-                ...ut.training, userId: ut.userId, progress: ut.progress
-            })),
+            // data: result.map(ut => ({ ...ut.training, userId: ut.userId, progress: ut.progress })),
+            data: Object.fromEntries(reduceCollection(
+                result,
+                ut => ut.training.trainingId,
+                ut => ({ ...ut.training, users: [{ userId: ut.userId, progress: ut.progress }] }),
+                (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
+            )),
             pageIndex: query.pageIndex,
             pageSize: query.pageSize,
             pageCount: Math.ceil(resultCount / query.pageSize),
