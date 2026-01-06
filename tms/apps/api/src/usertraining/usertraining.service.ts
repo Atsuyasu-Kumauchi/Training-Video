@@ -8,6 +8,7 @@ import { Messages } from "src/common/constants";
 import { TrainingService } from "src/training/training.service";
 import { Training } from "src/training/training.entity";
 import { reduceCollection } from "src/common/util";
+import { VideoService } from "src/video/video.service";
 
 
 @Injectable()
@@ -15,7 +16,8 @@ export class UserTrainingService {
 
     constructor(
         @InjectRepository(UserTraining) private readonly userTrainingRepository: Repository<UserTraining>,
-        private readonly trainingService: TrainingService
+        private readonly trainingService: TrainingService,
+        private readonly videoService: VideoService
     ) { }
 
     async findAll(query: UserTrainingQueryDto) {
@@ -59,7 +61,7 @@ export class UserTrainingService {
         }
 
         const ut = { ...userTraining };
-        return { ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] };
+        return { ...ut.training, videos: await this.videoService.lookupVideos(userTraining?.training.videos), trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] };
     }
 
     async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
