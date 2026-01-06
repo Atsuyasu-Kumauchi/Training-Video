@@ -36,7 +36,7 @@ export class UserTrainingService {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, users: [{ userId: ut.userId, progress: ut.progress }] }),
+                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,
@@ -51,14 +51,15 @@ export class UserTrainingService {
         };
     }
 
-    async findOne(id: number, userId?: number): Promise<UserTraining> {
+    async findOne(id: number, userId?: number) {
         const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id, userId }, relations: { training: true } });
 
         if (!userTraining) {
             throw new NotFoundException(Messages.MSG10_EX('UserTraining'));
         }
 
-        return userTraining;
+        const ut = { ...userTraining };
+        return { ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] };
     }
 
     async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
