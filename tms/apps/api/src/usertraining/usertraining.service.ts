@@ -25,7 +25,8 @@ export class UserTrainingService {
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        // queryBuilder.where({ status: query.statusFilter });
+        queryBuilder.where("UserTraining.userTrainingId IS NOT NULL");
+        if (query.userIdFilter !== undefined) queryBuilder.andWhere("UserTraining.userId = :userId", { userId: query.userIdFilter });
         // if (query.nameFilter) queryBuilder.andWhere("UserTraining.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`UserTraining.${query.sortBy}`, query.sortDirection);
@@ -46,7 +47,8 @@ export class UserTrainingService {
             resultCount,
             sortBy: query.sortBy,
             sortDirection: query.sortDirection,
-            nameFilter: query.nameFilter || null,
+            userIdFilter: query.userIdFilter,
+            // nameFilter: query.nameFilter || null,
             statusFilter: query.statusFilter
         };
     }
