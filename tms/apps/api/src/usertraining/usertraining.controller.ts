@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Put, Query, Req, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Req, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { UserTrainingService } from "./usertraining.service";
 import { UserTraining } from "./usertraining.entity";
 import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
@@ -21,8 +21,7 @@ export class UserTrainingController {
 
     @Get(':id')
     async findOne(@Req() req, @Param('id') id: string): Promise<UserTraining> {
-        if (req.user.isAdmin || req.user.userId === +id) return this.userTrainingService.findOne(+id);
-        throw new UnauthorizedException();
+        return this.userTrainingService.findOne(+id, req.user.isAdmin ? undefined : req.user.userId);
     }
 
     @Post()
