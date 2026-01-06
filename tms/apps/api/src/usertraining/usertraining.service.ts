@@ -51,8 +51,8 @@ export class UserTrainingService {
         };
     }
 
-    async findOne(id: number): Promise<UserTraining> {
-        const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id }, relations: { training: true } });
+    async findOne(id: number, userId?: number): Promise<UserTraining> {
+        const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id, userId }, relations: { training: true } });
 
         if (!userTraining) {
             throw new NotFoundException(Messages.MSG10_EX('UserTraining'));
