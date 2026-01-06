@@ -34,12 +34,12 @@ export class UserTrainingService {
 
         return {
             // data: result.map(ut => ({ ...ut.training, userId: ut.userId, progress: ut.progress })),
-            data: Object.fromEntries(reduceCollection(
+            data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
                 ut => ({ ...ut.training, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
-            )),
+            ))),
             pageIndex: query.pageIndex,
             pageSize: query.pageSize,
             pageCount: Math.ceil(resultCount / query.pageSize),
