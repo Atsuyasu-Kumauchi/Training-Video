@@ -10,7 +10,7 @@ export class CreateTrainingDto {
 
     @IsString()
     @IsOptional()
-    desription?: string;
+    description?: string;
 
     @IsArray()
     videos: number[] = [];
