@@ -19,7 +19,7 @@ export type TTrainingFormViewSchema = TFormViewSchema<TTrainingSchema>
 
 export const trainingSchema = zodObject({
   name: zodStringRequired(),
-  desription: zodString(),
+  description: zodString(),
   videos: zodArray(zodNumberRequired()),
   users: zodArray(zodNumberRequired()),
   deadline: zodString(),
@@ -31,7 +31,7 @@ export type TTrainingSchema = zodInfer<typeof trainingSchema>;
 
 export const initialValues = {
   name: "",
-  desription: "",
+  description: "",
   videos: [],
   users: [],
   deadline: "",

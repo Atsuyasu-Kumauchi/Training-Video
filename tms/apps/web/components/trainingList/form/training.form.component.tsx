@@ -45,7 +45,7 @@ export default function TrainingFormComponent({ modalRef, editData, isEdit }: TT
       onSubmit={onSubmitHandler}
       ref={formRef}
     >
-      <TrainingFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} />
+      <TrainingFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} isPending={trainingMutation.isPending} />
     </UiForm>
   );
 }

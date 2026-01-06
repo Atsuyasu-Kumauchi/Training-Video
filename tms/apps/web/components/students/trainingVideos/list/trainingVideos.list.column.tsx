@@ -1,24 +1,22 @@
 "use client";
+import { ITrainingVideosDto, IVideoListDto } from "@/common";
 import { useStudentRightBar } from "@/hooks/useStudentRightBar";
 import useStudentLang from "@/lang/students";
-import { cn } from "@/tmsui";
+import { MediaServer } from "@/tmsui";
 import {
   TUiBasicModalRef,
   UiBasicModal,
-  uiBasicModalRefDefaultValue,
+  uiBasicModalRefDefaultValue
 } from "@/tmsui/ui/UIBasicModal";
 import {
   faArrowLeft,
   faBook,
-  faCheck,
-  faClipboardCheck,
-  faPlay,
+  faPlay
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import TrainingVideoPlayerComponent from "../player/trainingVideo.player.component";
 import { TrainingVideosListSidebar } from "./trainingVideos.list.sidebar";
 
 const videoList = [
@@ -141,10 +139,15 @@ interface VideoDetails {
   videoUrl: string;
 }
 
-export default function TrainingVideosListColumn() {
+interface TrainingVideosListColumnProps {
+  training: ITrainingVideosDto;
+}
+
+export default function TrainingVideosListColumn({ training }: TrainingVideosListColumnProps) {
+  // console.log("trainingtrainingtraining", training?.videos);
 
   const { myTraining } = useStudentLang();
-  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  // const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { setSidebarContent } = useStudentRightBar();
   const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null);
 
@@ -155,35 +158,26 @@ export default function TrainingVideosListColumn() {
     };
   }, [setSidebarContent]);
 
-  const openVideoDetails = (videoId: number) => {
-    modalRef.current.modalOpen();
-    const video = videoList.find((video) => video.id === videoId);
-    if (video) {
-      setVideoDetails(video);
-    }
-  };
+  // const openVideoDetails = (videoId: number) => {
+  //   modalRef.current.modalOpen();
+  //   const video = videoList.find((video) => video.id === videoId);
+  //   if (video) {
+  //     setVideoDetails(video);
+  //   }
+  // };
 
-  const watchVideo = (videoId: number) => {
-    console.log(`Watching video: ${videoId}`);
-  };
+  // const watchVideo = (videoId: number) => {
+  //   console.log(`Watching video: ${videoId}`);
+  // };
 
-  const startTest = () => {
-    console.log(`Starting test`);
-  };
+  // const startTest = () => {
+  //   console.log(`Starting test`);
+  // };
 
-  console.log("videoDetails", videoDetails);
 
   return (
     <>
-      <UiBasicModal
-        modalRef={modalRef}
-        title={videoDetails?.title}
-        description={videoDetails?.description}
-        body={<TrainingVideoPlayerComponent />}
-      />
-
       <div className="px-6 py-8">
-        {/* Page Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 id="trainingTitle" className="text-2xl font-bold text-gray-900">
@@ -211,7 +205,6 @@ export default function TrainingVideosListColumn() {
             {myTraining.list.return_to_training}
           </Link>
         </div>
-        {/* Training Info Card */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div className="px-6 py-4">
             <div className="flex items-center justify-between">
@@ -232,10 +225,10 @@ export default function TrainingVideosListColumn() {
                     id="trainingName"
                     className="text-lg font-medium text-gray-900"
                   >
-                    JavaScript Fundamentals
+                    {training?.name}
                   </h2>
                   <p id="trainingDesc" className="text-sm text-gray-500">
-                    Learn the basics of JavaScript programming language
+                    {training?.description}
                   </p>
                 </div>
               </div>
@@ -266,8 +259,6 @@ export default function TrainingVideosListColumn() {
             </div>
           </div>
         </div>
-
-        {/* Video List */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-medium text-gray-900">
@@ -279,15 +270,15 @@ export default function TrainingVideosListColumn() {
           </div>
           <div className="p-6">
             <div className="space-y-4" id="videoList">
-              {videoList.map((video) => (
+              {training?.videos?.map((video) => (
                 <div
-                  key={video.id}
+                  key={video.videoId}
                   className="flex items-start space-x-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200"
                 >
                   <div className="flex-shrink-0">
                     <Image
-                      src={video.thumbnail}
-                      alt={video.title}
+                      src={'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg'}
+                      alt={video.name}
                       width={96}
                       height={64}
                       className="w-24 h-16 object-cover rounded-lg"
@@ -296,21 +287,15 @@ export default function TrainingVideosListColumn() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <h3 className="text-sm font-medium text-gray-900">
-                        {video.title}
+                        {video.name}
                       </h3>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
                       {video.description}
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
-                      <button
-                        onClick={() => openVideoDetails(video.id)}
-                        className="inline-flex items-center px-3 py-1 text-xs font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200"
-                      >
-                        <FontAwesomeIcon icon={faPlay} className="mr-1" />
-                        {myTraining.list.rewatch}
-                      </button>
-                      <span
+                      <TrainingVideoPlay videoDetails={video} key={video?.videoId} />
+                      {/* <span
                         className={cn(
                           "inline-flex items-center px-2 py-1 text-xs font-medium rounded-full",
                           video.status === "Completed"
@@ -327,10 +312,10 @@ export default function TrainingVideosListColumn() {
                         ) : (
                           <> {myTraining.list.in_progress}</>
                         )}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
-                  {video.status === "In Progress" && (
+                  {/* {video.status === "In Progress" && (
                     <div className="flex-shrink-0">
                       <button
                         onClick={() => watchVideo(video.id)}
@@ -343,7 +328,7 @@ export default function TrainingVideosListColumn() {
                         {myTraining.list.start_test}
                       </button>
                     </div>
-                  )}
+                  )} */}
                 </div>
               ))}
             </div>
@@ -353,3 +338,28 @@ export default function TrainingVideosListColumn() {
     </>
   );
 }
+
+export function TrainingVideoPlay({ videoDetails }: { videoDetails: IVideoListDto }) {
+  const { myTraining } = useStudentLang();
+  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  console.log("videoDetails", videoDetails);
+
+  return (
+    <>
+      <button
+        onClick={() => modalRef.current.modalOpen()}
+        className="inline-flex items-center px-3 py-1 text-xs font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200"
+      >
+        <FontAwesomeIcon icon={faPlay} className="mr-1" />
+        {myTraining.list.rewatch}
+      </button>
+
+      <UiBasicModal
+        modalRef={modalRef}
+        title={videoDetails?.name}
+        description={videoDetails?.description}
+        body={<video src={MediaServer(videoDetails?.videoUrl)} controls />}
+      />
+    </>)
+}
+

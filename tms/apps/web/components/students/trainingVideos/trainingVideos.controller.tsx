@@ -1,9 +1,9 @@
-import TrainingVideosListColumn from "./list/trainingVideos.list.column";
+import TrainingVideosListComponent from "./list/trainingVideos.list.component";
 
 function TrainingVideosController() {
   return (
     <div>
-      <TrainingVideosListColumn />
+      <TrainingVideosListComponent />
     </div>
   );
 }

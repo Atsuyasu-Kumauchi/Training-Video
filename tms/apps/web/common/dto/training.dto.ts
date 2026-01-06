@@ -1,23 +1,39 @@
 import { BaseDto, IBaseDto } from "./base.dto";
 
 export interface ITrainingsDto extends IBaseDto {
-    trainingId: string;
-    training: string;
-    register: string;
-    completion: string;
-    incomplete: string;
-    status: string;
+    trainingId: number;
+    name: string;
+    description: string;
+    videos: number[];
+    deadline: string;
+    status: boolean;
+    users: ITrainingsUserDto[];
+}
+
+export class CTrainingsDto extends BaseDto implements ITrainingsDto {
+    trainingId: number = 0;
+    userId: number = 0;
+    name: string = "";
+    description: string = "";
+    videos: number[] = [];
+    deadline: string = "";
+    status: boolean = false;
+    users: CTrainingsUserDto[] = [];
+
+    setAdditionalKey(): void {  // 
+    }
 
 }
 
+export interface ITrainingsUserDto extends IBaseDto {
+    userId: number;
+    progress: any[];
+}
 
-export class CTrainingsDto extends BaseDto implements ITrainingsDto {
-    trainingId: string = "";
-    training: string = "";
-    register: string = "";
-    completion: string = "";
-    incomplete: string = "";
-    status: string = "";
+
+export class CTrainingsUserDto extends BaseDto implements ITrainingsUserDto {
+    userId: number = 0;
+    progress: any[] = [];
 
     setAdditionalKey(): void {  // 
     }

@@ -70,7 +70,7 @@ export function useFetchList<TData>({ query, pageIndex = 0, pageSize = 1000, key
       }
     },
   });
-  const options = selectConvert<TData>(data?.data ?? [], keyName ?? { label: "", value: "" });
+  const options = keyName ? selectConvert<TData>(data?.data ?? [], keyName ?? { label: "", value: "" }) : data?.data ?? [];
   if (isLoading || isFetching) return [];
   return options as ISelectConvertProps[];
 }

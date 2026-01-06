@@ -5,6 +5,7 @@ export * from './changePassword.api';
 export * from './department.api';
 export * from './lists';
 export * from './role.api';
+export * from './student';
 export * from './tag.api';
 export * from './testCreation.api';
 export * from './training.api';

@@ -8,7 +8,7 @@ import {
   TTrainingSchema
 } from "./training.form.type";
 
-export default function TrainingFormView({ formRef, modalRef, isEdit }: TTrainingFormViewSchema) {
+export default function TrainingFormView({ formRef, modalRef, isEdit, isPending }: TTrainingFormViewSchema) {
   const { trainingList } = useLang();
 
   return (
@@ -19,7 +19,7 @@ export default function TrainingFormView({ formRef, modalRef, isEdit }: TTrainin
         placeholder={trainingList.form.trainNamePlaceholder}
       />
       <UiFormTextArea<TTrainingSchema>
-        name="desription"
+        name="description"
         label={trainingList.form.explanation}
         placeholder={trainingList.form.explanationPlaceholder}
       />
@@ -60,7 +60,7 @@ export default function TrainingFormView({ formRef, modalRef, isEdit }: TTrainin
         <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>
           {trainingList.form.cancel}
         </Button>
-        <Button type="submit"> {trainingList.form.createATraining}</Button>
+        <Button type="submit" disabled={isPending} loading={isPending} > {trainingList.form.createATraining}</Button>
       </div>
     </div>
   );
