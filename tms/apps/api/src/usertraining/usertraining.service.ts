@@ -27,14 +27,12 @@ export class UserTrainingService {
 
         queryBuilder.where("UserTraining.userTrainingId IS NOT NULL");
         if (query.userIdFilter !== undefined) queryBuilder.andWhere("UserTraining.userId = :userId", { userId: query.userIdFilter });
-        // if (query.nameFilter) queryBuilder.andWhere("UserTraining.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`UserTraining.${query.sortBy}`, query.sortDirection);
 
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
         return {
-            // data: result.map(ut => ({ ...ut.training, userId: ut.userId, progress: ut.progress })),
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
