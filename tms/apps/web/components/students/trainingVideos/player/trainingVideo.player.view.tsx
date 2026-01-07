@@ -1,11 +1,12 @@
-import VideoPlayer from "@/components/VideoPlayer";
+import BasicMediaPlayer from "./mediaPlayer/basic.mediaPlayer";
+import YoutubeMediaPlayer from "./mediaPlayer/youtube.mediaPlayer";
+import { TrainingVideoPlayerViewProps } from "./trainingVideo.player.type";
 
-export default function TrainingVideoPlayerView() {
+export default function TrainingVideoPlayerView({ videoDetails, modalRef }: TrainingVideoPlayerViewProps) {
+    if (videoDetails?.uploadType === "youtube") {
+        return <YoutubeMediaPlayer videoDetails={videoDetails} modalRef={modalRef} />;
+    }
     return (
-        <VideoPlayer
-            videoSrc="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            videoId="1"
-            title="Big Buck Bunny"
-        />
+        <BasicMediaPlayer videoDetails={videoDetails} modalRef={modalRef} />
     )
 }

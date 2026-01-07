@@ -2,7 +2,6 @@
 import { ITrainingVideosDto, IVideoListDto } from "@/common";
 import { useStudentRightBar } from "@/hooks/useStudentRightBar";
 import useStudentLang from "@/lang/students";
-import { MediaServer } from "@/tmsui";
 import {
   TUiBasicModalRef,
   UiBasicModal,
@@ -16,7 +15,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import TrainingVideoPlayerComponent from "../player/trainingVideo.player.component";
 import { TrainingVideosListSidebar } from "./trainingVideos.list.sidebar";
 
 const videoList = [
@@ -147,9 +147,14 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
   // console.log("trainingtrainingtraining", training?.videos);
 
   const { myTraining } = useStudentLang();
-  // const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { setSidebarContent } = useStudentRightBar();
-  const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<IVideoListDto | null>(null);
+
+  const handlePlayVideo = useCallback((video: IVideoListDto) => {
+    setSelectedVideo(video);
+    modalRef.current.modalOpen();
+  }, []);
 
   useEffect(() => {
     setSidebarContent(TrainingVideosListSidebar());
@@ -294,7 +299,14 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
                       {video.description}
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
-                      <TrainingVideoPlay videoDetails={video} key={video?.videoId} />
+                      <button
+                        onClick={() => handlePlayVideo(video)}
+                        className="inline-flex items-center px-3 py-1 text-xs font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200"
+                      >
+                        <FontAwesomeIcon icon={faPlay} className="mr-1" />
+                        {myTraining.list.rewatch}
+                      </button>
+
                       {/* <span
                         className={cn(
                           "inline-flex items-center px-2 py-1 text-xs font-medium rounded-full",
@@ -332,6 +344,11 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
                 </div>
               ))}
             </div>
+            <UiBasicModal
+              modalRef={modalRef}
+              title={selectedVideo?.name ?? ""}
+              body={selectedVideo ? (<TrainingVideoPlayerComponent videoDetails={selectedVideo} modalRef={modalRef} />) : null}
+            />
           </div>
         </div>
       </div>
@@ -339,27 +356,5 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
   );
 }
 
-export function TrainingVideoPlay({ videoDetails }: { videoDetails: IVideoListDto }) {
-  const { myTraining } = useStudentLang();
-  const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
-  console.log("videoDetails", videoDetails);
 
-  return (
-    <>
-      <button
-        onClick={() => modalRef.current.modalOpen()}
-        className="inline-flex items-center px-3 py-1 text-xs font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200"
-      >
-        <FontAwesomeIcon icon={faPlay} className="mr-1" />
-        {myTraining.list.rewatch}
-      </button>
-
-      <UiBasicModal
-        modalRef={modalRef}
-        title={videoDetails?.name}
-        description={videoDetails?.description}
-        body={<video src={MediaServer(videoDetails?.videoUrl)} controls />}
-      />
-    </>)
-}
 
