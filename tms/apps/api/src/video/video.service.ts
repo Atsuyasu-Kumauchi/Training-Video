@@ -101,10 +101,11 @@ export class VideoService {
         }
 
         const video = this.videoRepository.create({
-            ...createVideoDto
+            ...createVideoDto, test: { name: `Test: ${createVideoDto.name}` }
         });
 
-        return this.videoRepository.save({ ...video });
+        const { videoId } = await this.videoRepository.save({ ...video });
+        return await this.videoRepository.findOne({ where: { videoId }, relations: { test: true } }) as Video;
     }
 
     async save(id: number, video: DeepPartial<Video>) {

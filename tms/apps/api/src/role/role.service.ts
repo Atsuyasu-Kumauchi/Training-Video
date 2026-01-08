@@ -55,7 +55,7 @@ export class RoleService {
         });
 
         if (existingRole) {
-            throw new ConflictException(Messages.MSG6);
+            throw new ConflictException(Messages.DUPLICAT_ENTRY("Role"));
         }
 
         const role = this.roleRepository.create({

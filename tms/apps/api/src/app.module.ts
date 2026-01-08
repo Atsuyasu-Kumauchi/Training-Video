@@ -13,6 +13,7 @@ import { TagModule } from './tag/tag.module';
 import { VideoModule } from './video/video.module';
 import { UserTrainingModule } from './usertraining/usertraining.module';
 import { TrainingModule } from './training/training.module';
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -49,7 +50,8 @@ import { TrainingModule } from './training/training.module';
     TagModule,
     VideoModule,
     UserTrainingModule,
-    TrainingModule
+    TrainingModule,
+    TestModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],

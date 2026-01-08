@@ -4,11 +4,9 @@ import { Messages } from "src/common/constants";
 import { SortDirection } from "src/common/enums/SortDirection";
 
 export class CreateTrainingDto {
-    @IsString()
     @IsNotEmpty()
     name: string;
 
-    @IsString()
     @IsOptional()
     description?: string;
 

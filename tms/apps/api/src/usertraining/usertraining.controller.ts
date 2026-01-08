@@ -21,13 +21,13 @@ export class UserTrainingController {
 
     @Get(':id')
     async findOne(@Req() req, @Param('id') id: string) {
-        return this.userTrainingService.findOne(+id, req.user.isAdmin ? undefined : req.user.userId);
+        return await this.userTrainingService.findOne(+id, req.user.isAdmin ? undefined : req.user.userId);
     }
 
     @Post()
     @UseGuards(IsAdmin)
     async create(@Body() createTrainingDto: CreateUserTrainingDto): Promise<Training> {
-        return this.userTrainingService.create(createTrainingDto);
+        return await this.userTrainingService.create(createTrainingDto);
     }
 
     @Put(':id')

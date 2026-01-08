@@ -19,12 +19,12 @@ export class TagController {
 
     @Get(':id')
     async findOne(@Param('id') id: string): Promise<Tag> {
-        return this.tagService.findOne(+id);
+        return await this.tagService.findOne(+id);
     }
 
     @Post()
     async create(@Body() createTagtDto: CreateTagDto): Promise<Tag> {
-        return this.tagService.create(createTagtDto);
+        return await this.tagService.create(createTagtDto);
     }
 
     @Put(':id')

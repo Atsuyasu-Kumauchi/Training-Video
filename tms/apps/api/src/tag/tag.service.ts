@@ -55,7 +55,7 @@ export class TagService {
         });
 
         if (existingTag) {
-            throw new ConflictException(Messages.MSG6);
+            throw new ConflictException(Messages.DUPLICAT_ENTRY("Tag"));
         }
 
         const tag = this.tagRepository.create({

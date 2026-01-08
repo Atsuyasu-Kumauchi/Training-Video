@@ -19,12 +19,12 @@ export class RoleController {
 
     @Get(':id')
     async findOne(@Param('id') id: string): Promise<Role> {
-        return this.roleService.findOne(+id);
+        return await this.roleService.findOne(+id);
     }
 
     @Post()
     async create(@Body() createRoletDto: CreateRoleDto): Promise<Role> {
-        return this.roleService.create(createRoletDto);
+        return await this.roleService.create(createRoletDto);
     }
 
     @Put(':id')

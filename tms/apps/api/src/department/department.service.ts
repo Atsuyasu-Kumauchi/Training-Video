@@ -19,7 +19,7 @@ export class DepartmentService {
     });
 
     if (existingUser) {
-      throw new ConflictException(Messages.MSG6);
+      throw new ConflictException(Messages.DUPLICAT_ENTRY("Department"));
     }
 
     const department = this.departmentRepository.create({

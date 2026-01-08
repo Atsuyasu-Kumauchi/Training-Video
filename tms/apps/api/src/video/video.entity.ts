@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Test } from "src/test/test.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 @Entity('videos')
@@ -9,10 +10,10 @@ export class Video {
     @Column({ name: 'title', type: 'varchar' })
     name: string;
 
-    @Column({ name: 'description', type: 'text',  nullable: true })
+    @Column({ name: 'description', type: 'text', nullable: true })
     description?: string;
 
-    @Column({ name: 'test_id',  type: 'integer' })
+    @Column({ name: 'test_id', type: 'integer' })
     testId: number;
 
     @Column({ name: 'assignment_id', type: 'integer' })
@@ -41,4 +42,8 @@ export class Video {
 
     @UpdateDateColumn()
     modified: Date;
+
+    @OneToOne(() => Test, test => test.video, { cascade: true })
+    @JoinColumn({ name: "test_id" })
+    test: Test;
 }
