@@ -1,5 +1,4 @@
 "use client"
-import TrainingFormComponent from "./form/training.form.component";
 import TraningListComponent from "./list/training.list.component";
 import TrainingListFilter from "./list/training.list.filter";
 import TrainingListHeader from "./list/training.list.header";
@@ -10,7 +9,6 @@ export default function TrainingListController() {
       <TrainingListHeader />
       <TrainingListFilter />
       <TraningListComponent />
-      <TrainingFormComponent />
     </div>
   );
 }

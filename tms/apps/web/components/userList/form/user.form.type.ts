@@ -6,6 +6,7 @@ import {
   zodBoolean,
   zodInfer,
   zodNumber,
+  zodNumberRequired,
   zodObject,
   zodString,
   zodStringRequired
@@ -24,10 +25,10 @@ export const userSchema = zodObject({
   firstName: zodStringRequired(),
   lastName: zodStringRequired(),
   employeeId: zodStringRequired(),
-  roleId: zodStringRequired(),
-  departmentId: zodStringRequired(),
+  roleId: zodNumberRequired(),
+  departmentId: zodNumberRequired(),
   isReviewer: zodBoolean(),
-  userTags: zodArray(zodNumber().transform(Number)),
+  userTagIds: zodArray(zodNumber().transform(Number)),
   joinDate: zodStringRequired(),
 });
 
@@ -43,10 +44,10 @@ export const initialValues: TUserSchema = {
   firstName: "",
   lastName: "",
   employeeId: "",
-  roleId: "",
-  departmentId: "",
+  roleId: 0,
+  departmentId: 0,
   isReviewer: false,
-  userTags: [],
+  userTagIds: [],
   joinDate: "",
 };
 

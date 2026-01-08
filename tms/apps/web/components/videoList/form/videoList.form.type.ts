@@ -15,7 +15,6 @@ export const videoListSchema = zodObject({
   uploadType: zodString(),
   videoUrl: zodString(),
   fileResponse: zodObject({
-    "uploadId": zodString(),
     "fileName": zodString(),
     "playbackUrl": zodString(),
   }).optional(),
@@ -37,7 +36,6 @@ const initialValues: TVideoListSchema = {
   videoUrl: "",
   fileName: "",
   fileResponse: {
-    "uploadId": "",
     "fileName": "",
     "playbackUrl": "",
   },

@@ -2,6 +2,7 @@ import { ASSIGNMENT_LIST } from "../assignmentList.api";
 import { ASSIGNMENT_REVIEW } from "../assignmentReview.api";
 import { DEPARTMENT } from "../department.api";
 import { ROLE } from "../role.api";
+import { MY_TRAINING_LIST } from "../student";
 import { TAG } from "../tag.api";
 import { TEST_CREATION_LIST } from "../testCreation.api";
 import { TRAINING_LIST } from "../training.api";
@@ -24,6 +25,10 @@ export const ListQueryConfig = {
     TRAINING_LIST: {
         key: ["TrainingList"],
         url: `${TRAINING_LIST.LIST}`
+    },
+    MY_TRAINING_LIST: {
+        key: ["MyTrainingList"],
+        url: `${MY_TRAINING_LIST.LIST}`
     },
     TEST_CREATION_LIST: {
         key: ["TestCreationList"],

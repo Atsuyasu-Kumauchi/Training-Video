@@ -4,6 +4,7 @@ export * from './base.dto';
 export * from './changePassword.dto';
 export * from './department.dto';
 export * from './role.dto';
+export * from './student';
 export * from './tag.dto';
 export * from './testCreation.dto';
 export * from './training.dto';

@@ -23,17 +23,13 @@ export const LangTrainingList = {
     explanation: "説明", // explanation
     explanationPlaceholder: "トレーニングの説明を入力", // Enter a description of the training
     selectVideo: "動画を選択", // Select a video
-    selectVideoPlaceholder: "",
+    selectVideoPlaceholder: "動画を選択",
     selectUser: "ユーザーを選択（任意）", // Select a user (optional)
-    selectUserPlaceholder: "",
-    selectGroup: "ユーザーグループを選択（任意", //Select a user group (optional)
-    selectGroupPlaceholder: "",
+    selectUserPlaceholder: "ユーザーを選択（任意）",
     deadline: "期限", //Deadline
     deadlinePlaceholder: "",
-    tags: "タグ", //Tags
-    tagsPlaceholder: "",
     status: "ステータス", // status
-    statusPlaceholder: "",
+    statusPlaceholder: "ステータスを選択",
     cancel: "キャンセル", //cancel
     createATraining: "トレーニングを作成", //Create a training
   },

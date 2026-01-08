@@ -60,6 +60,10 @@ body {
   @apply bg-white text-black;
 }
 
+.player-modal:fullscreen .player-modal-child {
+  width: 800px;
+}
+
 
 /* #sidebar a:active{
   color: red !important;

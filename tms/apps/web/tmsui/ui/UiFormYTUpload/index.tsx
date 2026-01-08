@@ -1,7 +1,7 @@
 "use client"
 import { cn } from "@/tmsui/utility";
 import { ReactElement } from "react";
-import { Controller, FieldValues, Path } from "react-hook-form";
+import { Controller, FieldValues, Path, PathValue } from "react-hook-form";
 import { useFormContext } from "../useFormContext";
 
 /**
@@ -10,33 +10,43 @@ import { useFormContext } from "../useFormContext";
  * @example: <FontAwesomeIcon icon={faEnvelope} className="text-gray-400" />
  */
 
-export type UiFormTextProps<T extends FieldValues> = {
+export type UiFormYTUploadProps<T extends FieldValues> = {
     name: Path<T>;
+    title?: string;
     label?: string;
+    description?: string;
     required?: boolean;
     startIcon?: ReactElement;
     endIcon?: ReactElement;
     className?: string;
 } & React.ComponentPropsWithoutRef<"input">;
 
-
-export const sizeClasses = {
-    sm: "text-sm py-2 px-2",
-    md: "text-base py-5 px-5",
-    lg: "text-lg py-7 px-7",
-};
-
-
-export const UiFormInput = <T extends FieldValues>({
+export const UiFormYTUpload = <T extends FieldValues>({
     name,
+    title,
     label,
+    description,
     required,
     startIcon,
     endIcon,
     className,
     ...rest
-}: UiFormTextProps<T>) => {
-    const { control } = useFormContext<T>();
+}: UiFormYTUploadProps<T>) => {
+    const { control, setValue } = useFormContext<T>();
+
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const ytUrl = e.target.value;
+        const ytVideoDetailsResponse = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(ytUrl)}&format=json`)
+        const ytVideoDetailsData = await ytVideoDetailsResponse.json()
+        if (ytVideoDetailsData) {
+            setValue(name as Path<T>, {
+                fileName: ytVideoDetailsData.title,
+                playbackUrl: ytUrl,
+            } as PathValue<T, Path<T>>);
+        }
+    }
+
     return (
         <Controller
             name={name}
@@ -45,6 +55,9 @@ export const UiFormInput = <T extends FieldValues>({
             render={({ field, fieldState: { error } }) => {
                 return (
                     <div>
+                        <h4 className="text-lg font-medium text-gray-900 mb-4">
+                            {title}
+                        </h4>
                         {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
                         <div className="relative">
                             {startIcon && (
@@ -64,9 +77,10 @@ export const UiFormInput = <T extends FieldValues>({
                                     error && "border-red-700 focus:ring-red-600 focus:border-red-600",
                                     className
                                 )}
-                                {...field}
+                                onChange={handleFileChange}
                                 {...rest}
                             />
+                            {description && <p className="mt-2 text-sm text-gray-500">{description}</p>}
 
                             {endIcon && (
                                 <div
@@ -85,4 +99,4 @@ export const UiFormInput = <T extends FieldValues>({
     );
 };
 
-UiFormInput.displayName = "UiFormInput";
+UiFormYTUpload.displayName = "UiFormYTUpload";

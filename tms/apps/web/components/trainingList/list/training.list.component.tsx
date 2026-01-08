@@ -1,6 +1,6 @@
 import { CTrainingsDto, ListQueryConfig } from "@/common";
 import { useList } from "@/hooks/useList";
-import TrainingListView from "../training.list.view";
+import { ListTable } from "@/tmsui";
 import { trainingListColumn } from "./training.list.column";
 
 
@@ -10,7 +10,6 @@ export default function TrainingListComponent() {
     query: ListQueryConfig.TRAINING_LIST
   })
   return (
-    <TrainingListView />
-    // <ListTable {...listHook} />
+    <ListTable {...listHook} />
   )
 }
