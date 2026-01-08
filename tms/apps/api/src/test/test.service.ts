@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, Repository } from "typeorm";
+import { type DeepPartial, In, Repository } from "typeorm";
 import { Test } from "./test.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateTestDto, TestQueryDto } from "./test.dto";
@@ -42,7 +42,7 @@ export class TestService {
     }
 
     async findOne(id: number): Promise<Test> {
-        const test = await this.testRepository.findOne({ where: { testId: id } });
+        const test = await this.testRepository.findOne({ where: { testId: id }, relations: { testQuestions: true } });
 
         if (!test) {
             throw new NotFoundException(Messages.MSG10_EX('Test'));
