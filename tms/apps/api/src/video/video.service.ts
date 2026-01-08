@@ -51,7 +51,7 @@ export class VideoService {
     }
 
     async lookupVideos(videoIds: number[] = []) {
-        return await this.videoRepository.find({ where: { videoId: In(videoIds) }, relations: { test: true } });
+        return await this.videoRepository.find({ where: { videoId: In(videoIds) }, relations: { test: { testQuestions: true } } });
     }
 
     async findAll(query: VideoQueryDto) {
