@@ -21,6 +21,12 @@ export type UiFormYTUploadProps<T extends FieldValues> = {
     className?: string;
 } & React.ComponentPropsWithoutRef<"input">;
 
+function getYouTubeVideoID(url: string) {
+    const regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    const match = url.match(regex);
+    return (match && match[7].length === 11) ? match[7] : null;
+}
+
 export const UiFormYTUpload = <T extends FieldValues>({
     name,
     title,
@@ -40,9 +46,10 @@ export const UiFormYTUpload = <T extends FieldValues>({
         const ytVideoDetailsResponse = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(ytUrl)}&format=json`)
         const ytVideoDetailsData = await ytVideoDetailsResponse.json()
         if (ytVideoDetailsData) {
+            const videoId = getYouTubeVideoID(ytUrl);
             setValue(name as Path<T>, {
                 fileName: ytVideoDetailsData.title,
-                playbackUrl: ytUrl,
+                playbackUrl: videoId,
             } as PathValue<T, Path<T>>);
         }
     }
@@ -52,7 +59,7 @@ export const UiFormYTUpload = <T extends FieldValues>({
             name={name}
             defaultValue={undefined}
             control={control}
-            render={({ field, fieldState: { error } }) => {
+            render={({ fieldState: { error } }) => {
                 return (
                     <div>
                         <h4 className="text-lg font-medium text-gray-900 mb-4">

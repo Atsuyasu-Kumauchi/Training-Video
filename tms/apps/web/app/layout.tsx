@@ -27,10 +27,8 @@ type IRootLayout = {
 
 export default function RootLayout({ children }: Readonly<IRootLayout>) {
   return (
-    <html lang="en">
-      <body
-        className={`${getInter.className}  antialiased`}
-      >
+    <html lang="en" suppressHydrationWarning className="translated-ltr">
+      <body className={`${getInter.className}  antialiased`}  >
         <TanStackQueryClientProvider >
           {children}
         </TanStackQueryClientProvider>

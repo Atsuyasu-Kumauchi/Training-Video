@@ -10,5 +10,6 @@ export * from './UiFormSelect';
 export * from './UiFormSelect2';
 export * from './UiFormTextArea';
 export * from './UiFormYTUpload';
+export * from './UiHeadLessModal';
 export * from './useFormContext';
 

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 const AssignmentReviewController = dynamic(() => import('@/components/assignmentReview/assignmentReview.controller'))
 
 export const metadata: Metadata = {
@@ -8,6 +9,8 @@ export const metadata: Metadata = {
 
 export default function AssignmentReviewPage() {
     return (
-        <AssignmentReviewController />
+        <Suspense fallback={<div>Loading...</div>}>
+            <AssignmentReviewController />
+        </Suspense>
     )
 }

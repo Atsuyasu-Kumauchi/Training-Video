@@ -1,5 +1,5 @@
 "use client";
-import { ITrainingVideosDto, IVideoListDto } from "@/common";
+import { IStudentTrainingVideosDto, ITrainingVideosDto } from "@/common";
 import { useStudentRightBar } from "@/hooks/useStudentRightBar";
 import useStudentLang from "@/lang/students";
 import {
@@ -130,28 +130,18 @@ const videoList = [
   },
 ];
 
-interface VideoDetails {
-  title: string;
-  description: string;
-  duration: string;
-  status: string;
-  thumbnail: string;
-  videoUrl: string;
-}
-
 interface TrainingVideosListColumnProps {
   training: ITrainingVideosDto;
 }
 
 export default function TrainingVideosListColumn({ training }: TrainingVideosListColumnProps) {
-  // console.log("trainingtrainingtraining", training?.videos);
 
   const { myTraining } = useStudentLang();
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { setSidebarContent } = useStudentRightBar();
-  const [selectedVideo, setSelectedVideo] = useState<IVideoListDto | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<IStudentTrainingVideosDto | null>(null);
 
-  const handlePlayVideo = useCallback((video: IVideoListDto) => {
+  const handlePlayVideo = useCallback((video: IStudentTrainingVideosDto) => {
     setSelectedVideo(video);
     modalRef.current.modalOpen();
   }, []);
@@ -344,6 +334,7 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
                 </div>
               ))}
             </div>
+
             <UiBasicModal
               modalRef={modalRef}
               title={selectedVideo?.name ?? ""}

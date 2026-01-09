@@ -1,10 +1,9 @@
 import { IStudentTrainingVideosDto } from "@/common";
-import { TUiBasicModalRef } from "@/tmsui";
+import { TUiBasicModalRef, TUiHeadLessModalRef } from "@/tmsui";
 import { RefObject } from "react";
 
-export interface TrainingVideoPlayerComponentProps {
+export interface TMediaPlayerProps {
     videoDetails: IStudentTrainingVideosDto;
     modalRef: RefObject<TUiBasicModalRef>;
+    questionModalRef: RefObject<TUiHeadLessModalRef>;
 }
-export type TrainingVideoPlayerViewProps = TrainingVideoPlayerComponentProps
-

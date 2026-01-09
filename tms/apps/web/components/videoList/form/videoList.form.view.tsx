@@ -17,7 +17,7 @@ import {
   videoStatus
 } from "./videoList.form.type";
 
-export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoListFormViewSchema) {
+export default function VideoListFormView({ formRef, modalRef, isEdit, isPending }: TVideoListFormViewSchema) {
   const { setIsOpen } = useSettings();
   const { videoList } = useLang();
   const { formState: { errors }, control } = useFormContext<TVideoListSchema>();
@@ -148,7 +148,7 @@ export default function VideoListFormView({ formRef, modalRef, isEdit }: TVideoL
           >
             {videoList.form.cancle}
           </Button>
-          <Button type="submit"> {videoList.form.addVideo}</Button>
+          <Button type="submit" disabled={isPending} loading={isPending}> {videoList.form.addVideo}</Button>
         </div>
       </div>
     </Fragment>

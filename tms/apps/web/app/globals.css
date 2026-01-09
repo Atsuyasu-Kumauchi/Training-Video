@@ -60,6 +60,24 @@ body {
   @apply bg-white text-black;
 }
 
+.player-modal:fullscreen .player-modal-child-fullscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.player-modal:fullscreen .fullbutton {
+  bottom: 40px !important;
+  right: 102px !important;
+}
+
+.player-modal:fullscreen .fullbutton svg {
+  width: 20px !important;
+  height: 20px !important;
+  color: #ffffff4f
+}
+
 .player-modal:fullscreen .player-modal-child {
   width: 800px;
 }

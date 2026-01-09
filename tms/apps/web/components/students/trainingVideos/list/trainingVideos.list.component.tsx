@@ -8,7 +8,7 @@ import TrainingVideosListColumn from "./trainingVideos.list.column";
 export default function TrainingVideosListComponent() {
   const { id } = useParams<{ id: string }>()
   const { data: training } = useQuery({
-    queryKey: ["training-videos"],
+    queryKey: ["training-videos", id],
     queryFn: () => {
       return AuthServer({
         method: "GET",

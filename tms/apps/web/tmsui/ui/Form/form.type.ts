@@ -1,5 +1,4 @@
 import { zodInfer } from "@/tmsui/zodValidation";
-// import { UseEditStore } from "@repo/base/store";
 import { ComponentPropsWithoutRef, ReactNode, Ref } from "react";
 import { Control, FieldValues, FormState, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { ZodType } from "zod";
@@ -16,6 +15,7 @@ export type TUiFormRef<T extends FieldValues> = {
     trigger: UseFormReturn<T>["trigger"];
 };
 
+
 export type TFormHandlerSubmit<T> = SubmitHandler<T>
 
 export type TUiFormProps<TSchema extends ZodType<FieldValues>> = {
@@ -24,5 +24,4 @@ export type TUiFormProps<TSchema extends ZodType<FieldValues>> = {
     onSubmit: SubmitHandler<zodInfer<TSchema>>;
     children: ReactNode;
     ref: Ref<TUiFormRef<zodInfer<TSchema>>>;
-    // editStore?: UseEditStore<T>;
-} & ComponentPropsWithoutRef<"form">;
+} & Omit<ComponentPropsWithoutRef<"form">, "onSubmit">;

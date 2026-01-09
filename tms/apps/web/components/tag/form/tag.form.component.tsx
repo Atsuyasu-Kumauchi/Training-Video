@@ -6,7 +6,6 @@ import { defaultValues, tagSchema, TTagFormComponentSchema, TTagSchema } from ".
 import TagFormView from "./tag.form.view";
 
 export default function TagFormComponent({ isEdit, editData, modalRef }: TTagFormComponentSchema) {
-
   const formRef = useRef<TUiFormRef<TTagSchema>>(null);
   const tagMutation = useMutation({
     mutationKey: isEdit ? ["tag-update"] : ["tag-create"],
@@ -27,6 +26,7 @@ export default function TagFormComponent({ isEdit, editData, modalRef }: TTagFor
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.TAG_LIST.key });
     },
   });
+
   const onSubmitHandler: TFormHandlerSubmit<TTagSchema> = (value) => {
     tagMutation.mutate(value as TTagSchema);
   };

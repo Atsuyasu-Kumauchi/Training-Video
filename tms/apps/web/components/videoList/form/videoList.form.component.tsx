@@ -36,11 +36,8 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
   });
 
   const onSubmit: TFormHandlerSubmit<TVideoListSchema> = (value) => {
-    console.log(value);
-
     const modifiedValue = {
       ...value,
-      testId: 1,
       fileName: value.fileResponse?.fileName,
       videoUrl: value.fileResponse?.playbackUrl,
     };
@@ -55,7 +52,7 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
       onSubmit={onSubmit}
       ref={formRef}
     >
-      <VideoListFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} />
+      <VideoListFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} isPending={videoListMutation.isPending} />
     </UiForm>
   );
 }

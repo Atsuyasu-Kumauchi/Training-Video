@@ -4,7 +4,7 @@ import { pickFormData, TFormComponentSchema, TFormViewSchema, zodBooleanRequired
 export type TTagFormComponentSchema = TFormComponentSchema<TTagSchema> & {
   isEdit: boolean;
   editData?: ITagDto;
-  isPending: boolean;
+  isPending?: boolean;
 }
 
 export type TTagFormViewSchema = TFormViewSchema<TTagSchema>
@@ -15,6 +15,7 @@ export const tagSchema = zodObject({
 });
 
 export type TTagSchema = zodInfer<typeof tagSchema>;
+
 export const tagKeys = Object.keys(tagSchema.shape) as (keyof zodInfer<typeof tagSchema>)[];
 
 export const initialValues = {
