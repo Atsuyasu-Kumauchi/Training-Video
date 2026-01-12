@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { type DeepPartial, In, Repository } from "typeorm";
-import { Test } from "./test.entity";
+import { Test, TestQuestion } from "./test.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateTestDto, TestQueryDto } from "./test.dto";
 import { Messages } from "src/common/constants";
@@ -11,7 +11,8 @@ import { Messages } from "src/common/constants";
 export class TestService {
 
     constructor(
-        @InjectRepository(Test) private readonly testRepository: Repository<Test>
+        @InjectRepository(Test) private readonly testRepository: Repository<Test>,
+        @InjectRepository(TestQuestion) private readonly testQuestionRepository: Repository<TestQuestion>
     ) { }
 
     async findAll(query: TestQueryDto) {
@@ -68,8 +69,9 @@ export class TestService {
     }
 
     async save(id: number, test: DeepPartial<Test>) {
-        test.testQuestions?.forEach(tq => tq.testId = id);
         await this.testRepository.existsBy({ testId: id }) || throwSe(NotFoundException, "Test not found");
+        test.testQuestions?.forEach(tq => tq.testId = id);
+        await this.testQuestionRepository.delete({ testId: id });
         return await this.testRepository.save({ ...test, testId: id });
     }
 
