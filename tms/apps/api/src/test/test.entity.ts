@@ -23,6 +23,7 @@ export class Test {
   modified: Date;
 
   @OneToMany(_ => TestQuestion, tq => tq.test, { cascade: true })
+  @JoinColumn()
   testQuestions: TestQuestion[];
 
   @OneToOne(() => Video, video => video.test)
@@ -31,7 +32,7 @@ export class Test {
 
 @Entity('test_questions')
 export class TestQuestion {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: "test_question_id" })
   testQuestionId: number;
 
   @Column({ name: "test_id", type: "integer" })
@@ -53,5 +54,6 @@ export class TestQuestion {
   modified: Date;
 
   @ManyToOne(_ => Test, t => t.testQuestions)
+  @JoinColumn({ name: "test_id" })
   test: Test;
 }
