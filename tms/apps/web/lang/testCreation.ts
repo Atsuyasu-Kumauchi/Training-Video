@@ -36,6 +36,8 @@ export const LangTestCreation = {
     questionPlaceholder: "質問文を入力", //Enter your question
     questionType: "質問タイプ *", //Question Type *
     questionTypePlaceholder: "質問タイプを選択", //Select a question type
+    choices: "選択肢", //Choices
+    option: " 選択肢 ", //Option
 
     cancel: "キャンセル", //cancel
     createATest: "テストを作成", //create a test

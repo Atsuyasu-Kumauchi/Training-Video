@@ -8,12 +8,13 @@ import {
 
 export const createTestSchema = zodObject({
   name: zodStringRequired(),
-  explanation: zodString(),
+  description: zodString(),
   status: zodStringRequired(),
-  questions: zodArray(
+  testQuestions: zodArray(
     zodObject({
-      questionText: zodStringRequired(),
-      questionType: zodStringRequired(),
+      question: zodStringRequired(),
+      options: zodArray(zodStringRequired()).length(4), // always 4 options
+      correctOption: zodStringRequired(), // "A", "B", "C", "D"
     })
   ),
 });
@@ -22,12 +23,13 @@ export type TCreateTestSchema = zodInfer<typeof createTestSchema>;
 
 export const initialValues: TCreateTestSchema = {
   name: "",
-  status: "",
-  explanation: "",
-  questions: [
+  status: "Draft",
+  description: "",
+  testQuestions: [
     {
-      questionText: "",
-      questionType: "",
+      question: "",
+      options: ["", "", "", ""], // 4 empty options
+      correctOption: "A", // default
     },
   ],
 };

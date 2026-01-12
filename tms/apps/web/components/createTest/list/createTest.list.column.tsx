@@ -83,7 +83,6 @@ export const CreateTestEdit = (createTest: ITestCreationDto) => {
   const navigate = useRouter();
   const handleEdit = () => {
     navigate.push(`/admin/create-test/add-test/${createTest.testId}`);
-    console.log("test", createTest);
   };
 
   return (
