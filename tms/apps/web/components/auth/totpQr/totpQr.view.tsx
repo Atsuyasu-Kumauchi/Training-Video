@@ -1,14 +1,14 @@
 import { AUTH } from "@/common";
 import useLang from "@/lang";
 import { AuthServer, Button, cn, UiFormInput } from "@/tmsui";
-import { faGraduationCap, fas, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faGraduationCap, fas, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { TotpQrSchema, TTotpQrViewSchema } from "./totpQr.type";
 
 export default function TotpQrView(props: TTotpQrViewSchema) {
-    const { isPending, isResetPwd } = props;
+    const { isPending, isResetPwd, errorMessage } = props;
     const { auth: { login } } = useLang();
 
     // Only fetch the QR if isResetPwd is true
@@ -56,6 +56,17 @@ export default function TotpQrView(props: TTotpQrViewSchema) {
                         <span>{login.submit}</span>
                     </Button>
                 </div>
+                {props.isError && (
+                    <div id="loginError" className="bg-red-50 border border-red-200 rounded-lg p-3 mt-4">
+                        <div className="flex">
+                            <FontAwesomeIcon icon={faExclamationCircle} className="text-red-400 mr-2 mt-0.5" />
+                            <div>
+                                <h3 className="text-sm font-medium text-red-800">ログイン失敗</h3>
+                                <p id="errorMessage" className="text-sm text-red-700 mt-1" >{props.errorMessage}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
