@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react/jsx-runtime";
 import { TCreateTestSchema } from "./createTest.form.type";
 
-export default function CreateTestFormView() {
+export default function EditTestFormView() {
   const { testCreation } = useLang();
   return (
     <>
@@ -20,10 +20,10 @@ export default function CreateTestFormView() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900" id="pageTitle">
-              {testCreation.form.title}
+              {testCreation.form.editTitle}
             </h2>
             <p className="text-gray-600 mt-1" id="pageDescription">
-              {testCreation.form.subTitle}
+              {testCreation.form.editsubTitle}
             </p>
           </div>
         </div>
@@ -45,15 +45,6 @@ export default function CreateTestFormView() {
                   required
                 />
               </div>
-              {/* <div>
-                <UiFormSelect<TCreateTestSchema> name="category" label={testCreation.form.category} placeholder={testCreation.form.categoryPlaceholder} options={[
-                  { value: "Programming", label: "プログラミング" },
-                  { value: "Leadership", label: "リーダーシップ" },
-                  { value: "Safety", label: "安全" },
-                  { value: "Communication", label: "コミュニケーション" },
-                  { value: "Compliance", label: "コンプライアンス" },
-                ]} required />
-              </div> */}
               <div>
                 <UiFormTextArea<TCreateTestSchema>
                   name="explanation"
@@ -164,7 +155,7 @@ export default function CreateTestFormView() {
                 <Button type="button" color="neutral">
                   {testCreation.form.cancel}
                 </Button>
-                <Button type="submit">{testCreation.form.createATest}</Button>
+                <Button type="submit">{testCreation.form.updateTest}</Button>
               </div>
             </div>
           </div>

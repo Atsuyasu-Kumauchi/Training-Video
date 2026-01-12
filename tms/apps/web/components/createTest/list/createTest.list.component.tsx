@@ -1,16 +1,21 @@
 import { CTestCreationDto, ListQueryConfig } from "@/common";
 import { useList } from "@/hooks/useList";
-import CreateTestView from "../createTest.view";
+import { ListTable } from "@/tmsui";
+import { useSearchParams } from "next/navigation";
 import { createTestListColumn } from "./createTest.list.column";
 
-
 export default function CreateTestListComponent() {
+  const searchParams = useSearchParams();
   const listHook = useList<CTestCreationDto>({
     columns: createTestListColumn,
-    query: ListQueryConfig.TEST_CREATION_LIST
-  })
+    query: ListQueryConfig.TEST_CREATION_LIST,
+    filters: {
+      statusFilter: searchParams.get("statusFilter"),
+      simplenameFilter: searchParams.get("simplenameFilter"),
+    },
+  });
   return (
-    <CreateTestView />
-    // <ListTable {...listHook} />
-  )
+    // <CreateTestView />
+    <ListTable {...listHook} />
+  );
 }

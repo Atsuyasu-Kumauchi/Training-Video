@@ -1,18 +1,19 @@
 import { BaseDto, IBaseDto } from "./base.dto";
 
 export interface ITestCreationDto extends IBaseDto {
-    test: string;
-    category: string
-    status: string
+  testId: number;
+  name: string;
+  description: string;
+  status: string;
 }
 
-
 export class CTestCreationDto extends BaseDto implements ITestCreationDto {
-    test: string = "";
-    category: string = "";
-    status: string = "";
+  testId: number = 0;
+  name: string = "";
+  description: string = "";
+  status: string = "";
 
-    setAdditionalKey(): void {  // 
-    }
-
+  setAdditionalKey(): void {
+    //
+  }
 }

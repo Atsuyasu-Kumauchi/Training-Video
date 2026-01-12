@@ -1,9 +1,13 @@
-"use client"
+"use client";
 import { UiForm } from "@/tmsui/ui/Form/Form";
 import { TFormHandlerSubmit, TUiFormRef } from "@/tmsui/ui/Form/form.type";
 import { useRef } from "react";
-import { createTestSchema, initialValues, TCreateTestSchema } from "./createTest.form.type";
-import CreateTestFormView from "./createTest.form.view";
+import {
+  createTestSchema,
+  initialValues,
+  TCreateTestSchema,
+} from "./createTest.form.type";
+import EditTestFormView from "./editTest.form.view";
 
 export default function CreateTestFormComponent() {
   const formRef = useRef<TUiFormRef<TCreateTestSchema>>(null);
@@ -19,8 +23,8 @@ export default function CreateTestFormComponent() {
       onSubmit={onSubmitHandler}
       ref={formRef}
     >
-      <CreateTestFormView />
-
+      {/* <CreateTestFormView /> */}
+      <EditTestFormView />
     </UiForm>
-  )
+  );
 }
