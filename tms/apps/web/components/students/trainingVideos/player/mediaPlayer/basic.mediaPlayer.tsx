@@ -1,11 +1,17 @@
 import { cn, MediaServer, UiHeadLessModal } from "@/tmsui";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import QuestionComponent from "../question/question.component";
 import { TMediaPlayerProps } from "./mediaPlayer.type";
 
 export default function BasicMediaPlayer({ videoDetails, modalRef, questionModalRef }: TMediaPlayerProps) {
+
+    useEffect(() => {
+        setTimeout(() => {
+            questionModalRef.current.modalOpen();
+        }, 2000);
+    }, []);
 
     const [isFullscreen, setIsFullscreen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);

@@ -107,11 +107,11 @@ export default function YoutubeMediaPlayer({ videoDetails, modalRef, questionMod
         }
     };
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         questionModalRef.current.modalOpen();
-    //     }, 2000);
-    // }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            questionModalRef.current.modalOpen();
+        }, 2000);
+    }, []);
 
     return (
         <div className="space-y-4">
