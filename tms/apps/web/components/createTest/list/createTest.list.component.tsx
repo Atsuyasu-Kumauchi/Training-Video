@@ -11,7 +11,7 @@ export default function CreateTestListComponent() {
     query: ListQueryConfig.TEST_CREATION_LIST,
     filters: {
       statusFilter: searchParams.get("statusFilter"),
-      simplenameFilter: searchParams.get("simplenameFilter"),
+      nameFilter: searchParams.get("nameFilter"),
     },
   });
   return (
