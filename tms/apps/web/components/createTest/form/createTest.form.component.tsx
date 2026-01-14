@@ -1,10 +1,11 @@
 "use client";
-import { TEST_CREATION_LIST } from "@/common";
+import { ListQueryConfig, TEST_CREATION_LIST } from "@/common";
 import { AuthServer } from "@/tmsui";
 import { UiForm } from "@/tmsui/ui/Form/Form";
 import { TFormHandlerSubmit, TUiFormRef } from "@/tmsui/ui/Form/form.type";
 import { useParams, useRouter } from "next/navigation";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
   createTestSchema,
@@ -14,9 +15,10 @@ import {
 import EditTestFormView from "./editTest.form.view";
 
 export default function CreateTestFormComponent() {
-  const navigate = useRouter();
+  const router = useRouter();
   const formRef = useRef<TUiFormRef<TCreateTestSchema>>(null);
   const { id } = useParams<{ id: string }>();
+  const queryClient = useQueryClient();
 
   const onSubmitHandler: TFormHandlerSubmit<TCreateTestSchema> = async (
     value
@@ -31,7 +33,7 @@ export default function CreateTestFormComponent() {
       testId: Number(id),
       name: value.name,
       description: value.description,
-      status: value.status === "Active", // boolean
+      status: value.status, // boolean
       testQuestions: value.testQuestions.map((q) => ({
         question: q.question,
         options: q.options,
@@ -47,11 +49,15 @@ export default function CreateTestFormComponent() {
         url: TEST_CREATION_LIST.UPDATE(id),
         data: payload,
       });
+
       if (res?.status === 200) {
-        console.log("success");
-        navigate.push(`/admin/create-test`);
+        await queryClient.invalidateQueries({
+          queryKey: [ListQueryConfig.TEST_CREATION_LIST],
+        });
+        router.refresh();
+        router.push(`/admin/create-test?refresh=${Date.now()}`);
       }
-    } catch (error: unknown) {
+    } catch (error) {
       console.log(error);
     }
   };

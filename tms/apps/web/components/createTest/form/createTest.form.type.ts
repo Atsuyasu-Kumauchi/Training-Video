@@ -1,15 +1,17 @@
 import {
   zodArray,
+  zodBoolean,
   zodInfer,
   zodObject,
   zodString,
   zodStringRequired,
 } from "@/tmsui";
+import z from "zod";
 
 export const createTestSchema = zodObject({
   name: zodStringRequired(),
   description: zodString(),
-  status: zodStringRequired(),
+  status: z.preprocess((val) => val === true || val === "true", zodBoolean()),
   testQuestions: zodArray(
     zodObject({
       question: zodStringRequired(),
@@ -23,7 +25,7 @@ export type TCreateTestSchema = zodInfer<typeof createTestSchema>;
 
 export const initialValues: TCreateTestSchema = {
   name: "",
-  status: "Draft",
+  status: true,
   description: "",
   testQuestions: [
     {
@@ -33,3 +35,8 @@ export const initialValues: TCreateTestSchema = {
     },
   ],
 };
+
+export const status = [
+  { label: "アクティブ", value: true },
+  { label: "非アクティブ", value: false },
+];

@@ -27,14 +27,6 @@ export const createTestListColumn: TListColumnDef<CTestCreationDto>[] = [
       );
     },
   },
-  //   {
-  //     accessorKey: "category",
-  //     enableHiding: false,
-  //     header: () => list.category,
-  //     cell: (ctx) => {
-  //       return <div></div>;
-  //     },
-  //   },
   {
     accessorKey: "status",
     enableHiding: false,
@@ -80,9 +72,9 @@ export const CreateTestView = (createTest: ITestCreationDto) => {
 };
 
 export const CreateTestEdit = (createTest: ITestCreationDto) => {
-  const navigate = useRouter();
+  const router = useRouter();
   const handleEdit = () => {
-    navigate.push(`/admin/create-test/add-test/${createTest.testId}`);
+    router.push(`/admin/create-test/add-test/${createTest.testId}`);
   };
 
   return (

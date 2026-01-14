@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { TCreateTestSchema } from "./createTest.form.type";
+import { status, TCreateTestSchema } from "./createTest.form.type";
 
 export default function EditTestFormView({
   setFormValues,
@@ -22,18 +22,21 @@ export default function EditTestFormView({
   setFormValues: (values: TCreateTestSchema) => void;
 }) {
   const { id } = useParams<{ id: string }>();
+
   const { testCreation } = useLang();
 
   const { data: testEditData } = useQuery({
     queryKey: ["createTest-edit", id],
-    queryFn: () => {
-      return AuthServer({
+    queryFn: () =>
+      AuthServer({
         method: "GET",
         url: TEST_CREATION_LIST.FIND_BY_ID(id),
-      });
-    },
+      }),
+    enabled: !!id,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: false,
+    staleTime: 0,
   });
-  console.log("testEditData", testEditData?.data);
 
   // Map backend data → form values
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function EditTestFormView({
     const mapped: TCreateTestSchema = {
       name: apiData.name || "",
       description: apiData.description || "",
-      status: apiData.status ? "Active" : "Draft",
+      status: Boolean(apiData.status),
       testQuestions: apiData.testQuestions?.map(
         (q: {
           question: string;
@@ -112,13 +115,9 @@ export default function EditTestFormView({
                 <UiFormSelect<TCreateTestSchema>
                   name="status"
                   label={testCreation.form.status}
-                  placeholder={testCreation.form.statusPlaceholder}
-                  options={[
-                    { value: "Active", label: "アクティブ" },
-                    { value: "Draft", label: "下書き" },
-                    { value: "Archived", label: "アーカイブ済み" },
-                  ]}
+                  options={status}
                   required
+                  placeholder={testCreation.form.statusPlaceholder}
                 />
               </div>
             </div>
@@ -197,13 +196,6 @@ export default function EditTestFormView({
                                   key={oIndex}
                                   className="flex items-center space-x-2"
                                 >
-                                  {/* <input
-                                    type="radio"
-                                    name={`questions.${index}.correctOption`}
-                                    value={opt}
-                                    defaultChecked={item.correctOption === opt}
-                                    required
-                                  /> */}
                                   <UiFormInput<TCreateTestSchema>
                                     type="radio"
                                     name={`testQuestions.${index}.correctOption`}
