@@ -1,11 +1,14 @@
 "use client";
 import { ListQueryConfig, TEST_CREATION_LIST } from "@/common";
-import { AuthServer } from "@/tmsui";
-import { UiForm } from "@/tmsui/ui/Form/Form";
-import { TFormHandlerSubmit, TUiFormRef } from "@/tmsui/ui/Form/form.type";
+import {
+  AuthServer,
+  queryClient,
+  TFormHandlerSubmit,
+  TUiFormRef,
+  UiForm,
+} from "@/tmsui";
+import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-
-import { useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
   createTestSchema,
@@ -18,48 +21,46 @@ export default function CreateTestFormComponent() {
   const router = useRouter();
   const formRef = useRef<TUiFormRef<TCreateTestSchema>>(null);
   const { id } = useParams<{ id: string }>();
-  const queryClient = useQueryClient();
 
-  const onSubmitHandler: TFormHandlerSubmit<TCreateTestSchema> = async (
-    value
-  ) => {
-    const optionMap: Record<string, number> = {
-      A: 1,
-      B: 2,
-      C: 3,
-      D: 4,
-    };
-    const payload = {
-      testId: Number(id),
-      name: value.name,
-      description: value.description,
-      status: value.status, // boolean
-      testQuestions: value.testQuestions.map((q) => ({
-        question: q.question,
-        options: q.options,
-        correctOption: optionMap[q.correctOption], // 1–4
+  const testMutation = useMutation({
+    mutationKey: ["test-update", id],
+    mutationFn: async (value: TCreateTestSchema) => {
+      const optionMap: Record<string, number> = { A: 1, B: 2, C: 3, D: 4 };
+      const payload = {
         testId: Number(id),
-      })),
-    };
-    console.log("FINAL PAYLOAD", payload);
+        name: value.name,
+        description: value.description,
+        status: value.status,
+        testQuestions: value.testQuestions.map((q) => ({
+          question: q.question,
+          options: q.options,
+          correctOption: optionMap[q.correctOption],
+          testId: Number(id),
+        })),
+      };
 
-    try {
-      const res = await AuthServer({
+      return AuthServer({
         method: "PUT",
         url: TEST_CREATION_LIST.UPDATE(id),
         data: payload,
       });
+    },
+    onSuccess: async () => {
+      formRef.current?.reset();
+      router.push("/admin/create-test");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ListQueryConfig.TEST_CREATION_LIST.key,
+      });
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
-      if (res?.status === 200) {
-        await queryClient.invalidateQueries({
-          queryKey: [ListQueryConfig.TEST_CREATION_LIST],
-        });
-        router.refresh();
-        router.push(`/admin/create-test?refresh=${Date.now()}`);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmitHandler: TFormHandlerSubmit<TCreateTestSchema> = (value) => {
+    testMutation.mutate(value);
   };
 
   // Updated setFormValues using setValue for each key
