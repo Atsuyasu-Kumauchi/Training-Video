@@ -94,50 +94,24 @@ type Props = {
     onClose: () => void;
 };
 
-export default function QuestionView({ questionModalRef, test }: QuestionViewProps) {
+export default function QuestionView({ questionModalRef, test, submitAnswer, activeQuestion, activeQuestionIndex }: QuestionViewProps) {
     const questions = test?.testQuestions ?? [];
-
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-    const currentQuestion = questions[currentIndex];
     const total = questions.length;
 
     const progressPercent = useMemo(() => {
         if (!total) return 0;
-        return ((currentIndex + 1) / total) * 100;
-    }, [currentIndex, total]);
+        return ((activeQuestionIndex + 1) / total) * 100;
+    }, [activeQuestionIndex, total]);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
         if (selectedIndex === null) return;
-
-        const isCorrect =
-            selectedIndex === currentQuestion.correctOption - 1;
-
-        if (!isCorrect) {
-            alert("不正解です");
-            return;
-        }
-
-        if (currentIndex + 1 < total) {
-            setCurrentIndex((i) => i + 1);
-            setSelectedIndex(null);
-        } else {
-            alert("全問完了");
-            questionModalRef.current?.modalClose();
-        }
+        const isCorrect = activeQuestion.correctOption === selectedIndex + 1;
+        submitAnswer(isCorrect);
     };
 
-    const handleSkip = () => {
-        if (currentIndex + 1 < total) {
-            setCurrentIndex((i) => i + 1);
-            setSelectedIndex(null);
-        } else {
-            questionModalRef.current?.modalClose();
-        }
-    };
-
-    if (!currentQuestion) return null;
+    if (!activeQuestion) return null;
 
     return (
         <div className={cn("bg-black/70 rounded-lg border-3 border-gray-500 h-full w-full p-2 player-modal-child-fullscreen absolute overflow-y-auto scrollbar-none hover:scrollbar-thin top-0 left-0 z-50")}>
@@ -147,9 +121,9 @@ export default function QuestionView({ questionModalRef, test }: QuestionViewPro
                     <h3 className="text-xl font-bold">{test.name}</h3>
                     <div className="flex items-center space-x-3">
                         <span className="bg-primary-100 px-3 py-1 rounded-full text-sm">
-                            質問 {currentIndex + 1} / {total}
+                            質問 {activeQuestionIndex + 1} / {total}
                         </span>
-                        <button onClick={() => questionModalRef.current?.modalClose()}>
+                        <button type="button" onClick={() => questionModalRef.current?.modalClose()}>
                             <FontAwesomeIcon icon={faTimes} className="text-xl" />
                         </button>
                     </div>
@@ -157,30 +131,30 @@ export default function QuestionView({ questionModalRef, test }: QuestionViewPro
 
                 {/* Question */}
                 <h4 className="text-lg font-medium mb-4">
-                    {currentQuestion.question}
+                    {activeQuestion.question}
                 </h4>
 
                 {/* Options */}
                 <div className="space-y-3">
-                    {currentQuestion.options.map((option, idx) => (
-                        <label
-                            key={idx}
-                            className={`flex items-center p-4 border-2 rounded-lg cursor-pointer
-                ${selectedIndex === idx
+                    {activeQuestion?.options?.map((option, idx) => {
+                        return (
+                            <label
+                                key={idx}
+                                className={`flex items-center p-4 border-2 rounded-lg cursor-pointer ${selectedIndex === idx
                                     ? "border-primary-500 bg-primary-50"
                                     : "border-gray-200"
-                                }`}
-                        >
-                            <input
-                                type="radio"
-                                name="question"
-                                checked={selectedIndex === idx}
-                                onChange={() => setSelectedIndex(idx)}
-                                className="h-5 w-5"
-                            />
-                            <span className="ml-4">{option}</span>
-                        </label>
-                    ))}
+                                    }`}
+                            >
+                                <input
+                                    type="radio"
+                                    name="question"
+                                    onChange={() => setSelectedIndex(idx)}
+                                    className="h-5 w-5"
+                                />
+                                <span className="ml-4">{option}</span>
+                            </label>
+                        )
+                    })}
                 </div>
 
                 {/* Progress */}
@@ -197,17 +171,13 @@ export default function QuestionView({ questionModalRef, test }: QuestionViewPro
                         正しく回答して視聴を続ける
                     </span>
                     <div className="flex space-x-3">
-                        <button
+                        {/* <button
                             onClick={handleSkip}
                             className="px-6 py-2 bg-gray-300 rounded-lg"
                         >
                             問題をスキップ
-                        </button>
-                        <button
-                            onClick={handleSubmit}
-                            disabled={selectedIndex === null}
-                            className="px-6 py-2 bg-primary-600 text-white rounded-lg disabled:opacity-50"
-                        >
+                        </button> */}
+                        <button type="button" onClick={(e) => handleSubmit(e)} disabled={selectedIndex === null} className="px-6 py-2 bg-primary-600 text-white rounded-lg disabled:opacity-50">
                             回答を提出
                         </button>
                     </div>

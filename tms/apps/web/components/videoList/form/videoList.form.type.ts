@@ -5,7 +5,9 @@ export type TVideoListFormComponentSchema = TFormComponentSchema<TVideoListSchem
   editData?: Partial<IVideoListDto>;
 }
 
-export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema>
+export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema> & {
+  editData?: Partial<IVideoListDto>;
+}
 
 export const videoListSchema = zodObject({
   name: zodStringRequired(),
@@ -15,8 +17,8 @@ export const videoListSchema = zodObject({
   uploadType: zodString(),
   videoUrl: zodString(),
   fileResponse: zodObject({
-    "fileName": zodString(),
-    "playbackUrl": zodString(),
+    fileName: zodString(),
+    playbackUrl: zodString(),
   }).optional(),
   fileName: zodString(),
   fileDirectory: zodString(),
@@ -36,8 +38,8 @@ const initialValues: TVideoListSchema = {
   videoUrl: "",
   fileName: "",
   fileResponse: {
-    "fileName": "",
-    "playbackUrl": "",
+    fileName: "",
+    playbackUrl: "",
   },
   fileDirectory: "",
   status: true,
