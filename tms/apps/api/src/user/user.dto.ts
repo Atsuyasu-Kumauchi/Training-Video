@@ -5,44 +5,46 @@ import { SortDirection } from "src/common/enums/SortDirection";
 
 export class CreateUserDto {
 
-    @IsNotEmpty()
-    username: string;
+  @IsNotEmpty()
+  username: string;
 
-    @IsEmail()
-    @IsNotEmpty()
-    email: string;
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-    @IsNotEmpty()
-    @IsStrongPassword()
-    password: string;
+  @IsNotEmpty()
+  @IsStrongPassword()
+  password: string;
 
-    @IsNotEmpty()
-    firstName: string;
+  @IsNotEmpty()
+  firstName: string;
 
-    @IsNotEmpty()
-    lastName: string;
+  @IsNotEmpty()
+  lastName: string;
 
-    @IsNotEmpty()
-    @IsNumber({}, { each: true })
-    @IsArray()
-    userTagIds: number[];
+  @IsNotEmpty()
+  @IsNumber({}, { each: true })
+  @IsArray()
+  userTagIds: number[];
 
-    @IsNotEmpty()
-    @IsNumber()
-    roleId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  roleId: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    departmentId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  departmentId: number;
 
-    @IsNotEmpty()
-    employeeId: string;
+  @IsNotEmpty()
+  employeeId: string;
 
-    @IsNotEmpty()
-    joinDate: Date;
+  @IsNotEmpty()
+  joinDate: Date;
 
-    @IsNotEmpty()
-    isReviewer: boolean = false;
+  @IsNotEmpty()
+  @IsNumber({}, { each: true })
+  @IsArray()
+  reviewers: any[];
 
 }
 
