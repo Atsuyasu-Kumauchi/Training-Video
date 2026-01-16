@@ -42,8 +42,12 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
       videoUrl: value.fileResponse?.playbackUrl,
     };
     delete modifiedValue.fileResponse;
+    console.log("modifiedValue", modifiedValue);
+
     videoListMutation.mutate(modifiedValue as TVideoListSchema);
   };
+
+
 
   return (
     <UiForm
@@ -52,7 +56,12 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
       onSubmit={onSubmit}
       ref={formRef}
     >
-      <VideoListFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} isPending={videoListMutation.isPending} />
+      <VideoListFormView
+        modalRef={modalRef}
+        isEdit={isEdit}
+        isPending={videoListMutation.isPending}
+        editData={editData}
+      />
     </UiForm>
   );
 }

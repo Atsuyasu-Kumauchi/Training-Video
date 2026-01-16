@@ -133,12 +133,13 @@ const VideoPlayer = ({ videoSrc, videoId, title }: VideoPlayerProps) => {
             )}
 
             {/* Video Container */}
-            <div className="relative bg-black">
+            <div className="relative bg-black group">
                 <video
                     ref={videoRef}
                     src={videoSrc}
                     className="w-full h-auto"
                     onClick={togglePlay}
+                    controls
                 />
 
                 {/* Play Button Overlay */}
@@ -157,8 +158,8 @@ const VideoPlayer = ({ videoSrc, videoId, title }: VideoPlayerProps) => {
             </div>
 
             {/* Controls */}
-            <div className="bg-gray-800 px-4 py-3">
-                <div className="flex items-center gap-3">
+            <div className="bg-gray-800 px-4 py-3 group-hover:opacity-100 transition-colors duration-200 opacity-0 ">
+                <div className="flex items-center gap-3 ">
                     {/* Play/Pause Button */}
                     <button
                         onClick={togglePlay}
@@ -176,12 +177,12 @@ const VideoPlayer = ({ videoSrc, videoId, title }: VideoPlayerProps) => {
                     </button>
 
                     {/* Time Display */}
-                    <div className="text-white text-sm font-mono">
+                    {/* <div className="text-white text-sm font-mono">
                         {formatTime(currentTime)} / {formatTime(duration)}
-                    </div>
+                    </div> */}
 
                     {/* Progress Bar */}
-                    <div className="flex-1">
+                    {/* <div className="flex-1">
                         <input
                             type="range"
                             min="0"
@@ -190,7 +191,7 @@ const VideoPlayer = ({ videoSrc, videoId, title }: VideoPlayerProps) => {
                             onChange={handleSeek}
                             className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:cursor-pointer"
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

@@ -50,7 +50,6 @@ export default function StudentLoginComponent() {
         }
     };
 
-
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="max-w-md w-full">
@@ -61,7 +60,7 @@ export default function StudentLoginComponent() {
                         formRef={formRef}
                         isPending={mutation.isPending}
                         isError={mutation.isError}
-                        errorMessage={mutation?.error?.message || ''}
+                        errorMessage={(mutation.error as AxiosError<{ message: string }>)?.response?.data?.message || ''}
                     />
                 </UiForm>
             </div>

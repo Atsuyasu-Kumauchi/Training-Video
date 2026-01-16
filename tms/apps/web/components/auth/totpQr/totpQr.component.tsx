@@ -1,7 +1,9 @@
 "use client";
 import { AUTH } from '@/common';
+import { useToast } from '@/hooks/useToast';
 import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { initialValues, totpQrSchema, TotpQrSchema } from './totpQr.type';
@@ -16,6 +18,7 @@ type TTotpQrComponentProps = {
 export default function TotpQrComponent(props: TTotpQrComponentProps) {
     const { resetPwd, username } = props;
     const navigate = useRouter();
+    const { toastSuccess } = useToast();
     const formRef = useRef<TUiFormRef<TotpQrSchema>>(null);
     const mutation = useMutation({
         mutationKey: ["totp-qr"],
@@ -35,8 +38,10 @@ export default function TotpQrComponent(props: TTotpQrComponentProps) {
                 const user = decodeJwtClient<{ isAdmin: boolean }>(data.accessToken || "");
                 if (user?.isAdmin) {
                     navigate.push("/admin/dashboard");
+                    toastSuccess("Login has been successful");
                 } else {
                     navigate.push("/student/dashboard");
+                    toastSuccess("Login has been successful");
                 }
             }
         },
@@ -48,7 +53,6 @@ export default function TotpQrComponent(props: TTotpQrComponentProps) {
     const onSubmit: TFormHandlerSubmit<TotpQrSchema> = async (value) => {
         if (value) {
             const formData = value as TotpQrSchema;
-
             mutation.mutate({
                 username: username,
                 password: formData.password,
@@ -64,7 +68,7 @@ export default function TotpQrComponent(props: TTotpQrComponentProps) {
                         formRef={formRef}
                         isPending={mutation.isPending}
                         isError={mutation.isError}
-                        errorMessage={mutation?.error?.message || ''}
+                        errorMessage={(mutation.error as AxiosError<{ message: string }>)?.response?.data?.message || ''}
                         isResetPwd={resetPwd || false}
                     />
                 </UiForm>
