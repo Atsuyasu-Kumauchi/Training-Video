@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { UserAssignmentService } from "./userassignment.service";
 import { CreateAssignmentDto, AssignmentQueryDto } from "./userassignment.dto";
 import { type DeepPartial } from "typeorm";

@@ -22,11 +22,11 @@ export class UserAssignmentService {
     ) {
         fs.readFile(UserAssignmentService.REVIEWER_ROLE_FILE, 'utf8')
             .then(content => this.reviewerRoles = JSON.parse(content))
-            .catch(e => console.error(e));
+            .catch(e => console.warn(e.message));
     }
 
     async findAll(query: AssignmentQueryDto) {
-        const queryBuilder = this.assignmentRepository.createQueryBuilder('Test');
+        const queryBuilder = this.userAssignmentRepository.createQueryBuilder('UserAssignment');
 
         queryBuilder.leftJoinAndSelect("Test.testQuestions", "testQuestions");
 
