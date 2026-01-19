@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { comparePassword, hashPassword } from './hash.util';
 import { LoginDto, SignUpDto } from './auth.dto';
@@ -9,7 +9,7 @@ import { User } from 'src/user/user.entity';
 import { throwSe } from 'src/common/exception/exception.util';
 import { InvalidCredential, UserNotFound } from './auth.exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
-import { type DeepPartial, Not, Repository } from 'typeorm';
+import { type DeepPartial, Repository } from 'typeorm';
 import { UriPermission, UserUriPermission } from './auth.entity';
 
 
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ username }) || throwSe(UserNotFound);
+    const user = await this.userRepository.findOne({ where: { username }, relations: { role: true } }) || throwSe(UserNotFound);
 
     if (await comparePassword(password, user.password)) return user;
 
@@ -80,7 +80,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.validateUser(loginDto.username, loginDto.password);
-    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
+    return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
   }
 
   async initRecovery(email: string) {
@@ -91,35 +91,37 @@ export class AuthService {
   }
 
   async resetPassword(email: string, otp: string, sig: string, newpassword: string) {
-    const user = await this.userRepository.findOneBy({ email }) || throwSe(UserNotFound);
+    const user = await this.userRepository.findOne({ where: { email }, relations: { role: true } }) || throwSe(UserNotFound);
 
     if (await comparePassword(newUserVerifySigRaw(user, otp), sig) && diffMinutes(otpToDate(otp), new Date()) < 720) {
       user.password = await hashPassword(newpassword);
       user.privatekey = authenticator.generateSecret();
       await this.userRepository.save(user);
-      return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: false, isAdmin: user.isAdmin, sub: user.userId }) };
+      return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: false, isAdmin: user.isAdmin, sub: user.userId }) };
     }
 
     throwSe(InvalidCredential);
   }
 
   async loginWithTotp(loginDto: LoginDto): Promise<{ accessToken: string }> {
-    const user = await this.userRepository.findOneBy({ username: loginDto.username }) || throwSe(UserNotFound);
+    const user = await this.userRepository.findOne({ where: { username: loginDto.username }, relations: { role: true } }) || throwSe(UserNotFound);
 
     authenticator.verify({ token: loginDto.password, secret: user.privatekey || '' }) || throwSe(InvalidCredential);
 
-    return { accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
+    return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }) };
   }
 
   async signup(signUpDto: SignUpDto, isAdmin: boolean = false): Promise<{ accessToken: string, __mailbody: Object }> {
     const user = await this.createAuthUser(signUpDto, isAdmin, false);
     await this.userRepository.save(user);
 
+    user.role = (await this.userRepository.findOne({ where: { userId: user.userId }, relations: { role: true } }))?.role as any;
+
     const mailpass = dateToOtp(new Date());
     console.log(mailpass, await newUserVerifySig(user, mailpass)); // TODO: send emailVirifyCode
 
     return {
-      accessToken: this.jwtService.sign({ username: user.username, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }),
+      accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: user.resetPwd, isAdmin: user.isAdmin, sub: user.userId }),
       __mailbody: { mailpass, sig: await newUserVerifySig(user, mailpass) }
     };
   }

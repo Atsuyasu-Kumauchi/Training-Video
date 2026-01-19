@@ -26,8 +26,8 @@ export class User {
   @Column({ name: 'is_admin', type: 'boolean', default: false })
   isAdmin: boolean;
 
-  @Column({ name: 'is_reviewer', type: 'boolean', default: false })
-  isReviewer: boolean;
+  @Column({ type: 'jsonb', default: () => "'[]'::jsonb", nullable: false })
+  reviewers: any[] = [];
 
   @Column({ name: 'employee_id', type: 'varchar', length: 100, unique: true })
   employeeId: string;
