@@ -17,12 +17,6 @@ export class UserService {
     private readonly authService: AuthService
   ) {}
 
-  async getReviewers() {
-    return (await this.userRepository.find({ where: { isReviewer: true }, relations: { role: true } })).map(u => ({
-      userId: u.userId, firstName: u.firstName, lastName: u.lastName, roleName: u.role.name
-    }));
-  }
-
   async findAll(query: UserQueryDto) {
     const queryBuilder = this.userRepository.createQueryBuilder('User');
 

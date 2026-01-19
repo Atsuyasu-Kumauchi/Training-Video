@@ -9,6 +9,7 @@ import { TrainingService } from "src/training/training.service";
 import { Training } from "src/training/training.entity";
 import { reduceCollection } from "src/common/util";
 import { VideoService } from "src/video/video.service";
+import { CreateTrainingDto } from "src/training/training.dto";
 
 
 @Injectable()
@@ -80,9 +81,8 @@ export class UserTrainingService {
         return training;
     }
 
-    async save(id: number, userTraining: DeepPartial<UserTraining>) {
-        await this.userTrainingRepository.existsBy({ userTrainingId: id }) || throwSe(NotFoundException);
-        return await this.userTrainingRepository.save({ ...userTraining, userTrainingId: id });
+    async save(id: number, training: CreateTrainingDto): Promise<Training> {
+        return await this.trainingService.save(id, { trainingId: id, ...training });
     }
 
 }

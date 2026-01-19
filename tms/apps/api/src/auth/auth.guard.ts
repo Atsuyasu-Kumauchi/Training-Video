@@ -25,7 +25,7 @@ export class IsAdmin implements CanActivate {
 @Injectable()
 export abstract class RoleGuardAbs implements CanActivate {
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        return this.roles().includes(context.switchToHttp().getRequest().user?.role) || throwSe(UnauthorizedException);
+        return this.roles().includes(context.switchToHttp().getRequest().user?.role.name) || throwSe(UnauthorizedException);
     }
     abstract roles(): string[];
 }

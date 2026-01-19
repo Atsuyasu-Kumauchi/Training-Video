@@ -32,7 +32,7 @@ export class UserTrainingController {
 
     @Put(':id')
     @UseGuards(IsAdmin)
-    async save(@Param('id') id: number, @Body() training: DeepPartial<UserTraining>) {
+    async save(@Param('id') id: number, @Body() training: CreateUserTrainingDto): Promise<Training> {
         return await this.userTrainingService.save(id, training);
     }
 

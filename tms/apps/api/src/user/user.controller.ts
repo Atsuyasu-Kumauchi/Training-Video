@@ -11,11 +11,6 @@ import { type DeepPartial } from 'typeorm';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('reviewers')
-  async getReviewers() {
-    return await this.userService.getReviewers();
-  }
-
   @Get()
   async findAll(@Query() query: UserQueryDto) {
     return await this.userService.findAll(query);
