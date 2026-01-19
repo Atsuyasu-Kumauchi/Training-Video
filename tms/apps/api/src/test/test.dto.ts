@@ -33,7 +33,7 @@ export class TestQueryDto {
 
   @Transform(arg => arg.value === 'true')
   @IsBoolean()
-  statusFilter: boolean = true;
+  statusFilter?: boolean;
 
   @Type(() => Number)
   @IsNumber()
