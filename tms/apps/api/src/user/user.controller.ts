@@ -17,7 +17,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User & { userTags: number[] }> {
+  async findOne(@Param('id') id: string): Promise<User & { userTagIds: number[] }> {
     return await this.userService.findOne(+id);
   }
 
