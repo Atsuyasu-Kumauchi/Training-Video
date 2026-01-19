@@ -17,12 +17,6 @@ export class UserService {
     private readonly authService: AuthService
   ) {}
 
-  async getReviewers() {
-    return (await this.userRepository.find({ where: { isReviewer: true }, relations: { role: true } })).map(u => ({
-      userId: u.userId, firstName: u.firstName, lastName: u.lastName, roleName: u.role.name
-    }));
-  }
-
   async findAll(query: UserQueryDto) {
     const queryBuilder = this.userRepository.createQueryBuilder('User');
 
@@ -48,7 +42,7 @@ export class UserService {
     return {
       data: result.map(u => {
         const user = u as any;
-        user.userTags = user.tags.map((t: Tag) => t.tagId);
+        user.userTagIds = user.tags.map((t: Tag) => t.tagId);
         return user;
       }),
       pageIndex: query.pageIndex,
@@ -63,9 +57,9 @@ export class UserService {
     };
   }
 
-  async findOne(id: number): Promise<User & { userTags: number[] }> {
-    const user = await this.userRepository.findOne({ where: { userId: id } }) as any;
-    user.userTags = user.tags.map((t: Tag) => t.tagId);
+  async findOne(id: number): Promise<User & { userTagIds: number[] }> {
+    const user = await this.userRepository.findOne({ where: { userId: id }, relations: { tags: true } }) as any;
+    user.userTagIds = user.tags.map((t: Tag) => t.tagId);
 
     if (!user) {
       throw new NotFoundException(Messages.MSG10_EX('User'));

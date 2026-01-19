@@ -11,18 +11,13 @@ import { type DeepPartial } from 'typeorm';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('reviewers')
-  async getReviewers() {
-    return await this.userService.getReviewers();
-  }
-
   @Get()
   async findAll(@Query() query: UserQueryDto) {
     return await this.userService.findAll(query);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User & { userTags: number[] }> {
+  async findOne(@Param('id') id: string): Promise<User & { userTagIds: number[] }> {
     return await this.userService.findOne(+id);
   }
 
@@ -32,7 +27,7 @@ export class UserController {
   }
 
   @Put(':id')
-  async save(@Param('id') id: number, @Body() user: DeepPartial<User> & { userTags: number[] }) {
-    return await this.userService.save(id, user, user.userTags);
+  async save(@Param('id') id: number, @Body() user: DeepPartial<User> & { userTagIds: number[] }) {
+    return await this.userService.save(id, user, user.userTagIds);
   }
 }
