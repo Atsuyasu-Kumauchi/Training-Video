@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, Repository } from "typeorm";
+import { type DeepPartial, In, Not, Repository } from "typeorm";
 import { Assignment, UserAssignment } from "./userassignment.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateAssignmentDto, AssignmentQueryDto } from "./userassignment.dto";
@@ -32,7 +32,7 @@ export class UserAssignmentService {
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where({ status: query.statusFilter });
+        queryBuilder.where({ status: query.statusFilter === undefined ? Not(null) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Test.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`Test.${query.sortBy}`, query.sortDirection);
