@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, Not, Repository } from "typeorm";
+import { type DeepPartial, In, IsNull, Not, Repository } from "typeorm";
 import { Test, TestQuestion } from "./test.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateTestDto, TestQueryDto } from "./test.dto";
@@ -22,7 +22,7 @@ export class TestService {
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where({ status: query.statusFilter === undefined ? Not(null) : query.statusFilter });
+        queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Test.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`Test.${query.sortBy}`, query.sortDirection);
