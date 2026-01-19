@@ -10,6 +10,7 @@ import {
 } from "@/tmsui/ui/UIBasicModal";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import CreateTestDetailsComponent from "../details/createTest.details.component";
 
 const { list } = LangTestCreation;
 
@@ -52,6 +53,8 @@ export const createTestListColumn: TListColumnDef<CTestCreationDto>[] = [
 ];
 
 export const CreateTestView = (createTest: ITestCreationDto) => {
+  console.log("createTest", createTest);
+
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   return (
     <div className="flex items-center space-x-2">
@@ -64,8 +67,13 @@ export const CreateTestView = (createTest: ITestCreationDto) => {
       />
       <UiBasicModal
         modalRef={modalRef}
-        title="Test Details View"
-        body={<div>Create Test View</div>}
+        title={"Test Details - " + createTest?.name}
+        body={
+          <CreateTestDetailsComponent
+            editData={createTest}
+            modalRef={modalRef}
+          />
+        }
       />
     </div>
   );

@@ -11,7 +11,7 @@ import {
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { status, TCreateTestSchema } from "./createTest.form.type";
@@ -24,6 +24,7 @@ export default function EditTestFormView({
   const { id } = useParams<{ id: string }>();
 
   const { testCreation } = useLang();
+  const router = useRouter();
 
   const { data: testEditData } = useQuery({
     queryKey: ["createTest-edit", id],
@@ -224,7 +225,11 @@ export default function EditTestFormView({
             {/* Form Actions */}
             <div className="border-t border-gray-200 pt-6">
               <div className="flex justify-end space-x-3">
-                <Button type="button" color="neutral">
+                <Button
+                  type="button"
+                  color="neutral"
+                  onClick={() => router.push("/admin/create-test")}
+                >
                   {testCreation.form.cancel}
                 </Button>
                 <Button type="submit">{testCreation.form.updateTest}</Button>

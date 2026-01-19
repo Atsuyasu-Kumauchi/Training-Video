@@ -1,4 +1,7 @@
+import { ITestCreationDto } from "@/common";
 import {
+  TFormComponentSchema,
+  TFormViewSchema,
   zodArray,
   zodBoolean,
   zodInfer,
@@ -7,6 +10,15 @@ import {
   zodStringRequired,
 } from "@/tmsui";
 import z from "zod";
+
+export type TCreateTestListFormComponentSchema =
+  TFormComponentSchema<TCreateTestSchema> & {
+    editData?: Partial<ITestCreationDto>;
+  };
+
+export type TVideoListFormViewSchema = TFormViewSchema<TCreateTestSchema> & {
+  editData?: Partial<ITestCreationDto>;
+};
 
 export const createTestSchema = zodObject({
   name: zodStringRequired(),

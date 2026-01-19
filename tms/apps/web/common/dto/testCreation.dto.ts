@@ -5,6 +5,7 @@ export interface ITestCreationDto extends IBaseDto {
   name: string;
   description: string;
   status: string;
+  testQuestions: ITestQuestionsDto[];
 }
 
 export class CTestCreationDto extends BaseDto implements ITestCreationDto {
@@ -12,6 +13,21 @@ export class CTestCreationDto extends BaseDto implements ITestCreationDto {
   name: string = "";
   description: string = "";
   status: string = "";
+  testQuestions: CTestQuestionDto[] = [];
+
+  setAdditionalKey(): void {
+    //
+  }
+}
+
+export interface ITestQuestionsDto extends IBaseDto {
+  question: string;
+  options: any[];
+}
+
+export class CTestQuestionDto extends BaseDto implements ITestQuestionsDto {
+  question: string = "";
+  options: any[] = [];
 
   setAdditionalKey(): void {
     //
