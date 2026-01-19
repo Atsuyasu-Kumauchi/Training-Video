@@ -27,7 +27,7 @@ export class UserController {
   }
 
   @Put(':id')
-  async save(@Param('id') id: number, @Body() user: DeepPartial<User> & { userTags: number[] }) {
-    return await this.userService.save(id, user, user.userTags);
+  async save(@Param('id') id: number, @Body() user: DeepPartial<User> & { userTagIds: number[] }) {
+    return await this.userService.save(id, user, user.userTagIds);
   }
 }
