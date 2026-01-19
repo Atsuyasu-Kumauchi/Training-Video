@@ -4,7 +4,6 @@ import { status, TRolesFormViewSchema, TRolesSchema } from "./roles.form.type";
 
 export default function RolesFormView({ modalRef, isPending, isEdit }: TRolesFormViewSchema) {
   const { role } = useLang();
-
   return (
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-12">

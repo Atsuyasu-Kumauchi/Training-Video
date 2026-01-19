@@ -5,8 +5,6 @@ import { LangDepartment } from '@/lang/department';
 import { TListColumnDef } from '@/tmsui/types';
 import { Button } from '@/tmsui/ui/basic/button';
 import { TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui/ui/UIBasicModal';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import DepartmentsFormComponent from '../form/departments.form.component';
 
@@ -34,26 +32,38 @@ export const departmentsListColumn: TListColumnDef<CDepartmentDto>[] = [
     accessorKey: "actions",
     enableHiding: false,
     header: () => list.action,
-    cell: (ctx) => <ActionDepartment {...ctx.row.original} />
+    cell: (ctx) => {
+      return (
+        <div className="flex items-center space-x-2">
+          <DepartmentEdit {...ctx.row.original} />
+          <DepartmentDelete />
+        </div>
+      )
+    }
   }
 ]
 
-export const ActionDepartment = (department: IDepartmentDto) => {
+
+export const DepartmentEdit = (department: IDepartmentDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { department: departmentLang } = useLang();
+  const isEdit = !!department.departmentId || false;
   return (
-    <div className="flex items-center space-x-1">
-      <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0'>
-        <FontAwesomeIcon icon={faEdit} />
-      </Button>
-      <Button onClick={() => modalRef.current.modalOpen()} color='danger' variant="ghost" className='p-1' disabled>
-        <FontAwesomeIcon icon={faTrash} />
-      </Button>
+    <>
+      <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />
       <UiBasicModal
         modalRef={modalRef}
         title={departmentLang.form.editTitle}
-        body={<DepartmentsFormComponent modalRef={modalRef} editData={department} />}
+        body={<DepartmentsFormComponent isEdit={isEdit} editData={department} modalRef={modalRef} />}
       />
-    </div>
+    </>
+  )
+}
+
+export const DepartmentDelete = () => {
+  return (
+    <>
+      <Button color='danger' variant="ghost" className='p-0' disabled startIcon='delete' />
+    </>
   )
 }

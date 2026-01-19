@@ -95,7 +95,6 @@ export const UserEdit = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { user: userLang } = useLang();
   const isEdit = !!user.userId || false;
-
   return (
     <>
       <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />

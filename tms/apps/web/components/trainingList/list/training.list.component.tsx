@@ -9,6 +9,11 @@ export default function TrainingListComponent() {
     columns: trainingListColumn,
     query: ListQueryConfig.TRAINING_LIST
   })
+
+  listHook?.data?.data?.forEach((item) => {
+    item.usersIds = item.users.map((user) => user.userId);
+  })
+
   return (
     <ListTable {...listHook} />
   )

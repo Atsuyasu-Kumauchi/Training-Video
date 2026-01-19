@@ -5,4 +5,5 @@ export const USERS = {
     CREATE: `${BASE_URL}${USERS_API_END_POINT}`,
     UPDATE: (id: string) => `${BASE_URL}${USERS_API_END_POINT}/${id}`,
     DELETE: (id: string) => `${BASE_URL}${USERS_API_END_POINT}/${id}`,
+    USER_REVIEW: `${BASE_URL}${USERS_API_END_POINT}/reviewers`,
 };

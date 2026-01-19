@@ -19,8 +19,11 @@ import {
 
 export default function VideoListFormView({ modalRef, isEdit, isPending, editData }: TVideoListFormViewSchema) {
   const { videoList } = useLang();
-  const { control } = useFormContext<TVideoListSchema>();
+  const { control, formState: { errors } } = useFormContext<TVideoListSchema>();
   const videoFileType = useWatch({ control, name: "uploadType" });
+
+  console.log(errors);
+
 
   return (
     <Fragment>
@@ -28,11 +31,12 @@ export default function VideoListFormView({ modalRef, isEdit, isPending, editDat
         <UiFormInput<TVideoListSchema>
           name="name"
           label={videoList.form.videoTitle}
-          placeholder=""
+          required
         />
         <UiFormTextArea<TVideoListSchema>
           name="description"
           label={videoList.form.explanation}
+          required
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -45,46 +49,23 @@ export default function VideoListFormView({ modalRef, isEdit, isPending, editDat
               keyName: { label: "name", value: "name" }
             })}
             placeholder={'カテゴリを選択'}
+            required
           />
           <UiFormSelect<TVideoListSchema>
             name="status"
             label={videoList.form.status}
             options={videoStatus}
             placeholder={videoList.form.status}
+            required
           />
         </div>
 
-        {/* <label className="block text-sm font-medium text-gray-700 mb-2">
-          {videoList.form.problemSetTitle}*
-        </label>
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetOne"
-          label={videoList.form.problemSetOne}
-          options={questionSet}
-        />
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetTwo"
-          label={videoList.form.problemSetTwo}
-          options={questionSet}
-        />
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetThree"
-          label={videoList.form.problemSetThree}
-          options={questionSet}
-        />
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetFour"
-          label={videoList.form.problemSetFour}
-          options={questionSet}
-        />
-        <p className="mt-2 text-sm text-gray-500">
-          {videoList.form.problemSetFooter}
-        </p> */}
         <UiFormSelect<TVideoListSchema>
           name="assignmentId"
           label={videoList.form.assignment}
           options={assignment}
           placeholder={videoList.form.assignment}
+          required
         />
 
         <div className="border-t border-b border-gray-200 py-4 my-6">

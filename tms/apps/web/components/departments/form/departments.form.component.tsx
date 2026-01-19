@@ -1,78 +1,53 @@
 import { DEPARTMENT, IDepartmentDto, ListQueryConfig } from "@/common";
-import { AuthServer, queryClient, TFormHandlerSubmit, TUiBasicModalRef, TUiFormRef, UiForm, wait } from "@/tmsui";
+import { useToast } from "@/hooks";
+import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
-  departmentKeys,
+  defaultValues,
   departmentsSchema,
-  initialValues,
+  TDepartmentsFormComponentSchema,
   TDepartmentsSchema
 } from "./departments.form.type";
 import DepartmentsFormView from "./departments.form.view";
 
-type DepartmentProps = {
-  modalRef: React.RefObject<TUiBasicModalRef>;
-  editData?: IDepartmentDto;
-}
 
-function pick<T, K extends readonly (keyof T)[]>(
-  obj: T,
-  keys: K
-): Pick<T, K[number]> {
-  return Object.fromEntries(
-    keys.map((key) => [key, obj[key]])
-  ) as Pick<T, K[number]>;
-}
-
-
-
-
-export default function DepartmentsFormComponent({ modalRef, editData }: DepartmentProps) {
-
-  const isEdit = Boolean(editData?.departmentId);
+export default function DepartmentsFormComponent({ modalRef, editData, isEdit }: TDepartmentsFormComponentSchema) {
+  const { toastError, toastSuccess } = useToast()
   const formRef = useRef<TUiFormRef<TDepartmentsSchema>>(null);
-  const mutationKey = isEdit ? ["departments-update"] : ["departments-create"];
-  const mutationUrl = isEdit ? DEPARTMENT.UPDATE(editData?.departmentId ?? 0) : DEPARTMENT.CREATE;
 
   const mutation = useMutation({
-    mutationKey,
+    mutationKey: isEdit ? ["departments-update"] : ["departments-create"],
     mutationFn: async (data: TDepartmentsSchema) => {
       const response = await AuthServer({
         method: isEdit ? "PUT" : "POST",
-        url: mutationUrl,
-        data: {
-          name: data.name,
-          status: Boolean(data.status),
-        },
+        url: isEdit ? DEPARTMENT.UPDATE(editData?.departmentId ?? 0) : DEPARTMENT.CREATE,
+        data
       });
+      await wait();
       return response.data;
     },
     onSuccess: async () => {
-      await wait(500);
       formRef.current?.reset();
-      modalRef.current?.modalClose();
+      modalRef?.current?.modalClose();
+    },
+    onError: () => {
+      toastError("Something went wrong");
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.DEPARTMENT_LIST.key });
+      toastSuccess(isEdit ? "Department updated successfully" : "Department created successfully");
     },
   });
 
   const onSubmitHandler: TFormHandlerSubmit<TDepartmentsSchema> = (value) => {
-    const data = value as TDepartmentsSchema;
-    if (data) {
-      mutation.mutate({
-        name: data.name,
-        status: data.status as string,
-      } as TDepartmentsSchema);
-    }
+    mutation.mutate(value);
   };
-
-  const initValues = isEdit
-    ? pick(editData, departmentKeys as (keyof typeof editData)[])
-    : initialValues;
 
   return (
     <UiForm
       schema={departmentsSchema}
-      initialValues={initValues}
+      initialValues={defaultValues(isEdit, editData as IDepartmentDto)}
       onSubmit={onSubmitHandler}
       ref={formRef}
     >
