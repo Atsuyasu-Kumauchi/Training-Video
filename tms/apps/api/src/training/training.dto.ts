@@ -13,7 +13,7 @@ export class CreateTrainingDto {
     @IsArray()
     videos: number[] = [];
 
-    @IsDate()
+    @IsNotEmpty()
     deadline: Date;
 
     @IsBoolean({ message: Messages.MSG1_EX('Training', 'status', 'boolean') })
