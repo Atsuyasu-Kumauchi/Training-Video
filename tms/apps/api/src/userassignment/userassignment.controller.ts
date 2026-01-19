@@ -12,6 +12,21 @@ export class UserAssignmentController {
 
     constructor(private readonly userAssignmentService: UserAssignmentService) { }
 
+    @Post("setReviewerRoles")
+    async setReviewerRoles(@Body() reviewerRoles: number[]) {
+        await this.userAssignmentService.setReviewerRoles(reviewerRoles);
+    }
+
+    @Get("getReviewerRoles")
+    async getReviewerRoles() {
+        return await this.userAssignmentService.getReviewerRoles();
+    }
+
+    @Get('reviewers')
+    async getReviewers() {
+        return await this.userAssignmentService.getReviewers();
+    }
+
     @Get()
     async findAll(@Query() query: AssignmentQueryDto) {
         return await this.userAssignmentService.findAll(query);
@@ -30,21 +45,6 @@ export class UserAssignmentController {
     @Put(':id')
     async save(@Param('id') id: number, @Body() createAssignmentDto: CreateAssignmentDto): Promise<Assignment> {
         return await this.userAssignmentService.save(id, createAssignmentDto);
-    }
-
-    @Post("setReviewerRoles")
-    async setReviewerRoles(@Body() reviewerRoles: number[]) {
-        await this.userAssignmentService.setReviewerRoles(reviewerRoles);
-    }
-
-    @Get("getReviewerRoles")
-    async getReviewerRoles() {
-        return await this.userAssignmentService.getReviewerRoles();
-    }
-
-    @Get('reviewers')
-    async getReviewers() {
-        return await this.userAssignmentService.getReviewers();
     }
 
 }
