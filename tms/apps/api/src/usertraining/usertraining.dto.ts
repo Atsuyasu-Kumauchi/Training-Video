@@ -38,7 +38,8 @@ export class UserTrainingQueryDto {
 
   @Transform(arg => arg.value === 'true')
   @IsBoolean()
-  statusFilter: boolean = true;
+  @IsOptional()
+  statusFilter?: boolean;
 
   @Type(() => Number)
   @IsNumber()

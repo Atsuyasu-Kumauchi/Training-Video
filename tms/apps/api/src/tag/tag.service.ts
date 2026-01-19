@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, Repository } from "typeorm";
+import { type DeepPartial, Not, Repository } from "typeorm";
 import { Tag } from "./tag.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateTagDto, TagQueryDto } from "./tag.dto";
@@ -19,7 +19,7 @@ export class TagService {
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where({ status: query.statusFilter });
+        queryBuilder.where({ status: query.statusFilter === undefined ? Not(null) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Tag.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`Tag.${query.sortBy}`, query.sortDirection);
