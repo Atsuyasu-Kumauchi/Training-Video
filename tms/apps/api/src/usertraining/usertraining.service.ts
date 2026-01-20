@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, Repository } from "typeorm";
+import { type DeepPartial, In, IsNull, Not, Repository } from "typeorm";
 import { UserTraining } from "./usertraining.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
@@ -24,12 +24,15 @@ export class UserTrainingService {
     async findAll(query: UserTrainingQueryDto) {
         const queryBuilder = this.userTrainingRepository.createQueryBuilder('UserTraining');
 
-        queryBuilder.leftJoinAndSelect("UserTraining.training", "training");
+        queryBuilder.leftJoinAndSelect("UserTraining.training", "Training");
 
         queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where("UserTraining.userTrainingId IS NOT NULL");
+        if (query.statusFilter === null) queryBuilder.where("Training.status IS NOT NULL");
+        else queryBuilder.where("Training.status = :status", { status: query.statusFilter });
+
         if (query.userIdFilter !== undefined) queryBuilder.andWhere("UserTraining.userId = :userId", { userId: query.userIdFilter });
+        if (query.nameFilter !== undefined) queryBuilder.andWhere("Training.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`UserTraining.${query.sortBy}`, query.sortDirection);
 
@@ -50,8 +53,8 @@ export class UserTrainingService {
             resultCount,
             sortBy: query.sortBy,
             sortDirection: query.sortDirection,
-            userIdFilter: query.userIdFilter,
-            // nameFilter: query.nameFilter || null,
+            userIdFilter: query.userIdFilter || null,
+            nameFilter: query.nameFilter || null,
             statusFilter: query.statusFilter
         };
     }
