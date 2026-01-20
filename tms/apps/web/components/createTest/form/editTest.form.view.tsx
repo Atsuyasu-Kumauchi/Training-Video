@@ -1,76 +1,19 @@
-import { TEST_CREATION_LIST } from "@/common";
 import { useLang } from "@/lang";
 import {
-  AuthServer,
   Button,
   UiFormFiledArray,
   UiFormInput,
   UiFormSelect,
-  UiFormTextArea,
+  UiFormTextArea
 } from "@/tmsui";
+import { UiFormRadio } from "@/tmsui/ui/UiFormRadio";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { status, TCreateTestSchema } from "./createTest.form.type";
+import { status, TCreateTestFormViewSchema, TCreateTestSchema } from "./createTest.form.type";
 
-export default function EditTestFormView({
-  setFormValues,
-}: {
-  setFormValues: (values: TCreateTestSchema) => void;
-}) {
-  const { id } = useParams<{ id: string }>();
-
+export default function EditTestFormView(props: TCreateTestFormViewSchema) {
   const { testCreation } = useLang();
-  const router = useRouter();
-
-  const { data: testEditData } = useQuery({
-    queryKey: ["createTest-edit", id],
-    queryFn: () =>
-      AuthServer({
-        method: "GET",
-        url: TEST_CREATION_LIST.FIND_BY_ID(id),
-      }),
-    enabled: !!id,
-    refetchOnMount: "always",
-    refetchOnWindowFocus: false,
-    staleTime: 0,
-  });
-
-  // Map backend data → form values
-  useEffect(() => {
-    if (!testEditData?.data) return;
-
-    const apiData = testEditData.data;
-
-    const mapped: TCreateTestSchema = {
-      name: apiData.name || "",
-      description: apiData.description || "",
-      status: Boolean(apiData.status),
-      testQuestions: apiData.testQuestions?.map(
-        (q: {
-          question: string;
-          options: string[];
-          correctOption: number;
-        }) => ({
-          question: q.question || "",
-          options: q.options?.length === 4 ? q.options : ["", "", "", ""],
-          correctOption: ["A", "B", "C", "D"][q.correctOption - 1] || "A",
-        })
-      ) || [
-        {
-          questionText: "",
-          options: ["", "", "", ""],
-          correctOption: "A",
-        },
-      ],
-    };
-
-    // Send values to parent form
-    setFormValues(mapped);
-  }, [testEditData, setFormValues]);
 
   return (
     <>
@@ -95,8 +38,8 @@ export default function EditTestFormView({
           </div>
           <div id="testForm" className="p-6 space-y-6">
             {/* Basic Test Details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+            <div className="grid grid-cols-12  gap-6">
+              <div className="col-span-12 md:col-span-6">
                 <UiFormInput<TCreateTestSchema>
                   name="name"
                   label={testCreation.form.testName}
@@ -104,15 +47,7 @@ export default function EditTestFormView({
                   required
                 />
               </div>
-              <div>
-                <UiFormTextArea<TCreateTestSchema>
-                  name="description"
-                  label={testCreation.form.explanation}
-                  placeholder={testCreation.form.explanationPlaceholder}
-                  required
-                />
-              </div>
-              <div>
+              <div className="col-span-12 md:col-span-6">
                 <UiFormSelect<TCreateTestSchema>
                   name="status"
                   label={testCreation.form.status}
@@ -121,105 +56,104 @@ export default function EditTestFormView({
                   placeholder={testCreation.form.statusPlaceholder}
                 />
               </div>
+              <div className="col-span-12 md:col-span-6">
+                <UiFormTextArea<TCreateTestSchema>
+                  name="description"
+                  label={testCreation.form.explanation}
+                  placeholder={testCreation.form.explanationPlaceholder}
+                  required
+                />
+              </div>
             </div>
             {/* Questions Section */}
             <div className="border-t border-gray-200 pt-6">
               <UiFormFiledArray<TCreateTestSchema> name="testQuestions">
-                {({ append, fields, remove }) => (
-                  <Fragment>
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-lg font-medium text-gray-900">
-                        {testCreation.form.questionHeader}
-                      </h4>
-                      <Button
-                        type="button"
-                        onClick={() =>
-                          append({
-                            question: "",
-                            options: ["", "", "", ""],
-                            correctOption: "A",
-                          })
-                        }
-                      >
-                        <FontAwesomeIcon
-                          icon={faPlus}
-                          className="fas fa-plus w-5 h-5 mr-2 text-white"
-                        />
-                        <span>{testCreation.form.addQuestion}</span>
-                      </Button>
-                    </div>
-
-                    <div id="questionsContainer" className="space-y-4">
-                      {fields.map((item, index) => (
-                        <div
-                          key={item.id + index}
-                          className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                {({ append, fields, remove }) => {
+                  return (
+                    <Fragment>
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-medium text-gray-900">
+                          {testCreation.form.questionHeader}
+                        </h4>
+                        <Button
+                          type="button"
+                          onClick={() =>
+                            append({
+                              question: "",
+                              options: ["", "", "", ""],
+                              correctOption: "A",
+                            })
+                          }
                         >
-                          <div className="flex items-center justify-between mb-4">
-                            <h5 className="text-md font-medium text-gray-900">
-                              {testCreation.form.questionNo} {index + 1}
-                            </h5>
-                            <Button
-                              type="button"
-                              color="danger"
-                              variant="ghost"
-                              onClick={() => remove(index)}
-                              disabled={fields.length === 1}
-                            >
-                              <FontAwesomeIcon
-                                icon={faTrash}
-                                className="fas fa-trash w-5 h-5"
-                              />
-                            </Button>
-                          </div>
+                          <FontAwesomeIcon
+                            icon={faPlus}
+                            className="fas fa-plus w-5 h-5 mr-2 text-white"
+                          />
+                          <span>{testCreation.form.addQuestion}</span>
+                        </Button>
+                      </div>
 
-                          {/* Question Text */}
-                          <div>
-                            <UiFormTextArea<TCreateTestSchema>
-                              name={`testQuestions.${index}.question`}
-                              label={testCreation.form.question}
-                              placeholder={
-                                testCreation.form.questionPlaceholder
-                              }
-                              required
-                            />
-                          </div>
-
-                          {/* Options */}
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                              {testCreation.form.choices}
-                            </label>
-
-                            <div className="space-y-2">
-                              {["A", "B", "C", "D"].map((opt, oIndex) => (
-                                <div
-                                  key={oIndex}
-                                  className="flex items-center space-x-2"
+                      <div id="questionsContainer" className="space-y-4">
+                        {fields.map((item, parentIndex) => {
+                          return (
+                            <div key={item.id + parentIndex} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                              <div className="flex items-center justify-between mb-4">
+                                <h5 className="text-md font-medium text-gray-900">  {testCreation.form.questionNo} {parentIndex + 1} </h5>
+                                <Button
+                                  type="button"
+                                  color="danger"
+                                  variant="ghost"
+                                  onClick={() => remove(parentIndex)}
+                                  disabled={fields.length === 1}
                                 >
-                                  <UiFormInput<TCreateTestSchema>
-                                    type="radio"
-                                    name={`testQuestions.${index}.correctOption`}
-                                    value={opt}
-                                    defaultChecked={item.correctOption === opt}
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className="fas fa-trash w-5 h-5"
                                   />
-                                  <div className="w-full">
-                                    <UiFormInput
-                                      name={`testQuestions.${index}.options.${oIndex}`}
-                                      placeholder={`${testCreation.form.option} ${opt}`}
-                                      required
-                                      className="flex-1 min-w-0"
-                                    />
-                                  </div>
+                                </Button>
+                              </div>
+
+                              {/* Question Text */}
+                              <div>
+                                <UiFormTextArea<TCreateTestSchema>
+                                  name={`testQuestions.${parentIndex}.question`}
+                                  label={testCreation.form.question}
+                                  placeholder={testCreation.form.questionPlaceholder}
+                                  required
+                                />
+                              </div>
+
+                              {/* Options */}
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                  {testCreation.form.choices}
+                                </label>
+
+                                <div className="space-y-2">
+                                  {item?.options?.map((opt, childIndex) => {
+                                    return (
+                                      <div key={parentIndex + childIndex} className="flex items-center space-x-2" >
+                                        <UiFormRadio name={`testQuestions.${parentIndex}.correctOption`} value={childIndex + 1} />
+                                        <div className="w-full">
+                                          <UiFormInput
+                                            name={`testQuestions.${parentIndex}.options.${childIndex}`}
+                                            placeholder={`${testCreation.form.option} ${opt}`}
+                                            required
+                                            className="flex-1 min-w-0"
+                                          />
+                                        </div>
+                                      </div>
+                                    )
+                                  })}
                                 </div>
-                              ))}
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Fragment>
-                )}
+                          )
+                        })}
+                      </div>
+                    </Fragment>
+                  )
+                }}
               </UiFormFiledArray>
             </div>
             {/* Form Actions */}
@@ -228,7 +162,6 @@ export default function EditTestFormView({
                 <Button
                   type="button"
                   color="neutral"
-                  onClick={() => router.push("/admin/create-test")}
                 >
                   {testCreation.form.cancel}
                 </Button>

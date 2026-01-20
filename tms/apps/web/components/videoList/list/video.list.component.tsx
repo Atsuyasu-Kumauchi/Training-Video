@@ -11,6 +11,8 @@ export default function VideoListComponent() {
         query: ListQueryConfig.VIDEO_LIST,
         filters: {
             tagsFilter: searchParams.get("tagsFilter"),
+            statusFilter: searchParams.get("statusFilter"),
+            nameFilter: searchParams.get("nameFilter"),
         }
     })
 

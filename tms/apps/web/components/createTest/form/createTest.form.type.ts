@@ -1,5 +1,6 @@
 import { ITestCreationDto } from "@/common";
 import {
+  pickFormData,
   TFormComponentSchema,
   TFormViewSchema,
   zodArray,
@@ -9,31 +10,30 @@ import {
   zodString,
   zodStringRequired,
 } from "@/tmsui";
-import z from "zod";
 
-export type TCreateTestListFormComponentSchema =
-  TFormComponentSchema<TCreateTestSchema> & {
-    editData?: Partial<ITestCreationDto>;
-  };
+export type TCreateTestFormComponentSchema = TFormComponentSchema<TCreateTestSchema> & {
+  editData?: Partial<ITestCreationDto>;
+};
 
-export type TVideoListFormViewSchema = TFormViewSchema<TCreateTestSchema> & {
+export type TCreateTestFormViewSchema = TFormViewSchema<TCreateTestSchema> & {
   editData?: Partial<ITestCreationDto>;
 };
 
 export const createTestSchema = zodObject({
   name: zodStringRequired(),
   description: zodString(),
-  status: z.preprocess((val) => val === true || val === "true", zodBoolean()),
+  status: zodBoolean(),
   testQuestions: zodArray(
     zodObject({
       question: zodStringRequired(),
-      options: zodArray(zodStringRequired()).length(4), // always 4 options
       correctOption: zodStringRequired(), // "A", "B", "C", "D"
+      options: zodArray(zodStringRequired()).length(4), // always 4 options
     })
   ),
 });
 
 export type TCreateTestSchema = zodInfer<typeof createTestSchema>;
+export const createTestKeys = Object.keys(createTestSchema.shape) as (keyof zodInfer<typeof createTestSchema>)[];
 
 export const initialValues: TCreateTestSchema = {
   name: "",
@@ -48,7 +48,12 @@ export const initialValues: TCreateTestSchema = {
   ],
 };
 
+export const defaultValues = (isEdit?: boolean, editData?: Partial<ITestCreationDto>): Partial<TCreateTestSchema> => {
+  return isEdit ? pickFormData(editData as unknown as TCreateTestSchema, createTestKeys as (keyof TCreateTestSchema)[]) : initialValues;
+}
+
+
 export const status = [
-  { label: "アクティブ", value: true },
-  { label: "非アクティブ", value: false },
+  { label: "アクティブ", value: 'true' },
+  { label: "非アクティブ", value: 'false' },
 ];

@@ -1,10 +1,11 @@
 import { BaseDto, IBaseDto } from "./base.dto";
+import { CDepartmentDto, IDepartmentDto } from "./department.dto";
 
 export interface IUserDto extends IBaseDto {
     userId: string;
     email: string;
     username: string;
-    department: string;
+    department: IDepartmentDto;
     assigned_training: number;
     completed_training: number;
     status: string
@@ -19,7 +20,7 @@ export class CUserDto extends BaseDto implements IUserDto {
     userId: string = "";
     email: string = "";
     username: string = "";
-    department: string = "";
+    department: CDepartmentDto = new CDepartmentDto();
     assigned_training: number = 0;
     completed_training: number = 0;
     status: string = "";
