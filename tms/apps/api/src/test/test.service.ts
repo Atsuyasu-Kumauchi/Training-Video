@@ -22,7 +22,7 @@ export class TestService {
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
+        queryBuilder.where({ status: query.statusFilter === null ? Not(IsNull()) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Test.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`Test.${query.sortBy}`, query.sortDirection);

@@ -27,7 +27,7 @@ export class DepartmentQueryDto {
   @Transform(arg => arg.value === 'true')
   @IsBoolean()
   @IsOptional()
-  statusFilter?: boolean;
+  statusFilter: boolean | null = null;
 
   @Type(() => Number)
   @IsNumber()

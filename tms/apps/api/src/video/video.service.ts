@@ -57,7 +57,7 @@ export class VideoService {
     async findAll(query: VideoQueryDto) {
         const queryBuilder = this.videoRepository.createQueryBuilder('Video');
 
-        queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
+        queryBuilder.where({ status: query.statusFilter === null ? Not(IsNull()) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Video.name like :name", { name: `%${query.nameFilter}%` });
         if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags ?| :tags", { tags: query.tagsFilter });
 
