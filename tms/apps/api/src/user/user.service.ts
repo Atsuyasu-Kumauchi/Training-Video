@@ -24,9 +24,9 @@ export class UserService {
     queryBuilder.leftJoin('User.department', 'Department').addSelect(['Department.departmentId', 'Department.name']);
     queryBuilder.leftJoin('User.tags', 'Tag').addSelect(['Tag.tagId', 'Tag.name']);
 
-    queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
+    queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-    queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
+    queryBuilder.where({ status: query.statusFilter === null ? Not(IsNull()) : query.statusFilter });
     if (query.simplenameFilter) {
       queryBuilder.andWhere(new Brackets(qb => {
         qb.where("User.username like :username", { username: `%${query.simplenameFilter}%` })
