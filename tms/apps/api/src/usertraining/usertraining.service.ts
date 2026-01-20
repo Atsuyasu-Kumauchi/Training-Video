@@ -70,10 +70,10 @@ export class UserTrainingService {
     }
 
     async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
-        const training = await this.trainingService.create(createUserTrainingDto);
+        const training = await this.trainingService.create(createUserTrainingDto as CreateTrainingDto);
 
-        const userTrainings = createUserTrainingDto.users.map(id => ({
-            userId: id, trainingId: training.trainingId, progress: []
+        const userTrainings = createUserTrainingDto.users.map(userId => ({
+            userId, trainingId: training.trainingId, progress: []
         }));
 
         await this.userTrainingRepository.save(userTrainings);
@@ -82,18 +82,18 @@ export class UserTrainingService {
     }
 
     async save(id: number, createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
-        const training = await this.trainingService.save(id, { trainingId: id, ...createUserTrainingDto });
-
         const existingUserTrainings = Object.fromEntries(
             (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId: id } }))
                 .map(ut => [ut.userId, ut])
         );
+
         const userTrainings = createUserTrainingDto.users.map(userId => ({
-            userId, trainingId: userId, progress: [...(existingUserTrainings[userId]?.progress || [])]
+            userId, trainingId: id, progress: existingUserTrainings[userId]?.progress || []
         }));
+
         await this.userTrainingRepository.save(userTrainings);
 
-        return training;
+        return await this.trainingService.save(id, { trainingId: id, ...(createUserTrainingDto as CreateTrainingDto) });
     }
 
 }
