@@ -1,24 +1,28 @@
-import { Avatar } from '@/common';
-import { Badge } from '@/common/components/badge';
-import { CUserDto, IUserDto } from '@/common/dto/user.dto';
-import useLang from '@/lang';
-import { LangUser } from '@/lang/user';
-import { Button } from '@/tmsui';
-import { TListColumnDef } from '@/tmsui/types';
-import { TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui/ui/UIBasicModal';
-import { useRef } from 'react';
-import UserFormComponent from '../form/user.form.component';
+import { Avatar } from "@/common";
+import { Badge } from "@/common/components/badge";
+import { CUserDto, IUserDto } from "@/common/dto/user.dto";
+import useLang from "@/lang";
+import { LangUser } from "@/lang/user";
+import { Button } from "@/tmsui";
+import { TListColumnDef } from "@/tmsui/types";
+import {
+  TUiBasicModalRef,
+  UiBasicModal,
+  uiBasicModalRefDefaultValue,
+} from "@/tmsui/ui/UIBasicModal";
+import { useRef } from "react";
+import UsersDetailsComponent from "../details/users.details.component";
+import UserFormComponent from "../form/user.form.component";
 
 const { list } = LangUser;
 
 export const userListColumn: TListColumnDef<CUserDto>[] = [
-
   {
     accessorKey: "name",
     enableHiding: false,
     header: () => list.user,
     cell: (ctx) => {
-      return <Avatar name={ctx.row.original.username} />
+      return <Avatar name={ctx.row.original.username} />;
     },
   },
   {
@@ -26,40 +30,40 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.email,
     cell: (ctx) => {
-      return <div>{ctx.row.original.email}</div>
-    }
+      return <div>{ctx.row.original.email}</div>;
+    },
   },
   {
     accessorKey: "department",
     enableHiding: false,
     header: () => list.department,
     cell: (ctx) => {
-      return <div>{'N/A'}</div>
-    }
+      return <div>{"N/A"}</div>;
+    },
   },
   {
     accessorKey: "assigned_training",
     enableHiding: false,
     header: () => list.assignedTraining,
     cell: (ctx) => {
-      return <div>{'N/A'}</div>
-    }
+      return <div>{"N/A"}</div>;
+    },
   },
   {
     accessorKey: "completed_training",
     enableHiding: false,
     header: () => list.completedTraining,
     cell: (ctx) => {
-      return <div>{'N/A'}</div>
-    }
+      return <div>{"N/A"}</div>;
+    },
   },
   {
     accessorKey: "status",
     enableHiding: false,
     header: () => list.status,
     cell: ({ row: { original } }) => {
-      return <Badge status={original.status ? "Active" : "Inactive"} />
-    }
+      return <Badge status={original.status ? "Active" : "Inactive"} />;
+    },
   },
   {
     accessorKey: "actions",
@@ -72,25 +76,32 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
           <UserEdit {...ctx.row.original} />
           <UserDelete />
         </div>
-      )
-    }
-  }
-]
-
+      );
+    },
+  },
+];
 
 export const UserView = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
+  console.log("user", user);
+
   return (
     <div className="flex items-center space-x-2">
-      <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='view' />
+      <Button
+        onClick={() => modalRef.current.modalOpen()}
+        variant="ghost"
+        color="primary"
+        className="p-0"
+        startIcon="view"
+      />
       <UiBasicModal
         modalRef={modalRef}
-        title="User View"
-        body={<div>User View</div>}
+        title={list.userDetail + " - " + user?.firstName + user?.lastName}
+        body={<UsersDetailsComponent editData={user} modalRef={modalRef} />}
       />
     </div>
-  )
-}
+  );
+};
 export const UserEdit = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { user: userLang } = useLang();
@@ -98,19 +109,37 @@ export const UserEdit = (user: IUserDto) => {
 
   return (
     <>
-      <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />
+      <Button
+        onClick={() => modalRef.current.modalOpen()}
+        variant="ghost"
+        color="primary"
+        className="p-0"
+        startIcon="edit"
+      />
       <UiBasicModal
         modalRef={modalRef}
         title={userLang.form.editUser}
-        body={<UserFormComponent isEdit={isEdit} editData={user} modalRef={modalRef} />}
+        body={
+          <UserFormComponent
+            isEdit={isEdit}
+            editData={user}
+            modalRef={modalRef}
+          />
+        }
       />
     </>
-  )
-}
+  );
+};
 export const UserDelete = () => {
   return (
     <>
-      <Button color='danger' variant="ghost" className='p-0' disabled startIcon='delete' />
+      <Button
+        color="danger"
+        variant="ghost"
+        className="p-0"
+        disabled
+        startIcon="delete"
+      />
     </>
-  )
-}
+  );
+};

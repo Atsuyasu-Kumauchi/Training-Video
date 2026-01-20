@@ -1,7 +1,8 @@
 import { IUserDto } from "@/common";
 import {
   pickFormData,
-  TFormComponentSchema, TFormViewSchema,
+  TFormComponentSchema,
+  TFormViewSchema,
   zodArray,
   zodBoolean,
   zodInfer,
@@ -9,14 +10,18 @@ import {
   zodNumberRequired,
   zodObject,
   zodString,
-  zodStringRequired
+  zodStringRequired,
 } from "@/tmsui";
 
 export type TUserFormComponentSchema = TFormComponentSchema<TUserSchema> & {
   editData?: Partial<IUserDto>;
-}
+};
 
-export type TUserFormViewSchema = TFormViewSchema<TUserSchema>
+export type TUserListFormViewSchema = TFormViewSchema<TUserListSchema> & {
+  editData?: Partial<IUserDto>;
+};
+
+export type TUserFormViewSchema = TFormViewSchema<TUserSchema>;
 
 export const userSchema = zodObject({
   username: zodString(),
@@ -33,9 +38,10 @@ export const userSchema = zodObject({
 });
 
 export type TUserSchema = zodInfer<typeof userSchema>;
-
-export const userKeys = Object.keys(userSchema.shape) as (keyof zodInfer<typeof userSchema>)[];
-
+export type TUserListSchema = zodInfer<typeof userSchema>;
+export const userKeys = Object.keys(userSchema.shape) as (keyof zodInfer<
+  typeof userSchema
+>)[];
 
 export const initialValues: TUserSchema = {
   username: "",
@@ -51,9 +57,17 @@ export const initialValues: TUserSchema = {
   joinDate: "",
 };
 
-export const defaultValues = (isEdit?: boolean, editData?: Partial<IUserDto>): Partial<TUserSchema> => {
-  return isEdit ? pickFormData(editData as unknown as TUserSchema, userKeys as (keyof TUserSchema)[]) : initialValues;
-}
+export const defaultValues = (
+  isEdit?: boolean,
+  editData?: Partial<IUserDto>,
+): Partial<TUserSchema> => {
+  return isEdit
+    ? pickFormData(
+        editData as unknown as TUserSchema,
+        userKeys as (keyof TUserSchema)[],
+      )
+    : initialValues;
+};
 
 export const tag = [
   { label: "Select Tag", value: "" }, //

@@ -13,7 +13,6 @@ export const LangUser = {
     search: "検索", // Search
     searchPlaceholder: "名前またはメールで検索...", // Search by name or email
   },
-
   list: {
     user: "ユーザー", // User
     email: "メール", // Email
@@ -22,6 +21,21 @@ export const LangUser = {
     completedTraining: "完了したトレーニング", // Completed Training
     status: "ステータス", // Status
     actions: "アクション", // Actions
+    userDetail: "ユーザー詳細", // User Details
+  },
+  view: {
+    email: "メール", // Email
+    employeeID: "従業員 ID", // Employee ID
+    department: "部署", // Department
+    startDate: "入社日", // Start date
+    role: "役割", // role
+    tag: "タグ", // tag
+    status: "ステータス", // status
+    adminisPrivileges: "管理権限", // Administrative privileges
+    tProgress: "トレーニング進捗", // Training Progress
+    assignTraining: "割り当て済みトレーニング", // Assigned Training
+    completeTraining: "完了済みトレーニング", // Completed Training
+    close: "閉じる", // close
   },
 
   form: {
@@ -45,7 +59,8 @@ export const LangUser = {
     adminisPrivilegesFooter: "管理権限を選択（任意）", //Select administrative permissions (optional)
     passSetting: "パスワード設定（管理者）", //Password settings (administrator)
     passSettingPlaceholder: "新しいパスワードを入力", //Enter your new password
-    passSettingFooter: "空欄のままにすると、ユーザーが自分でパスワードを設定できます", //If left blank, users can set their own password.
+    passSettingFooter:
+      "空欄のままにすると、ユーザーが自分でパスワードを設定できます", //If left blank, users can set their own password.
     generatePassword: "生成", //Generate Password
     cancel: "キャンセル", // Cancel
     addAUser: "ユーザーを追加", //Add a user
