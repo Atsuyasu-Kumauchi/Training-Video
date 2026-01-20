@@ -26,7 +26,7 @@ export class UserTrainingService {
 
         queryBuilder.leftJoinAndSelect("UserTraining.training", "training");
 
-        queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
+        queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
 
         queryBuilder.where("UserTraining.userTrainingId IS NOT NULL");
         if (query.userIdFilter !== undefined) queryBuilder.andWhere("UserTraining.userId = :userId", { userId: query.userIdFilter });
