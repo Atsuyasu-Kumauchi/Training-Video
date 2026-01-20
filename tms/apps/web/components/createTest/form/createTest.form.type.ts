@@ -1,27 +1,54 @@
-import { zodArray, zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+import { ITestCreationDto } from "@/common";
+import {
+  TFormComponentSchema,
+  TFormViewSchema,
+  zodArray,
+  zodBoolean,
+  zodInfer,
+  zodObject,
+  zodString,
+  zodStringRequired,
+} from "@/tmsui";
+import z from "zod";
+
+export type TCreateTestListFormComponentSchema =
+  TFormComponentSchema<TCreateTestSchema> & {
+    editData?: Partial<ITestCreationDto>;
+  };
+
+export type TVideoListFormViewSchema = TFormViewSchema<TCreateTestSchema> & {
+  editData?: Partial<ITestCreationDto>;
+};
 
 export const createTestSchema = zodObject({
   name: zodStringRequired(),
-  category: zodStringRequired(),
-  explanation: zodStringRequired(),
-  status: zodStringRequired(),
-  questions: zodArray(zodObject({
-    questionText: zodStringRequired(),
-    questionType: zodStringRequired(),
-  })),
+  description: zodString(),
+  status: z.preprocess((val) => val === true || val === "true", zodBoolean()),
+  testQuestions: zodArray(
+    zodObject({
+      question: zodStringRequired(),
+      options: zodArray(zodStringRequired()).length(4), // always 4 options
+      correctOption: zodStringRequired(), // "A", "B", "C", "D"
+    })
+  ),
 });
 
 export type TCreateTestSchema = zodInfer<typeof createTestSchema>;
 
 export const initialValues: TCreateTestSchema = {
   name: "",
-  category: "",
-  status: "",
-  explanation: "",
-  questions: [
+  status: true,
+  description: "",
+  testQuestions: [
     {
-      questionText: "",
-      questionType: "",
+      question: "",
+      options: ["", "", "", ""], // 4 empty options
+      correctOption: "A", // default
     },
   ],
 };
+
+export const status = [
+  { label: "アクティブ", value: true },
+  { label: "非アクティブ", value: false },
+];
