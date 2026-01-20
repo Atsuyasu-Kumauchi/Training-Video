@@ -59,7 +59,8 @@ export class VideoService {
 
         queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Video.name like :name", { name: `%${query.nameFilter}%` });
-        if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags && :tags", { tags: query.tagsFilter });
+        // if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags @> :tags", { tags: `[${query.tagsFilter.join(",")}]` });
+        if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags @> :tags", { tags: `[${query.tagsFilter.map(v => `"${v}"`).join(",")}]` });
 
         queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
