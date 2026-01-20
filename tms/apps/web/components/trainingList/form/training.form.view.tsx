@@ -2,6 +2,7 @@ import { IUserDto, IVideoListDto, ListQueryConfig } from "@/common";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { Button, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea } from "@/tmsui";
+import { useFormContext } from "react-hook-form";
 import {
   status,
   TTrainingFormViewSchema,
@@ -10,6 +11,11 @@ import {
 
 export default function TrainingFormView({ formRef, modalRef, isEdit, isPending }: TTrainingFormViewSchema) {
   const { trainingList } = useLang();
+
+  const { formState: { errors }, watch } = useFormContext<TTrainingSchema>();
+
+  console.log(watch());
+
 
   return (
     <div className="space-y-4">
@@ -34,7 +40,7 @@ export default function TrainingFormView({ formRef, modalRef, isEdit, isPending 
         })}
       />
       <UiFormSelect2<TTrainingSchema>
-        name="users"
+        name="usersIds"
         label={trainingList.form.selectUser}
         placeholder={trainingList.form.selectUserPlaceholder}
         isMulti

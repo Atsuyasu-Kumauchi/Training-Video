@@ -1,11 +1,19 @@
-import { IDepartmentDto, IRoleDto, ITagDto, ListQueryConfig } from "@/common";
+import { IDepartmentDto, IRoleDto, ITagDto, IUserDto, ListQueryConfig } from "@/common";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { Button, passwordGenerate, UiFormInput, UiFormSelect, useFormContext } from "@/tmsui";
 import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
 import { TUserFormViewSchema, TUserSchema } from "./user.form.type";
 
-export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormViewSchema) {
+export function selectConvert<T>(data: T[]) {
+  const options = data?.map((item: any) => ({
+    label: item.firstName + " " + item.lastName + " - " + item.roleName,
+    value: item.userId,
+  }));
+  return options;
+};
+
+export default function UserFormView({ isEdit, modalRef, isPending, firstReviewData, secondReviewData, finalReviewData }: TUserFormViewSchema) {
   const { user } = useLang();
   const { setValue, trigger } = useFormContext<TUserSchema>();
 
@@ -14,6 +22,7 @@ export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormV
     setValue("password", password);
     trigger("password");
   }
+
   return (
     <>
       <div className="grid grid-cols-12 gap-4">
@@ -95,7 +104,7 @@ export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormV
             })}
           />
         </div>
-        {/* 
+
         <div className="col-span-12">
           <h4 className="text-lg font-medium text-gray-900 mb-4">
             {user.form.issueReview}
@@ -105,24 +114,42 @@ export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormV
           <UiFormSelect<TUserSchema>
             name="firstReview"
             label={user.form.firstReview}
-            options={department}
+            placeholder={user.form.firstReview}
+            options={selectConvert(firstReviewData as IUserDto[]) ?? []}
           />
         </div>
         <div className="col-span-12">
           <UiFormSelect<TUserSchema>
             name="secondReview"
             label={user.form.secondaryReview}
-            options={department}
+            placeholder={user.form.secondaryReview}
+            options={selectConvert(secondReviewData as IUserDto[]) ?? []}
           />
         </div>
         <div className="col-span-12">
           <UiFormSelect<TUserSchema>
             name="finalReview"
             label={user.form.finalReview}
-            options={department}
+            placeholder={user.form.finalReview}
+            options={selectConvert(finalReviewData as IUserDto[]) ?? []}
           />
         </div>
-        <div className="col-span-12 md:col-span-6">
+        {/* <div className="col-span-12">
+          <UiFormSelect<TUserSchema>
+            name="secondReview"
+            label={user.form.secondaryReview}
+            options={tag}
+          />
+        </div>
+        <div className="col-span-12">
+          <UiFormSelect<TUserSchema>
+            name="finalReview"
+            label={user.form.finalReview}
+            options={tag}
+          />
+        </div> */}
+
+        {/* <div className="col-span-12 md:col-span-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               {user.form.adminisPrivileges}
@@ -163,6 +190,8 @@ export default function UserFormView({ isEdit, modalRef, isPending }: TUserFormV
             </p>
           </div>
         </div> */}
+
+
         <div className="col-span-12">
           <UiFormInput<TUserSchema>
             name="password"

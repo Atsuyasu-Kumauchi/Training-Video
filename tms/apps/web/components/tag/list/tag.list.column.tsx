@@ -2,7 +2,7 @@ import { CTagDto, ITagDto } from '@/common';
 import { Badge } from '@/common/components/badge';
 import useLang from '@/lang';
 import { LangTag } from '@/lang/tag';
-import { Button } from '@/tmsui';
+import { Button, formateDate } from '@/tmsui';
 import { TListColumnDef } from '@/tmsui/types';
 import { TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui/ui/UIBasicModal';
 import { useRef } from 'react';
@@ -33,7 +33,7 @@ export const tagListColumn: TListColumnDef<CTagDto>[] = [
     enableHiding: false,
     header: () => list.creationDate,
     cell: (ctx) => {
-      return <div>{ctx.row.original.created}</div>
+      return <div>{formateDate(ctx.row.original.created)}</div>
     }
   },
   {

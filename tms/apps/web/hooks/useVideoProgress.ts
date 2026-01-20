@@ -2,7 +2,7 @@ import { TUiHeadLessModalRef } from "@/tmsui";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { useToast } from "./useToast";
 
-export type Question = {
+export type IYTQuestion = {
     testQuestionId: number;
     question: string;
     options: string[];
@@ -10,7 +10,7 @@ export type Question = {
 };
 
 type UseVideoProgressProps = {
-    questions: Question[];
+    questions: IYTQuestion[];
     storageKey: string;
     questionModalRef: RefObject<TUiHeadLessModalRef>;
     step?: number;
@@ -53,7 +53,7 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
     };
 
     const activeQuestionIndex = currentTime > 0 && currentTime % 180 === 0 && (currentTime / 180 - 1) < questions.length ? currentTime / 180 - 1 : -1;
-    const activeQuestion: Question | undefined = activeQuestionIndex >= 0 ? questions[activeQuestionIndex] : undefined;
+    const activeQuestion: IYTQuestion | undefined = activeQuestionIndex >= 0 ? questions[activeQuestionIndex] : undefined;
 
     useEffect(() => {
         if (activeQuestionIndex === -1 || activeQuestionIndex === lastQuestionIndexRef.current) return;

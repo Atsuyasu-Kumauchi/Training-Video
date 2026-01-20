@@ -106,7 +106,6 @@ export const UserEdit = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { user: userLang } = useLang();
   const isEdit = !!user.userId || false;
-
   return (
     <>
       <Button
