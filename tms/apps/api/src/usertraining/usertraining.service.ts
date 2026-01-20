@@ -28,7 +28,9 @@ export class UserTrainingService {
 
         queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where({ status: query.statusFilter === null ? Not(IsNull()) : query.statusFilter });
+        if (query.statusFilter === null) queryBuilder.where("Training.status IS NOT NULL");
+        else queryBuilder.where("Training.status = :status", { status: query.statusFilter });
+
         if (query.userIdFilter !== undefined) queryBuilder.andWhere("UserTraining.userId = :userId", { userId: query.userIdFilter });
         if (query.nameFilter !== undefined) queryBuilder.andWhere("Training.name like :name", { name: `%${query.nameFilter}%` });
 
