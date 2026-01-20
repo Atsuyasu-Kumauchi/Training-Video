@@ -1,14 +1,12 @@
 import { Transform, Type } from "class-transformer";
-import { IsArray, IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
 import { Messages } from "src/common/constants";
 import { SortDirection } from "src/common/enums/SortDirection";
 
 export class CreateUserTrainingDto {
-    @IsString()
     @IsNotEmpty()
     name: string;
 
-    @IsString()
     @IsOptional()
     description?: string;
 
@@ -38,7 +36,8 @@ export class UserTrainingQueryDto {
 
   @Transform(arg => arg.value === 'true')
   @IsBoolean()
-  statusFilter: boolean = true;
+  @IsOptional()
+  statusFilter?: boolean;
 
   @Type(() => Number)
   @IsNumber()

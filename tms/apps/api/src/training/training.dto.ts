@@ -13,7 +13,7 @@ export class CreateTrainingDto {
     @IsArray()
     videos: number[] = [];
 
-    @IsDate()
+    @IsNotEmpty()
     deadline: Date;
 
     @IsBoolean({ message: Messages.MSG1_EX('Training', 'status', 'boolean') })
@@ -28,7 +28,8 @@ export class TrainingQueryDto {
 
   @Transform(arg => arg.value === 'true')
   @IsBoolean()
-  statusFilter: boolean = true;
+  @IsOptional()
+  statusFilter?: boolean;
 
   @Type(() => Number)
   @IsNumber()

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, Repository } from "typeorm";
+import { type DeepPartial, In, Repository } from "typeorm";
 import { UserTraining } from "./usertraining.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
@@ -81,8 +81,19 @@ export class UserTrainingService {
         return training;
     }
 
-    async save(id: number, training: CreateTrainingDto): Promise<Training> {
-        return await this.trainingService.save(id, { trainingId: id, ...training });
+    async save(id: number, createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
+        const training = await this.trainingService.save(id, { trainingId: id, ...createUserTrainingDto });
+
+        const existingUserTrainings = Object.fromEntries(
+            (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId: id } }))
+                .map(ut => [ut.userId, ut])
+        );
+        const userTrainings = createUserTrainingDto.users.map(userId => ({
+            userId, trainingId: userId, progress: [...(existingUserTrainings[userId]?.progress || [])]
+        }));
+        await this.userTrainingRepository.save(userTrainings);
+
+        return training;
     }
 
 }

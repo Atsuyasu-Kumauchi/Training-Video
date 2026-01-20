@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, Repository } from "typeorm";
+import { type DeepPartial, In, IsNull, Not, Repository } from "typeorm";
 import { Video } from "./video.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateVideoDto, type VideoMetadata, VideoQueryDto } from "./video.dto";
@@ -57,7 +57,7 @@ export class VideoService {
     async findAll(query: VideoQueryDto) {
         const queryBuilder = this.videoRepository.createQueryBuilder('Video');
 
-        queryBuilder.where({ status: query.statusFilter });
+        queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
         if (query.nameFilter) queryBuilder.andWhere("Video.name like :name", { name: `%${query.nameFilter}%` });
         if (query.tagsFilter?.length) queryBuilder.andWhere("Video.audienceTags && :tags", { tags: query.tagsFilter });
 

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Brackets, DeepPartial, Repository } from 'typeorm';
+import { Brackets, DeepPartial, IsNull, Not, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Messages } from '../common/constants/messages';
 import { CreateUserDto, UserQueryDto } from './user.dto';
@@ -26,7 +26,7 @@ export class UserService {
 
     queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-    queryBuilder.where({ status: query.statusFilter ? true : false });
+    queryBuilder.where({ status: query.statusFilter === undefined ? Not(IsNull()) : query.statusFilter });
     if (query.simplenameFilter) {
       queryBuilder.andWhere(new Brackets(qb => {
         qb.where("User.username like :username", { username: `%${query.simplenameFilter}%` })
