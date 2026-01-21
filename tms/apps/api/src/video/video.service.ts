@@ -91,7 +91,7 @@ export class VideoService {
         return video;
     }
 
-    async create(createVideoDto: CreateVideoDto): Promise<Video> {
+    async create(createVideoDto: CreateVideoDto & { videoDuration: number, thumbnailUrl: string }): Promise<Video> {
         const existingVideo = await this.videoRepository.findOne({
             where: { name: createVideoDto.name },
         });

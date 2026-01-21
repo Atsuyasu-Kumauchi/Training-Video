@@ -7,7 +7,7 @@ export class Video {
     @PrimaryGeneratedColumn({ name: 'video_id' })
     videoId: number;
 
-    @Column({ name: 'title', type: 'varchar' })
+    @Column({ name: 'title', type: 'varchar', length: 100 })
     name: string;
 
     @Column({ name: 'description', type: 'text', nullable: true })
@@ -30,6 +30,12 @@ export class Video {
 
     @Column({ name: 'file_directory', type: 'varchar' })
     fileDirectory: string;
+
+    @Column({ name: 'video_duration', type: 'integer' })
+    videoDuration: number;
+
+    @Column({ name: 'thumbnail_url', type: 'varchar' })
+    thumbnailUrl: string;
 
     @Column({ name: 'audience_tags', type: 'jsonb', default: () => "'[]'::jsonb", nullable: false })
     audienceTags: string[] = [];
