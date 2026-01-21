@@ -34,7 +34,7 @@ export class Video {
     @Column({ name: 'video_duration', type: 'integer' })
     videoDuration: number;
 
-    @Column({ name: 'video_thumb_url', type: 'varchar' })
+    @Column({ name: 'thumbnail_url', type: 'varchar' })
     thumbnailUrl: string;
 
     @Column({ name: 'audience_tags', type: 'jsonb', default: () => "'[]'::jsonb", nullable: false })
