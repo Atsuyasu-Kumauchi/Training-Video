@@ -38,7 +38,7 @@ export class VideoController {
 
     @Post()
     async create(@Body() createVideoDto: CreateVideoDto): Promise<Video> {
-        const video = await this.videoService.create(createVideoDto);
+        const video = await this.videoService.create({ ...createVideoDto, videoDuration: 0, thumbnailUrl: '' });
 
         // schedule test generation
         await this.testService.save(createVideoDto.testId || video.testId, {
