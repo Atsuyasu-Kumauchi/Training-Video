@@ -7,7 +7,7 @@ export class Training {
     @PrimaryGeneratedColumn({ name: 'training_id' })
     trainingId: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', length: 100 })
     name: string;
 
     @Column({ type: 'text', nullable: true })
