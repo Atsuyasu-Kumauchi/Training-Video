@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { flexRender } from "@tanstack/react-table";
 import { TListTableHeader } from "./types";
 
-export function TableBody<T>({ table }: TListTableHeader<T>) {
+export function TableBody<T>({ table, }: TListTableHeader<T>) {
     const rows = table.getRowModel().rows;
-    console.log("rows", rows.length);
-    console.log("rows", table.getAllColumns().length);
 
     return (
         <tbody className="bg-white divide-y divide-gray-200" >

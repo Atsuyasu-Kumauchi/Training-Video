@@ -5,44 +5,66 @@ import {
   queryClient,
   TFormHandlerSubmit,
   TUiFormRef,
-  UiForm,
+  UiForm
 } from "@/tmsui";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useRef } from "react";
-import {
-  createTestSchema,
-  initialValues,
-  TCreateTestSchema,
-} from "./createTest.form.type";
+import { createTestSchema, defaultValues, TCreateTestSchema } from "./createTest.form.type";
 import EditTestFormView from "./editTest.form.view";
 
 export default function CreateTestFormComponent() {
+
   const router = useRouter();
   const formRef = useRef<TUiFormRef<TCreateTestSchema>>(null);
   const { id } = useParams<{ id: string }>();
 
+  const { data: testEditData, isLoading, isFetching } = useQuery({
+    queryKey: ["createTest-edit", id],
+    queryFn: async () => {
+      const response = AuthServer({
+        method: "GET",
+        url: TEST_CREATION_LIST.FIND_BY_ID(id),
+      });
+      return response;
+    },
+
+  });
+
+  const testEditDataValues = {
+    name: testEditData?.data?.name,
+    description: testEditData?.data?.description,
+    status: testEditData?.data?.status,
+    testQuestions: testEditData?.data?.testQuestions?.map((item: any) => {
+      return {
+        question: item.question,
+        options: item.options,
+        correctOption: item.correctOption,
+      }
+    })
+  }
+
   const testMutation = useMutation({
     mutationKey: ["test-update", id],
     mutationFn: async (value: TCreateTestSchema) => {
-      const optionMap: Record<string, number> = { A: 1, B: 2, C: 3, D: 4 };
-      const payload = {
-        testId: Number(id),
-        name: value.name,
-        description: value.description,
-        status: value.status,
-        testQuestions: value.testQuestions.map((q) => ({
-          question: q.question,
-          options: q.options,
-          correctOption: optionMap[q.correctOption],
-          testId: Number(id),
-        })),
-      };
+      // const optionMap: Record<string, number> = { A: 1, B: 2, C: 3, D: 4 };
+      // const payload = {
+      //   testId: Number(id),
+      //   name: value.name,
+      //   description: value.description,
+      //   status: value.status,
+      //   testQuestions: value.testQuestions.map((q) => ({
+      //     question: q.question,
+      //     options: q.options,
+      //     correctOption: optionMap[q.correctOption],
+      //     testId: Number(id),
+      //   })),
+      // };
 
       return AuthServer({
         method: "PUT",
         url: TEST_CREATION_LIST.UPDATE(id),
-        data: payload,
+        data: value,
       });
     },
     onSuccess: async () => {
@@ -63,28 +85,16 @@ export default function CreateTestFormComponent() {
     testMutation.mutate(value);
   };
 
-  // Updated setFormValues using setValue for each key
-  const setFormValues = (values: TCreateTestSchema) => {
-    if (!formRef.current) return;
-
-    // Loop through each key and call setValue
-    Object.keys(values).forEach((key) => {
-      // ...existing code...
-      // @ts-expect-error - setValue expects a specific key type, not a dynamic string key
-      // ...existing code...
-      formRef.current?.setValue(key, values[key]);
-    });
-  };
+  if (isLoading || isFetching) return <div className="flex items-center justify-center h-screen">Loading...</div>
 
   return (
     <UiForm
       schema={createTestSchema}
-      initialValues={initialValues}
+      initialValues={defaultValues(true, testEditDataValues)}
       onSubmit={onSubmitHandler}
       ref={formRef}
     >
-      {/* <CreateTestFormView /> */}
-      <EditTestFormView setFormValues={setFormValues} />
+      <EditTestFormView />
     </UiForm>
   );
 }

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, Repository } from "typeorm";
+import { type DeepPartial, In, IsNull, Not, Repository } from "typeorm";
 import { UserTraining } from "./usertraining.entity";
 import { throwSe } from "src/common/exception/exception.util";
 import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
@@ -24,12 +24,15 @@ export class UserTrainingService {
     async findAll(query: UserTrainingQueryDto) {
         const queryBuilder = this.userTrainingRepository.createQueryBuilder('UserTraining');
 
-        queryBuilder.leftJoinAndSelect("UserTraining.training", "training");
+        queryBuilder.leftJoinAndSelect("UserTraining.training", "Training");
 
-        queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
+        queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
 
-        queryBuilder.where("UserTraining.userTrainingId IS NOT NULL");
+        if (query.statusFilter === null) queryBuilder.where("Training.status IS NOT NULL");
+        else queryBuilder.where("Training.status = :status", { status: query.statusFilter });
+
         if (query.userIdFilter !== undefined) queryBuilder.andWhere("UserTraining.userId = :userId", { userId: query.userIdFilter });
+        if (query.nameFilter !== undefined) queryBuilder.andWhere("Training.name like :name", { name: `%${query.nameFilter}%` });
 
         queryBuilder.addOrderBy(`UserTraining.${query.sortBy}`, query.sortDirection);
 
@@ -50,8 +53,8 @@ export class UserTrainingService {
             resultCount,
             sortBy: query.sortBy,
             sortDirection: query.sortDirection,
-            userIdFilter: query.userIdFilter,
-            // nameFilter: query.nameFilter || null,
+            userIdFilter: query.userIdFilter || null,
+            nameFilter: query.nameFilter || null,
             statusFilter: query.statusFilter
         };
     }
@@ -70,10 +73,10 @@ export class UserTrainingService {
     }
 
     async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
-        const training = await this.trainingService.create(createUserTrainingDto);
+        const training = await this.trainingService.create(createUserTrainingDto as CreateTrainingDto);
 
-        const userTrainings = createUserTrainingDto.users.map(id => ({
-            userId: id, trainingId: training.trainingId, progress: []
+        const userTrainings = createUserTrainingDto.users.map(userId => ({
+            userId, trainingId: training.trainingId, progress: []
         }));
 
         await this.userTrainingRepository.save(userTrainings);
@@ -82,18 +85,18 @@ export class UserTrainingService {
     }
 
     async save(id: number, createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
-        const training = await this.trainingService.save(id, { trainingId: id, ...createUserTrainingDto });
-
         const existingUserTrainings = Object.fromEntries(
             (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId: id } }))
                 .map(ut => [ut.userId, ut])
         );
+
         const userTrainings = createUserTrainingDto.users.map(userId => ({
-            userId, trainingId: userId, progress: [...(existingUserTrainings[userId]?.progress || [])]
+            userId, trainingId: id, progress: existingUserTrainings[userId]?.progress || []
         }));
+
         await this.userTrainingRepository.save(userTrainings);
 
-        return training;
+        return await this.trainingService.save(id, { trainingId: id, ...(createUserTrainingDto as CreateTrainingDto) });
     }
 
 }

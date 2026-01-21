@@ -46,15 +46,14 @@ export class VideoQueryDto {
   @IsString()
   nameFilter?: string;
 
-  @IsString({ each: true })
-  @IsArray()
   @IsOptional()
+  @Transform(({ value }) => (value || "").split(","))
   tagsFilter?: string[];
 
   @Transform(arg => arg.value === 'true')
   @IsBoolean()
   @IsOptional()
-  statusFilter?: boolean;
+  statusFilter: boolean | null = null;
 
   @Type(() => Number)
   @IsNumber()

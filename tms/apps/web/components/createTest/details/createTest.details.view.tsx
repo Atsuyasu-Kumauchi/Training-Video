@@ -1,12 +1,12 @@
 import { Badge } from "@/common";
 import { Button } from "@/tmsui";
 import { useState } from "react";
-import { TCreateTestListFormComponentSchema } from "../form/createTest.form.type";
+import { TCreateTestFormViewSchema } from "../form/createTest.form.type";
 
 export default function CreateTestDetailsView({
   modalRef,
   editData,
-}: TCreateTestListFormComponentSchema) {
+}: TCreateTestFormViewSchema) {
   const [participant, setParticipant] = useState(null);
 
   return (

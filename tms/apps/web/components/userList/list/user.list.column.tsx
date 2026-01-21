@@ -38,7 +38,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.department,
     cell: (ctx) => {
-      return <div>{"N/A"}</div>;
+      return <div>{ctx.row.original.department?.name}</div>;
     },
   },
   {

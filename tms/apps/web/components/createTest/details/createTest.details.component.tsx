@@ -1,8 +1,8 @@
-import { TCreateTestListFormComponentSchema } from "../form/createTest.form.type";
+import { TCreateTestFormComponentSchema } from "../form/createTest.form.type";
 import CreateTestDetailsView from "./createTest.details.view";
 
 export default function CreateTestDetailsComponent(
-  props: TCreateTestListFormComponentSchema
+  props: TCreateTestFormComponentSchema,
 ) {
   return <CreateTestDetailsView {...props} />;
 }
