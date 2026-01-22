@@ -15,7 +15,7 @@ export class UserTraining {
     trainingId: number;
 
     @Column({ name: 'progress', type: "jsonb", default: () => "'[]'::jsonb" })
-    progress: any[] = [];
+    progress: { [key: number]: any }[] = [];
 
     @CreateDateColumn()
     created: Date;
