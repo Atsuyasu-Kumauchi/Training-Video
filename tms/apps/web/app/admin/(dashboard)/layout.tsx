@@ -1,9 +1,14 @@
 import { AdminLayout } from "@/tmsui";
+import { RequireAuth } from "@/common/components/RequireAuth";
 
 type IAdminLayout = {
     children: React.ReactNode
 }
 
 export default function layout({ children }: IAdminLayout) {
-    return (<AdminLayout>{children}</AdminLayout>)
+    return (
+        <RequireAuth>
+            <AdminLayout>{children}</AdminLayout>
+        </RequireAuth>
+    )
 }

@@ -2,8 +2,11 @@ import axios from "axios";
 import { getAuthToken } from "./server-cookie";
 
 
+const envBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL || "/";
+const BASE_URL = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
+
 export const AuthServer = axios.create({
-    baseURL: process.env.BASE_URL,
+    baseURL: BASE_URL,
     timeout: 1000 * 60,
     headers: {
         "Content-Type": "application/json",

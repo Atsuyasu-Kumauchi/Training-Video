@@ -4,7 +4,7 @@ import { decodeJwtEdge } from "./tmsui";
 // -----------------
 const PUBLIC_ROUTES = [
   "/",
-  "/admin/login",
+  "/admin",
   "/forgot-password",
   "/reset-password",
   "/totp-qr",
@@ -37,6 +37,11 @@ const CHANGE_PASSWORD_ROUTES_STUDENT = "/student/change-password";
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+
+  // Redirect /admin/login to /admin
+  if (pathname === "/admin/login") {
+    return NextResponse.redirect(new URL("/admin", request.url));
+  }
 
   const token = request.cookies.get("tms_token")?.value;
   const otpStep = request.cookies.get("tms_step")?.value === "2";
@@ -105,7 +110,7 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
-    "/admin/login",
+    "/admin",
     "/admin/:path*",
     "/student/:path*",
     "/forgot-password",
