@@ -44,7 +44,7 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.26",
-    "ytdl-core": "^4.11.5"
+    "youtube-sr": "^4.3.12"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
