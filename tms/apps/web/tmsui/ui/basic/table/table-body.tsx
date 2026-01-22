@@ -1,6 +1,5 @@
 import { cn } from "@/tmsui/utility";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EmptyState } from "@/common/components";
 import { flexRender } from "@tanstack/react-table";
 import { TListTableHeader } from "./types";
 
@@ -37,11 +36,8 @@ export function TableBody<T>({ table, }: TListTableHeader<T>) {
                 )
             }) : (
                 <tr>
-                    <td colSpan={table.getAllColumns().length} className="text-center py-4">
-                        <div>
-                            <FontAwesomeIcon icon={faExclamationTriangle} className="text-gray-500" />
-                            <p className="text-gray-500 text-sm  ">no data available</p>
-                        </div>
+                    <td colSpan={table.getAllColumns().length}>
+                        <EmptyState />
                     </td>
                 </tr>
             )}
