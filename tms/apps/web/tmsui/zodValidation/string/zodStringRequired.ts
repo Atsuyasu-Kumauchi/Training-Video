@@ -1,7 +1,8 @@
+import { Messages } from "@/common/constants";
 import { z } from "zod";
 import { sanitizeSQLInput } from "./zodString";
 
-const defaultMessage = "This field is required";
+const defaultMessage = Messages.FIELD_REQUIRED; // This field is required
 
 export function zodStringRequired(message: string = defaultMessage) {
   return z.coerce

@@ -1,4 +1,4 @@
-import { ITagDto, ListQueryConfig, TAG } from "@/common";
+import { ITagDto, ListQueryConfig, Messages, TAG } from "@/common";
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -24,7 +24,7 @@ export default function TagFormComponent({ isEdit, editData, modalRef }: TTagFor
       modalRef?.current?.modalClose();
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      const errorMessage = error?.response?.data?.message ?? "エラーが発生しました";
+      const errorMessage = error?.response?.data?.message ?? Messages.ERROR_OCCURRED; // Error occurred
       // Set error on the name field since duplicate tag error is related to the tag name
       formRef.current?.setError("name", {
         type: "server",
