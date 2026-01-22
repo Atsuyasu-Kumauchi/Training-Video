@@ -38,26 +38,266 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Ensure all text elements are visible in both light and dark modes */
+* {
+  color: inherit;
+}
+
+/* Text elements - ensure visibility */
+p, span, div, a, label, input, textarea, select, button, 
+h1, h2, h3, h4, h5, h6, li, td, th, strong, em, b, i, 
+small, code, pre, blockquote {
+  color: inherit;
+}
+
+/* Light mode - explicit dark text */
+@media (prefers-color-scheme: light) {
+  :root {
+    --text-primary: #171717;
+    --text-secondary: #404040;
+    --text-muted: #737373;
+    --border-color: #e5e5e5;
+  }
+  
+  body, p, span, div, a, label, h1, h2, h3, h4, h5, h6, 
+  li, td, th, strong, em, button, input, textarea, select {
+    color: var(--text-primary);
+  }
+  
+  /* Ensure inputs and form elements are visible */
+  input, textarea, select {
+    background-color: #ffffff;
+    color: #171717;
+    border-color: var(--border-color);
+  }
+  
+  input::placeholder, textarea::placeholder {
+    color: var(--text-muted);
+  }
+}
+
+/* Dark mode - explicit light text */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #ededed;
+    --text-secondary: #d4d4d4;
+    --text-muted: #a3a3a3;
+    --border-color: #404040;
+  }
+  
+  body, p, span, div, a, label, h1, h2, h3, h4, h5, h6, 
+  li, td, th, strong, em, button {
+    color: var(--text-primary);
+  }
+  
+  /* Ensure inputs and form elements are visible in dark mode */
+  input, textarea, select {
+    background-color: #1a1a1a !important;
+    color: #ededed !important;
+    border-color: var(--border-color) !important;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    color: var(--text-muted) !important;
+  }
+  
+  /* Override Tailwind classes in dark mode */
+  input.text-gray-900,
+  input[class*="text-gray-900"],
+  textarea.text-gray-900,
+  textarea[class*="text-gray-900"] {
+    color: #ededed !important;
+    background-color: #1a1a1a !important;
+  }
+  
+  input[class*="placeholder-gray-500"]::placeholder,
+  textarea[class*="placeholder-gray-500"]::placeholder {
+    color: #737373 !important;
+  }
+  
+  /* Ensure all input types are visible */
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"] {
+    background-color: #1a1a1a !important;
+    color: #ededed !important;
+  }
+  
+  input[type="text"]::placeholder,
+  input[type="password"]::placeholder,
+  input[type="email"]::placeholder {
+    color: #737373 !important;
+  }
+  
+  /* Links should be visible in dark mode */
+  a {
+    color: #60a5fa;
+  }
+  
+  a:hover {
+    color: #93c5fd;
+  }
+  
+  /* Buttons should have visible text */
+  button {
+    color: var(--text-primary);
+  }
+  
+  /* Table cells */
+  td, th {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+  
+  /* Override Tailwind text color classes in dark mode */
+  .text-gray-900,
+  [class*="text-gray-900"] {
+    color: #ededed !important;
+  }
+  
+  .text-gray-800,
+  [class*="text-gray-800"] {
+    color: #d4d4d4 !important;
+  }
+  
+  .text-gray-700,
+  [class*="text-gray-700"] {
+    color: #d4d4d4 !important;
+  }
+  
+  .text-gray-600,
+  [class*="text-gray-600"] {
+    color: #a3a3a3 !important;
+  }
+  
+  .text-gray-500,
+  [class*="text-gray-500"] {
+    color: #737373 !important;
+  }
+  
+  /* Ensure labels are visible */
+  label {
+    color: var(--text-primary) !important;
+  }
+  
+  label.text-gray-900,
+  label[class*="text-gray-900"] {
+    color: #ededed !important;
+  }
+  
+  /* Headings on white backgrounds */
+  h1.text-gray-900,
+  h2.text-gray-900,
+  h3.text-gray-900,
+  h4.text-gray-900,
+  h5.text-gray-900,
+  h6.text-gray-900,
+  h1[class*="text-gray-900"],
+  h2[class*="text-gray-900"],
+  h3[class*="text-gray-900"] {
+    color: #ededed !important;
+  }
+  
+  /* Paragraphs and spans */
+  p.text-gray-900,
+  span.text-gray-900,
+  div.text-gray-900,
+  p[class*="text-gray-900"],
+  span[class*="text-gray-900"] {
+    color: #ededed !important;
+  }
+  
+  /* Ensure white backgrounds become dark in dark mode */
+  .bg-white,
+  [class*="bg-white"] {
+    background-color: #1a1a1a !important;
+  }
+  
+  /* Form containers and cards */
+  form,
+  .form-container,
+  .card,
+  [class*="rounded-md"] {
+    background-color: transparent;
+  }
+  
+  /* Error messages and alerts */
+  .bg-red-50 {
+    background-color: #7f1d1d !important;
+  }
+  
+  .text-red-800,
+  [class*="text-red-800"] {
+    color: #fca5a5 !important;
+  }
+  
+  .text-red-700,
+  [class*="text-red-700"] {
+    color: #fca5a5 !important;
+  }
+  
+  .border-red-200 {
+    border-color: #991b1b !important;
+  }
+}
+
 
 /* React Select custom css */
 .react-select__control {
   @apply border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.react-select__single-value,
+.react-select__input-container,
+.react-select__placeholder {
+  color: var(--foreground) !important;
 }
 
 .react-select__option {
   @apply px-3 py-2 cursor-pointer;
+  color: var(--foreground);
 }
 
 .react-select__option--is-selected {
   @apply bg-blue-500 text-white;
 }
 
-.react-select__option--is-focused:not(.react-select__option--is-selected) {
-  @apply bg-blue-100 text-black;
+@media (prefers-color-scheme: dark) {
+  .react-select__control {
+    background-color: #1a1a1a;
+    border-color: #404040;
+  }
+  
+  .react-select__menu {
+    background-color: #1a1a1a;
+    border-color: #404040;
+  }
+  
+  .react-select__option--is-focused:not(.react-select__option--is-selected) {
+    background-color: #2a2a2a;
+    color: #ededed;
+  }
+  
+  .react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
+    background-color: #1a1a1a;
+    color: #ededed;
+  }
 }
 
-.react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
-  @apply bg-white text-black;
+@media (prefers-color-scheme: light) {
+  .react-select__option--is-focused:not(.react-select__option--is-selected) {
+    @apply bg-blue-100 text-black;
+  }
+  
+  .react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
+    @apply bg-white text-black;
+  }
 }
 
 .player-modal:fullscreen .player-modal-child-fullscreen {
@@ -82,6 +322,27 @@ body {
   width: 800px;
 }
 
+
+/* Ensure icons and SVGs are visible */
+svg {
+  color: inherit;
+  fill: currentColor;
+}
+
+/* FontAwesome icons */
+.fa, .fas, .far, .fal, .fab {
+  color: inherit;
+}
+
+/* Ensure all text in cards, containers, etc. */
+.card, .container, .panel, .box {
+  color: var(--foreground);
+}
+
+/* Utility classes for explicit text colors */
+.text-inherit {
+  color: inherit;
+}
 
 /* #sidebar a:active{
   color: red !important;

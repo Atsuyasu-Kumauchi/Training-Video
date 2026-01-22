@@ -10,11 +10,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
         <>
             {/* Logo and Header */}
             <div className="text-center">
-                <div className="mx-auto h-16 w-16 bg-primary rounded-full flex items-center justify-center">
-                    <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
+                
                 <h2 className="mt-6 text-3xl font-bold text-gray-900">
                     管理者ログイン
                 </h2>
@@ -115,8 +111,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
             {/* Footer */}
             <div className="text-center mt-4">
                 <p className="text-xs text-gray-500">
-                    © 2025 Training Management System. All rights reserved.
-
+                    © {new Date().getFullYear()} Training Management System. All rights reserved.
                 </p>
             </div>
         </>
