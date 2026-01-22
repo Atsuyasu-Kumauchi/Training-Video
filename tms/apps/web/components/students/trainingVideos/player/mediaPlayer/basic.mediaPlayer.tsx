@@ -10,6 +10,7 @@ export default function BasicMediaPlayer({ videoDetails, modalRef, questionModal
     const { videoRef, fullscreenRef, toggleFullscreen, onLoadedMetadata, activeQuestion, activeQuestionIndex, submitAnswer } = useVideoProgress({
         questions: videoDetails?.test?.testQuestions,
         storageKey: `video-${videoDetails?.uploadType}-${String(videoDetails?.videoId)}`,
+        dataSource: videoDetails,
         questionModalRef: questionModalRef
     });
 
