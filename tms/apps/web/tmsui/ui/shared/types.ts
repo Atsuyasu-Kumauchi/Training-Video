@@ -1,5 +1,5 @@
 export type IOption = {
     label: string;
-    value: string | number | boolean;
+    value: string | number;
 };
 

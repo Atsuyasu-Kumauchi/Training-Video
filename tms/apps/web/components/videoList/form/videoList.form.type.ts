@@ -5,7 +5,9 @@ export type TVideoListFormComponentSchema = TFormComponentSchema<TVideoListSchem
   editData?: Partial<IVideoListDto>;
 }
 
-export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema>
+export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema> & {
+  editData?: Partial<IVideoListDto>;
+}
 
 export const videoListSchema = zodObject({
   name: zodStringRequired(),
@@ -15,8 +17,8 @@ export const videoListSchema = zodObject({
   uploadType: zodString(),
   videoUrl: zodString(),
   fileResponse: zodObject({
-    "fileName": zodString(),
-    "playbackUrl": zodString(),
+    fileName: zodStringRequired(),
+    playbackUrl: zodStringRequired(),
   }).optional(),
   fileName: zodString(),
   fileDirectory: zodString(),
@@ -36,8 +38,8 @@ const initialValues: TVideoListSchema = {
   videoUrl: "",
   fileName: "",
   fileResponse: {
-    "fileName": "",
-    "playbackUrl": "",
+    fileName: "",
+    playbackUrl: "",
   },
   fileDirectory: "",
   status: true,
@@ -48,19 +50,19 @@ export const defaultValues = (isEdit?: boolean, editData?: Partial<IVideoListDto
 }
 
 export const videoStatus = [
-  { label: "アクティブ", value: true },
-  { label: "非アクティブ", value: false },
+  { label: "アクティブ", value: "true" },
+  { label: "非アクティブ", value: "false" },
 ];
 
-export const questionSet = [
-  { label: "問題セットを選択", value: "value" }, //Select a problem set
-  { label: "JavaScript Basics Quiz", value: "javascript-basics" },
-  { label: "React Fundamentals Test", value: "react-fundamentals" },
-  { label: "CSS Grid Assessment", value: "css-grid" },
-  { label: "Node.js Backend Quiz", value: "nodejs-backend" },
-  { label: "Database Design Test", value: "database-design" },
-  { label: "Leadership Assessment", value: "leadership-assessment" },
-];
+// export const questionSet = [
+//   { label: "問題セットを選択", value: "value" }, //Select a problem set
+//   { label: "JavaScript Basics Quiz", value: "javascript-basics" },
+//   { label: "React Fundamentals Test", value: "react-fundamentals" },
+//   { label: "CSS Grid Assessment", value: "css-grid" },
+//   { label: "Node.js Backend Quiz", value: "nodejs-backend" },
+//   { label: "Database Design Test", value: "database-design" },
+//   { label: "Leadership Assessment", value: "leadership-assessment" },
+// ];
 export const assignment = [
   { label: "Assignment 1: JavaScript Fundamentals", value: 1 },
   { label: "Assignment 2: React Components", value: 2 },

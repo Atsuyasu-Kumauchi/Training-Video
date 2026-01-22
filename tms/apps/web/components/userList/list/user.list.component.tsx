@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { userListColumn } from "./user.list.column";
 
 export default function UserListComponent() {
+
     const searchParams = useSearchParams();
     const listHook = useList<CUserDto>({
         columns: userListColumn,
@@ -15,6 +16,22 @@ export default function UserListComponent() {
             departmentIdFilter: searchParams.get("departmentIdFilter"),
             simplenameFilter: searchParams.get("simplenameFilter")
         }
+    })
+
+    listHook.data?.data?.forEach((user: CUserDto) => {
+        user.reviewers.forEach((reviewer: number, index: number) => {
+            switch (index) {
+                case 0:
+                    user.firstReview = reviewer
+                    break;
+                case 1:
+                    user.secondReview = reviewer
+                    break;
+                case 2:
+                    user.finalReview = reviewer
+                    break;
+            }
+        })
     })
 
     return (

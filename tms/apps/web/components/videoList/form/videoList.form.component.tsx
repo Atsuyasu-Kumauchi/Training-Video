@@ -30,6 +30,9 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
       formRef.current?.reset();
       modalRef?.current?.modalClose();
     },
+    onError: (error) => {
+      console.log("error", error);
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.VIDEO_LIST.key });
     },
@@ -40,10 +43,13 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
       ...value,
       fileName: value.fileResponse?.fileName,
       videoUrl: value.fileResponse?.playbackUrl,
+      status: Boolean(value.status),
     };
     delete modifiedValue.fileResponse;
     videoListMutation.mutate(modifiedValue as TVideoListSchema);
   };
+
+
 
   return (
     <UiForm
@@ -52,7 +58,12 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
       onSubmit={onSubmit}
       ref={formRef}
     >
-      <VideoListFormView formRef={formRef} modalRef={modalRef} isEdit={isEdit} isPending={videoListMutation.isPending} />
+      <VideoListFormView
+        modalRef={modalRef}
+        isEdit={isEdit}
+        isPending={videoListMutation.isPending}
+        editData={editData}
+      />
     </UiForm>
   );
 }

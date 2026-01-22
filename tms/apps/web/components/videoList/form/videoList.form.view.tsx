@@ -1,9 +1,9 @@
+"use client"
 import { ListQueryConfig } from "@/common/apiEnpoint";
 import { ITagDto } from "@/common/dto";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
-import { Button, UiFormFileUpload, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea, UiFormYTUpload, useFormContext } from "@/tmsui";
-import { useSettings } from "@/tmsui/store/settings";
+import { Button, MediaServer, UiFormFileUpload, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea, UiFormYTUpload, useFormContext } from "@/tmsui";
 import { UiFormRadio } from "@/tmsui/ui/UiFormRadio";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faCloudUpload } from "@fortawesome/free-solid-svg-icons";
@@ -17,12 +17,9 @@ import {
   videoStatus
 } from "./videoList.form.type";
 
-export default function VideoListFormView({ formRef, modalRef, isEdit, isPending }: TVideoListFormViewSchema) {
-  const { setIsOpen } = useSettings();
+export default function VideoListFormView({ modalRef, isEdit, isPending, editData }: TVideoListFormViewSchema) {
   const { videoList } = useLang();
-  const { formState: { errors }, control } = useFormContext<TVideoListSchema>();
-
-  console.log("errors", errors);
+  const { control } = useFormContext<TVideoListSchema>();
   const videoFileType = useWatch({ control, name: "uploadType" });
 
   return (
@@ -31,11 +28,12 @@ export default function VideoListFormView({ formRef, modalRef, isEdit, isPending
         <UiFormInput<TVideoListSchema>
           name="name"
           label={videoList.form.videoTitle}
-          placeholder=""
+          required
         />
         <UiFormTextArea<TVideoListSchema>
           name="description"
           label={videoList.form.explanation}
+          required
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -48,46 +46,23 @@ export default function VideoListFormView({ formRef, modalRef, isEdit, isPending
               keyName: { label: "name", value: "name" }
             })}
             placeholder={'カテゴリを選択'}
+            required
           />
           <UiFormSelect<TVideoListSchema>
             name="status"
             label={videoList.form.status}
             options={videoStatus}
             placeholder={videoList.form.status}
+            required
           />
         </div>
 
-        {/* <label className="block text-sm font-medium text-gray-700 mb-2">
-          {videoList.form.problemSetTitle}*
-        </label>
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetOne"
-          label={videoList.form.problemSetOne}
-          options={questionSet}
-        />
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetTwo"
-          label={videoList.form.problemSetTwo}
-          options={questionSet}
-        />
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetThree"
-          label={videoList.form.problemSetThree}
-          options={questionSet}
-        />
-        <UiFormSelect<TVideoListSchema>
-          name="problemSetFour"
-          label={videoList.form.problemSetFour}
-          options={questionSet}
-        />
-        <p className="mt-2 text-sm text-gray-500">
-          {videoList.form.problemSetFooter}
-        </p> */}
         <UiFormSelect<TVideoListSchema>
           name="assignmentId"
           label={videoList.form.assignment}
           options={assignment}
           placeholder={videoList.form.assignment}
+          required
         />
 
         <div className="border-t border-b border-gray-200 py-4 my-6">
@@ -138,13 +113,30 @@ export default function VideoListFormView({ formRef, modalRef, isEdit, isPending
           placeholder={videoList.form.upVSubTitle}
         />}
 
-        {/* <VideoListFormUpload /> */}
+        {isEdit && <div id="editCurrentVideoThumbnail" className="bg-gray-50 rounded-lg p-4">
+          <h5 className="text-sm font-medium text-gray-900 mb-2">現在の動画:</h5>
+          <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
+            {editData?.uploadType === "youtube" ? (
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${editData?.videoUrl}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              />
+            ) : (
+              <video
+                className="w-full h-full object-cover"
+                controls
+                src={MediaServer(editData?.videoUrl as string)}
+              />
+            )}
+          </div>
+        </div>}
 
         <div className="flex justify-end space-x-3 pt-4">
           <Button
             type="button"
             color="neutral"
-            onClick={() => setIsOpen(false)}
+            onClick={() => modalRef?.current?.modalClose()}
           >
             {videoList.form.cancle}
           </Button>

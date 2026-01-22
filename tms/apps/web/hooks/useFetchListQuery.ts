@@ -23,7 +23,7 @@ interface IUseFetchListQueryProps {
   pageSize: number;
   sorting: { id: string; desc: boolean }[];
   columnFilters: { id: string; value: unknown }[];
-  filters?: Record<string, string | number | boolean | undefined | null>;
+  filters?: Record<string, string | number | Array<string | number> | boolean | undefined | null>;
   searchQuery?: Record<string, string>;
   server?: AxiosInstance;
   sortBy?: string;
@@ -51,15 +51,7 @@ export function useFetchListQuery<TData>({
       const params = {
         pageIndex: pageIndex,
         pageSize: pageSize,
-        ...Object.entries(filters ?? {})
-          .filter(([, value]) => value !== undefined && value !== null)
-          .reduce(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {} as Record<string, string>,
-          ),
+        ...(filters || {})
 
         // sortBy: [
         //   ...(sortBy ? sortBy.split(",").filter(Boolean) : []),
