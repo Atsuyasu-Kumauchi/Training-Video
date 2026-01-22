@@ -31,7 +31,8 @@ export default function VideoListFilter() {
 
     const tagList = useFetchList<ITagDto[]>({
         query: ListQueryConfig.TAG_LIST,
-        keyName: { label: "name", value: "name" }
+        keyName: { label: "name", value: "name" },
+        statusFilter: true // Only show active tags in the select box
     })
 
     const [selectedOptions, setSelectedOptions] = useState<readonly ISelectConvertProps[]>([]);
@@ -55,8 +56,8 @@ export default function VideoListFilter() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">ステータス</label>
                         <select value={status} onChange={(e) => onStatusFilterChange(e.target.value)} className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                             <option value="">すべてのステータス</option>
-                            <option value="true">Active</option>
-                            <option value="false">Inactive</option>
+                            <option value="true">アクティブ</option>
+                            <option value="false">非アクティブ</option>
                             {/*      <option value="published">公開済み</option>
                             <option value="draft">下書き</option>
                             <option value="archived">アーカイブ済み</option> */}

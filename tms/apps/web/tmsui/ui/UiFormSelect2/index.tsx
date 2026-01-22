@@ -21,7 +21,7 @@ export const UiFormSelect2 = <T extends FieldValues>({
     required = false,
     options,
     isMulti = false,
-    placeholder = "Select an option",
+    placeholder = "選択してください",
     getValue = 'label',
 }: UiFormSelect2Props<T>) => {
     const { control } = useFormContext<T>();
