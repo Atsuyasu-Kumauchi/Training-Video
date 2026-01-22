@@ -11,6 +11,7 @@ import * as fs from 'fs';
 import Ffmpeg, * as ffmpeg from 'fluent-ffmpeg';
 import * as ffmpegPath from 'ffmpeg-static';
 import * as ffprobe from 'ffprobe-static';
+import * as ytdl from 'ytdl-core';
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
@@ -75,9 +76,12 @@ export class VideoController {
         const videoPath = path.join(this.uploadDir, createVideoDto.videoUrl.replace('/static', ''));
         const video = await this.videoService.create({
             ...createVideoDto,
-            videoDuration: Math.floor(await this.getVideoDuration(videoPath)),
-            thumbnailUrl: (await this.takeVideoThumbnail(videoPath, videoPath.replace(/\.[^.]*$/, ".thumb.jpg")))
-                .replace(/.*\/public/, '')
+            videoDuration: createVideoDto.uploadType === "file"
+                ? Math.floor(await this.getVideoDuration(videoPath))
+                : +(await ytdl.getBasicInfo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).videoDetails.lengthSeconds,
+            thumbnailUrl: createVideoDto.uploadType === "file"
+                ? (await this.takeVideoThumbnail(videoPath, videoPath.replace(/\.[^.]*$/, ".thumb.jpg"))).replace(/.*\/public/, '')
+                : (await ytdl.getBasicInfo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).thumbnail_url,
         });
 
         // schedule test generation
