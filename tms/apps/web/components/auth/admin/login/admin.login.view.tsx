@@ -22,19 +22,19 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
             <div className="mt-8 space-y-6">
                 <div className="rounded-md shadow-sm -space-y-px">
                     <Controller
-                        name="username"
+                        name="email"
                         control={control}
                         render={({ field }) => (
                             <div>
-                                <label htmlFor="admin-id" className="sr-only">Admin ID</label>
+                                <label htmlFor="admin-email" className="sr-only">Email</label>
                                 <input
-                                    id="admin-id"
-                                    type="text"
+                                    id="admin-email"
+                                    type="email"
                                     className={cn(
                                         "appearance-none rounded-none relative block w-full px-3 py-2 border  placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm",
-                                        errors.username ? "border-red-500" : "border-gray-300"
+                                        errors.email ? "border-red-500" : "border-gray-300"
                                     )}
-                                    placeholder="Admin ID"
+                                    placeholder="メールアドレス"
                                     {...field}
                                 />
                             </div>
@@ -53,7 +53,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
                                         "appearance-none rounded-none relative block w-full px-3 py-2 border  placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm",
                                         errors.password ? "border-red-500" : "border-gray-300"
                                     )}
-                                    placeholder="Password"
+                                    placeholder="パスワード"
                                     {...field}
                                 />
                             </div>

@@ -15,7 +15,10 @@ export default function AdminLoginComponent() {
             const response = await AuthServer({
                 method: "POST",
                 url: AUTH.LOGIN,
-                data: value,
+                data: {
+                    username: value.email, // Map email to username for API compatibility
+                    password: value.password,
+                },
             });
             await wait();
             return response.data;
