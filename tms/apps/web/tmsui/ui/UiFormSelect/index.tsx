@@ -36,7 +36,6 @@ export const UiFormSelect = <T extends FieldValues>({
     return (
         <Controller
             name={name}
-            defaultValue={undefined}
             control={control}
             render={({ field, fieldState: { error } }) => {
                 return (
@@ -54,7 +53,7 @@ export const UiFormSelect = <T extends FieldValues>({
                         >
                             <option value="">{placeholder}</option>
                             {options?.map((option: IOption) => {
-                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option.value as string | number}>{option.label}</option>)
+                                return (<option key={`${option.value}-${generateRandomKey()}`} value={option?.value as string | number}>{option.label}</option>)
                             })}
                         </select>
                         {error && <label className="block text-sm font-medium text-red-700 mb-2 mt-1">{error?.message}</label>}

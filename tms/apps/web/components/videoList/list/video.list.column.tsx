@@ -100,13 +100,21 @@ export const VideoEdit = (video: IVideoListDto) => {
     const { videoList } = useLang();
     const isEdit = !!video.videoId || false;
 
+    const videoModified = {
+        ...video,
+        fileResponse: {
+            "fileName": video.uploadType === "file" ? video?.fileName : video?.fileName,
+            "playbackUrl": video.uploadType === "file" ? video?.videoUrl : video?.videoUrl,
+        },
+    }
+
     return (
         <>
             <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />
             <UiBasicModal
                 modalRef={modalRef}
                 title={videoList.form.title}
-                body={<VideoListFormComponent isEdit={isEdit} editData={video} modalRef={modalRef} />}
+                body={<VideoListFormComponent isEdit={isEdit} editData={videoModified} modalRef={modalRef} />}
             />
         </>
     )

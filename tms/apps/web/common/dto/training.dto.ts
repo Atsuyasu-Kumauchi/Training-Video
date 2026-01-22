@@ -8,6 +8,7 @@ export interface ITrainingsDto extends IBaseDto {
     deadline: string;
     status: boolean;
     users: ITrainingsUserDto[];
+    usersIds: number[]
 }
 
 export class CTrainingsDto extends BaseDto implements ITrainingsDto {
@@ -19,8 +20,10 @@ export class CTrainingsDto extends BaseDto implements ITrainingsDto {
     deadline: string = "";
     status: boolean = false;
     users: CTrainingsUserDto[] = [];
+    usersIds: number[] = [];
 
     setAdditionalKey(): void {  // 
+        this.usersIds = this.users.map((user) => user.userId);
     }
 
 }

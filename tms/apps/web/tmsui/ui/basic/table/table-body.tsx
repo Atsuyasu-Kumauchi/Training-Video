@@ -1,13 +1,15 @@
 import { cn } from "@/tmsui/utility";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { flexRender } from "@tanstack/react-table";
 import { TListTableHeader } from "./types";
 
-export function TableBody<T>({ table }: TListTableHeader<T>) {
+export function TableBody<T>({ table, }: TListTableHeader<T>) {
     const rows = table.getRowModel().rows;
 
     return (
         <tbody className="bg-white divide-y divide-gray-200" >
-            {rows.map((row, index) => {
+            {rows.length > 0 ? rows.map((row, index) => {
                 return (
                     <tr
                         key={row.id}
@@ -33,7 +35,17 @@ export function TableBody<T>({ table }: TListTableHeader<T>) {
                         })}
                     </tr>
                 )
-            })}
+            }) : (
+                <tr>
+                    <td colSpan={table.getAllColumns().length} className="text-center py-4">
+                        <div>
+                            <FontAwesomeIcon icon={faExclamationTriangle} className="text-gray-500" />
+                            <p className="text-gray-500 text-sm  ">no data available</p>
+                        </div>
+                    </td>
+                </tr>
+            )}
+
         </tbody>
     )
 }

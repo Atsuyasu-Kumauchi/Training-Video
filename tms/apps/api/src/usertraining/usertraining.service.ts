@@ -21,7 +21,7 @@ export class UserTrainingService {
         private readonly videoService: VideoService
     ) { }
 
-    async findAll(query: UserTrainingQueryDto) {
+    async findAllTrainigs(query: UserTrainingQueryDto) {
         const queryBuilder = this.userTrainingRepository.createQueryBuilder('UserTraining');
 
         queryBuilder.leftJoinAndSelect("UserTraining.training", "Training");
@@ -59,8 +59,8 @@ export class UserTrainingService {
         };
     }
 
-    async findOne(id: number, userId?: number) {
-        const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id, userId }, relations: { training: true } });
+    async findOneTraining(trainingId: number, userId?: number) {
+        const userTraining = await this.userTrainingRepository.findOne({ where: { trainingId, userId }, relations: { training: true } });
 
         if (!userTraining) {
             throw new NotFoundException(Messages.MSG10_EX('UserTraining'));
@@ -72,7 +72,7 @@ export class UserTrainingService {
         return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress }] };
     }
 
-    async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
+    async createUserTraining(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
         const training = await this.trainingService.create(createUserTrainingDto as CreateTrainingDto);
 
         const userTrainings = createUserTrainingDto.users.map(userId => ({
@@ -84,19 +84,28 @@ export class UserTrainingService {
         return training;
     }
 
-    async save(id: number, createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
+    async saveUserTraining(trainingId: number, createUserTrainingDto: CreateUserTrainingDto & { progress: any[] }): Promise<Training> {
         const existingUserTrainings = Object.fromEntries(
-            (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId: id } }))
+            (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId } }))
                 .map(ut => [ut.userId, ut])
         );
 
         const userTrainings = createUserTrainingDto.users.map(userId => ({
-            userId, trainingId: id, progress: existingUserTrainings[userId]?.progress || []
+            userId, trainingId, progress: existingUserTrainings[userId]?.progress
         }));
 
         await this.userTrainingRepository.save(userTrainings);
 
-        return await this.trainingService.save(id, { trainingId: id, ...(createUserTrainingDto as CreateTrainingDto) });
+        return await this.trainingService.save(trainingId, { ...(createUserTrainingDto as CreateTrainingDto) });
     }
 
+    async saveUserTrainigProgress(userId: any, trainingId: number, trainingProgress: { videoId: number, progress: any }) {
+        const userTraining = await this.userTrainingRepository.findOne({ where: { userId, trainingId } }) || throwSe(NotFoundException);
+        userTraining?.progress.forEach(p => {
+            if (p[trainingProgress.videoId])
+                p[trainingProgress.videoId] = trainingProgress.progress;
+            return p;
+        });
+        await this.userTrainingRepository.save(userTraining);
+    }
 }

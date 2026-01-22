@@ -1,4 +1,5 @@
 import { IRoleDto, ListQueryConfig, ROLE } from "@/common";
+import { useToast } from "@/hooks";
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
@@ -8,7 +9,7 @@ import RolesFormView from "./roles.form.view";
 export default function RolesFormComponent({ modalRef, isEdit, editData }: TRolesFormComponentSchema) {
 
   const formRef = useRef<TUiFormRef<TRolesSchema>>(null);
-
+  const { toastError, toastSuccess } = useToast()
   const mutation = useMutation({
     mutationKey: isEdit ? ["roles-update"] : ["roles-create"],
     mutationFn: async (data: TRolesSchema) => {
@@ -24,9 +25,14 @@ export default function RolesFormComponent({ modalRef, isEdit, editData }: TRole
       formRef.current?.reset();
       modalRef?.current?.modalClose();
     },
+    onError: () => {
+      toastError("Something went wrong");
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.ROLE_LIST.key });
+      toastSuccess(isEdit ? "Role updated successfully" : "Role created successfully");
     },
+
   });
 
   const onSubmitHandler: TFormHandlerSubmit<TRolesSchema> = (value) => {

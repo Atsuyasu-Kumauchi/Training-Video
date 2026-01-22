@@ -34,7 +34,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.department,
     cell: (ctx) => {
-      return <div>{'N/A'}</div>
+      return <div>{ctx.row.original.department?.name}</div>
     }
   },
   {
@@ -95,7 +95,6 @@ export const UserEdit = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { user: userLang } = useLang();
   const isEdit = !!user.userId || false;
-
   return (
     <>
       <Button onClick={() => modalRef.current.modalOpen()} variant="ghost" color='primary' className='p-0' startIcon='edit' />

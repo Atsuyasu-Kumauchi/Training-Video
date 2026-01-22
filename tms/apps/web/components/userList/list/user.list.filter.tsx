@@ -2,7 +2,7 @@ import { IDepartmentDto, ListQueryConfig } from "@/common";
 import { ISelectConvertProps, useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function UserListFilter() {
     const { user } = useLang();
@@ -11,9 +11,6 @@ export default function UserListFilter() {
 
     const status = searchParams.get("statusFilter") ?? "";
     const department = searchParams.get("departmentIdFilter") ?? "";
-    const search = searchParams.get("simplenameFilter") ?? "";
-
-    const [searchText, setSearchText] = useState(search);
 
     const updateQuery = (key: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -34,12 +31,15 @@ export default function UserListFilter() {
         updateQuery("departmentIdFilter", value);
     }
 
-    const onSearchFilterChange = () => {
-        updateQuery("simplenameFilter", searchText);
+
+
+    const { register, handleSubmit, reset } = useForm({ mode: "all", defaultValues: { simplenameFilter: "" } })
+    const onSearchFilterChange: SubmitHandler<{ simplenameFilter: string }> = (value) => {
+        updateQuery("simplenameFilter", value.simplenameFilter);
     }
 
     const onClearFilterChange = () => {
-        setSearchText("");   // input clear
+        reset()  // input clear
         router.push("?");    // all query param delete
     }
 
@@ -51,8 +51,8 @@ export default function UserListFilter() {
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
             <div className="px-6 py-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div>
+                <div className="grid grid-cols-12  gap-4">
+                    <div className="col-span-12 md:col-span-3">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.status}
                         </label>
@@ -67,7 +67,7 @@ export default function UserListFilter() {
                             <option value="false">非アクティブ</option>
                         </select>
                     </div>
-                    <div>
+                    <div className="col-span-12 md:col-span-3">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             {user.filter.department}
                         </label>
@@ -82,42 +82,44 @@ export default function UserListFilter() {
                             ))}
                         </select>
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {user.filter.search}
-                        </label>
-                        <div className="flex gap-2">
-                            <input
-                                type="text"
-                                id="searchInput"
-                                placeholder={user.filter.searchPlaceholder}
-                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2 opacity-0">
-                            .
-                        </label>
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => onSearchFilterChange()}
-                                id="searchButton"
-                                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
-                            >
+                    <form onSubmit={handleSubmit(onSearchFilterChange)} className="col-span-12 md:col-span-5 flex gap-4 flex-wrap">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
                                 {user.filter.search}
-                            </button>
-                            <button
-                                onClick={() => onClearFilterChange()}
-                                id="searchButton"
-                                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
-                            >
-                                {user.filter.clearFilters}
-                            </button>
+                            </label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    id="searchInput"
+                                    placeholder={user.filter.searchPlaceholder}
+                                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                                    {...register("simplenameFilter")}
+                                />
+                            </div>
                         </div>
-                    </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2 opacity-0">
+                                .
+                            </label>
+                            <div className="flex gap-2">
+                                <button
+                                    type="submit"
+                                    id="searchButton"
+                                    className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+                                >
+                                    {user.filter.search}
+                                </button>
+                                <button
+                                    onClick={() => onClearFilterChange()}
+                                    id="searchButton"
+                                    type="button"
+                                    className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+                                >
+                                    {user.filter.clearFilters}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
