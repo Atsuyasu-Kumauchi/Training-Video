@@ -5,8 +5,6 @@
   --foreground: #171717;
 }
 
-
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -25,279 +23,181 @@
   --color-primary-900: #1e3a8a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Force light mode colors - design stays same in both modes */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #f9fafb; /* bg-gray-50 */
+  color: #111827; /* text-gray-900 */
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Ensure all text elements are visible in both light and dark modes */
+/* Ensure all elements use light mode colors regardless of system preference */
 * {
-  color: inherit;
+  color-scheme: light !important;
 }
 
-/* Text elements - ensure visibility */
-p, span, div, a, label, input, textarea, select, button, 
-h1, h2, h3, h4, h5, h6, li, td, th, strong, em, b, i, 
-small, code, pre, blockquote {
-  color: inherit;
+/* Force all backgrounds to stay light */
+.bg-white,
+[class*="bg-white"] {
+  background-color: #ffffff !important;
 }
 
-/* Light mode - explicit dark text */
-@media (prefers-color-scheme: light) {
-  :root {
-    --text-primary: #171717;
-    --text-secondary: #404040;
-    --text-muted: #737373;
-    --border-color: #e5e5e5;
-  }
-  
-  body, p, span, div, a, label, h1, h2, h3, h4, h5, h6, 
-  li, td, th, strong, em, button, input, textarea, select {
-    color: var(--text-primary);
-  }
-  
-  /* Ensure inputs and form elements are visible */
-  input, textarea, select {
-    background-color: #ffffff;
-    color: #171717;
-    border-color: var(--border-color);
-  }
-  
-  input::placeholder, textarea::placeholder {
-    color: var(--text-muted);
-  }
+.bg-gray-50,
+[class*="bg-gray-50"] {
+  background-color: #f9fafb !important;
 }
 
-/* Dark mode - explicit light text */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-primary: #ededed;
-    --text-secondary: #d4d4d4;
-    --text-muted: #a3a3a3;
-    --border-color: #404040;
-  }
-  
-  body, p, span, div, a, label, h1, h2, h3, h4, h5, h6, 
-  li, td, th, strong, em, button {
-    color: var(--text-primary);
-  }
-  
-  /* Ensure inputs and form elements are visible in dark mode */
-  input, textarea, select {
-    background-color: #1a1a1a !important;
-    color: #ededed !important;
-    border-color: var(--border-color) !important;
-  }
-  
-  input::placeholder, textarea::placeholder {
-    color: var(--text-muted) !important;
-  }
-  
-  /* Override Tailwind classes in dark mode */
-  input.text-gray-900,
-  input[class*="text-gray-900"],
-  textarea.text-gray-900,
-  textarea[class*="text-gray-900"] {
-    color: #ededed !important;
-    background-color: #1a1a1a !important;
-  }
-  
-  input[class*="placeholder-gray-500"]::placeholder,
-  textarea[class*="placeholder-gray-500"]::placeholder {
-    color: #737373 !important;
-  }
-  
-  /* Ensure all input types are visible */
-  input[type="text"],
-  input[type="password"],
-  input[type="email"],
-  input[type="number"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="search"] {
-    background-color: #1a1a1a !important;
-    color: #ededed !important;
-  }
-  
-  input[type="text"]::placeholder,
-  input[type="password"]::placeholder,
-  input[type="email"]::placeholder {
-    color: #737373 !important;
-  }
-  
-  /* Links should be visible in dark mode */
-  a {
-    color: #60a5fa;
-  }
-  
-  a:hover {
-    color: #93c5fd;
-  }
-  
-  /* Buttons should have visible text */
-  button {
-    color: var(--text-primary);
-  }
-  
-  /* Table cells */
-  td, th {
-    color: var(--text-primary);
-    border-color: var(--border-color);
-  }
-  
-  /* Override Tailwind text color classes in dark mode */
-  .text-gray-900,
-  [class*="text-gray-900"] {
-    color: #ededed !important;
-  }
-  
-  .text-gray-800,
-  [class*="text-gray-800"] {
-    color: #d4d4d4 !important;
-  }
-  
-  .text-gray-700,
-  [class*="text-gray-700"] {
-    color: #d4d4d4 !important;
-  }
-  
-  .text-gray-600,
-  [class*="text-gray-600"] {
-    color: #a3a3a3 !important;
-  }
-  
-  .text-gray-500,
-  [class*="text-gray-500"] {
-    color: #737373 !important;
-  }
-  
-  /* Ensure labels are visible */
-  label {
-    color: var(--text-primary) !important;
-  }
-  
-  label.text-gray-900,
-  label[class*="text-gray-900"] {
-    color: #ededed !important;
-  }
-  
-  /* Headings on white backgrounds */
-  h1.text-gray-900,
-  h2.text-gray-900,
-  h3.text-gray-900,
-  h4.text-gray-900,
-  h5.text-gray-900,
-  h6.text-gray-900,
-  h1[class*="text-gray-900"],
-  h2[class*="text-gray-900"],
-  h3[class*="text-gray-900"] {
-    color: #ededed !important;
-  }
-  
-  /* Paragraphs and spans */
-  p.text-gray-900,
-  span.text-gray-900,
-  div.text-gray-900,
-  p[class*="text-gray-900"],
-  span[class*="text-gray-900"] {
-    color: #ededed !important;
-  }
-  
-  /* Ensure white backgrounds become dark in dark mode */
-  .bg-white,
-  [class*="bg-white"] {
-    background-color: #1a1a1a !important;
-  }
-  
-  /* Form containers and cards */
-  form,
-  .form-container,
-  .card,
-  [class*="rounded-md"] {
-    background-color: transparent;
-  }
-  
-  /* Error messages and alerts */
-  .bg-red-50 {
-    background-color: #7f1d1d !important;
-  }
-  
-  .text-red-800,
-  [class*="text-red-800"] {
-    color: #fca5a5 !important;
-  }
-  
-  .text-red-700,
-  [class*="text-red-700"] {
-    color: #fca5a5 !important;
-  }
-  
-  .border-red-200 {
-    border-color: #991b1b !important;
-  }
+.bg-gray-100,
+[class*="bg-gray-100"] {
+  background-color: #f3f4f6 !important;
 }
 
+/* Force all text colors to stay dark - but allow white text */
+.text-white,
+[class*="text-white"] {
+  color: #ffffff !important;
+}
+
+.text-gray-900,
+[class*="text-gray-900"],
+h1, h2, h3, h4, h5, h6 {
+  color: #111827 !important;
+}
+
+.text-gray-800,
+[class*="text-gray-800"] {
+  color: #1f2937 !important;
+}
+
+.text-gray-700,
+[class*="text-gray-700"] {
+  color: #374151 !important;
+}
+
+.text-gray-600,
+[class*="text-gray-600"] {
+  color: #4b5563 !important;
+}
+
+.text-gray-500,
+[class*="text-gray-500"] {
+  color: #6b7280 !important;
+}
+
+.text-gray-400,
+[class*="text-gray-400"] {
+  color: #9ca3af !important;
+}
+
+/* Primary colors - ensure they work */
+.text-primary-700,
+[class*="text-primary-700"] {
+  color: #1d4ed8 !important; /* primary-700 */
+}
+
+.bg-primary-50,
+[class*="bg-primary-50"] {
+  background-color: #eff6ff !important; /* primary-50 */
+}
+
+.bg-primary-600,
+[class*="bg-primary-600"] {
+  background-color: #2563eb !important; /* primary-600 */
+}
+
+.border-primary-600,
+[class*="border-primary-600"] {
+  border-color: #2563eb !important; /* primary-600 */
+}
+
+/* Icons on colored backgrounds should be white */
+.bg-primary-600 .text-white,
+.bg-primary-600 [class*="text-white"],
+.bg-primary-600 svg,
+.bg-primary-600 .fa,
+.bg-primary-600 .fas,
+.bg-blue-500 .text-white,
+.bg-blue-500 [class*="text-white"],
+.bg-blue-500 svg,
+.bg-blue-500 .fa,
+.bg-blue-500 .fas,
+.bg-green-500 .text-white,
+.bg-green-500 [class*="text-white"],
+.bg-green-500 svg,
+.bg-green-500 .fa,
+.bg-green-500 .fas,
+.bg-orange-500 .text-white,
+.bg-orange-500 [class*="text-white"],
+.bg-orange-500 svg,
+.bg-orange-500 .fa,
+.bg-orange-500 .fas,
+.bg-purple-500 .text-white,
+.bg-purple-500 [class*="text-white"],
+.bg-yellow-500 .text-white,
+.bg-yellow-500 [class*="text-white"],
+.bg-red-500 .text-white,
+.bg-red-500 [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+/* Force all borders to stay light */
+.border-gray-200,
+[class*="border-gray-200"] {
+  border-color: #e5e7eb !important;
+}
+
+.border-gray-300,
+[class*="border-gray-300"] {
+  border-color: #d1d5db !important;
+}
+
+/* Form elements - always light mode */
+input, textarea, select {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280 !important; /* text-gray-500 */
+}
 
 /* React Select custom css */
 .react-select__control {
   @apply border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: #ffffff !important;
+  color: #111827 !important;
 }
 
 .react-select__single-value,
 .react-select__input-container,
 .react-select__placeholder {
-  color: var(--foreground) !important;
+  color: #111827 !important;
 }
 
 .react-select__option {
   @apply px-3 py-2 cursor-pointer;
-  color: var(--foreground);
+  background-color: #ffffff !important;
+  color: #111827 !important;
 }
 
 .react-select__option--is-selected {
   @apply bg-blue-500 text-white;
 }
 
-@media (prefers-color-scheme: dark) {
-  .react-select__control {
-    background-color: #1a1a1a;
-    border-color: #404040;
-  }
-  
-  .react-select__menu {
-    background-color: #1a1a1a;
-    border-color: #404040;
-  }
-  
-  .react-select__option--is-focused:not(.react-select__option--is-selected) {
-    background-color: #2a2a2a;
-    color: #ededed;
-  }
-  
-  .react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
-    background-color: #1a1a1a;
-    color: #ededed;
-  }
+.react-select__option--is-focused:not(.react-select__option--is-selected) {
+  background-color: #dbeafe !important; /* bg-blue-100 */
+  color: #111827 !important;
 }
 
-@media (prefers-color-scheme: light) {
-  .react-select__option--is-focused:not(.react-select__option--is-selected) {
-    @apply bg-blue-100 text-black;
-  }
-  
-  .react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
-    @apply bg-white text-black;
-  }
+.react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.react-select__menu {
+  background-color: #ffffff !important;
+  border-color: #d1d5db !important;
 }
 
 .player-modal:fullscreen .player-modal-child-fullscreen {
@@ -322,26 +222,32 @@ small, code, pre, blockquote {
   width: 800px;
 }
 
-
-/* Ensure icons and SVGs are visible */
+/* Ensure icons and SVGs are visible and inherit colors */
 svg {
   color: inherit;
   fill: currentColor;
 }
 
-/* FontAwesome icons */
-.fa, .fas, .far, .fal, .fab {
+/* FontAwesome icons - inherit parent color */
+.fa, .fas, .far, .fal, .fab,
+[class*="fa-"] {
   color: inherit;
 }
 
-/* Ensure all text in cards, containers, etc. */
-.card, .container, .panel, .box {
-  color: var(--foreground);
+/* Sidebar icons should inherit link colors */
+#sidebar a .fa,
+#sidebar a .fas,
+#sidebar a svg,
+#sidebar a [class*="fa-"] {
+  color: inherit;
 }
 
-/* Utility classes for explicit text colors */
-.text-inherit {
-  color: inherit;
+/* Active sidebar link icons should be primary-700 */
+#sidebar a.text-primary-700 .fa,
+#sidebar a.text-primary-700 .fas,
+#sidebar a.text-primary-700 svg,
+#sidebar a.text-primary-700 [class*="fa-"] {
+  color: #1d4ed8 !important; /* primary-700 */
 }
 
 /* #sidebar a:active{

@@ -2,9 +2,23 @@
 
 -- Insert default department if it doesn't exist
 INSERT INTO departments (name)
-SELECT 'Management'
+SELECT 'Department A'
 WHERE NOT EXISTS (
-    SELECT 1 FROM departments WHERE name = 'Management'
+    SELECT 1 FROM departments WHERE name = 'Department A'
+);
+
+-- Insert Department B
+INSERT INTO departments (name)
+SELECT 'Department '
+WHERE NOT EXISTS (
+    SELECT 1 FROM departments WHERE name = 'Department B'
+);
+
+-- Insert Department C
+INSERT INTO departments (name)
+SELECT 'Department C'
+WHERE NOT EXISTS (
+    SELECT 1 FROM departments WHERE name = 'Department C'
 );
 
 -- Insert default role if it doesn't exist
@@ -12,6 +26,38 @@ INSERT INTO roles (name)
 SELECT 'Administrator'
 WHERE NOT EXISTS (
     SELECT 1 FROM roles WHERE name = 'Administrator'
+);
+
+-- Insert Employee role
+INSERT INTO roles (name)
+SELECT 'Employee'
+WHERE NOT EXISTS (
+    SELECT 1 FROM roles WHERE name = 'Employee'
+);
+
+-- Insert Tags
+INSERT INTO tags (name, status)
+SELECT 'TAG-1', true
+WHERE NOT EXISTS (
+    SELECT 1 FROM tags WHERE name = 'TAG-1'
+);
+
+INSERT INTO tags (name, status)
+SELECT 'TAG-2', true
+WHERE NOT EXISTS (
+    SELECT 1 FROM tags WHERE name = 'TAG-2'
+);
+
+INSERT INTO tags (name, status)
+SELECT 'TAG-3', true
+WHERE NOT EXISTS (
+    SELECT 1 FROM tags WHERE name = 'TAG-3'
+);
+
+INSERT INTO tags (name, status)
+SELECT 'TAG-4', true
+WHERE NOT EXISTS (
+    SELECT 1 FROM tags WHERE name = 'TAG-4'
 );
 
 -- Insert Admin User

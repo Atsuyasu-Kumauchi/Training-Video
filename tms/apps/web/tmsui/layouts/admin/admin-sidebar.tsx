@@ -45,11 +45,9 @@ export function AdminSidebar() {
     <div
       id="sidebar"
       className={cn(
-        "w-64 bg-white shadow-lg transform transition-transform duration-300 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0",
+        "w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0",
         // Mobile → slide in/out
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full",
-        // Desktop → completely hide if closed
-        !isSidebarOpen && "lg:hidden"
+        isSidebarOpen && "translate-x-0"
       )}
     >
       <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
