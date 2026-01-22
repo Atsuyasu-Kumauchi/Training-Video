@@ -11,7 +11,7 @@ import * as fs from 'fs';
 import Ffmpeg, * as ffmpeg from 'fluent-ffmpeg';
 import * as ffmpegPath from 'ffmpeg-static';
 import * as ffprobe from 'ffprobe-static';
-import * as ytdl from 'ytdl-core';
+import { YouTube } from 'youtube-sr';
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
@@ -78,10 +78,10 @@ export class VideoController {
             ...createVideoDto,
             videoDuration: createVideoDto.uploadType === "file"
                 ? Math.floor(await this.getVideoDuration(videoPath))
-                : +(await ytdl.getBasicInfo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).videoDetails.lengthSeconds,
+                : (await YouTube.getVideo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).duration,
             thumbnailUrl: createVideoDto.uploadType === "file"
                 ? (await this.takeVideoThumbnail(videoPath, videoPath.replace(/\.[^.]*$/, ".thumb.jpg"))).replace(/.*\/public/, '')
-                : (await ytdl.getBasicInfo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).thumbnail_url,
+                : (await YouTube.getVideo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).thumbnail?.url || "",
         });
 
         // schedule test generation
