@@ -13,7 +13,8 @@ export default function YoutubeMediaPlayer({ videoDetails, modalRef, questionMod
         videoId: videoDetails?.videoUrl,
         questions: videoDetails?.test?.testQuestions,
         storageKey: `video-${videoDetails?.uploadType}-${String(videoDetails?.videoId)}`,
-        questionModalRef: questionModalRef
+        questionModalRef: questionModalRef,
+        dataSource: videoDetails
     });
 
     return (

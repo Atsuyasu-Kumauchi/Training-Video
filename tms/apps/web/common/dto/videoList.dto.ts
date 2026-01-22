@@ -19,6 +19,8 @@ export interface IVideoListDto extends IBaseDto {
         fileName: string;
         playbackUrl: string;
     };
+    videoDuration: number;
+    thumbnailUrl: string;
 }
 
 
@@ -44,6 +46,9 @@ export class CVideoListDto extends BaseDto implements IVideoListDto {
             fileName: "",
             playbackUrl: "",
         };
+
+    videoDuration: number = 0;
+    thumbnailUrl: string = "";
 
     setAdditionalKey(): void {  // 
         this.fileResponse.playbackUrl = this.videoUrl;

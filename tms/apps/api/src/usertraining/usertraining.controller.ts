@@ -1,9 +1,8 @@
 import { Body, Controller, Get, Param, Patch, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
-import { UserTrainingService } from "./usertraining.service";
-import { UserTraining } from "./usertraining.entity";
-import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
 import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
 import { Training } from "src/training/training.entity";
+import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
+import { UserTrainingService } from "./usertraining.service";
 
 
 @UseGuards(JwtAuthGuard, VerifyUser)
@@ -24,7 +23,7 @@ export class UserTrainingController {
     }
 
     @Get(':id')
-    async findOne(@Req() req, @Param('id') trainingId: string) {
+    async findOne(@Req() req, @Param('id') trainingId: number) {
         return await this.userTrainingService.findOneTraining(+trainingId, req.user.isAdmin ? undefined : req.user.userId);
     }
 

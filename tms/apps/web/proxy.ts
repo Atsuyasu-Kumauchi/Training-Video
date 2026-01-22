@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { decodeJwtEdge } from "./tmsui";
+import { decodeJwtEdge, deleteAuthToken } from "./tmsui";
 
 // -----------------
 const PUBLIC_ROUTES = [
@@ -41,9 +41,15 @@ export async function proxy(request: NextRequest) {
   const token = request.cookies.get("tms_token")?.value;
   const otpStep = request.cookies.get("tms_step")?.value === "2";
   const otpStep1 = request.cookies.get("tms_step")?.value === "1";
-  const payload = token ? await decodeJwtEdge<{ isAdmin: boolean, resetPwd: boolean }>(token) : null;
+  const payload = token ? await decodeJwtEdge<{ isAdmin: boolean, resetPwd: boolean, exp: number }>(token) : null;
   const isAdmin = payload?.isAdmin === true;
   const isResetPwd = payload?.resetPwd === true;
+  const isExpired = payload?.exp as number;
+  if (isExpired < Date.now() / 1000) {
+    await deleteAuthToken("tms_token");
+    await deleteAuthToken("tms_step");
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   // Route matching
   const isPublicRoute = PUBLIC_ROUTES.some((route) => {
@@ -53,9 +59,9 @@ export async function proxy(request: NextRequest) {
 
   const isAdminRoute = ADMIN_ROUTES.some((route) => pathname === route || pathname.startsWith(route + "/"));
   const isStudentRoute = STUDENT_ROUTES.some((route) => pathname === route || pathname.startsWith(route + "/"));
-  const isAdminChangePasswordRoute = pathname === CHANGE_PASSWORD_ROUTES_ADMIN ||  pathname.startsWith(CHANGE_PASSWORD_ROUTES_ADMIN + "/");
-  const isStudentChangePasswordRoute =  pathname === CHANGE_PASSWORD_ROUTES_STUDENT || pathname.startsWith(CHANGE_PASSWORD_ROUTES_STUDENT + "/");
-  const isProtectedRoute =  isAdminRoute || isStudentRoute || isAdminChangePasswordRoute || isStudentChangePasswordRoute;
+  const isAdminChangePasswordRoute = pathname === CHANGE_PASSWORD_ROUTES_ADMIN || pathname.startsWith(CHANGE_PASSWORD_ROUTES_ADMIN + "/");
+  const isStudentChangePasswordRoute = pathname === CHANGE_PASSWORD_ROUTES_STUDENT || pathname.startsWith(CHANGE_PASSWORD_ROUTES_STUDENT + "/");
+  const isProtectedRoute = isAdminRoute || isStudentRoute || isAdminChangePasswordRoute || isStudentChangePasswordRoute;
 
   //  Protected route access
   if (isProtectedRoute) {
@@ -78,11 +84,11 @@ export async function proxy(request: NextRequest) {
 
     if (isResetPwd) {
       if (isAdmin && !isAdminChangePasswordRoute) {
-        return NextResponse.redirect( new URL(CHANGE_PASSWORD_ROUTES_ADMIN, request.url));
+        return NextResponse.redirect(new URL(CHANGE_PASSWORD_ROUTES_ADMIN, request.url));
       }
 
       if (!isAdmin && !isStudentChangePasswordRoute) {
-        return NextResponse.redirect( new URL(CHANGE_PASSWORD_ROUTES_STUDENT, request.url));
+        return NextResponse.redirect(new URL(CHANGE_PASSWORD_ROUTES_STUDENT, request.url));
       }
     }
 

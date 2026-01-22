@@ -82,10 +82,9 @@ export default function VideoListFilter() {
                         {/* </select> */}
 
                         <Select
+                            instanceId="videoTags-filter"
                             isMulti
-                            name="fruits"
                             options={tagList}
-                            className="basic-multi-select"
                             classNamePrefix="select"
                             onChange={onTagsFilterChange}
                             value={selectedOptions}

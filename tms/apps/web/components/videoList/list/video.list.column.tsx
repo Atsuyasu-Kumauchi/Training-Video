@@ -3,9 +3,7 @@ import { Badge } from '@/common/components/badge';
 import { CVideoListDto, IVideoListDto } from '@/common/dto/videoList.dto';
 import useLang from '@/lang';
 import { LangVideoList } from '@/lang/videoList';
-import { Button, formateDate, TListColumnDef, TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, formateDate, MediaServer, TListColumnDef, TUiBasicModalRef, UiBasicModal, uiBasicModalRefDefaultValue } from '@/tmsui';
 import { useRef } from 'react';
 import VideoDetailsComponent from '../details/video.details.component';
 import VideoListFormComponent from '../form/videoList.form.component';
@@ -22,8 +20,10 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
             return (
                 <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-24">
-                        <div className="h-16 w-24 bg-gray-200 rounded-lg flex items-center justify-center">
-                            <FontAwesomeIcon icon={fas.faPlay} />
+                        <div className="h-16 w-24 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden ">
+                            <img src={
+                                original.uploadType === "file" ? MediaServer(original?.thumbnailUrl) : original.uploadType === "youtube" ? original?.thumbnailUrl : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                            } alt={original?.name} width={150} height={150} />
                         </div>
                     </div>
                     <div className="ml-4">

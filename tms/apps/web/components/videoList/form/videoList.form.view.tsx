@@ -19,8 +19,9 @@ import {
 
 export default function VideoListFormView({ modalRef, isEdit, isPending, editData }: TVideoListFormViewSchema) {
   const { videoList } = useLang();
-  const { control } = useFormContext<TVideoListSchema>();
+  const { control, formState: { errors } } = useFormContext<TVideoListSchema>();
   const videoFileType = useWatch({ control, name: "uploadType" });
+  console.log(errors);
 
   return (
     <Fragment>

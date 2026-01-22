@@ -1,5 +1,5 @@
 import { ITagDto } from "@/common";
-import { pickFormData, TFormComponentSchema, TFormViewSchema, zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+import { pickFormData, TFormComponentSchema, TFormViewSchema, zodInfer, zodObject, zodStringRequired } from "@/tmsui";
 
 export type TTagFormComponentSchema = TFormComponentSchema<TTagSchema> & {
   isEdit: boolean;
@@ -11,7 +11,7 @@ export type TTagFormViewSchema = TFormViewSchema<TTagSchema>
 
 export const tagSchema = zodObject({
   name: zodStringRequired(),
-  status: zodString(),
+  status: zodStringRequired().transform((value) => value === "true"),
 });
 
 export type TTagSchema = zodInfer<typeof tagSchema>;
@@ -20,7 +20,7 @@ export const tagKeys = Object.keys(tagSchema.shape) as (keyof zodInfer<typeof ta
 
 export const initialValues = {
   name: "",
-  status: "true",
+  status: true,
 };
 
 export const defaultValues = (isEdit: boolean, editData: ITagDto): Partial<TTagSchema> => {
