@@ -155,10 +155,27 @@ input, textarea, select {
   background-color: #ffffff !important;
   color: #111827 !important;
   border-color: #d1d5db !important;
+  font-size: 0.875rem !important; /* text-sm - 14px */
 }
 
 input::placeholder,
 textarea::placeholder {
+  color: #6b7280 !important; /* text-gray-500 */
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+/* Select box text and options - smaller font size */
+select {
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+select option {
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+/* Select option placeholder styling (first empty option) */
+select option[value=""] {
+  font-size: 0.875rem !important; /* text-sm - 14px */
   color: #6b7280 !important; /* text-gray-500 */
 }
 
@@ -170,9 +187,13 @@ textarea::placeholder {
 }
 
 .react-select__single-value,
-.react-select__input-container,
-.react-select__placeholder {
+.react-select__input-container {
   color: #111827 !important;
+}
+
+.react-select__placeholder {
+  color: #6b7280 !important; /* text-gray-500 */
+  font-size: 0.875rem !important; /* text-sm - 14px */
 }
 
 .react-select__option {

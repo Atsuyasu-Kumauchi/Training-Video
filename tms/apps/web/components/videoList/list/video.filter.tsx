@@ -46,12 +46,6 @@ export default function VideoListFilter() {
         updateQuery("nameFilter", value.nameFilter);
     }
 
-    const onClearFilterChange = () => {
-        setSelectedOptions([]);
-        reset();
-        router.push("?");    // all query param delete
-    }
-
 
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
@@ -118,12 +112,6 @@ export default function VideoListFilter() {
                             <label className="block text-sm font-medium text-gray-700 mb-2 opacity-0">.</label>
                             <button id="searchButton" className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 検索
-                            </button>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2 opacity-0">.</label>
-                            <button type="button" onClick={onClearFilterChange} id="searchButton" className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200" >
-                                クリア
                             </button>
                         </div>
                     </form>
