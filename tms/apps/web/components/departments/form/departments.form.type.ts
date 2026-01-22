@@ -1,4 +1,12 @@
-import { zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+import { IDepartmentDto } from "@/common";
+import { pickFormData, TFormComponentSchema, TFormViewSchema, zodInfer, zodObject, zodStringRequired } from "@/tmsui";
+
+
+export type TDepartmentsFormComponentSchema = TFormComponentSchema<TDepartmentsSchema> & {
+  editData?: Partial<IDepartmentDto>;
+}
+
+export type TDepartmentsFormViewSchema = TFormViewSchema<TDepartmentsSchema>
 
 export const departmentsSchema = zodObject({
   name: zodStringRequired(),
@@ -6,14 +14,20 @@ export const departmentsSchema = zodObject({
 });
 
 export type TDepartmentsSchema = zodInfer<typeof departmentsSchema>;
+export const departmentKeys = Object.keys(departmentsSchema.shape) as (keyof zodInfer<typeof departmentsSchema>)[];
 
 export const initialValues = {
   name: "",
-  status: "",
+  status: "true",
 };
 
+
+export const defaultValues = (isEdit?: boolean, editData?: Partial<IDepartmentDto>): Partial<TDepartmentsSchema> => {
+  return isEdit ? pickFormData(editData as unknown as TDepartmentsSchema, departmentKeys as (keyof TDepartmentsSchema)[]) : initialValues;
+}
+
+// active and inactive
 export const status = [
-  { label: "Select Status", value: "value" },
-  { label: "Active", value: "1" },
-  { label: "Inactive", value: "0" },
+  { label: "アクティブ", value: "true" },
+  { label: "非アクティブ", value: "false" },
 ];

@@ -3,13 +3,31 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DepartmentsModule } from './departments/departments.module';
+import { DepartmentModule } from './department/department.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_FILTER } from '@nestjs/core';
+import { PublicHttpExceptionFilter } from './common/exception/PublicHttpExceptionFilter';
+import { RoleModule } from './role/role.module';
+import { UserModule } from './user/user.moduel';
+import { TagModule } from './tag/tag.module';
+import { VideoModule } from './video/video.module';
+import { UserTrainingModule } from './usertraining/usertraining.module';
+import { TrainingModule } from './training/training.module';
+import { TestModule } from './test/test.module';
+import { UserAssignmentModule } from './userassignment/userassignment.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
+      load: [
+        () => ({
+          appname: process.env.APPNAME || 'com.offproapp.tvs',
+          secretkey: process.env.SECRET_KEY || 'OPEN_SECRET',
+          verify_signup: process.env.VERIFY_SIGNUP || false
+        })
+      ]
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -26,9 +44,18 @@ import { DepartmentsModule } from './departments/departments.module';
       }),
       inject: [ConfigService],
     }),
-    DepartmentsModule,
+    DepartmentModule,
+    AuthModule,
+    RoleModule,
+    UserModule,
+    TagModule,
+    VideoModule,
+    UserTrainingModule,
+    TrainingModule,
+    TestModule,
+    UserAssignmentModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],
 })
 export class AppModule {}

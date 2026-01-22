@@ -1,7 +1,8 @@
+"use client"
 import ChangePasswordFormComponent from "./form/changePassword.form.component";
 
-export default function ChangePasswordController() {
+export default function ChangePasswordController({ username }: { username: string }) {
     return (
-        <ChangePasswordFormComponent />
+        <ChangePasswordFormComponent username={username} />
     )
 }

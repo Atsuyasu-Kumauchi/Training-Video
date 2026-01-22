@@ -13,6 +13,7 @@ import {
     VisibilityState,
 } from "@tanstack/react-table";
 import { AxiosInstance } from "axios";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useFetchListQuery } from "./useFetchListQuery";
 
@@ -46,71 +47,64 @@ export function useList<TData, TValue = unknown>({
     sortBy = "updatedAt:desc",
     staleTime,
 }: IUseListTableOptions<TData, TValue>) {
+
+
+    const searchParams = useSearchParams();
+
     const [sorting, setSortingState] = useState<SortingState>([]);
-    const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>(
-        [],
-    );
+    const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
-    const [globalFilter, setGlobalFilterState] = useState("");
+    // const [globalFilter, setGlobalFilterState] = useState("");
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: pageSize,
     });
 
-    const setPageIndexZero = () => {
-        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-    };
+    const setPageIndexZero = () => setPagination((prev) => ({ ...prev, pageIndex: 0 }));
 
-    const setSorting = (
-        updater: SortingState | ((old: SortingState) => SortingState),
-    ) => {
+    const setSorting = (updater: SortingState | ((old: SortingState) => SortingState)) => {
         setSortingState(updater);
         setPageIndexZero();
     };
 
-    const setColumnFilters = (
-        updater:
-            | ColumnFiltersState
-            | ((old: ColumnFiltersState) => ColumnFiltersState),
-    ) => {
+    const setColumnFilters = (updater: | ColumnFiltersState | ((old: ColumnFiltersState) => ColumnFiltersState),) => {
         setColumnFiltersState(updater);
         setPageIndexZero();
     };
 
-    const setGlobalFilter = (value: string) => {
-        setGlobalFilterState(value);
-        setPageIndexZero();
-    };
+    // const setGlobalFilter = (value: string) => {
+    //     setGlobalFilterState(value);
+    //     setPageIndexZero();
+    // };
 
     const { data, isLoading, isError, error } = useFetchListQuery<TData>({
         query,
         pageIndex: pagination.pageIndex,
         pageSize: pagination.pageSize,
-        globalFilter,
+        server,
+        staleTime,
         sorting,
         columnFilters,
         filters,
-        server,
         sortBy,
-        staleTime,
     });
 
     const table = useReactTable({
-        data: data?.items || [],
+        data: data?.data || [],
         columns,
-        pageCount: data?.pageable?.totalPages ?? -1,
+        pageCount: data?.pageCount ?? -1,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
             rowSelection,
-            globalFilter,
+            // globalFilter,
             pagination,
         },
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
-        onGlobalFilterChange: setGlobalFilter,
+        // onGlobalFilterChange: setGlobalFilter,
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
@@ -126,8 +120,8 @@ export function useList<TData, TValue = unknown>({
     return {
         table,
         columns,
-        globalFilter,
-        setGlobalFilter,
+        // globalFilter,
+        // setGlobalFilter,
         isLoading,
         isError,
         error,

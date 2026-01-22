@@ -8,29 +8,23 @@ interface IQueryConfig {
 }
 
 export interface ApiResponse<TData> {
-  nonce: number;
-  status: number;
-  message: string;
-  error: null | string;
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-    totalPages: number;
-    totalElements: number;
-    first: boolean;
-    last: boolean;
-  };
-  items: TData[];
+  pageIndex: number;
+  pageSize: number;
+  pageCount: number;
+  resultCount: number;
+  sortBy: string;
+  sortDirection: string;
+  data: TData[];
 }
 
 interface IUseFetchListQueryProps {
   query: IQueryConfig;
   pageIndex: number;
   pageSize: number;
-  globalFilter: string;
   sorting: { id: string; desc: boolean }[];
   columnFilters: { id: string; value: unknown }[];
-  filters?: Record<string, string | number | boolean | undefined | null>;
+  filters?: Record<string, string | number | Array<string | number> | boolean | undefined | null>;
+  searchQuery?: Record<string, string>;
   server?: AxiosInstance;
   sortBy?: string;
   staleTime?: number;
@@ -40,12 +34,8 @@ export function useFetchListQuery<TData>({
   query,
   pageIndex,
   pageSize,
-  globalFilter,
-  sorting,
-  columnFilters,
   filters,
   server = AuthServer,
-  sortBy = "updatedAt:desc",
   staleTime = 1000 * 60 * 5,
 }: IUseFetchListQueryProps) {
   return useQuery<ApiResponse<TData>>({
@@ -53,28 +43,16 @@ export function useFetchListQuery<TData>({
       ...query.key,
       pageIndex,
       pageSize,
-      globalFilter,
-      sorting,
-      columnFilters,
       filters,
     ],
     queryFn: async ({ signal }) => {
       const cancelSource: CancelTokenSource = axios.CancelToken.source();
       signal?.addEventListener("abort", () => cancelSource.cancel());
-
       const params = {
-        page: pageIndex + 1,
-        per_page: pageSize,
-        // q: globalFilter,
-        // ...Object.entries(filters ?? {})
-        //   .filter(([, value]) => value !== undefined && value !== null)
-        //   .reduce(
-        //     (acc, [key, value]) => {
-        //       acc[key] = String(value);
-        //       return acc;
-        //     },
-        //     {} as Record<string, string>,
-        //   ),
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        ...(filters || {})
+
         // sortBy: [
         //   ...(sortBy ? sortBy.split(",").filter(Boolean) : []),
         //   ...sorting.map((s) => `${s.id}:${s.desc ? "desc" : "asc"}`),
@@ -101,10 +79,10 @@ export function useFetchListQuery<TData>({
 
         return {
           ...response.data,
-          items: response?.data.items ?? [],
+          data: response?.data.data ?? [],
 
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         if (axios.isCancel(error)) {
           console.warn("Cancelled request:", error.message);
         } else {
@@ -112,19 +90,13 @@ export function useFetchListQuery<TData>({
         }
 
         return {
-          nonce: 0,
-          status: 500,
-          message: "Canceled or failed request",
-          error: error.message ?? "Request failed",
-          pageable: {
-            pageNumber: 0,
-            pageSize,
-            totalPages: 0,
-            totalElements: 0,
-            first: true,
-            last: true,
-          },
-          items: [],
+          pageIndex: 0,
+          pageSize: 0,
+          pageCount: 0,
+          resultCount: 0,
+          sortBy: "",
+          sortDirection: "",
+          data: [],
         };
       }
     },

@@ -1,89 +1,73 @@
+import { IUserDto, IVideoListDto, ListQueryConfig } from "@/common";
+import { useFetchList } from "@/hooks";
+import useLang from "@/lang";
+import { Button, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea } from "@/tmsui";
+import { useFormContext } from "react-hook-form";
 import {
-  Button,
-  Modal,
-  TFormHandlerSubmit,
-  TUiFormRef,
-  UiForm,
-  UiFormInput,
-  UiFormSelect,
-  UiFormTextArea,
-} from "@/tmsui";
-import { useSettings } from "@/tmsui/store";
-import { useRef } from "react";
-import {
-  initialValues,
-  members,
   status,
-  trainingSchema,
-  TTrainingSchema,
-  videos,
+  TTrainingFormViewSchema,
+  TTrainingSchema
 } from "./training.form.type";
 
-export default function TrainingFormView() {
-  const { isOpen, setIsOpen } = useSettings();
-  const formRef = useRef<TUiFormRef<TTrainingSchema>>(null);
+export default function TrainingFormView({ formRef, modalRef, isEdit, isPending }: TTrainingFormViewSchema) {
+  const { trainingList } = useLang();
 
-  const onSubmitHandler: TFormHandlerSubmit<TTrainingSchema> = (value) => {
-    console.log(value);
-    setIsOpen(false);
-  };
+  const { formState: { errors }, watch } = useFormContext<TTrainingSchema>();
+
+  console.log(watch());
+
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      title="Add New Training"
-    >
-      <UiForm
-        schema={trainingSchema}
-        initialValues={initialValues}
-        onSubmit={onSubmitHandler}
-        ref={formRef}
-      >
-        <div className="px-6 py-8">
-          <div className="space-y-4">
-            <UiFormInput<TTrainingSchema>
-              name="name"
-              label="Name"
-              placeholder="Enter your text here.."
-            />
-            <UiFormTextArea<TTrainingSchema>
-              name="description"
-              label="Description"
-            />
-            <UiFormSelect<TTrainingSchema>
-              name="videos"
-              label="Select Videos"
-              options={videos}
-            />
-            <UiFormSelect<TTrainingSchema>
-              name="users"
-              label="Select Users(Optional)"
-              options={members}
-            />
-            <UiFormSelect<TTrainingSchema>
-              name="group"
-              label="Select User Group(Optional)"
-              options={members}
-            />
-            <UiFormSelect<TTrainingSchema>
-              name="status"
-              label="Status"
-              options={status}
-            />
-            <div className="flex justify-end space-x-3 pt-4">
-              <Button
-                type="button"
-                color="neutral"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancle
-              </Button>
-              <Button type="submit">Create Training</Button>
-            </div>
-          </div>
-        </div>
-      </UiForm>
-    </Modal>
+    <div className="space-y-4">
+      <UiFormInput<TTrainingSchema>
+        name="name"
+        label={trainingList.form.trainingName}
+        placeholder={trainingList.form.trainNamePlaceholder}
+      />
+      <UiFormTextArea<TTrainingSchema>
+        name="description"
+        label={trainingList.form.explanation}
+        placeholder={trainingList.form.explanationPlaceholder}
+      />
+      <UiFormSelect2<TTrainingSchema>
+        name="videos"
+        label={trainingList.form.selectVideo}
+        placeholder={trainingList.form.selectVideoPlaceholder}
+        isMulti
+        options={useFetchList<IVideoListDto[]>({
+          query: ListQueryConfig.VIDEO_LIST,
+          keyName: { label: "name", value: "videoId" }
+        })}
+      />
+      <UiFormSelect2<TTrainingSchema>
+        name="usersIds"
+        label={trainingList.form.selectUser}
+        placeholder={trainingList.form.selectUserPlaceholder}
+        isMulti
+        options={useFetchList<IUserDto[]>({
+          query: ListQueryConfig.USER,
+          keyName: { label: "email", value: "userId" }
+        })}
+      />
+      <UiFormInput<TTrainingSchema>
+        name="deadline"
+        label={trainingList.form.deadline}
+        placeholder={trainingList.form.deadlinePlaceholder}
+        required
+        type="date"
+      />
+      <UiFormSelect<TTrainingSchema>
+        name="status"
+        label={trainingList.form.status}
+        options={status}
+        placeholder={trainingList.form.statusPlaceholder}
+      />
+      <div className="flex justify-end space-x-3 pt-4">
+        <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>
+          {trainingList.form.cancel}
+        </Button>
+        <Button type="submit" disabled={isPending} loading={isPending} > {trainingList.form.createATraining}</Button>
+      </div>
+    </div>
   );
 }

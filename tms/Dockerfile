@@ -15,7 +15,7 @@ ENV PATH=$PATH:/usr/local/lib/node_modules/.bin
 RUN npm install -g @nestjs/cli
 
 # Expose ports for both API and web
-EXPOSE 3000 3001
+EXPOSE 3000 3001 9229
 
 # Default command (will be overridden by docker-compose)
 CMD ["npm", "start"]

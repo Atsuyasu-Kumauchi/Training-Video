@@ -1,6 +1,6 @@
 'use client';
 
-import VideoPlayer from "@/components/VideoPlayer";
+import VideoPlayer from "@/components/students/trainingVideos/VideoPlayer";
 
 
 export default function Home() {

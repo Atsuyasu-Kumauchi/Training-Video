@@ -1,4 +1,5 @@
 import { cn } from "@/tmsui/utility";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faArrowLeft,
   faArrowRight,
@@ -9,16 +10,22 @@ import {
   faCircleNotch,
   faDownload,
   faEdit,
+  faEye,
+  faKey,
+  faPaperPlane,
   faPlus,
   faPrint,
+  fas,
   faSave,
+  faSignInAlt,
   faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { ComponentProps, ElementType, ReactNode } from "react";
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, IconProp> = {
   chevronRight: faChevronRight,
   chevronLeft: faChevronLeft,
   check: faCheck,
@@ -29,10 +36,15 @@ const iconMap: Record<string, any> = {
   download: faDownload,
   save: faSave,
   update: faCircle, // Placeholder - FA doesn't have exact update icon
-  delete: faTrash,
   draft: faEdit, // Placeholder
+  view: faEye,
   edit: faEdit,
+  delete: faTrash,
   print: faPrint,
+  paperPlane: faPaperPlane,
+  login: faSignInAlt,
+  key: faKey,
+
 };
 
 const colorVariants = {
@@ -203,7 +215,7 @@ export const Button = ({
     <button type={type} className={buttonClasses} disabled={disabled} {...rest}>
       {loading && (
         <FontAwesomeIcon
-          icon={faCircleNotch}
+          icon={fas.faSpinner}
           spin
           size={size === "sm" ? "sm" : size === "lg" ? "lg" : "1x"}
         />
@@ -267,7 +279,7 @@ export const LinkButton = ({
   target,
   rel,
   onClick,
-  as: Component = "a",
+  as: Component = Link,
   ...rest
 }: LinkButtonProps) => {
   const colorClass =

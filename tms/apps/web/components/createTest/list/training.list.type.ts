@@ -1,0 +1,42 @@
+export const trainingTableData = [
+  {
+    training: "JavaScript Fundamentals",
+    description: "Learn the basics of JavaScript programming",
+    totalVideos: 12,
+    enrolled: 45,
+    completed: 38,
+    status: "Active",
+  },
+  {
+    training: "Leadership Skills",
+    description: "Develop essential leadership competencies",
+    totalVideos: 10,
+    enrolled: 28,
+    completed: 22,
+    status: "Active",
+  },
+  {
+    training: "Workplace Safety",
+    description: "Essential safety protocols and procedures",
+    totalVideos: 8,
+    enrolled: 156,
+    completed: 142,
+    status: "Active",
+  },
+  {
+    training: "Communication Skills",
+    description: "Improve interpersonal communication",
+    totalVideos: 9,
+    enrolled: 67,
+    completed: 54,
+    status: "Draft",
+  },
+  {
+    training: "Compliance Training",
+    description: "Legal and regulatory compliance requirements",
+    totalVideos: 15,
+    enrolled: 89,
+    completed: 76,
+    status: "Active",
+  },
+];

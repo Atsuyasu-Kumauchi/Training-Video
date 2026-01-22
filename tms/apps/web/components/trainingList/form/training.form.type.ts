@@ -1,43 +1,50 @@
-import { zodInfer, zodObject, zodString, zodStringRequired } from "@/tmsui";
+import { ITrainingsDto } from "@/common";
+import {
+  pickFormData,
+  TFormComponentSchema,
+  TFormViewSchema,
+  zodArray,
+  zodBooleanRequired,
+  zodInfer,
+  zodNumberRequired,
+  zodObject,
+  zodString,
+  zodStringRequired
+} from "@/tmsui";
+
+export type TTrainingFormComponentSchema = TFormComponentSchema<TTrainingSchema> & {
+  editData?: Partial<ITrainingsDto>;
+}
+
+export type TTrainingFormViewSchema = TFormViewSchema<TTrainingSchema>
 
 export const trainingSchema = zodObject({
   name: zodStringRequired(),
   description: zodString(),
-  videos: zodStringRequired(),
-  users: zodString(),
-  group: zodString(),
-  status: zodStringRequired(),
+  videos: zodArray(zodNumberRequired()),
+  usersIds: zodArray(zodNumberRequired()),
+  deadline: zodString(),
+  status: zodBooleanRequired(),
 });
 
+
 export type TTrainingSchema = zodInfer<typeof trainingSchema>;
+export const trainingKeys = Object.keys(trainingSchema.shape) as (keyof zodInfer<typeof trainingSchema>)[];
 
 export const initialValues = {
   name: "",
   description: "",
-  videos: "",
-  users: "",
-  group: "",
-  status: "",
+  videos: [],
+  usersIds: [],
+  deadline: "",
+  status: true,
 };
 
-export const videos = [
-  { label: "Select videos", value: "value" },
-  { label: "Introduction to JavaScript", value: "introduction_to_javaScript" },
-  { label: "Advance JavaScript Concept", value: "advance_javaScript_concept" },
-  { label: "React Basic", value: "react_basic" },
-  { label: "React Hooks", value: "react_hooks" },
-];
-
-export const members = [
-  { label: "Select members...", value: "value" },
-  { label: "Alice Johnson", value: "alice_johnson" },
-  { label: "Bob Smith", value: "bob_smith" },
-  { label: "Charlie Brown", value: "charlie_brown" },
-  { label: "Diana Prince", value: "diana_prince" },
-];
+export const defaultValues = (isEdit?: boolean, editData?: Partial<ITrainingsDto>): Partial<TTrainingSchema> => {
+  return isEdit ? pickFormData(editData as unknown as TTrainingSchema, trainingKeys as (keyof TTrainingSchema)[]) : initialValues;
+}
 
 export const status = [
-  { label: "Select Status", value: "value" },
-  { label: "Active", value: "1" },
-  { label: "Inactive", value: "0" },
+  { label: "アクティブ", value: "true" },
+  { label: "非アクティブ", value: "false" },
 ];

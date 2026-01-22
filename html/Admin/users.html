@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,10 +40,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
+
 <body class="bg-gray-50">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div id="sidebar" class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
+        <div id="sidebar"
+            class="w-64 bg-white shadow-lg transform lg:transform-none transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0">
             <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
@@ -54,51 +57,63 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <nav class="mt-6 px-3">
                 <div class="space-y-3">
-                    <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
+                    <a href="dashboard.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600">
                         <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
                         ダッシュボード
                     </a>
-                    <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="users.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-users w-5 h-5 mr-3"></i>
                         ユーザー一覧
                     </a>
-                    <a href="tags.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="tags.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-tags w-5 h-5 mr-3"></i>
                         タグ
                     </a>
-                    <a href="video-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="video-list.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-video w-5 h-5 mr-3"></i>
                         動画一覧
                     </a>
-                    <a href="training-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="training-list.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-book w-5 h-5 mr-3"></i>
                         トレーニング一覧
                     </a>
-                    <a href="create-test.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="create-test.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-clipboard-check w-5 h-5 mr-3"></i>
                         テスト作成
                     </a>
-                    <a href="assignment-list.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="assignment-list.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-tasks w-5 h-5 mr-3"></i>
                         課題一覧
                     </a>
-                    <a href="assignment-review.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="assignment-review.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-clipboard-list w-5 h-5 mr-3"></i>
                         課題レビュー
-                        <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
+                        <span
+                            class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">4</span>
                     </a>
-                    <a href="departments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="departments.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-building w-5 h-5 mr-3"></i>
                         部門
                     </a>
-                    <a href="roles.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="roles.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-user-tag w-5 h-5 mr-3"></i>
                         役割
                     </a>
-                    <a href="change-password.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+                    <a href="change-password.html"
+                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
                         <i class="fas fa-key w-5 h-5 mr-3"></i>
                         パスワード変更
                     </a>
@@ -119,12 +134,13 @@
                             <i class="fas fa-bars text-xl"></i>
                         </button>
                     </div>
-                    
+
                     <div class="flex items-center space-x-4">
                         <!-- User Profile -->
                         <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <button class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                <button
+                                    class="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                                     <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                                         <span class="text-white font-medium text-sm">A</span>
                                     </div>
@@ -147,19 +163,22 @@
                         </div>
                         <div class="flex items-center space-x-3">
                             <!-- CSV Import Button -->
-                            <button onclick="importCSV()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            <button onclick="importCSV()"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 <i class="fas fa-download mr-2"></i>
                                 CSVインポート
                             </button>
-                            
+
                             <!-- CSV Export Button -->
-                            <button onclick="exportCSV()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            <button onclick="exportCSV()"
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 <i class="fas fa-upload mr-2"></i>
                                 CSVエクスポート
                             </button>
-                            
+
                             <!-- Add New User Button -->
-                            <button onclick="showAddUserModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                            <button onclick="showAddUserModal()"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                 <i class="fas fa-plus mr-2"></i>
                                 新規ユーザー追加
                             </button>
@@ -172,7 +191,8 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">ステータス</label>
-                                    <select class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                    <select
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                         <option value="">すべてのステータス</option>
                                         <option value="active">アクティブ</option>
                                         <option value="inactive">非アクティブ</option>
@@ -181,7 +201,8 @@
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">部門</label>
-                                    <select class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                    <select
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                         <option value="">すべての部門</option>
                                         <option value="it">IT部門</option>
                                         <option value="hr">HR部門</option>
@@ -194,8 +215,10 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">検索</label>
                                     <div class="flex gap-2">
-                                        <input type="text" id="searchInput" placeholder="名前またはメールで検索..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                        <button id="searchButton" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                                        <input type="text" id="searchInput" placeholder="名前またはメールで検索..."
+                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                        <button id="searchButton"
+                                            class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                                             検索
                                         </button>
                                     </div>
@@ -206,18 +229,32 @@
 
                     <!-- Users Table Card -->
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                        
+
                         <div class="overflow-x-auto">
                             <table class="w-full min-w-[800px] divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">ユーザー</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">メール</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/8">部門</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">割り当て済みトレーニング</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">完了済みトレーニング</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">ステータス</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">アクション</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
+                                            ユーザー</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                                            メール</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/8">
+                                            部門</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">
+                                            割り当て済みトレーニング</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">
+                                            完了済みトレーニング</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">
+                                            ステータス</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">
+                                            アクション</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -225,7 +262,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
-                                                    <div class="h-10 w-10 rounded-full bg-primary-600 flex items-center justify-center">
+                                                    <div
+                                                        class="h-10 w-10 rounded-full bg-primary-600 flex items-center justify-center">
                                                         <span class="text-white font-medium text-sm">JD</span>
                                                     </div>
                                                 </div>
@@ -239,29 +277,39 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">IT Department</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showAssignedTrainings('John Doe', 8)">
+                                            <button
+                                                class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showAssignedTrainings('John Doe', 8)">
                                                 8
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedTrainings('John Doe', 6)">
+                                            <button
+                                                class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showCompletedTrainings('John Doe', 6)">
                                                 6
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                 アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-2">
-                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewUserDetails('John Doe')">
+                                                <button
+                                                    class="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                                                    onclick="viewUserDetails('John Doe')">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditUserModal('John Doe')">
+                                                <button
+                                                    class="text-primary-600 hover:text-primary-900 transition-colors duration-200"
+                                                    onclick="showEditUserModal('John Doe')">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                <button
+                                                    class="text-red-600 hover:text-red-900 transition-colors duration-200">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -271,7 +319,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
-                                                    <div class="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center">
+                                                    <div
+                                                        class="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center">
                                                         <span class="text-white font-medium text-sm">SW</span>
                                                     </div>
                                                 </div>
@@ -285,29 +334,39 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">HR Department</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showAssignedTrainings('Sarah Wilson', 12)">
+                                            <button
+                                                class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showAssignedTrainings('Sarah Wilson', 12)">
                                                 12
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedTrainings('Sarah Wilson', 10)">
+                                            <button
+                                                class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showCompletedTrainings('Sarah Wilson', 10)">
                                                 10
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                 アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-2">
-                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewUserDetails('Sarah Wilson')">
+                                                <button
+                                                    class="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                                                    onclick="viewUserDetails('Sarah Wilson')">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditUserModal('Sarah Wilson')">
+                                                <button
+                                                    class="text-primary-600 hover:text-primary-900 transition-colors duration-200"
+                                                    onclick="showEditUserModal('Sarah Wilson')">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                <button
+                                                    class="text-red-600 hover:text-red-900 transition-colors duration-200">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -317,7 +376,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
-                                                    <div class="h-10 w-10 rounded-full bg-yellow-600 flex items-center justify-center">
+                                                    <div
+                                                        class="h-10 w-10 rounded-full bg-yellow-600 flex items-center justify-center">
                                                         <span class="text-white font-medium text-sm">MJ</span>
                                                     </div>
                                                 </div>
@@ -329,31 +389,42 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">mike.johnson@example.com</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Finance Department</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Finance Department
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showAssignedTrainings('Mike Johnson', 5)">
+                                            <button
+                                                class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showAssignedTrainings('Mike Johnson', 5)">
                                                 5
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedTrainings('Mike Johnson', 3)">
+                                            <button
+                                                class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showCompletedTrainings('Mike Johnson', 3)">
                                                 3
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                 アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-2">
-                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewUserDetails('Mike Johnson')">
+                                                <button
+                                                    class="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                                                    onclick="viewUserDetails('Mike Johnson')">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditUserModal('Mike Johnson')">
+                                                <button
+                                                    class="text-primary-600 hover:text-primary-900 transition-colors duration-200"
+                                                    onclick="showEditUserModal('Mike Johnson')">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                <button
+                                                    class="text-red-600 hover:text-red-900 transition-colors duration-200">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -363,7 +434,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
-                                                    <div class="h-10 w-10 rounded-full bg-pink-600 flex items-center justify-center">
+                                                    <div
+                                                        class="h-10 w-10 rounded-full bg-pink-600 flex items-center justify-center">
                                                         <span class="text-white font-medium text-sm">EB</span>
                                                     </div>
                                                 </div>
@@ -375,31 +447,42 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">emily.brown@example.com</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Marketing Department</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Marketing
+                                            Department</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showAssignedTrainings('Emily Brown', 3)">
+                                            <button
+                                                class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showAssignedTrainings('Emily Brown', 3)">
                                                 3
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedTrainings('Emily Brown', 1)">
+                                            <button
+                                                class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showCompletedTrainings('Emily Brown', 1)">
                                                 1
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                                 Inactive
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-2">
-                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewUserDetails('Emily Brown')">
+                                                <button
+                                                    class="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                                                    onclick="viewUserDetails('Emily Brown')">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditUserModal('Emily Brown')">
+                                                <button
+                                                    class="text-primary-600 hover:text-primary-900 transition-colors duration-200"
+                                                    onclick="showEditUserModal('Emily Brown')">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                <button
+                                                    class="text-red-600 hover:text-red-900 transition-colors duration-200">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -409,7 +492,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-10 w-10">
-                                                    <div class="h-10 w-10 rounded-full bg-green-600 flex items-center justify-center">
+                                                    <div
+                                                        class="h-10 w-10 rounded-full bg-green-600 flex items-center justify-center">
                                                         <span class="text-white font-medium text-sm">DL</span>
                                                     </div>
                                                 </div>
@@ -421,31 +505,42 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">david.lee@example.com</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Operations Department</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Operations
+                                            Department</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer" onclick="showAssignedTrainings('David Lee', 15)">
+                                            <button
+                                                class="font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showAssignedTrainings('David Lee', 15)">
                                                 15
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <button class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer" onclick="showCompletedTrainings('David Lee', 12)">
+                                            <button
+                                                class="font-medium text-green-600 hover:text-green-800 transition-colors duration-200 cursor-pointer"
+                                                onclick="showCompletedTrainings('David Lee', 12)">
                                                 12
                                             </button>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                 アクティブ
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-2">
-                                                <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200" onclick="viewUserDetails('David Lee')">
+                                                <button
+                                                    class="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                                                    onclick="viewUserDetails('David Lee')">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="text-primary-600 hover:text-primary-900 transition-colors duration-200" onclick="showEditUserModal('David Lee')">
+                                                <button
+                                                    class="text-primary-600 hover:text-primary-900 transition-colors duration-200"
+                                                    onclick="showEditUserModal('David Lee')">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                                <button
+                                                    class="text-red-600 hover:text-red-900 transition-colors duration-200">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -454,7 +549,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <!-- Pagination -->
                         <div class="px-6 py-3 border-t border-gray-200">
                             <div class="flex items-center justify-between">
@@ -462,13 +557,16 @@
                                     <span>1〜5件 / 全5件を表示</span>
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <button
+                                        class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                                         前へ
                                     </button>
-                                    <button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md">
+                                    <button
+                                        class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md">
                                         1
                                     </button>
-                                    <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <button
+                                        class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                                         次へ
                                     </button>
                                 </div>
@@ -514,7 +612,7 @@
         });
 
         // Initialize Select2 for Tags (multi-select)
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#tags').select2({
                 placeholder: 'Select tags',
                 width: '100%',
@@ -526,7 +624,7 @@
         // Search functionality
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
-        
+
         searchButton.addEventListener('click', () => {
             const searchTerm = searchInput.value.trim();
             if (searchTerm) {
@@ -535,7 +633,7 @@
                 alert('Please enter a search term');
             }
         });
-        
+
         // Allow search on Enter key press
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -551,20 +649,16 @@
             });
         });
 
-
-
-
-
         // Training count click functions
-        window.showAssignedTrainings = function(userName, count) {
+        window.showAssignedTrainings = function (userName, count) {
             window.location.href = `user-training-details.html?user=${encodeURIComponent(userName)}&type=assigned`;
         };
 
-        window.showCompletedTrainings = function(userName, count) {
+        window.showCompletedTrainings = function (userName, count) {
             window.location.href = `user-training-details.html?user=${encodeURIComponent(userName)}&type=completed`;
         };
 
-        window.viewUserDetails = function(userName) {
+        window.viewUserDetails = function (userName) {
             showUserDetailsModal(userName);
         };
 
@@ -572,16 +666,16 @@
             const modal = document.getElementById('userDetailsModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalContent = document.getElementById('modalContent');
-            
+
             // Set modal title
             modalTitle.textContent = `ユーザー詳細 - ${userName}`;
-            
+
             // Generate user details content based on user name
             let userDetails = getUserDetails(userName);
-            
+
             // Update modal content
             modalContent.innerHTML = userDetails;
-            
+
             // Show modal
             modal.classList.remove('hidden');
         }
@@ -657,7 +751,7 @@
             };
 
             const user = userData[userName] || {};
-            
+
             return `
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -737,24 +831,24 @@
             const modal = document.getElementById('addUserModal');
             const modalTitle = document.getElementById('addUserModalTitle');
             const submitBtn = document.getElementById('addUserSubmitBtn');
-            
+
             // Set modal for add mode
             modalTitle.textContent = '新規ユーザー追加';
             submitBtn.textContent = 'ユーザーを追加';
             submitBtn.onclick = submitAddUserForm;
-            
+
             // Reset form
             document.getElementById('addUserForm').reset();
             // Reset select2 tags
             if ($('#tags').hasClass('select2-hidden-accessible')) {
                 $('#tags').val(null).trigger('change');
             }
-            
+
             // Clear checkboxes manually (form.reset() doesn't clear checkboxes properly)
             document.querySelectorAll('input[name="adminAuthorities"]').forEach(checkbox => {
                 checkbox.checked = false;
             });
-            
+
             modal.classList.remove('hidden');
         }
 
@@ -762,19 +856,19 @@
             const modal = document.getElementById('addUserModal');
             const modalTitle = document.getElementById('addUserModalTitle');
             const submitBtn = document.getElementById('addUserSubmitBtn');
-            
+
             // Set modal for edit mode
             modalTitle.textContent = `ユーザーを編集 - ${userName}`;
             submitBtn.textContent = 'ユーザーを更新';
             submitBtn.onclick = () => submitEditUserForm(userName);
-            
+
             // Populate form with user data
             populateUserForm(userName);
             // Ensure select2 reflects populated tags
             if ($('#tags').hasClass('select2-hidden-accessible')) {
                 $('#tags').trigger('change');
             }
-            
+
             modal.classList.remove('hidden');
         }
 
@@ -783,7 +877,7 @@
             modal.classList.add('hidden');
             // Reset form
             document.getElementById('addUserForm').reset();
-            
+
             // Clear checkboxes manually
             document.querySelectorAll('input[name="adminAuthorities"]').forEach(checkbox => {
                 checkbox.checked = false;
@@ -793,7 +887,7 @@
         function submitAddUserForm() {
             const form = document.getElementById('addUserForm');
             const formData = new FormData(form);
-            
+
             // Get form values
             const firstName = formData.get('firstName');
             const lastName = formData.get('lastName');
@@ -803,28 +897,28 @@
             const employeeId = formData.get('employeeId');
             const joinDate = formData.get('joinDate');
             const tags = Array.from(form.querySelectorAll('#tags option:checked')).map(o => o.value);
-            
+
             // Get review hierarchy values
             const directManager = formData.get('directManager');
             const seniorManager = formData.get('seniorManager');
             const empowerDepartment = formData.get('empowerDepartment');
-            
+
             // Get multiple selection values
             const adminAuthorities = Array.from(form.querySelectorAll('input[name="adminAuthorities"]:checked')).map(cb => cb.value);
-            
+
             // Validate required fields
             if (!firstName || !lastName || !email || !department || !role || !employeeId || !joinDate || !directManager || !seniorManager || !empowerDepartment) {
                 alert('Please fill in all required fields including the assignment review hierarchy.');
                 return;
             }
-            
+
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Please enter a valid email address.');
                 return;
             }
-            
+
             console.log('Adding new user:', {
                 firstName,
                 lastName,
@@ -839,7 +933,7 @@
                 empowerDepartment,
                 adminAuthorities
             });
-            
+
             alert('User added successfully!');
             closeAddUserModal();
         }
@@ -920,7 +1014,7 @@
             };
 
             const user = userData[userName] || {};
-            
+
             // Populate form fields
             document.getElementById('lastName').value = user.lastName || '';
             document.getElementById('firstName').value = user.firstName || '';
@@ -929,12 +1023,12 @@
             document.getElementById('role').value = user.role || '';
             document.getElementById('employeeId').value = user.employeeId || '';
             document.getElementById('joinDate').value = user.joinDate || '';
-            
+
             // Populate review hierarchy fields
             document.getElementById('directManager').value = user.directManager || '';
             document.getElementById('seniorManager').value = user.seniorManager || '';
             document.getElementById('empowerDepartment').value = user.empowerDepartment || '';
-            
+
             // Populate tags if present
             const tagsSelect = document.getElementById('tags');
             Array.from(tagsSelect.options).forEach(opt => opt.selected = false);
@@ -944,8 +1038,8 @@
                     if (option) option.selected = true;
                 });
             }
-            
-            
+
+
             // Clear and populate admin authorities
             document.querySelectorAll('input[name="adminAuthorities"]').forEach(checkbox => {
                 checkbox.checked = false;
@@ -961,7 +1055,7 @@
         function submitEditUserForm(userName) {
             const form = document.getElementById('addUserForm');
             const formData = new FormData(form);
-            
+
             // Get form values
             const firstName = formData.get('firstName');
             const lastName = formData.get('lastName');
@@ -971,28 +1065,28 @@
             const employeeId = formData.get('employeeId');
             const joinDate = formData.get('joinDate');
             const tags = Array.from(form.querySelectorAll('#tags option:checked')).map(o => o.value);
-            
+
             // Get review hierarchy values
             const directManager = formData.get('directManager');
             const seniorManager = formData.get('seniorManager');
             const empowerDepartment = formData.get('empowerDepartment');
-            
+
             // Get multiple selection values
             const adminAuthorities = Array.from(form.querySelectorAll('input[name="adminAuthorities"]:checked')).map(cb => cb.value);
-            
+
             // Validate required fields
             if (!firstName || !lastName || !email || !department || !role || !employeeId || !joinDate || !directManager || !seniorManager || !empowerDepartment) {
                 alert('Please fill in all required fields including the assignment review hierarchy.');
                 return;
             }
-            
+
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Please enter a valid email address.');
                 return;
             }
-            
+
             console.log('Updating user:', {
                 userName,
                 firstName,
@@ -1008,7 +1102,7 @@
                 empowerDepartment,
                 adminAuthorities
             });
-            
+
             alert(`User ${userName} updated successfully!`);
             closeAddUserModal();
         }
@@ -1026,25 +1120,28 @@
     </script>
 
     <!-- User Details Modal -->
-    <div id="userDetailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div id="userDetailsModal"
+        class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between mb-4">
                     <h3 id="modalTitle" class="text-lg font-medium text-gray-900">ユーザー詳細</h3>
-                    <button onclick="closeUserDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <button onclick="closeUserDetailsModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                
+
                 <!-- Modal Content -->
                 <div id="modalContent" class="text-sm text-gray-500">
                     <!-- Content will be dynamically populated -->
                 </div>
-                
+
                 <!-- Modal Footer -->
                 <div class="flex justify-end mt-6 pt-4 border-t border-gray-200">
-                    <button onclick="closeUserDetailsModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                    <button onclick="closeUserDetailsModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
                         閉じる
                     </button>
                 </div>
@@ -1054,7 +1151,7 @@
 
     <!-- Close modal when clicking outside -->
     <script>
-        document.getElementById('userDetailsModal').addEventListener('click', function(e) {
+        document.getElementById('userDetailsModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeUserDetailsModal();
             }
@@ -1063,47 +1160,54 @@
 
     <!-- Add User Modal -->
     <div id="addUserModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-white">
+        <div
+            class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between mb-6">
                     <h3 id="addUserModalTitle" class="text-xl font-medium text-gray-900">新規ユーザー追加</h3>
-                    <button onclick="closeAddUserModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <button onclick="closeAddUserModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                
+
                 <!-- Modal Content -->
                 <form id="addUserForm" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Last Name -->
                         <div>
                             <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">姓 *</label>
-                            <input type="text" id="lastName" name="lastName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="text" id="lastName" name="lastName" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- First Name -->
                         <div>
                             <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">名 *</label>
-                            <input type="text" id="firstName" name="firstName" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="text" id="firstName" name="firstName" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Email -->
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メール *</label>
-                            <input type="email" id="email" name="email" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="email" id="email" name="email" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Employee ID -->
                         <div>
                             <label for="employeeId" class="block text-sm font-medium text-gray-700 mb-2">従業員ID *</label>
-                            <input type="text" id="employeeId" name="employeeId" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="text" id="employeeId" name="employeeId" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
-                        
+
                         <!-- Department -->
                         <div>
                             <label for="department" class="block text-sm font-medium text-gray-700 mb-2">部門 *</label>
-                            <select id="department" name="department" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <select id="department" name="department" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                 <option value="">部門を選択</option>
                                 <option value="IT Department">IT Department</option>
                                 <option value="HR Department">HR Department</option>
@@ -1113,11 +1217,12 @@
                                 <option value="Operations Department">Operations Department</option>
                             </select>
                         </div>
-                        
+
                         <!-- Role -->
                         <div>
                             <label for="role" class="block text-sm font-medium text-gray-700 mb-2">役割 *</label>
-                            <select id="role" name="role" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <select id="role" name="role" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                 <option value="">役割を選択</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Manager">Manager</option>
@@ -1127,17 +1232,19 @@
                                 <option value="Student">Student</option>
                             </select>
                         </div>
-                        
+
                         <!-- Join Date -->
                         <div>
                             <label for="joinDate" class="block text-sm font-medium text-gray-700 mb-2">入社日 *</label>
-                            <input type="date" id="joinDate" name="joinDate" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                            <input type="date" id="joinDate" name="joinDate" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                         </div>
 
                         <!-- Tags (Multiple) -->
                         <div>
                             <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">タグ</label>
-                            <select id="tags" name="tags" multiple class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 min-h-[44px]">
+                            <select id="tags" name="tags" multiple
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 min-h-[44px]">
                                 <option value="IT">IT</option>
                                 <option value="HR">HR</option>
                                 <option value="SALES">SALES</option>
@@ -1153,8 +1260,11 @@
                             <div class="space-y-4">
                                 <!-- Initial Review by Direct Manager -->
                                 <div>
-                                    <label for="directManager" class="block text-sm font-medium text-gray-700 mb-2">一次レビュー担当者（直属マネージャー） *</label>
-                                    <select id="directManager" name="directManager" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                    <label for="directManager"
+                                        class="block text-sm font-medium text-gray-700 mb-2">一次レビュー担当者（直属マネージャー）
+                                        *</label>
+                                    <select id="directManager" name="directManager" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                         <option value="">直属マネージャーを選択</option>
                                         <option value="john.smith@example.com">John Smith - IT Manager</option>
                                         <option value="sarah.johnson@example.com">Sarah Johnson - HR Manager</option>
@@ -1166,27 +1276,40 @@
 
                                 <!-- Second Review by Senior Manager -->
                                 <div>
-                                    <label for="seniorManager" class="block text-sm font-medium text-gray-700 mb-2">二次レビュー担当者（シニアマネージャー） *</label>
-                                    <select id="seniorManager" name="seniorManager" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                    <label for="seniorManager"
+                                        class="block text-sm font-medium text-gray-700 mb-2">二次レビュー担当者（シニアマネージャー）
+                                        *</label>
+                                    <select id="seniorManager" name="seniorManager" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                         <option value="">シニアマネージャーを選択</option>
-                                        <option value="robert.taylor@example.com">Robert Taylor - Senior IT Manager</option>
-                                        <option value="jennifer.davis@example.com">Jennifer Davis - Senior HR Manager</option>
-                                        <option value="william.miller@example.com">William Miller - Senior Finance Manager</option>
-                                        <option value="emily.garcia@example.com">Emily Garcia - Senior Marketing Manager</option>
-                                        <option value="james.anderson@example.com">James Anderson - Senior Operations Manager</option>
+                                        <option value="robert.taylor@example.com">Robert Taylor - Senior IT Manager
+                                        </option>
+                                        <option value="jennifer.davis@example.com">Jennifer Davis - Senior HR Manager
+                                        </option>
+                                        <option value="william.miller@example.com">William Miller - Senior Finance
+                                            Manager</option>
+                                        <option value="emily.garcia@example.com">Emily Garcia - Senior Marketing Manager
+                                        </option>
+                                        <option value="james.anderson@example.com">James Anderson - Senior Operations
+                                            Manager</option>
                                     </select>
                                 </div>
 
                                 <!-- Last Review by Empower Department -->
                                 <div>
-                                    <label for="empowerDepartment" class="block text-sm font-medium text-gray-700 mb-2">最終レビュー担当者（エンパワー部門） *</label>
-                                    <select id="empowerDepartment" name="empowerDepartment" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                    <label for="empowerDepartment"
+                                        class="block text-sm font-medium text-gray-700 mb-2">最終レビュー担当者（エンパワー部門）
+                                        *</label>
+                                    <select id="empowerDepartment" name="empowerDepartment" required
+                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                                         <option value="">エンパワー部門を選択</option>
                                         <option value="empower.it@company.com">Empower IT Department</option>
                                         <option value="empower.hr@company.com">Empower HR Department</option>
                                         <option value="empower.finance@company.com">Empower Finance Department</option>
-                                        <option value="empower.marketing@company.com">Empower Marketing Department</option>
-                                        <option value="empower.operations@company.com">Empower Operations Department</option>
+                                        <option value="empower.marketing@company.com">Empower Marketing Department
+                                        </option>
+                                        <option value="empower.operations@company.com">Empower Operations Department
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -1197,40 +1320,55 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">管理権限</label>
                             <div class="space-y-2 max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-3">
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authDashboard" name="adminAuthorities" value="dashboard" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authDashboard" name="adminAuthorities" value="dashboard"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authDashboard" class="ml-2 text-sm text-gray-700">ダッシュボードアクセス</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authUserList" name="adminAuthorities" value="user_list" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authUserList" name="adminAuthorities" value="user_list"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authUserList" class="ml-2 text-sm text-gray-700">ユーザー一覧管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authUserGroups" name="adminAuthorities" value="user_groups" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authUserGroups" name="adminAuthorities"
+                                        value="user_groups"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authUserGroups" class="ml-2 text-sm text-gray-700">ユーザーグループ管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authVideoList" name="adminAuthorities" value="video_list" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authVideoList" name="adminAuthorities" value="video_list"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authVideoList" class="ml-2 text-sm text-gray-700">動画一覧管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authTrainingList" name="adminAuthorities" value="training_list" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authTrainingList" name="adminAuthorities"
+                                        value="training_list"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authTrainingList" class="ml-2 text-sm text-gray-700">トレーニング一覧管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authCreateTest" name="adminAuthorities" value="create_test" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authCreateTest" name="adminAuthorities"
+                                        value="create_test"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authCreateTest" class="ml-2 text-sm text-gray-700">テスト作成管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authDepartments" name="adminAuthorities" value="departments" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authDepartments" name="adminAuthorities"
+                                        value="departments"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authDepartments" class="ml-2 text-sm text-gray-700">部門管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authRoles" name="adminAuthorities" value="roles" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <input type="checkbox" id="authRoles" name="adminAuthorities" value="roles"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                                     <label for="authRoles" class="ml-2 text-sm text-gray-700">役割管理</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" id="authChangePassword" name="adminAuthorities" value="change_password" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                                    <label for="authChangePassword" class="ml-2 text-sm text-gray-700">パスワード変更アクセス</label>
+                                    <input type="checkbox" id="authChangePassword" name="adminAuthorities"
+                                        value="change_password"
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <label for="authChangePassword"
+                                        class="ml-2 text-sm text-gray-700">パスワード変更アクセス</label>
                                 </div>
                             </div>
                             <p class="text-xs text-gray-500 mt-1">管理権限を選択（任意）</p>
@@ -1238,10 +1376,13 @@
 
                         <!-- Password Reset by Admin -->
                         <div>
-                            <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-2">パスワード設定（管理者）</label>
+                            <label for="adminPassword"
+                                class="block text-sm font-medium text-gray-700 mb-2">パスワード設定（管理者）</label>
                             <div class="relative">
-                                <input type="password" id="adminPassword" name="adminPassword" placeholder="新しいパスワードを入力" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                                <button type="button" id="generatePassword" class="absolute right-2 top-2 text-sm text-primary-600 hover:text-primary-800 font-medium">生成</button>
+                                <input type="password" id="adminPassword" name="adminPassword" placeholder="新しいパスワードを入力"
+                                    class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                                <button type="button" id="generatePassword"
+                                    class="absolute right-2 top-2 text-sm text-primary-600 hover:text-primary-800 font-medium">生成</button>
                             </div>
                             <p class="text-xs text-gray-500 mt-1">空欄のままにすると、ユーザーが自分でパスワードを設定できます</p>
                         </div>
@@ -1249,13 +1390,15 @@
                         <!-- Training -->
                     </div>
                 </form>
-                
+
                 <!-- Modal Footer -->
                 <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
-                    <button onclick="closeAddUserModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
+                    <button onclick="closeAddUserModal()"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors duration-200">
                         キャンセル
                     </button>
-                    <button id="addUserSubmitBtn" onclick="submitAddUserForm()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+                    <button id="addUserSubmitBtn" onclick="submitAddUserForm()"
+                        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
                         ユーザーを追加
                     </button>
                 </div>
@@ -1265,7 +1408,7 @@
 
     <!-- Close add user modal when clicking outside -->
     <script>
-        document.getElementById('addUserModal').addEventListener('click', function(e) {
+        document.getElementById('addUserModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeAddUserModal();
             }
@@ -1274,15 +1417,15 @@
 
     <!-- Password Generation Script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const generatePasswordBtn = document.getElementById('generatePassword');
             const adminPasswordInput = document.getElementById('adminPassword');
 
             if (generatePasswordBtn && adminPasswordInput) {
-                generatePasswordBtn.addEventListener('click', function() {
+                generatePasswordBtn.addEventListener('click', function () {
                     const generatedPassword = generateSecurePassword();
                     adminPasswordInput.value = generatedPassword;
-                    
+
                     // Show a brief notification
                     showPasswordGeneratedNotification();
                 });
@@ -1292,18 +1435,18 @@
                 const length = 12;
                 const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
                 let password = "";
-                
+
                 // Ensure at least one character from each category
                 password += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)]; // Uppercase
                 password += "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)]; // Lowercase
                 password += "0123456789"[Math.floor(Math.random() * 10)]; // Number
                 password += "!@#$%^&*"[Math.floor(Math.random() * 8)]; // Special character
-                
+
                 // Fill the rest randomly
                 for (let i = 4; i < length; i++) {
                     password += charset[Math.floor(Math.random() * charset.length)];
                 }
-                
+
                 // Shuffle the password
                 return password.split('').sort(() => Math.random() - 0.5).join('');
             }
@@ -1313,9 +1456,9 @@
                 const notification = document.createElement('div');
                 notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
                 notification.textContent = 'Password generated successfully!';
-                
+
                 document.body.appendChild(notification);
-                
+
                 // Remove after 3 seconds
                 setTimeout(() => {
                     if (notification.parentNode) {
@@ -1326,4 +1469,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>

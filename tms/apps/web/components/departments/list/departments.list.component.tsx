@@ -1,5 +1,15 @@
-import DepartmentsListView from "./departments.list.view";
+import { ListQueryConfig } from "@/common";
+import { CDepartmentDto } from "@/common/dto";
+import { useList } from "@/hooks/useList";
+import { ListTable } from "@/tmsui";
+import { departmentsListColumn } from "./departments.list.column";
 
 export default function DepartmentsListComponent() {
-  return <DepartmentsListView />;
+  const listHook = useList<CDepartmentDto>({
+    columns: departmentsListColumn,
+    query: ListQueryConfig.DEPARTMENT_LIST
+  })
+  return (
+    <ListTable {...listHook} />
+  )
 }

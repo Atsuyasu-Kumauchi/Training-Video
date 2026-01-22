@@ -23,7 +23,7 @@ export function ListTable<TData, TValue>({
             isError={isError}
             error={error}
             title={title}
-            totalElements={data?.pageable?.totalElements ?? 0}
+            totalElements={data?.resultCount ?? 0}
             pageSize={pageSize}
             showFilterColumns={showFilterColumns}
             className={className}
