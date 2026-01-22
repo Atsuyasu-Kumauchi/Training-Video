@@ -38,13 +38,11 @@ export class UserTrainingService {
 
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
-        const fakedProgress = ut => [...(ut.progress && []), ...ut.training.videos.map(v => ({ [v]: Math.random() * 10 > 5 }))];
-
         return {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress(ut) }] }),
+                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,
@@ -68,8 +66,7 @@ export class UserTrainingService {
 
         const ut = { ...userTraining };
         const videos = await this.videoService.lookupVideos(userTraining?.training.videos);
-        const fakedProgress = [...(ut.progress && []), ...videos.map(v => ({ [v.videoId]: Math.random() * 10 > 5 }))];
-        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress }] };
+        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: userTraining.progress }] };
     }
 
     async createUserTraining(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
@@ -101,10 +98,7 @@ export class UserTrainingService {
 
     async saveUserTrainigProgress(userId: any, trainingId: number, trainingProgress: { videoId: number, progress: any }) {
         const userTraining = await this.userTrainingRepository.findOne({ where: { userId, trainingId } }) || throwSe(NotFoundException);
-        userTraining.progress.forEach((p, i) => {
-            if (p[trainingProgress.videoId]) delete userTraining.progress[i];
-                p[trainingProgress.videoId] = trainingProgress.progress;
-        });
+        userTraining.progress.forEach((p, i) => p[trainingProgress.videoId] && userTraining.progress.splice(i, 1));
         userTraining.progress.push({ [trainingProgress.videoId]: trainingProgress.progress });
         return await this.userTrainingRepository.save(userTraining);
     }
