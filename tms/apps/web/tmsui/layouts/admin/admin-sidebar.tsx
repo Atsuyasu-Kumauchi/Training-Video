@@ -91,7 +91,7 @@ export function AdminSidebar() {
           {/* Close button only visible on mobile */}
           <button
             id="closeSidebar"
-            className="lg:hidden text-gray-500 hover:text-gray-700 flex-shrink-0"
+            className="lg:hidden text-gray-500 hover:text-gray-700 flex-shrink-0 cursor-pointer"
             onClick={() => setIsSidebarOpen(false)}
           >
             <FontAwesomeIcon icon={faTimes} className="fas fa-times" />

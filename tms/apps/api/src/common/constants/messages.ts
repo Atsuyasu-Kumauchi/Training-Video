@@ -41,4 +41,6 @@ export class Messages {
 
   // Tag validation messages
   static readonly MSG21 = 'このタグは既に存在します。'; // Tag already exists
+  static readonly MSG22 = 'タグ名にスペースは使用できません。アンダースコア（_）を使用してください。'; // Tag name cannot contain spaces, use underscore instead
+  static readonly MSG23 = 'タグ名は20文字以内である必要があります。'; // Tag name must be 20 characters or less
 }
