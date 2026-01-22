@@ -7,7 +7,7 @@ export class Role {
     @PrimaryGeneratedColumn({ name: 'role_id' })
     roleId: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', length: 100 })
     name: string;
 
     @Column({ type: 'boolean', default: true })

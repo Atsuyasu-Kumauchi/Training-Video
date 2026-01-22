@@ -92,7 +92,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async resetPassword(@Body('email') email: string, @Body('otp') otp: string, @Body('sig') sig: string, @Body('newpassword') p: string) {
     try {
-      await this.authService.resetPassword(email, otp, sig, p);
+      return await this.authService.resetPassword(email, otp, sig, p);
     } catch (e) {
       if (e instanceof UserNotFound || e instanceof InvalidCredential)
         throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);

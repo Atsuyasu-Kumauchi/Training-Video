@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Req, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { UserTrainingService } from "./usertraining.service";
 import { UserTraining } from "./usertraining.entity";
 import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
-import { type DeepPartial } from "typeorm";
 import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
 import { Training } from "src/training/training.entity";
 
@@ -13,27 +12,32 @@ export class UserTrainingController {
 
     constructor(private readonly userTrainingService: UserTrainingService) { }
 
+    @Patch(':id/saveProgress')
+    async savePartial(@Req() req, @Param('id') trainingId: number, @Body() trainingProgress: { videoId: number, progress: any }) {
+        return await this.userTrainingService.saveUserTrainigProgress(req.user.userId, trainingId, trainingProgress);
+    }
+
     @Get()
     async findAll(@Req() req, @Query() query: UserTrainingQueryDto) {
         if (!req.user.isAdmin) query.userIdFilter = req.user.userId;
-        return await this.userTrainingService.findAll(query);
+        return await this.userTrainingService.findAllTrainigs(query);
     }
 
     @Get(':id')
-    async findOne(@Req() req, @Param('id') id: string) {
-        return await this.userTrainingService.findOne(+id, req.user.isAdmin ? undefined : req.user.userId);
+    async findOne(@Req() req, @Param('id') trainingId: string) {
+        return await this.userTrainingService.findOneTraining(+trainingId, req.user.isAdmin ? undefined : req.user.userId);
     }
 
     @Post()
     @UseGuards(IsAdmin)
-    async create(@Body() createTrainingDto: CreateUserTrainingDto): Promise<Training> {
-        return await this.userTrainingService.create(createTrainingDto);
+    async create(@Body() userTraining: CreateUserTrainingDto): Promise<Training> {
+        return await this.userTrainingService.createUserTraining(userTraining);
     }
 
     @Put(':id')
     @UseGuards(IsAdmin)
-    async save(@Param('id') id: number, @Body() training: CreateUserTrainingDto): Promise<Training> {
-        return await this.userTrainingService.save(id, training);
+    async save(@Param('id') trainingId: number, @Body() userTraining: CreateUserTrainingDto & { progress?: any[] }): Promise<Training> {
+        return await this.userTrainingService.saveUserTraining(trainingId, { ...userTraining, progress: userTraining.progress || [] });
     }
 
 }

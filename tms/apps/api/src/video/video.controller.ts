@@ -6,13 +6,23 @@ import { type DeepPartial } from "typeorm";
 import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
 import { TestService } from "src/test/test.service";
 import { Test, TestQuestion } from "src/test/test.entity";
+import * as path from 'path';
+import * as fs from 'fs';
+import Ffmpeg, * as ffmpeg from 'fluent-ffmpeg';
+import * as ffmpegPath from 'ffmpeg-static';
+import * as ffprobe from 'ffprobe-static';
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
 @Controller('videos')
 export class VideoController {
+    private readonly uploadDir = path.join(process.cwd(), 'public', 'static');
 
-    constructor(private readonly videoService: VideoService, private readonly testService: TestService) { }
+    constructor(private readonly videoService: VideoService, private readonly testService: TestService) {
+        if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
+        ffmpeg.setFfmpegPath(ffmpegPath.default as any);
+        ffmpeg.setFfprobePath(ffprobe.path);
+    }
 
     @Post("uploads")
     async upload(@Req() req: Request, @Headers('x-file-name') fileName: string, @Headers('x-upload-id') uploadId: string) {
@@ -36,9 +46,39 @@ export class VideoController {
         return await this.videoService.findOne(+id);
     }
 
+    async getVideoDuration(path: string): Promise<number> {
+        return new Promise((res, rej) => {
+            ffmpeg.ffprobe(path, (err, data) => {
+                if (err) return rej(err);
+                res(data.format.duration as number);
+            });
+        });
+    }
+
+    async takeVideoThumbnail(videoPath: string, outputPath: string) {
+        return new Promise<string>((res, rej) => {
+            Ffmpeg(videoPath)
+                .videoFilters('thumbnail=100')
+                .frames(1)
+                .on('end', () => {
+                    res(outputPath);
+                })
+                .on('error', e => {
+                    rej(e);
+                })
+                .save(outputPath);
+        });
+    }
+
     @Post()
     async create(@Body() createVideoDto: CreateVideoDto): Promise<Video> {
-        const video = await this.videoService.create(createVideoDto);
+        const videoPath = path.join(this.uploadDir, createVideoDto.videoUrl.replace('/static', ''));
+        const video = await this.videoService.create({
+            ...createVideoDto,
+            videoDuration: Math.floor(await this.getVideoDuration(videoPath)),
+            thumbnailUrl: (await this.takeVideoThumbnail(videoPath, videoPath.replace(/\.[^.]*$/, ".thumb.jpg")))
+                .replace(/.*\/public/, '')
+        });
 
         // schedule test generation
         await this.testService.save(createVideoDto.testId || video.testId, {
