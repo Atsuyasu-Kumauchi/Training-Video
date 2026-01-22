@@ -9,6 +9,8 @@ import { Test, TestQuestion } from "src/test/test.entity";
 import * as path from 'path';
 import * as fs from 'fs';
 import Ffmpeg, * as ffmpeg from 'fluent-ffmpeg';
+import * as ffmpegPath from 'ffmpeg-static';
+import * as ffprobe from 'ffprobe-static';
 
 
 @UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
@@ -18,6 +20,8 @@ export class VideoController {
 
     constructor(private readonly videoService: VideoService, private readonly testService: TestService) {
         if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
+        ffmpeg.setFfmpegPath(ffmpegPath.default as any);
+        ffmpeg.setFfprobePath(ffprobe.path);
     }
 
     @Post("uploads")
@@ -56,8 +60,12 @@ export class VideoController {
             Ffmpeg(videoPath)
                 .videoFilters('thumbnail=100')
                 .frames(1)
-                .on('end', () => res(outputPath))
-                .on('error', rej)
+                .on('end', () => {
+                    res(outputPath);
+                })
+                .on('error', e => {
+                    rej(e);
+                })
                 .save(outputPath);
         });
     }
@@ -67,8 +75,9 @@ export class VideoController {
         const videoPath = path.join(this.uploadDir, createVideoDto.videoUrl.replace('/static', ''));
         const video = await this.videoService.create({
             ...createVideoDto,
-            videoDuration: await this.getVideoDuration(videoPath),
-            thumbnailUrl: await this.takeVideoThumbnail(videoPath, videoPath.replace(".", ".thumb."))
+            videoDuration: Math.floor(await this.getVideoDuration(videoPath)),
+            thumbnailUrl: (await this.takeVideoThumbnail(videoPath, videoPath.replace(/\.[^.]*$/, ".thumb.jpg")))
+                .replace(/.*\/public/, '')
         });
 
         // schedule test generation
