@@ -42,7 +42,7 @@ export class UserTrainingService {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId }] }),
+                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,
@@ -66,8 +66,7 @@ export class UserTrainingService {
 
         const ut = { ...userTraining };
         const videos = await this.videoService.lookupVideos(userTraining?.training.videos);
-        const fakedProgress = [...(ut.progress && []), ...videos.map(v => ({ [v.videoId]: Math.random() * 10 > 5 }))];
-        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress }] };
+        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: userTraining.progress }] };
     }
 
     async createUserTraining(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
