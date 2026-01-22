@@ -12,7 +12,7 @@ export class UserTrainingController {
 
     constructor(private readonly userTrainingService: UserTrainingService) { }
 
-    @Patch('saveProgress')
+    @Patch(':id/saveProgress')
     async savePartial(@Req() req, @Param('id') trainingId: number, @Body() trainingProgress: { videoId: number, progress: any }) {
         return await this.userTrainingService.saveUserTrainigProgress(req.user.userId, trainingId, trainingProgress);
     }
