@@ -19,7 +19,7 @@ export default function CreateTestDetailsView({
                 Questions
               </label>
               <p className="text-sm text-gray-900">
-                {editData?.testQuestions?.length}aa
+                {editData?.testQuestions?.length}
               </p>
             </div>
             <div>
@@ -47,7 +47,9 @@ export default function CreateTestDetailsView({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Description
             </label>
-            <p className="text-sm text-gray-900">{editData?.description}</p>
+            <p className="text-sm text-gray-900">
+              {editData?.description ? editData?.description : "N/A"}
+            </p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4">
