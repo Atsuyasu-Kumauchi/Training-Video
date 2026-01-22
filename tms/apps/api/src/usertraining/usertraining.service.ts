@@ -101,11 +101,11 @@ export class UserTrainingService {
 
     async saveUserTrainigProgress(userId: any, trainingId: number, trainingProgress: { videoId: number, progress: any }) {
         const userTraining = await this.userTrainingRepository.findOne({ where: { userId, trainingId } }) || throwSe(NotFoundException);
-        userTraining?.progress.forEach(p => {
-            if (p[trainingProgress.videoId])
+        userTraining.progress.forEach((p, i) => {
+            if (p[trainingProgress.videoId]) delete userTraining.progress[i];
                 p[trainingProgress.videoId] = trainingProgress.progress;
-            return p;
         });
-        await this.userTrainingRepository.save(userTraining);
+        userTraining.progress.push({ [trainingProgress.videoId]: trainingProgress.progress });
+        return await this.userTrainingRepository.save(userTraining);
     }
 }
