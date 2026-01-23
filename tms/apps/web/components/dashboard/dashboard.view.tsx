@@ -131,7 +131,7 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
         {/* Recent Activity */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
+            <h3 className="text-base font-medium text-gray-900">
               {lang.dashboard.recentActivity}
             </h3>
           </div>
@@ -143,21 +143,21 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
                   return (
                     <div key={index} className="flex items-start space-x-3">
                       <div className="flex-shrink-0">
-                        <div className={`w-8 h-8 ${bgColor} rounded-full flex items-center justify-center`}>
+                        <div className={`w-7 h-7 ${bgColor} rounded-full flex items-center justify-center`}>
                           <FontAwesomeIcon
                             icon={icon}
-                            className={`${textColor} text-sm`}
+                            className={`${textColor} text-xs`}
                           />
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-xs font-medium text-gray-900">
                           {activity.title}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-xs text-gray-500">
                           {activity.description}
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-[10px] text-gray-400">
                           {humanTime(new Date(activity.timestamp))}
                         </p>
                       </div>
@@ -167,7 +167,7 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-sm text-gray-500">最近のアクティビティはありません。</p>
+                <p className="text-xs text-gray-500">最近のアクティビティはありません。</p>
               </div>
             )}
           </div>
