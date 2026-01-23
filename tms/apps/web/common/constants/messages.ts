@@ -19,4 +19,7 @@ export class Messages {
   static readonly TAG_ALREADY_EXISTS = 'このタグは既に存在します。'; // Tag already exists
   static readonly TAG_NO_SPACES = 'タグ名にスペースは使用できません。アンダースコア（_）を使用してください。'; // Tag name cannot contain spaces, use underscore instead
   static readonly TAG_MAX_LENGTH = 'タグ名は20文字以内である必要があります。'; // Tag name must be 20 characters or less
+
+  // Auth validation messages (Japanese)
+  static readonly LOGIN_FAILED = 'メールアドレスまたはパスワードが正しくありません。'; // Invalid credentials
 }
