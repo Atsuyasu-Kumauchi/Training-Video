@@ -1,4 +1,5 @@
 import { Button, cn, LinkButton, useFormContext } from "@/tmsui";
+import { Messages } from "@/common";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { TAdminLoginSchema, TAdminLoginViewSchema } from "./admin.login.type";
@@ -100,11 +101,8 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
                     </div>
                     <div className="ml-3">
                         <h3 className="text-sm font-medium text-red-800">
-                            Invalid credentials
+                            {Messages.LOGIN_FAILED}
                         </h3>
-                        <div className="mt-2 text-sm text-red-700">
-                            <p>Please check your Admin ID and password and try again.</p>
-                        </div>
                     </div>
                 </div>
             </div>}

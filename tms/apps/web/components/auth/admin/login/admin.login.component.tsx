@@ -1,5 +1,5 @@
 "use client"
-import { AUTH } from '@/common';
+import { AUTH, Messages } from '@/common';
 import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -44,7 +44,8 @@ export default function AdminLoginComponent() {
             mutation.mutate(value as TAdminLoginSchema);
         }
     }
-    const errorMessage = (mutation.error as AxiosError<{ message: string }>)?.response?.data?.message ?? "";
+    // Use constant message instead of API error message to ensure Japanese only
+    const errorMessage = mutation.isError ? Messages.LOGIN_FAILED : "";
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="max-w-md w-full space-y-8">

@@ -1,5 +1,5 @@
 "use client";
-import { AUTH } from '@/common';
+import { AUTH, Messages } from '@/common';
 import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -61,7 +61,7 @@ export default function StudentLoginComponent() {
                         formRef={formRef}
                         isPending={mutation.isPending}
                         isError={mutation.isError}
-                        errorMessage={(mutation.error as AxiosError<{ message: string }>)?.response?.data?.message || ''}
+                        errorMessage={mutation.isError ? Messages.LOGIN_FAILED : ''}
                     />
                 </UiForm>
             </div>
