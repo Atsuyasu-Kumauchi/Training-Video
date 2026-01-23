@@ -11,7 +11,7 @@ export class Assignment {
   name: string;
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  question: string;
 
   @CreateDateColumn()
   created: Date;

@@ -24,7 +24,7 @@ export class UserService {
     queryBuilder.leftJoin('User.department', 'Department').addSelect(['Department.departmentId', 'Department.name']);
     queryBuilder.leftJoin('User.tags', 'Tag').addSelect(['Tag.tagId', 'Tag.name']);
 
-    queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
+    queryBuilder.take(query.pageSize).skip(query.pageIndex * query.pageSize);
 
     queryBuilder.where({ status: query.statusFilter === null ? Not(IsNull()) : query.statusFilter });
     if (query.simplenameFilter) {
