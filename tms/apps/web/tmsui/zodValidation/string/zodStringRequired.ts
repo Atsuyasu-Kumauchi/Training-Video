@@ -7,7 +7,6 @@ export function zodStringRequired(message: string = defaultMessage) {
   return z.coerce
     .string()
     .min(1, { message })
-    .max(100, { message: "255 is the maximum length of the string" })
     .transform(sanitizeSQLInput);
 
 }

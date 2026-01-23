@@ -21,7 +21,7 @@ export class UserTrainingService {
         private readonly videoService: VideoService
     ) { }
 
-    async findAll(query: UserTrainingQueryDto) {
+    async findAllTrainigs(query: UserTrainingQueryDto) {
         const queryBuilder = this.userTrainingRepository.createQueryBuilder('UserTraining');
 
         queryBuilder.leftJoinAndSelect("UserTraining.training", "Training");
@@ -38,13 +38,11 @@ export class UserTrainingService {
 
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
-        const fakedProgress = ut => [...(ut.progress && []), ...ut.training.videos.map(v => ({ [v]: Math.random() * 10 > 5 }))];
-
         return {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress(ut) }] }),
+                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,
@@ -59,8 +57,8 @@ export class UserTrainingService {
         };
     }
 
-    async findOne(id: number, userId?: number) {
-        const userTraining = await this.userTrainingRepository.findOne({ where: { userTrainingId: id, userId }, relations: { training: true } });
+    async findOneTraining(trainingId: number, userId?: number) {
+        const userTraining = await this.userTrainingRepository.findOne({ where: { trainingId, userId }, relations: { training: true } });
 
         if (!userTraining) {
             throw new NotFoundException(Messages.MSG10_EX('UserTraining'));
@@ -68,11 +66,10 @@ export class UserTrainingService {
 
         const ut = { ...userTraining };
         const videos = await this.videoService.lookupVideos(userTraining?.training.videos);
-        const fakedProgress = [...(ut.progress && []), ...videos.map(v => ({ [v.videoId]: Math.random() * 10 > 5 }))];
-        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: fakedProgress }] };
+        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: userTraining.progress }] };
     }
 
-    async create(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
+    async createUserTraining(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
         const training = await this.trainingService.create(createUserTrainingDto as CreateTrainingDto);
 
         const userTrainings = createUserTrainingDto.users.map(userId => ({
@@ -84,19 +81,25 @@ export class UserTrainingService {
         return training;
     }
 
-    async save(id: number, createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
+    async saveUserTraining(trainingId: number, createUserTrainingDto: CreateUserTrainingDto & { progress: any[] }): Promise<Training> {
         const existingUserTrainings = Object.fromEntries(
-            (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId: id } }))
+            (await this.userTrainingRepository.find({ where: { userId: In(createUserTrainingDto.users), trainingId } }))
                 .map(ut => [ut.userId, ut])
         );
 
         const userTrainings = createUserTrainingDto.users.map(userId => ({
-            userId, trainingId: id, progress: existingUserTrainings[userId]?.progress || []
+            userId, trainingId, progress: existingUserTrainings[userId]?.progress
         }));
 
         await this.userTrainingRepository.save(userTrainings);
 
-        return await this.trainingService.save(id, { trainingId: id, ...(createUserTrainingDto as CreateTrainingDto) });
+        return await this.trainingService.save(trainingId, { ...(createUserTrainingDto as CreateTrainingDto) });
     }
 
+    async saveUserTrainigProgress(userId: any, trainingId: number, trainingProgress: { videoId: number, progress: any }) {
+        const userTraining = await this.userTrainingRepository.findOne({ where: { userId, trainingId } }) || throwSe(NotFoundException);
+        userTraining.progress.forEach((p, i) => p[trainingProgress.videoId] && userTraining.progress.splice(i, 1));
+        userTraining.progress.push({ [trainingProgress.videoId]: trainingProgress.progress });
+        return await this.userTrainingRepository.save(userTraining);
+    }
 }

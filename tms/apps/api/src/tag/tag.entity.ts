@@ -7,7 +7,7 @@ export class Tag {
     @PrimaryGeneratedColumn({ name: 'tag_id' })
     tagId: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', length: 100 })
     name: string;
 
     @Column({ type: 'boolean', default: true })

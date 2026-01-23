@@ -14,9 +14,7 @@ import { Video } from "./video.entity";
 export class VideoService {
     private readonly uploadDir = path.join(process.cwd(), 'public', 'static');
 
-    constructor(@InjectRepository(Video) private readonly videoRepository: Repository<Video>) {
-        if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
-    }
+    constructor(@InjectRepository(Video) private readonly videoRepository: Repository<Video>) { }
 
     async handleUpload(req: any, fileName: string, uploadId: string): Promise<VideoMetadata> {
         const cleanId = uploadId.replace(/[\\/.]/g, '');
@@ -91,7 +89,7 @@ export class VideoService {
         return video;
     }
 
-    async create(createVideoDto: CreateVideoDto): Promise<Video> {
+    async create(createVideoDto: CreateVideoDto & { videoDuration: number, thumbnailUrl: string }): Promise<Video> {
         const existingVideo = await this.videoRepository.findOne({
             where: { name: createVideoDto.name },
         });

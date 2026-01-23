@@ -1,4 +1,7 @@
-import { TUiHeadLessModalRef } from "@/tmsui";
+import { IStudentTrainingVideosDto } from "@/common";
+import { AuthServer, TUiHeadLessModalRef } from "@/tmsui";
+import { useMutation } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { useToast } from "./useToast";
 
@@ -14,9 +17,11 @@ type UseVideoProgressProps = {
     storageKey: string;
     questionModalRef: RefObject<TUiHeadLessModalRef>;
     step?: number;
+    dataSource: IStudentTrainingVideosDto
 };
 
-export function useVideoProgress({ questions, storageKey, questionModalRef, step = 180 }: UseVideoProgressProps) {
+export function useVideoProgress({ questions, storageKey, questionModalRef, step = 180, dataSource }: UseVideoProgressProps) {
+    const trainingId = useParams<{ id: string }>()
     const { toastError, toastSuccess } = useToast()
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const fullscreenRef = useRef<HTMLDivElement | null>(null);
@@ -40,7 +45,7 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
     const onLoadedMetadata = () => {
         const video = videoRef.current;
         if (!video) return;
-        totalDuration.current = video.duration;
+        totalDuration.current = Math.floor(video.duration);
         const savedTime = Number(localStorage.getItem(storageKey) || 0);
         if (savedTime) {
             video.currentTime = savedTime;
@@ -63,6 +68,18 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
         questionModalRef.current?.modalOpen();
     }, [activeQuestionIndex, questionModalRef]);
 
+    const submitProgress = useMutation({
+        mutationKey: ['updateVideoProgress', dataSource?.videoId],
+        mutationFn: (data: { videoId: number, progress: { status: string, watchDuration: number } }) => {
+            const response = AuthServer({
+                method: 'PATCH',
+                url: `/trainings/${trainingId?.id}/saveProgress`,
+                data
+            })
+            return response
+        }
+    })
+
     useEffect(() => {
         const player = videoRef.current;
         if (!player) return;
@@ -77,11 +94,57 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
         }
     }, [currentTime, storageKey]);
 
+
+    useEffect(() => {
+        const player = videoRef.current;
+        if (!player) return;
+
+        let submitted = false;
+
+        const submitCompleted = () => {
+            if (submitted) return;
+            submitted = true;
+
+            submitProgress.mutate(
+                {
+                    videoId: dataSource?.videoId,
+                    progress: {
+                        status: "COMPLETED",
+                        watchDuration: Math.floor(player.duration),
+                    }
+                }
+            );
+        };
+
+        const handleEnded = () => submitCompleted();
+
+        const handleTimeUpdate = () => {
+            if (player.currentTime >= player.duration - 1) {
+                submitCompleted();
+            }
+        };
+
+        player.addEventListener("ended", handleEnded);
+        player.addEventListener("timeupdate", handleTimeUpdate);
+
+        return () => {
+            player.removeEventListener("ended", handleEnded);
+            player.removeEventListener("timeupdate", handleTimeUpdate);
+        };
+    }, []);
+
     const submitAnswer = (isCorrect: boolean): void => {
         const player = videoRef.current;
         if (!player) return;
         if (isCorrect) {
             toastSuccess("Correct Answer");
+            submitProgress.mutate({
+                videoId: dataSource?.videoId,
+                progress: {
+                    status: "IN_PROGRESS",
+                    watchDuration: currentTime,
+                }
+            })
         } else {
             toastError("Wrong Answer");
             const rewindTime = Math.max(0, currentTime - (step - 1));

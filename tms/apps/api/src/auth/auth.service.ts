@@ -15,7 +15,7 @@ import { UriPermission, UserUriPermission } from './auth.entity';
 
 function dateToOtp(date: Date): string {
   const d = date;
-  const months = d.getMonth() > 9 ? d.getMonth() : `${Math.ceil(Math.random()*10)%2 ? 2 : 6}${d.getDate()}`;
+  const months = d.getMonth() > 9 ? d.getMonth() : `${Math.ceil(Math.random()*10)%2 ? 2 : 6}${d.getMonth()}`;
   const days = d.getDate() > 9 ? d.getDate() : `${Math.ceil(Math.random()*10)%2 ? 4 : 5}${d.getDate()}`;
   const hours = d.getHours() > 9 ? d.getHours() : `${Math.ceil(Math.random()*10)%2 ? 3 : 8}${d.getHours()}`;
   return `${months}${days}${hours}`;
@@ -96,8 +96,8 @@ export class AuthService {
     if (await comparePassword(newUserVerifySigRaw(user, otp), sig) && diffMinutes(otpToDate(otp), new Date()) < 720) {
       user.password = await hashPassword(newpassword);
       user.privatekey = authenticator.generateSecret();
-      await this.userRepository.save(user);
-      return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: false, isAdmin: user.isAdmin, sub: user.userId }) };
+      await this.userRepository.save({ ...user, resetPwd: true });
+      return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: true, isAdmin: user.isAdmin, sub: user.userId }) };
     }
 
     throwSe(InvalidCredential);

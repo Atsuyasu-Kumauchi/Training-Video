@@ -17,8 +17,23 @@ AuthServer.interceptors.request.use(
         if (token) config.headers.Authorization = `Bearer ${token}`;
         return config;
     },
-    (error) => Promise.reject(error),
+    (error) => {
+        console.log("request error", error);
+        return Promise.reject(error);
+    }
 );
+
+// AuthServer.interceptors.response.use((response) => {
+//     return response;
+// }, async (error) => {
+//     console.log("response error", error);
+//     const token = await getAuthToken("tms_token");
+//     const payload = token ? decodeJwtClient<{ exp: number }>(token)?.exp : null;
+//     if (payload && payload < Date.now() / 1000) {
+//         await deleteAuthToken("tms_token");
+//     }
+//     return Promise.reject(error);
+// })
 
 // AuthServer.interceptors.response.use(
 //     (response) => response,

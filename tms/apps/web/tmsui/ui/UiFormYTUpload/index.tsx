@@ -45,6 +45,8 @@ export const UiFormYTUpload = <T extends FieldValues>({
         const ytUrl = e.target.value;
         const ytVideoDetailsResponse = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(ytUrl)}&format=json`)
         const ytVideoDetailsData = await ytVideoDetailsResponse.json()
+        console.log("ytVideoDetailsData", ytVideoDetailsData);
+
         if (ytVideoDetailsData) {
             const videoId = getYouTubeVideoID(ytUrl);
             setValue(name as Path<T>, {
