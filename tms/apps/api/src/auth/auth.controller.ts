@@ -4,6 +4,7 @@ import { VerifyUser, JwtAuthGuard } from './auth.guard';
 import { LoginDto, SignUpDto } from './auth.dto';
 import { throwHttpException } from 'src/common/exception/exception.util';
 import { InvalidCredential, UserNotFound } from './auth.exceptions';
+import { Messages } from 'src/common/constants/messages';
 
 
 @Controller('auth')
@@ -29,7 +30,7 @@ export class AuthController {
       return await this.authService.loginWithTotp(loginDto);
     } catch (e) {
       if (e instanceof UserNotFound || e instanceof InvalidCredential)
-        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+        throwHttpException(Messages.MSG24, HttpStatus.UNAUTHORIZED, e);
       throw e;
     }
   }
@@ -41,7 +42,7 @@ export class AuthController {
       return await this.authService.login(loginDto);
     } catch (e) {
       if (e instanceof UserNotFound || e instanceof InvalidCredential)
-        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+        throwHttpException(Messages.MSG24, HttpStatus.UNAUTHORIZED, e);
       throw e;
     }
   }
@@ -72,7 +73,7 @@ export class AuthController {
       await this.authService.verifyEmail(email, mailpass, sig);
     } catch (e) {
       if (e instanceof UserNotFound || e instanceof InvalidCredential)
-        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+        throwHttpException(Messages.MSG24, HttpStatus.UNAUTHORIZED, e);
       throw e;
     }
   }
@@ -95,7 +96,7 @@ export class AuthController {
       return await this.authService.resetPassword(email, otp, sig, p);
     } catch (e) {
       if (e instanceof UserNotFound || e instanceof InvalidCredential)
-        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+        throwHttpException(Messages.MSG24, HttpStatus.UNAUTHORIZED, e);
       throw e;
     }
   }
@@ -108,7 +109,7 @@ export class AuthController {
       await this.authService.changePassword(req.user.username, password, newpassword);
     } catch (e) {
       if (e instanceof UserNotFound || e instanceof InvalidCredential)
-        throwHttpException("Invalid credentials", HttpStatus.UNAUTHORIZED, e);
+        throwHttpException(Messages.MSG24, HttpStatus.UNAUTHORIZED, e);
       throw e;
     }
   }
