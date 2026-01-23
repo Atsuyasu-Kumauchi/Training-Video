@@ -1,11 +1,9 @@
+import { getPasswordStrength } from "@/components/changePassword/form/changePassword.form.type";
 import useStudentLang from "@/lang/students";
 import { Button } from "@/tmsui";
 import { UiFormInputPassword } from "@/tmsui/ui/UiFormInputPassword";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ChangePasswordType,
-  getPasswordStrength,
 } from "./changePassword.form.type";
 
 export default function ChangePasswordFormView({ isPwdPending }: { isPwdPending: boolean }) {
@@ -52,12 +50,12 @@ export default function ChangePasswordFormView({ isPwdPending }: { isPwdPending:
                 label={changePassword.form.confirmPassword}
                 placeholder={changePassword.form.confirmPasswordPlaceholder}
               />
-              <div className="mt-2">
+              {/* <div className="mt-2">
                 <div id="passwordMatch" className="text-xs text-gray-400">
                   <FontAwesomeIcon icon={faCircle} className=" text-sm" />
                   {changePassword.form.message}
                 </div>
-              </div>
+              </div> */}
 
               {/* Action Buttons */}
               {/* <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">

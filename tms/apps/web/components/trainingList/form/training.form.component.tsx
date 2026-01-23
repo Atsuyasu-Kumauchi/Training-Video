@@ -4,6 +4,7 @@ import { AuthServer, queryClient, wait } from "@/tmsui";
 import { UiForm } from "@/tmsui/ui/Form/Form";
 import { TFormHandlerSubmit, TUiFormRef } from "@/tmsui/ui/Form/form.type";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRef } from "react";
 import {
   defaultValues,
@@ -32,7 +33,8 @@ export default function TrainingFormComponent({ modalRef, editData, isEdit }: TT
       modalRef?.current?.modalClose();
       toastSuccess(Messages.OPERATION_SUCCESS);
     },
-    onError: () => {
+    onError: (error: AxiosError<{ message: string[] }>) => {
+      // const errorData = error?.response?.data;
       toastError(Messages.OPERATION_FAILED);
     },
     onSettled: () => {

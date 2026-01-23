@@ -1,5 +1,5 @@
 import { IStudentTrainingVideosDto } from "@/common";
-import { AuthServer, TUiHeadLessModalRef } from "@/tmsui";
+import { AuthServer, queryClient, TUiHeadLessModalRef } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { RefObject, useEffect, useRef, useState } from "react";
@@ -77,7 +77,12 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
                 data
             })
             return response
-        }
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['training-videos', trainingId?.id],
+            })
+        },
     })
 
     useEffect(() => {
@@ -137,7 +142,7 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
         const player = videoRef.current;
         if (!player) return;
         if (isCorrect) {
-            toastSuccess("Correct Answer");
+            toastSuccess("あなたの答えは正しいです");
             submitProgress.mutate({
                 videoId: dataSource?.videoId,
                 progress: {
@@ -146,7 +151,7 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
                 }
             })
         } else {
-            toastError("Wrong Answer");
+            toastError("あなたの答えは間違っています");
             const rewindTime = Math.max(0, currentTime - (step - 1));
             player.currentTime = rewindTime;
             lastSavedTimeRef.current = rewindTime;

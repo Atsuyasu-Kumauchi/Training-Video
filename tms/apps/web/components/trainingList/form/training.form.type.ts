@@ -23,7 +23,7 @@ export const trainingSchema = zodObject({
   description: zodString(),
   videos: zodArray(zodNumberRequired()),
   usersIds: zodArray(zodNumberRequired()),
-  deadline: zodString(),
+  deadline: zodStringRequired(),
   status: zodBoolean(),
 });
 

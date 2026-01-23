@@ -1,4 +1,5 @@
 "use client";
+import { AvatarUser } from "@/common";
 import { deleteAuthToken } from "@/tmsui";
 import { useSettings } from "@/tmsui/store";
 import { LinkButton } from "@/tmsui/ui";
@@ -8,12 +9,13 @@ import { Button, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react
 import Link from "next/link";
 
 export function StudentHeader() {
-  const { toggleSidebar, setIsSidebarOpen } = useSettings();
+  const { toggleSidebar, setIsSidebarOpen, removeUser, user } = useSettings();
 
   const removeAuthTokens = async () => {
     await deleteAuthToken("tms_token");
     await deleteAuthToken("tms_step");
-    window.location.reload();
+    removeUser();
+    window.location.href = "/";
   }
 
   return (
@@ -45,11 +47,13 @@ export function StudentHeader() {
           <div className="flex items-center space-x-3">
             <Menu as="div" className="relative">
               <MenuButton id="userMenuButton" className="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-medium text-sm">JD</span>
-                </div>
-                <span className="text-gray-700 font-medium">John Doe</span>
-                <FontAwesomeIcon icon={faChevronDown} className="text-gray-400" />
+                {user?.username && (<>
+                  <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                    <span className="text-white font-medium text-sm"><AvatarUser name={user?.username || ""} /></span>
+                  </div>
+                  <span className="text-gray-700 font-medium">{user?.username}</span>
+                  <FontAwesomeIcon icon={faChevronDown} className="text-gray-400" />
+                </>)}
               </MenuButton>
               <MenuItems className="absolute right-0 focus:outline-none mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                 <MenuItem>

@@ -1,4 +1,4 @@
-import { AUTH } from "@/common";
+import { AUTH, Messages } from "@/common";
 import { useToast } from "@/hooks";
 import { AuthServer, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
@@ -47,7 +47,7 @@ export default function ChangePasswordFormComponent({ username }: { username: st
         },
         onError: (error) => {
             const errorData = (error as AxiosError<{ message: string }>)?.response?.data?.message;
-            toastError(errorData || "")
+            toastError(errorData || Messages.OPERATION_FAILED)
         }
     });
 

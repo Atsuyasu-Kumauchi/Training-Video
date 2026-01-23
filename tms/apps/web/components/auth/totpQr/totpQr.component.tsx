@@ -2,6 +2,7 @@
 import { AUTH } from '@/common';
 import { useToast } from '@/hooks/useToast';
 import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
+import { useSettings } from '@/tmsui/store';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -16,6 +17,7 @@ type TTotpQrComponentProps = {
 }
 
 export default function TotpQrComponent(props: TTotpQrComponentProps) {
+    const { setUser } = useSettings();
     const { resetPwd, username } = props;
     const navigate = useRouter();
     const { toastSuccess } = useToast();
@@ -35,13 +37,16 @@ export default function TotpQrComponent(props: TTotpQrComponentProps) {
             if (data?.accessToken) {
                 await setAuthToken({ name: "tms_token", value: data.accessToken });
                 await setAuthToken({ name: "tms_step", value: "2" });
-                const user = decodeJwtClient<{ isAdmin: boolean }>(data.accessToken || "");
+                const user = decodeJwtClient<{ isAdmin: boolean, username: string, }>(data.accessToken || "");
+                setUser({
+                    username: user?.username || "",
+                });
                 if (user?.isAdmin) {
                     navigate.push("/admin/dashboard");
-                    toastSuccess("Login has been successful");
+                    toastSuccess("ログインに成功しました");
                 } else {
                     navigate.push("/student/dashboard");
-                    toastSuccess("Login has been successful");
+                    toastSuccess("ログインに成功しました");
                 }
             }
         },

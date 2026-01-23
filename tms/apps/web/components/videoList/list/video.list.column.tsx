@@ -20,10 +20,10 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
             return (
                 <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-24">
-                        <div className="h-16 w-24 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden ">
+                        <div className="h-16 w-24 bg-gray-200 rounded-lg flex items-center justify-center ">
                             <img src={
                                 original.uploadType === "file" ? MediaServer(original?.thumbnailUrl) : original.uploadType === "youtube" ? original?.thumbnailUrl : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
-                            } alt={original?.name} width={150} height={150} />
+                            } alt={original?.name} width={150} height={150} className="w-24 h-16 object-cover rounded-lg" />
                         </div>
                     </div>
                     <div className="ml-4">

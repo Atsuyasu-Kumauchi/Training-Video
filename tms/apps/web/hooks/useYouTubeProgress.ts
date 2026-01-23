@@ -1,5 +1,5 @@
 import { IStudentTrainingVideosDto } from "@/common";
-import { AuthServer, TUiHeadLessModalRef } from "@/tmsui";
+import { AuthServer, queryClient, TUiHeadLessModalRef } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { RefObject, useEffect, useRef, useState } from "react";
@@ -55,7 +55,7 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
     const lastQuestionIndexRef = useRef<number | null>(null);
 
     const [currentTime, setCurrentTime] = useState<number>(0);
-    const [totalDuration, setTotalDuration] = useState<number>(0);
+    // const [totalDuration, setTotalDuration] = useState<number>(0);
     const [isReady, setIsReady] = useState<boolean>(false);
 
     /* -------------------- Fullscreen -------------------- */
@@ -68,14 +68,11 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
             fullscreenRef.current.requestFullscreen();
         }
     }
-    console.log(totalDuration);
 
     /* -------------------- Player Init -------------------- */
     useEffect(() => {
         if (!videoId) return;
-
         let intervalId: number | undefined;
-
         const init = async (): Promise<void> => {
             await loadYouTubeAPI();
             if (!containerRef.current || !window.YT) return;
@@ -91,7 +88,7 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
                     onReady: (event: YT.PlayerEvent): void => {
                         const player = event.target;
                         const totalDuration = Math.floor(player.getDuration());
-                        setTotalDuration(totalDuration);
+                        // setTotalDuration(totalDuration);
                         setIsReady(true);
                         const savedTime = Number(localStorage.getItem(storageKey) || 0);
 
@@ -101,7 +98,6 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
                             lastSavedTimeRef.current = savedTime;
 
                         }
-
                         intervalId = window.setInterval(() => {
                             setCurrentTime(Math.floor(player.getCurrentTime()));
                         }, 1000);
@@ -125,6 +121,7 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
             }
         };
     }, [videoId, storageKey]);
+
     /* -------------------- Question Detection -------------------- */
     // const activeQuestionIndex: number = currentTime > 0 && currentTime % step === 0 ? currentTime / step - 1 : -1;
     const activeQuestionIndex = currentTime > 0 && currentTime % 180 === 0 && (currentTime / 180 - 1) < questions.length ? currentTime / 180 - 1 : -1;
@@ -168,7 +165,12 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
                 data
             })
             return response
-        }
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['training-videos', trainingId?.id],
+            })
+        },
     })
 
     const submitCompleted = (): void => {
@@ -189,7 +191,7 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
         if (!player || !dataSource?.videoId) return;
 
         if (isCorrect) {
-            toastSuccess("Correct Answer");
+            toastSuccess("あなたの答えは正しいです");
             ytSubmitProgressMutation.mutate({
                 videoId: dataSource.videoId,
                 progress: {
@@ -198,7 +200,7 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
                 },
             });
         } else {
-            toastError("Wrong Answer");
+            toastError("あなたの答えは間違っています");
             const rewindTime = Math.max(0, currentTime - (step - 1));
             player.seekTo(rewindTime, true);
             lastSavedTimeRef.current = rewindTime;
