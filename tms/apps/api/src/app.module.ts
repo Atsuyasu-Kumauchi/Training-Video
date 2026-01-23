@@ -15,6 +15,7 @@ import { UserTrainingModule } from './usertraining/usertraining.module';
 import { TrainingModule } from './training/training.module';
 import { TestModule } from './test/test.module';
 import { UserAssignmentModule } from './userassignment/userassignment.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -53,7 +54,8 @@ import { UserAssignmentModule } from './userassignment/userassignment.module';
     UserTrainingModule,
     TrainingModule,
     TestModule,
-    UserAssignmentModule
+    UserAssignmentModule,
+    DashboardModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: PublicHttpExceptionFilter }],
