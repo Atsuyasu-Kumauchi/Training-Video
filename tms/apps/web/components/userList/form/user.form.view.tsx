@@ -106,7 +106,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
         </div>
 
         <div className="col-span-12">
-          <h4 className="text-lg font-medium text-gray-900 mb-4">
+          <h4 className="text-lg font-medium text-gray-900 mb-2">
             {user.form.issueReview}
           </h4>
         </div>
@@ -114,24 +114,27 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
           <UiFormSelect<TUserSchema>
             name="firstReview"
             label={user.form.firstReview}
-            placeholder={user.form.firstReview}
+            placeholder="選択してください"
             options={selectConvert(firstReviewData as IUserDto[]) ?? []}
+            labelClassName="block text-xs font-medium text-gray-700 mb-2"
           />
         </div>
         <div className="col-span-12">
           <UiFormSelect<TUserSchema>
             name="secondReview"
             label={user.form.secondaryReview}
-            placeholder={user.form.secondaryReview}
+            placeholder="選択してください"
             options={selectConvert(secondReviewData as IUserDto[]) ?? []}
+            labelClassName="block text-xs font-medium text-gray-700 mb-2"
           />
         </div>
         <div className="col-span-12">
           <UiFormSelect<TUserSchema>
             name="finalReview"
             label={user.form.finalReview}
-            placeholder={user.form.finalReview}
+            placeholder="選択してください"
             options={selectConvert(finalReviewData as IUserDto[]) ?? []}
+            labelClassName="block text-xs font-medium text-gray-700 mb-2"
           />
         </div>
         {/* <div className="col-span-12">
