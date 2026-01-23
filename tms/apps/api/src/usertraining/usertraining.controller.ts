@@ -24,7 +24,7 @@ export class UserTrainingController {
 
     @Get(':id')
     async findOne(@Req() req, @Param('id') trainingId: number) {
-        return await this.userTrainingService.findOneTraining(+trainingId, req.user.isAdmin ? undefined : req.user.userId);
+        return await this.userTrainingService.findOneTraining(trainingId, req.user.isAdmin ? undefined : req.user.userId);
     }
 
     @Post()

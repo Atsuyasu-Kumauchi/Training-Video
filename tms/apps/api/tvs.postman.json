@@ -1,0 +1,1693 @@
+{
+  "info": {
+    "name": "tvs",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "assignment",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"good assignment\",\n  \"question\": \"what is good assignment\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "reviewers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments/reviewers",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments",
+                "reviewers"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Good assignment\",\n  \"question\": \"What is good assignment\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "setReviewerRoles",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments/setReviewerRoles",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments",
+                "setReviewerRoles"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[1]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "getReviewerRoles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments/getReviewerRoles",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments",
+                "getReviewerRoles"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "getReviewers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/assignments/getReviewers",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "assignments",
+                "getReviewers"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "change-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/change-password",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "change-password"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"max_9200X\",\n  \"newpassword\": \"max_9200X\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "init-recovery",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/init-recovery?email=samax.mw@gmail.com",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "init-recovery?email=samax.mw@gmail.com"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "samax.mw@gmail.com"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "login-totp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/login-totp",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "login-totp"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"samax\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/login",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"username\": \"samax\", \"password\": \"max_9200X\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/profile",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "profile"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "resend-mailpass",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/resend-mailpass?email=samax.mw@gmail.com",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "resend-mailpass?email=samax.mw@gmail.com"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "samax.mw@gmail.com"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "reset-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/reset-password",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "reset-password"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"samax.mw@gmail.com\",\n  \"otp\": \"123456\",\n  \"sig\": \"$sax$sjaljdsf.3424\",\n  \"newpassword\": \"max_9200Xa\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "signup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/signup",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"username\": \"samax\", \"password\": \"max_9200X\", \"email\": \"samax.mw@gmail.com\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "totp-qr",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/totp-qr",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "totp-qr"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "uri-permissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/uri-permissions",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "uri-permissions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "verify-email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/auth/verify-email",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "auth",
+                "verify-email"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"samax.mw@gmail.com\",\n  \"mailpass\": \"123456\",\n  \"sig\": \"$sax$sjaljdsf.3424\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "department",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/departments",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "departments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"depNy\",\n  \"status\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/departments",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "departments"
+              ],
+              "query": [
+                {
+                  "key": "statusFilter",
+                  "value": "true"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/departments/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "departments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/departments/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "departments",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"depXyz\",\n  \"status\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "role",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/roles",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "roles"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"student\",\n  \"status\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/roles",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "roles"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/roles/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "roles",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/roles/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "roles",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"subadmin\",\n  \"status\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tags",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tags"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"developer\",\n  \"status\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tags",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tags"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tags/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tags",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tags/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tags",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"developer\",\n  \"status\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "item": [
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tests",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tests"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tests/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tests",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/tests/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "tests",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Test: CSS Grid Layout\",\n    \"description\": \"Test: CSS Grid Layout\",\n    \"status\": true,\n    \"testQuestions\": [\n        {\n            \"question\": \"ダイバーシティという言葉の基本的な意味として最も適切なものはどれですか？\",\n            \"correctOption\": \"2\",\n            \"options\": [\n                \"1. 組織内の人材構成を均一に保つ考え方\",\n                \"2. 多様な背景や価値観を持つ人々を受け入れ活かす考え方\",\n                \"3. 特定の属性を優遇する制度\",\n                \"4. 意思決定を単純化するための管理手法\"\n            ]\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "training",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/trainings",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "trainings"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"a training\",\n    \"description\": \"description of a training\",\n    \"videos\": [1,2,3],\n    \"users\": [1],\n    \"deadline\": \"2026-01-11\",\n    \"status\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/trainings",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "trainings"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/trainings/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "trainings",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/trainings/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "trainings",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"a training\",\n    \"description\": \"description of a training\",\n    \"videos\": [1,2,3],\n    \"users\": [1],\n    \"deadline\": \"2026-01-11\",\n    \"status\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "saveProgress",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/trainings/1/saveProgress",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "trainings",
+                "1",
+                "saveProgress"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"videoId\":1,\n  \"progress\": {\n    \"status\":\"COMPLETED\",\n    \"watchDuration\": 653\n  }\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/users",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"samax92\",\n  \"email\": \"samax92@gmail.com\",\n  \"password\": \"max_9200X\",\n  \"firstName\": \"Haiat\",\n  \"lastName\": \"Shabbir\",\n  \"roleId\": \"1\",\n  \"departmentId\": 1,\n  \"employeeId\": \"x123\",\n  \"joinDate\": \"11-11-2025\",\n  \"isReviewer\": true,\n  \"userTagIds\": [1, 2]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/users",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/users/2",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "users",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/users/10",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "users",
+                "10"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"samax92\",\n  \"email\": \"samax92@gmail.com\",\n  \"password\": \"max_9200X\",\n  \"firstName\": \"Haiat_\",\n  \"lastName\": \"Shabbir\",\n  \"roleId\": \"1\",\n  \"departmentId\": \"1\",\n  \"employeeId\": \"x123\",\n  \"joinDate\": \"11-11-2025\",\n  \"isReviewer\": true,\n  \"userTagIds\": [1, 2]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "video",
+      "item": [
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/videos",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "videos"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"test video title\",\n  \"description\": null,\n  \"testId\": null,\n  \"assignmentId\": 1,\n  \"uploadType\": \"file\",\n  \"videoUrl\": \"/static/1.mp4\",\n  \"fileName\": \"my_movie.mp4\",\n  \"fileDirectory\": \"\",\n  \"audienceTags\": [\n    \"developer\",\n    \"marketer\"\n  ],\n  \"status\": true\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/videos?tagsFilter=taga,tagb",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "videos?tagsFilter=taga,tagb"
+              ],
+              "query": [
+                {
+                  "key": "tagsFilter",
+                  "value": "taga,tagb"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/videos/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "videos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "getUpload",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/videos/uploads/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "videos",
+                "uploads",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "save",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/videos/1",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "videos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"test video title\",\n  \"description\": null,\n  \"testId\": 1,\n  \"assignmentId\": 1,\n  \"uploadType\": \"file\",\n  \"videoUrl\": \"https://uploadboss.ny/123\",\n  \"fileName\": \"good_video\",\n  \"fileDirectory\": \"\",\n  \"audienceTags\": [\n    \"developer\",\n    \"marketer\"\n  ],\n  \"status\": true\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-file-name",
+                "value": "my_movie.mp4",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "x-upload-id",
+                "value": "1",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [{
+                "key": "token",
+                "value": "{{tvs_jwt}}",
+                "type": "string"
+              }]
+            },
+            "description": "",
+            "url": {
+              "raw": "{{server_address}}/videos/uploads",
+              "protocol": "",
+              "host": [
+                "{{server_address}}"
+              ],
+              "path": [
+                "videos",
+                "uploads"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_address",
+      "value": "http://127.0.0.1:7001",
+      "type": "default"
+    },
+    {
+      "key": "tvs_jwt",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbWF4Iiwicm9sZSI6eyJpZCI6MSwibmFtZSI6ImFkbWluIn0sImVuYWJsZWQiOnRydWUsInJlc2V0UHdkIjpmYWxzZSwiaXNBZG1pbiI6dHJ1ZSwic3ViIjoxLCJpYXQiOjE3NjkxNDkxOTQsImV4cCI6MTc2OTE2NzE5NH0.bMXLbTUDN95YSGAfXT-fXYDbQFFWWJzE4R2e8Q8H5Bc",
+      "type": "default"
+    }
+  ]
+}

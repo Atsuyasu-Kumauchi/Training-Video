@@ -1,9 +1,9 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, IsNull, Not, Repository } from "typeorm";
+import { type DeepPartial, In, IsNull, Not, Raw, Repository } from "typeorm";
 import { Assignment, UserAssignment } from "./userassignment.entity";
 import { throwSe } from "src/common/exception/exception.util";
-import { CreateAssignmentDto, AssignmentQueryDto } from "./userassignment.dto";
+import { AssignmentQueryDto, CreateAssignmentDto, UserAssignmentQueryDto } from "./userassignment.dto";
 import { Messages } from "src/common/constants";
 import { promises as fs } from 'fs';
 import { User } from "src/user/user.entity";
@@ -25,17 +25,62 @@ export class UserAssignmentService {
             .catch(e => console.warn(e.message));
     }
 
-    async findAll(query: AssignmentQueryDto) {
+    async getUserAssignments(userId: number, assignmentIds: number[]) {
+        return await this.userAssignmentRepository.findBy({ userId, assignmentId: In(assignmentIds) });
+    }
+
+    async findAllUserAssignments(query: UserAssignmentQueryDto, reviewerId?: number) {
+        const reviewerUsers = reviewerId ? (await this.userRepository.findBy({
+            reviewers: Raw((alias) => `${alias} ? :reviewerId`, { reviewerId })
+        })).map(u => u.userId) : [];
+
         const queryBuilder = this.userAssignmentRepository.createQueryBuilder('UserAssignment');
 
-        queryBuilder.leftJoinAndSelect("Test.testQuestions", "testQuestions");
+        queryBuilder.leftJoinAndSelect("UserAssignment.assignment", "Assignment");
 
-        queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
+        queryBuilder.take(query.pageSize).skip(query.pageIndex * query.pageSize);
 
-        queryBuilder.where({ status: query.statusFilter === null ? Not(IsNull()) : query.statusFilter });
-        if (query.nameFilter) queryBuilder.andWhere("Test.name like :name", { name: `%${query.nameFilter}%` });
+        queryBuilder.addOrderBy(`UserAssignment.${query.sortBy}`, query.sortDirection);
 
-        queryBuilder.addOrderBy(`Test.${query.sortBy}`, query.sortDirection);
+        let [result, resultCount] = await queryBuilder.getManyAndCount();
+
+        // queryBuilder.andWhere("UserAssignment.userId IN (:...userIds)", { userIds: reviewerUsersFilter.map(v => v.userId) });
+        result = result.filter(ua => reviewerUsers.includes(ua.userId))
+
+        return {
+            data: result,
+            pageIndex: query.pageIndex,
+            pageSize: query.pageSize,
+            pageCount: Math.ceil(resultCount / query.pageSize),
+            resultCount,
+            sortBy: query.sortBy,
+            sortDirection: query.sortDirection,
+            nameFilter: query.nameFilter || null,
+        };
+    }
+
+    async findOneUserAssignment(id: number, reviewerId?: number) {
+        const reviewerUsers = reviewerId ? (await this.userRepository.findBy({
+            reviewers: Raw((alias) => `${alias} ? :reviewerId`, { reviewerId })
+        })).map(u => u.userId) : [];
+
+        const userAssignment = await this.userAssignmentRepository
+            .findOne({ where: { assignmentId: id }, relations: { assignment: true } }) || throwSe(NotFoundException);
+
+        if (reviewerUsers.includes(userAssignment.userId)) return userAssignment;
+
+        throwSe(NotFoundException);
+    }
+
+    async findAll(query: AssignmentQueryDto) {
+        const queryBuilder = this.assignmentRepository.createQueryBuilder('Assignment');
+
+        queryBuilder.limit(query.pageSize).offset(query.pageIndex * query.pageSize);
+
+        queryBuilder.where({ assignmentId: Not(IsNull()) });
+        if (query.nameFilter) queryBuilder.andWhere("Assignment.name like :name", { name: `%${query.nameFilter}%` });
+
+        queryBuilder.addOrderBy(`Assignment.${query.sortBy}`, query.sortDirection);
 
         const [result, resultCount] = await queryBuilder.getManyAndCount();
 
@@ -48,18 +93,11 @@ export class UserAssignmentService {
             sortBy: query.sortBy,
             sortDirection: query.sortDirection,
             nameFilter: query.nameFilter || null,
-            statusFilter: query.statusFilter
         };
     }
 
-    async findOne(id: number): Promise<Assignment> {
-        const test = await this.assignmentRepository.findOne({ where: { assignmentId: id }, relations: { userAssignments: true } });
-
-        if (!test) {
-            throw new NotFoundException(Messages.MSG10_EX('Test'));
-        }
-
-        return test;
+    async findOne(assignmentId: number) {
+        return await this.assignmentRepository.findOneBy({ assignmentId }) || throwSe(NotFoundException);
     }
 
     async create(createUserAssignmentDto: CreateAssignmentDto): Promise<Assignment> {
@@ -67,13 +105,13 @@ export class UserAssignmentService {
     }
 
     async save(id: number, assignment: CreateAssignmentDto): Promise<Assignment> {
-        await this.userAssignmentRepository.existsBy({ assignmentId: id }) || throwSe(NotFoundException, "Assignment not found");
+        await this.assignmentRepository.existsBy({ assignmentId: id }) || throwSe(NotFoundException);
         return await this.assignmentRepository.save({ ...assignment, assignmentId: id });
     }
 
     async setReviewerRoles(reviewerRoles: number[]) {
         await fs.writeFile(UserAssignmentService.REVIEWER_ROLE_FILE, JSON.stringify(reviewerRoles), 'utf8');
-        this.reviewerRoles = reviewerRoles;
+        return this.reviewerRoles = reviewerRoles;
     }
 
     async getReviewerRoles() {
@@ -84,7 +122,6 @@ export class UserAssignmentService {
         return (await this.userRepository.find({ where: { role: { roleId: In(this.reviewerRoles) } }, relations: { role: true } })).map(u => ({
             userId: u.userId, firstName: u.firstName, lastName: u.lastName, roleName: u.role.name
         }));
-
     }
 
     // async getUserReviewers(userId: number) {
