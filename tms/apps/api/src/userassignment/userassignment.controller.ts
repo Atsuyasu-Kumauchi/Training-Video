@@ -1,48 +1,72 @@
 import { Body, Controller, Get, Param, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { UserAssignmentService } from "./userassignment.service";
-import { CreateAssignmentDto, AssignmentQueryDto } from "./userassignment.dto";
+import { AssignmentQueryDto, CreateAssignmentDto, UserAssignmentQueryDto } from "./userassignment.dto";
 import { type DeepPartial } from "typeorm";
 import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
 import { Assignment } from "./userassignment.entity";
 
 
-@UseGuards(JwtAuthGuard, VerifyUser, IsAdmin)
+@UseGuards(JwtAuthGuard, VerifyUser)
 @Controller('assignments')
 export class UserAssignmentController {
 
     constructor(private readonly userAssignmentService: UserAssignmentService) { }
 
     @Post("setReviewerRoles")
+    @UseGuards(IsAdmin)
     async setReviewerRoles(@Body() reviewerRoles: number[]) {
-        await this.userAssignmentService.setReviewerRoles(reviewerRoles);
+        return await this.userAssignmentService.setReviewerRoles(reviewerRoles);
     }
 
     @Get("getReviewerRoles")
+    @UseGuards(IsAdmin)
     async getReviewerRoles() {
         return await this.userAssignmentService.getReviewerRoles();
     }
 
-    @Get('reviewers')
+    @Get('getReviewers')
+    @UseGuards(IsAdmin)
     async getReviewers() {
         return await this.userAssignmentService.getReviewers();
     }
 
+    @Get('getUserAssignments')
+    async getUserAssignments(@Req() req, @Query('assignmentIds') assignmentIds: string) {
+        return await this.userAssignmentService.getUserAssignments(req.user.userId, assignmentIds.split(",").map(v => +v));
+    }
+
+    // @Get()
+    // @UseGuards(IsAdmin)
+    // async findAllUserAssignments(@Req() req, @Query() query: UserAssignmentQueryDto) {
+    //     const reviewer = (await this.userAssignmentService.getReviewers()).find(r => r.userId === req.user.userId);
+    //     return await this.userAssignmentService.findAllUserAssignments(query, reviewer?.userId);
+    // }
+
+    // @Get('')
+    // @UseGuards(IsAdmin)
+    // async findOneUserAssignments(@Req() req, @Param('id') assignmentId: number) {
+    //     const reviewer = (await this.userAssignmentService.getReviewers()).find(r => r.userId === req.user.userId);
+    //     return await this.userAssignmentService.findOneUserAssignment(assignmentId, reviewer?.userId);
+    // }
+
     @Get()
-    async findAll(@Query() query: AssignmentQueryDto) {
+    async findAll(@Req() req, @Query() query: AssignmentQueryDto) {
         return await this.userAssignmentService.findAll(query);
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string) {
-        return await this.userAssignmentService.findOne(+id);
+    async findOne(@Req() req, @Param('id') assignmentId: number) {
+        return await this.userAssignmentService.findOne(assignmentId);
     }
 
     @Post()
-    async create(@Body() createAssignmentDto: CreateAssignmentDto): Promise<Assignment> {
-        return await this.userAssignmentService.create(createAssignmentDto);
+    @UseGuards(IsAdmin)
+    async create(@Body() userAssignment: CreateAssignmentDto): Promise<Assignment> {
+        return await this.userAssignmentService.create(userAssignment);
     }
 
     @Put(':id')
+    @UseGuards(IsAdmin)
     async save(@Param('id') id: number, @Body() createAssignmentDto: CreateAssignmentDto): Promise<Assignment> {
         return await this.userAssignmentService.save(id, createAssignmentDto);
     }

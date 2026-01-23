@@ -26,7 +26,7 @@ export class UserTrainingService {
 
         queryBuilder.leftJoinAndSelect("UserTraining.training", "Training");
 
-        queryBuilder.take(query.pageSize).offset(query.pageIndex * query.pageSize);
+        queryBuilder.take(query.pageSize).skip(query.pageIndex * query.pageSize);
 
         if (query.statusFilter === null) queryBuilder.where("Training.status IS NOT NULL");
         else queryBuilder.where("Training.status = :status", { status: query.statusFilter });
@@ -42,7 +42,7 @@ export class UserTrainingService {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
+                ut => ({ ...ut.training, userTrainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,
@@ -66,7 +66,7 @@ export class UserTrainingService {
 
         const ut = { ...userTraining };
         const videos = await this.videoService.lookupVideos(userTraining?.training.videos);
-        return { ...ut.training, videos, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: userTraining.progress }] };
+        return { ...ut.training, videos, userTrainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: userTraining.progress }] };
     }
 
     async createUserTraining(createUserTrainingDto: CreateUserTrainingDto): Promise<Training> {
