@@ -69,7 +69,7 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
     }, [activeQuestionIndex, questionModalRef]);
 
     const submitProgress = useMutation({
-        mutationKey: ['updateVideoProgress', dataSource?.videoId],
+        mutationKey: ['updateVideoProgress-video', dataSource?.videoId],
         mutationFn: (data: { videoId: number, progress: { status: string, watchDuration: number } }) => {
             const response = AuthServer({
                 method: 'PATCH',
