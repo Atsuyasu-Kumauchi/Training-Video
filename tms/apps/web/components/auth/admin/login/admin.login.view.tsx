@@ -1,4 +1,5 @@
 import { Button, cn, LinkButton, useFormContext } from "@/tmsui";
+import { Messages } from "@/common";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { TAdminLoginSchema, TAdminLoginViewSchema } from "./admin.login.type";
@@ -10,11 +11,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
         <>
             {/* Logo and Header */}
             <div className="text-center">
-                <div className="mx-auto h-16 w-16 bg-primary rounded-full flex items-center justify-center">
-                    <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
+                
                 <h2 className="mt-6 text-3xl font-bold text-gray-900">
                     管理者ログイン
                 </h2>
@@ -26,19 +23,19 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
             <div className="mt-8 space-y-6">
                 <div className="rounded-md shadow-sm -space-y-px">
                     <Controller
-                        name="username"
+                        name="email"
                         control={control}
                         render={({ field }) => (
                             <div>
-                                <label htmlFor="admin-id" className="sr-only">Admin ID</label>
+                                <label htmlFor="admin-email" className="sr-only">Email</label>
                                 <input
-                                    id="admin-id"
-                                    type="text"
+                                    id="admin-email"
+                                    type="email"
                                     className={cn(
                                         "appearance-none rounded-none relative block w-full px-3 py-2 border  placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm",
-                                        errors.username ? "border-red-500" : "border-gray-300"
+                                        errors.email ? "border-red-500" : "border-gray-300"
                                     )}
-                                    placeholder="Admin ID"
+                                    placeholder="メールアドレス"
                                     {...field}
                                 />
                             </div>
@@ -57,7 +54,7 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
                                         "appearance-none rounded-none relative block w-full px-3 py-2 border  placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm",
                                         errors.password ? "border-red-500" : "border-gray-300"
                                     )}
-                                    placeholder="Password"
+                                    placeholder="パスワード"
                                     {...field}
                                 />
                             </div>
@@ -104,19 +101,15 @@ export default function AdminLoginView(props: TAdminLoginViewSchema) {
                     </div>
                     <div className="ml-3">
                         <h3 className="text-sm font-medium text-red-800">
-                            Invalid credentials
+                            {Messages.LOGIN_FAILED}
                         </h3>
-                        <div className="mt-2 text-sm text-red-700">
-                            <p>Please check your Admin ID and password and try again.</p>
-                        </div>
                     </div>
                 </div>
             </div>}
             {/* Footer */}
             <div className="text-center mt-4">
                 <p className="text-xs text-gray-500">
-                    © 2025 Training Management System. All rights reserved.
-
+                    © {new Date().getFullYear()} Training Management System. All rights reserved.
                 </p>
             </div>
         </>

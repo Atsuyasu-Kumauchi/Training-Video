@@ -9,6 +9,7 @@ import {
   faClipboardList,
   faGraduationCap,
   faKey,
+  faSpinner,
   faTachometerAlt,
   faTags,
   faTasks,
@@ -20,12 +21,31 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function AdminSidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setIsSidebarOpen } = useSettings();
+  const [loadingPath, setLoadingPath] = useState<string | null>(null);
 
   const lang = useLang();
+
+  const handleLinkClick = (url: string) => {
+    if (url !== pathname) {
+      setLoadingPath(url);
+      // Close sidebar on mobile after navigation starts
+      if (window.innerWidth < 1024) {
+        setIsSidebarOpen(false);
+      }
+    }
+  };
+
+  // Clear loading state when pathname changes (navigation complete)
+  useEffect(() => {
+    if (loadingPath && pathname === loadingPath) {
+      setLoadingPath(null);
+    }
+  }, [pathname, loadingPath]);
 
   const sidebar = [
     { url: "/admin/dashboard", icon: faTachometerAlt, title: lang.menu.dashboard },
@@ -45,55 +65,76 @@ export function AdminSidebar() {
     <div
       id="sidebar"
       className={cn(
-        "w-64 bg-white shadow-lg transform transition-transform duration-300 fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0",
-        // Mobile → slide in/out
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full",
-        // Desktop → completely hide if closed
-        !isSidebarOpen && "lg:hidden"
+        "bg-white shadow-lg transform transition-all duration-300 ease-in-out fixed lg:static inset-y-0 left-0 z-30 flex-shrink-0 overflow-hidden",
+        // Mobile → slide in/out with fixed width
+        isSidebarOpen ? "w-64 translate-x-0" : "w-64 -translate-x-full",
+        // Desktop → width transition (static positioning)
+        isSidebarOpen ? "lg:w-64 lg:translate-x-0" : "lg:w-0 lg:translate-x-0"
       )}
     >
-      <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-            <FontAwesomeIcon
-              icon={faGraduationCap}
-              className="fas fa-graduation-cap text-white text-sm"
-            />
+      {/* Inner wrapper with fixed width to prevent text breaking */}
+      <div className={cn(
+        "h-full w-64 transition-opacity duration-200",
+        // Hide content smoothly when collapsed on desktop
+        isSidebarOpen ? "opacity-100 delay-75" : "lg:opacity-0 delay-0"
+      )}>
+        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+          <div className="flex items-center space-x-3 whitespace-nowrap">
+            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <FontAwesomeIcon
+                icon={faGraduationCap}
+                className="fas fa-graduation-cap text-white text-sm"
+              />
+            </div>
+            <h1 className="text-lg font-bold text-gray-900">トレーニング管理</h1>
           </div>
-          <h1 className="text-xl font-bold text-gray-900">トレーニング管理</h1>
+          {/* Close button only visible on mobile */}
+          <button
+            id="closeSidebar"
+            className="lg:hidden text-gray-500 hover:text-gray-700 flex-shrink-0 cursor-pointer"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <FontAwesomeIcon icon={faTimes} className="fas fa-times" />
+          </button>
         </div>
-        {/* Close button only visible on mobile */}
-        <button
-          id="closeSidebar"
-          className="lg:hidden text-gray-500 hover:text-gray-700"
-          onClick={() => setIsSidebarOpen(false)}
-        >
-          <FontAwesomeIcon icon={faTimes} className="fas fa-times" />
-        </button>
+        <nav className="mt-6 px-3">
+          <div className="space-y-3">
+            {sidebar?.map((item, index) => {
+              const isActive = pathname === item.url;
+              const isLoading = loadingPath === item.url;
+              return (
+                <Link
+                  key={index}
+                  href={item.url}
+                  onClick={() => handleLinkClick(item.url)}
+                  className={cn(
+                    "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 whitespace-nowrap relative",
+                    isActive &&
+                    " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600",
+                    isLoading && "opacity-70"
+                  )}
+                >
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={cn(
+                      "fas fa-tachometer-alt w-5 h-5 mr-3 flex-shrink-0",
+                      isLoading && "animate-pulse"
+                    )}
+                  />
+                  <span className="truncate">{item.title}</span>
+                  {isLoading && (
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="ml-auto w-4 h-4 text-primary-600"
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
       </div>
-      <nav className="mt-6 px-3">
-        <div className="space-y-3">
-          {sidebar?.map((item, index) => {
-            return (
-              <Link
-                key={index}
-                href={item.url}
-                className={cn(
-                  "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200",
-                  pathname === item.url &&
-                  " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600"
-                )}
-              >
-                <FontAwesomeIcon
-                  icon={item.icon}
-                  className="fas fa-tachometer-alt w-5 h-5 mr-3"
-                />
-                {item.title}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
     </div>
   );
 }

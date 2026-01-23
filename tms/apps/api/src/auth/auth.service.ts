@@ -70,8 +70,15 @@ export class AuthService {
     return !!await this.userRepository.findOneBy({ username });
   }
 
-  async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { username }, relations: { role: true } }) || throwSe(UserNotFound);
+  async validateUser(identifier: string, password: string): Promise<User> {
+    // Try to find user by username first, then by email
+    const user = await this.userRepository.findOne({ 
+      where: [
+        { username: identifier },
+        { email: identifier }
+      ], 
+      relations: { role: true } 
+    }) || throwSe(UserNotFound);
 
     if (await comparePassword(password, user.password)) return user;
 

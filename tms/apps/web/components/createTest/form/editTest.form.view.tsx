@@ -4,17 +4,22 @@ import {
   UiFormFiledArray,
   UiFormInput,
   UiFormSelect,
-  UiFormTextArea
+  UiFormTextArea,
 } from "@/tmsui";
 import { UiFormRadio } from "@/tmsui/ui/UiFormRadio";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 import { Fragment } from "react/jsx-runtime";
-import { status, TCreateTestFormViewSchema, TCreateTestSchema } from "./createTest.form.type";
+import {
+  status,
+  TCreateTestFormViewSchema,
+  TCreateTestSchema,
+} from "./createTest.form.type";
 
 export default function EditTestFormView(props: TCreateTestFormViewSchema) {
   const { testCreation } = useLang();
-
+  const router = useRouter();
   return (
     <>
       <div className="px-6 py-8">
@@ -96,9 +101,16 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                       <div id="questionsContainer" className="space-y-4">
                         {fields.map((item, parentIndex) => {
                           return (
-                            <div key={item.id + parentIndex} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                            <div
+                              key={item.id + parentIndex}
+                              className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                            >
                               <div className="flex items-center justify-between mb-4">
-                                <h5 className="text-md font-medium text-gray-900">  {testCreation.form.questionNo} {parentIndex + 1} </h5>
+                                <h5 className="text-md font-medium text-gray-900">
+                                  {" "}
+                                  {testCreation.form.questionNo}{" "}
+                                  {parentIndex + 1}{" "}
+                                </h5>
                                 <Button
                                   type="button"
                                   color="danger"
@@ -118,7 +130,9 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                                 <UiFormTextArea<TCreateTestSchema>
                                   name={`testQuestions.${parentIndex}.question`}
                                   label={testCreation.form.question}
-                                  placeholder={testCreation.form.questionPlaceholder}
+                                  placeholder={
+                                    testCreation.form.questionPlaceholder
+                                  }
                                   required
                                 />
                               </div>
@@ -132,8 +146,14 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                                 <div className="space-y-2">
                                   {item?.options?.map((opt, childIndex) => {
                                     return (
-                                      <div key={parentIndex + childIndex} className="flex items-center space-x-2" >
-                                        <UiFormRadio name={`testQuestions.${parentIndex}.correctOption`} value={childIndex + 1} />
+                                      <div
+                                        key={parentIndex + childIndex}
+                                        className="flex items-center space-x-2"
+                                      >
+                                        <UiFormRadio
+                                          name={`testQuestions.${parentIndex}.correctOption`}
+                                          value={childIndex + 1}
+                                        />
                                         <div className="w-full">
                                           <UiFormInput
                                             name={`testQuestions.${parentIndex}.options.${childIndex}`}
@@ -143,16 +163,16 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                                           />
                                         </div>
                                       </div>
-                                    )
+                                    );
                                   })}
                                 </div>
                               </div>
                             </div>
-                          )
+                          );
                         })}
                       </div>
                     </Fragment>
-                  )
+                  );
                 }}
               </UiFormFiledArray>
             </div>
@@ -162,6 +182,7 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                 <Button
                   type="button"
                   color="neutral"
+                  onClick={() => router.push("/admin/create-test")}
                 >
                   {testCreation.form.cancel}
                 </Button>

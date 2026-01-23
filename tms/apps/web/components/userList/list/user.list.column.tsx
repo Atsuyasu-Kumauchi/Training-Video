@@ -83,7 +83,6 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
 
 export const UserView = (user: IUserDto) => {
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
-  console.log("user", user);
 
   return (
     <div className="flex items-center space-x-2">
@@ -96,7 +95,7 @@ export const UserView = (user: IUserDto) => {
       />
       <UiBasicModal
         modalRef={modalRef}
-        title={list.userDetail + " - " + user?.firstName + user?.lastName}
+        title={list.userDetail + ` - ${user?.firstName} ${user?.lastName}`}
         body={<UsersDetailsComponent editData={user} modalRef={modalRef} />}
       />
     </div>

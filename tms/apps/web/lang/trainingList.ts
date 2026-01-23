@@ -32,6 +32,10 @@ export const LangTrainingList = {
     statusPlaceholder: "ステータスを選択",
     cancel: "キャンセル", //cancel
     createATraining: "トレーニングを作成", //Create a training
+    editTraining: "トレーニングを編集", //Edit Training
+  },
+  view: {
+    trainingDetail: "トレーニング詳細", // Training Details
   },
 };
 

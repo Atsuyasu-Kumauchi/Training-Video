@@ -26,3 +26,16 @@ restart:
 	@echo "Restarting TMS services..."
 	docker-compose restart
 	@echo "Services restarted!"
+
+# Update dependencies
+npm-update:
+	@echo "Updating dependencies inside containers..."
+	docker-compose exec api npm update
+	docker-compose exec web npm update
+	@echo "Dependencies updated!"
+
+# Seed database
+seed:
+	@echo "Seeding database..."
+	docker exec -i tvms-db psql -U tvms_user -d tvms_db < db/seed.sql
+	@echo "Database seeded!"

@@ -27,18 +27,22 @@ interface IUseFetchListProps {
   pageIndex?: number;
   pageSize?: number;
   keyName?: ISelectConvertProps;
+  statusFilter?: boolean | string | null;
 }
 
-export function useFetchList<TData>({ query, pageIndex = 0, pageSize = 1000, keyName }: IUseFetchListProps): ISelectConvertProps[] {
+export function useFetchList<TData>({ query, pageIndex = 0, pageSize = 1000, keyName, statusFilter }: IUseFetchListProps): ISelectConvertProps[] {
   const { data, isLoading, isFetching } = useQuery<IApiResponse<TData>>({
-    queryKey: [...query.key, pageIndex, pageSize],
+    queryKey: [...query.key, pageIndex, pageSize, statusFilter],
     queryFn: async ({ signal }) => {
       const cancelSource: CancelTokenSource = axios.CancelToken.source();
       signal?.addEventListener("abort", () => cancelSource.cancel());
-      const params = {
+      const params: Record<string, any> = {
         pageIndex: pageIndex,
         pageSize: pageSize,
       };
+      if (statusFilter !== undefined && statusFilter !== null) {
+        params.statusFilter = statusFilter;
+      }
       const [baseUrl] = query.url.split("?");
       try {
         const response = await AuthServer.get<IApiResponse<TData>>(baseUrl ?? "", {

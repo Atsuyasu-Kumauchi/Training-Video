@@ -38,6 +38,9 @@ export const UiFormSelect = <T extends FieldValues>({
             name={name}
             control={control}
             render={({ field, fieldState: { error } }) => {
+                // Convert null/undefined to empty string for controlled select
+                const selectValue = field.value ?? "";
+                const { value, ...fieldProps } = field;
                 return (
                     <div>
                         {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
@@ -48,7 +51,8 @@ export const UiFormSelect = <T extends FieldValues>({
                                 error && "border-red-500 focus:ring-red-500 focus:border-red-500"
                             )}
                             id={label}
-                            {...field}
+                            {...fieldProps}
+                            value={selectValue}
                             {...rest}
                         >
                             <option value="">{placeholder}</option>

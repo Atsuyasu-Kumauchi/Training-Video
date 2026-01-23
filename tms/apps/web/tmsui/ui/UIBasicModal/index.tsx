@@ -98,7 +98,7 @@ export function UiBasicModal({ modalRef, title, description, showCloseButton = t
                                         {showCloseButton && (
                                             <button
                                                 type="button"
-                                                className="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+                                                className="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full cursor-pointer"
                                                 onClick={modalClose}
                                             >
                                                 <span className="sr-only">Close</span>

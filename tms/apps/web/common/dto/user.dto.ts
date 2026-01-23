@@ -1,11 +1,13 @@
 import { BaseDto, IBaseDto } from "./base.dto";
 import { CDepartmentDto, IDepartmentDto } from "./department.dto";
+import { CTagDto, ITagDto } from "./tag.dto";
 
 export interface IUserDto extends IBaseDto {
   userId: string;
   email: string;
   username: string;
   department: IDepartmentDto;
+  tags: ITagDto;
   assigned_training: number;
   completed_training: number;
   status: string;
@@ -27,6 +29,7 @@ export class CUserDto extends BaseDto implements IUserDto {
   email: string = "";
   username: string = "";
   department: CDepartmentDto = new CDepartmentDto();
+  tags: CTagDto = new CTagDto();
   assigned_training: number = 0;
   completed_training: number = 0;
   status: string = "";

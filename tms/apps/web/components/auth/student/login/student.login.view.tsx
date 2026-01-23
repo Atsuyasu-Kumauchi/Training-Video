@@ -1,4 +1,5 @@
 import { useLang } from "@/lang";
+import { Messages } from "@/common";
 import { Button, LinkButton, UiFormInput } from "@/tmsui";
 import { UiFormInputPassword } from "@/tmsui/ui/UiFormInputPassword";
 import { faExclamationCircle, faGraduationCap, fas, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
@@ -55,8 +56,7 @@ export default function StudentLoginView(props: TStudentLoginViewSchema) {
                         <div className="flex">
                             <FontAwesomeIcon icon={faExclamationCircle} className="text-red-400 mr-2 mt-0.5" />
                             <div>
-                                <h3 className="text-sm font-medium text-red-800">ログイン失敗</h3>
-                                <p id="errorMessage" className="text-sm text-red-700 mt-1" >{props.errorMessage}</p>
+                                <h3 className="text-sm font-medium text-red-800">{Messages.LOGIN_FAILED}</h3>
                             </div>
                         </div>
                     </div>
