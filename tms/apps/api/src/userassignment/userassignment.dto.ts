@@ -10,31 +10,13 @@ export class CreateAssignmentDto {
   name: string;
 
   @IsNotEmpty()
-  description: string;
-
-  @IsBoolean({ message: Messages.MSG1_EX('Assignment', 'status', 'boolean') })
-  @IsNotEmpty({ message: Messages.MSG2_EX('Assignment', 'status') })
-  status: boolean;
-
-  @IsNotEmpty()
   question: string;
-
-  @IsNumber()
-  correctOption: number;
-
-  @IsNumber({}, { each: true })
-  options: number[];
 }
 
 export class AssignmentQueryDto {
   @IsOptional()
   @IsString()
   nameFilter?: string;
-
-  @Transform(arg => arg.value === 'true')
-  @IsBoolean()
-  @IsOptional()
-  statusFilter: boolean | null = null;
 
   @Type(() => Number)
   @IsNumber()
@@ -48,6 +30,29 @@ export class AssignmentQueryDto {
 
   @IsString()
   sortBy: string = "Assignment.assignmentId".split(".")[1];
+
+  @IsOptional()
+  @IsEnum(SortDirection)
+  sortDirection: SortDirection = SortDirection.Descending;
+}
+
+export class UserAssignmentQueryDto {
+  @IsOptional()
+  @IsString()
+  nameFilter?: string;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  pageIndex: number = 0;
+
+  @Type(() => Number)
+  @IsNumber()
+  @IsPositive()
+  pageSize: number = 10;
+
+  @IsString()
+  sortBy: string = "UserAssignment.userAssignmentId".split(".")[1];
 
   @IsOptional()
   @IsEnum(SortDirection)
