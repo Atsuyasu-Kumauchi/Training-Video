@@ -38,7 +38,8 @@ export default function StudentLoginComponent() {
         },
         onError: (error) => {
             if ((error as AxiosError).response?.status === 401) {
-                formRef.current?.form?.reset()
+                // Don't reset form on error - keep the entered values so user can see what they typed
+                // Only navigate away if it's a 401 unauthorized error
                 navigate.push("/");
             }
         }

@@ -34,7 +34,7 @@ export default function AdminLoginComponent() {
             }
         },
         onError: () => {
-            formRef.current?.form?.reset()
+            // Don't reset form on error - keep the entered values so user can see what they typed
         }
     });
 
