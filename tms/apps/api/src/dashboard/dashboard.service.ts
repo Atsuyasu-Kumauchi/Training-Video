@@ -52,7 +52,7 @@ export class DashboardService {
 
   private async getRecentActivity(): Promise<RecentActivityItem[]> {
     const activities: RecentActivityItem[] = [];
-    const limit = 5; // Get last 5 activities
+    const limit = 4; // Get last 4 activities
 
     // Get recently registered users (limit to 2 for better distribution)
     const recentUsers = await this.userRepository.find({
@@ -136,7 +136,7 @@ export class DashboardService {
 		});
 	});
 
-    // Sort all activities by timestamp (most recent first) and limit to 5
+    // Sort all activities by timestamp (most recent first) and limit to 4
     return activities
       .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
       .slice(0, limit);
