@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, IsNull, Not, Repository } from "typeorm";
-import { UserTraining } from "./usertraining.entity";
-import { throwSe } from "src/common/exception/exception.util";
-import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
 import { Messages } from "src/common/constants";
-import { TrainingService } from "src/training/training.service";
-import { Training } from "src/training/training.entity";
+import { throwSe } from "src/common/exception/exception.util";
 import { reduceCollection } from "src/common/util";
-import { VideoService } from "src/video/video.service";
 import { CreateTrainingDto } from "src/training/training.dto";
+import { Training } from "src/training/training.entity";
+import { TrainingService } from "src/training/training.service";
+import { VideoService } from "src/video/video.service";
+import { In, Repository } from "typeorm";
+import { CreateUserTrainingDto, UserTrainingQueryDto } from "./usertraining.dto";
+import { UserTraining } from "./usertraining.entity";
 
 
 @Injectable()
@@ -42,7 +42,7 @@ export class UserTrainingService {
             data: Object.values(Object.fromEntries(reduceCollection(
                 result,
                 ut => ut.training.trainingId,
-                ut => ({ ...ut.training, trainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
+                ut => ({ ...ut.training, userTrainingId: ut.userTrainingId, users: [{ userId: ut.userId, progress: ut.progress }] }),
                 (existing, incoming) => ({ ...existing, users: [...existing.users, ...incoming.users] })
             ))),
             pageIndex: query.pageIndex,

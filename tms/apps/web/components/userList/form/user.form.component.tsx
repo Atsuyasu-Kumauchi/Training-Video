@@ -33,10 +33,6 @@ const getByReview = (data: IUserDto[], reviewId: number) => {
 
 export default function UserFormComponent({ modalRef, editData, isEdit }: TUserFormComponentSchema) {
     const formRef = useRef<TUiFormRef<TUserSchema>>(null)
-    console.log("editData", editData);
-
-
-
     const firstReviewData = reviewFetch({
         queryKey: ["USER_REVIEW_ONE"],
         url: USERS.USER_REVIEW,
@@ -124,6 +120,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         >
             <UserFormView
                 modalRef={modalRef}
+                isEdit={isEdit}
                 isPending={userMutation.isPending}
                 firstReviewData={firstReviewData.data}
                 secondReviewData={secondReviewData.data}

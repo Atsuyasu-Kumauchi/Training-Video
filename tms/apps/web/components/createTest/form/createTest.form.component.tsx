@@ -1,11 +1,14 @@
 "use client";
-import { ListQueryConfig, TEST_CREATION_LIST } from "@/common";
+import { ListQueryConfig, Messages, TEST_CREATION_LIST } from "@/common";
+import { useToast } from "@/hooks";
 import {
   AuthServer,
+  onErrorType,
   queryClient,
   TFormHandlerSubmit,
   TUiFormRef,
-  UiForm
+  UiForm,
+  wait
 } from "@/tmsui";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
@@ -14,7 +17,7 @@ import { createTestSchema, defaultValues, TCreateTestSchema } from "./createTest
 import EditTestFormView from "./editTest.form.view";
 
 export default function CreateTestFormComponent() {
-
+  const { toastError, toastSuccess } = useToast()
   const router = useRouter();
   const formRef = useRef<TUiFormRef<TCreateTestSchema>>(null);
   const { id } = useParams<{ id: string }>();
@@ -26,8 +29,12 @@ export default function CreateTestFormComponent() {
         method: "GET",
         url: TEST_CREATION_LIST.FIND_BY_ID(id),
       });
+      await wait();
       return response;
     },
+    refetchOnMount: 'always', // Always fetch when component appears
+    refetchOnWindowFocus: false, // Do not fetch when user switches tabs
+
 
   });
 
@@ -70,14 +77,15 @@ export default function CreateTestFormComponent() {
     onSuccess: async () => {
       formRef.current?.reset();
       router.push("/admin/create-test");
+      toastSuccess(Messages.OPERATION_SUCCESS)
     },
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ListQueryConfig.TEST_CREATION_LIST.key,
       });
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: onErrorType) => {
+      toastError(error.error.response?.data?.message || Messages.OPERATION_FAILED)
     },
   });
 
@@ -94,7 +102,11 @@ export default function CreateTestFormComponent() {
       onSubmit={onSubmitHandler}
       ref={formRef}
     >
-      <EditTestFormView />
+      <EditTestFormView
+        isEdit={true}
+        formRef={formRef}
+        isPending={testMutation.isPending}
+      />
     </UiForm>
   );
 }

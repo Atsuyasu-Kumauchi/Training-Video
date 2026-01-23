@@ -1,9 +1,15 @@
 import useLang from "@/lang";
-import { Button } from "@/tmsui";
+import { Button, TUiFormRef } from "@/tmsui";
 import { UiFormInputPassword } from "@/tmsui/ui/UiFormInputPassword";
+import { RefObject } from "react";
 import { ChangePasswordType, getPasswordStrength } from "./changePassword.form.type";
 
-export default function ChangePasswordFormView({ isPwdPending }: { isPwdPending: boolean }) {
+interface IChangePasswordFormView {
+    formRef?: RefObject<TUiFormRef<ChangePasswordType> | null>;
+    isPwdPending: boolean;
+}
+
+export default function ChangePasswordFormView({ formRef, isPwdPending }: IChangePasswordFormView) {
     const { changePassword } = useLang();
     return (
         <div className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
@@ -38,7 +44,7 @@ export default function ChangePasswordFormView({ isPwdPending }: { isPwdPending:
 
                     {/* Action Buttons */}
                     <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-                        <Button type="button" variant="outline" className="  text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50  transition-colors duration-200">
+                        <Button type="button" onClick={() => formRef?.current?.reset()} variant="outline" className="  text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50  transition-colors duration-200">
                             {changePassword.form.cancel}
                         </Button>
                         <Button type="submit" disabled={isPwdPending} loading={isPwdPending}>

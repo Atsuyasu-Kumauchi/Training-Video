@@ -1,36 +1,30 @@
 import { useLang } from "@/lang";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function TrainingListFilter() {
-  const { testCreation } = useLang();
+  const { testCreation, user } = useLang();
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const status = searchParams.get("statusFilter") ?? "";
-  const [searchText, setSearchText] = useState(
-    searchParams.get("nameFilter") ?? ""
-  );
 
   const updateQuery = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value) params.set(key, value);
     else params.delete(key);
-
     router.push(`?${params.toString()}`);
   };
 
-  const onSearchClick = () => {
-    updateQuery("nameFilter", searchText);
-  };
+  const { register, handleSubmit, reset } = useForm({ mode: "all", defaultValues: { nameFilter: "" } })
+  const onSearchFilterChange: SubmitHandler<{ nameFilter: string }> = (value) => {
+    updateQuery("nameFilter", value.nameFilter);
+  }
 
-  // Optional: If you want clearing the input immediately resets the list
-  const onInputChange = (val: string) => {
-    setSearchText(val);
-    if (val === "") {
-      updateQuery("nameFilter", ""); // immediately show full list
-    }
-  };
+  const onClearFilterChange = () => {
+    reset()  // input clear
+    router.push("?");    // all query param delete
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
@@ -54,23 +48,30 @@ export default function TrainingListFilter() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               {testCreation.filter.search}
             </label>
-            <div className="flex gap-2">
+            <form onSubmit={handleSubmit(onSearchFilterChange)} className="flex gap-2">
               <input
                 type="text"
                 id="searchInput"
                 placeholder={testCreation.filter.searchPlaceholder}
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                value={searchText}
-                onChange={(e) => onInputChange(e.target.value)}
+                {...register("nameFilter")}
               />
               <button
                 id="searchButton"
                 className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
-                onClick={onSearchClick}
+                type="submit"
               >
                 {testCreation.filter.search}
               </button>
-            </div>
+              <button
+                onClick={() => onClearFilterChange()}
+                id="searchButton"
+                type="button"
+                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+              >
+                {user.filter.clearFilters}
+              </button>
+            </form>
           </div>
         </div>
       </div>

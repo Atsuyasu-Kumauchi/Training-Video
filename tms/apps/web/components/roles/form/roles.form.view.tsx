@@ -1,6 +1,7 @@
+import { StaticData } from "@/common";
 import { useLang } from "@/lang";
 import { Button, UiFormInput, UiFormSelect } from "@/tmsui";
-import { status, TRolesFormViewSchema, TRolesSchema } from "./roles.form.type";
+import { TRolesFormViewSchema, TRolesSchema } from "./roles.form.type";
 
 export default function RolesFormView({ modalRef, isPending, isEdit }: TRolesFormViewSchema) {
   const { role } = useLang();
@@ -18,7 +19,7 @@ export default function RolesFormView({ modalRef, isPending, isEdit }: TRolesFor
           name="status"
           label={role.form.status}
           placeholder={role.form.statusPlaceholder}
-          options={status}
+          options={StaticData.status}
         />
       </div>
       <div className="col-span-12 flex justify-end space-x-3 pt-4">

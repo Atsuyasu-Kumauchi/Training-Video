@@ -4,7 +4,7 @@ import {
   TFormComponentSchema,
   TFormViewSchema,
   zodArray,
-  zodBooleanRequired,
+  zodBoolean,
   zodInfer,
   zodNumberRequired,
   zodObject,
@@ -24,7 +24,7 @@ export const trainingSchema = zodObject({
   videos: zodArray(zodNumberRequired()),
   usersIds: zodArray(zodNumberRequired()),
   deadline: zodString(),
-  status: zodBooleanRequired(),
+  status: zodBoolean(),
 });
 
 

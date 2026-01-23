@@ -1,3 +1,4 @@
+import { StaticData } from "@/common";
 import { useLang } from "@/lang";
 import {
   Button,
@@ -12,12 +13,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { Fragment } from "react/jsx-runtime";
 import {
-  status,
   TCreateTestFormViewSchema,
   TCreateTestSchema,
 } from "./createTest.form.type";
 
 export default function EditTestFormView(props: TCreateTestFormViewSchema) {
+  const { isEdit, formRef, isPending } = props;
   const { testCreation } = useLang();
   const router = useRouter();
   return (
@@ -56,7 +57,7 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                 <UiFormSelect<TCreateTestSchema>
                   name="status"
                   label={testCreation.form.status}
-                  options={status}
+                  options={StaticData.status}
                   required
                   placeholder={testCreation.form.statusPlaceholder}
                 />
@@ -186,7 +187,7 @@ export default function EditTestFormView(props: TCreateTestFormViewSchema) {
                 >
                   {testCreation.form.cancel}
                 </Button>
-                <Button type="submit">{testCreation.form.updateTest}</Button>
+                <Button type="submit" disabled={isPending} loading={isPending}>{testCreation.form.updateTest}</Button>
               </div>
             </div>
           </div>

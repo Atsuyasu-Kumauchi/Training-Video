@@ -10,7 +10,7 @@ export type TDepartmentsFormViewSchema = TFormViewSchema<TDepartmentsSchema>
 
 export const departmentsSchema = zodObject({
   name: zodStringRequired(),
-  status: zodStringRequired(),
+  status: zodStringRequired().transform(value => value === "true"),
 });
 
 export type TDepartmentsSchema = zodInfer<typeof departmentsSchema>;
@@ -18,7 +18,7 @@ export const departmentKeys = Object.keys(departmentsSchema.shape) as (keyof zod
 
 export const initialValues = {
   name: "",
-  status: "true",
+  status: true,
 };
 
 

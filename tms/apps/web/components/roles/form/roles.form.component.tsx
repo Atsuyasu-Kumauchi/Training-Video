@@ -1,4 +1,4 @@
-import { IRoleDto, ListQueryConfig, ROLE } from "@/common";
+import { IRoleDto, ListQueryConfig, Messages, ROLE } from "@/common";
 import { useToast } from "@/hooks";
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
@@ -24,13 +24,13 @@ export default function RolesFormComponent({ modalRef, isEdit, editData }: TRole
     onSuccess: () => {
       formRef.current?.reset();
       modalRef?.current?.modalClose();
+      toastSuccess(Messages.OPERATION_SUCCESS);
     },
     onError: () => {
-      toastError("Something went wrong");
+      toastError(Messages.OPERATION_FAILED);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.ROLE_LIST.key });
-      toastSuccess(isEdit ? "Role updated successfully" : "Role created successfully");
     },
 
   });

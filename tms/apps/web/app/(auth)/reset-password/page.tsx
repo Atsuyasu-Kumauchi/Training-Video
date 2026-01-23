@@ -1,7 +1,12 @@
-import ResetPasswordComponent from '@/components/auth/reset-password/resetPassword.component'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+
+const ResetPasswordComponent = dynamic(() => import('@/components/auth/reset-password/resetPassword.component'))
 
 export default function ResetPasswordPage() {
     return (
-        <ResetPasswordComponent />
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordComponent />
+        </Suspense>
     )
 }

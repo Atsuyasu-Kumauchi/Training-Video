@@ -1,7 +1,9 @@
 
+import { Messages } from "@/common";
 import { ListQueryConfig, VIDEO_LIST } from "@/common/apiEnpoint";
 import { IVideoListDto } from "@/common/dto";
-import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
+import { useToast } from "@/hooks";
+import { AuthServer, onErrorType, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import {
@@ -13,7 +15,7 @@ import {
 import VideoListFormView from "./videoList.form.view";
 
 export default function VideoListFormComponent({ modalRef, editData, isEdit }: TVideoListFormComponentSchema) {
-
+  const { toastError, toastSuccess } = useToast()
   const formRef = useRef<TUiFormRef<TVideoListSchema>>(null);
   const videoListMutation = useMutation({
     mutationKey: isEdit ? ["video-list-update"] : ["video-list-create"],
@@ -29,9 +31,10 @@ export default function VideoListFormComponent({ modalRef, editData, isEdit }: T
     onSuccess: () => {
       formRef.current?.reset();
       modalRef?.current?.modalClose();
+      toastSuccess(Messages.OPERATION_SUCCESS)
     },
-    onError: (error) => {
-      console.log("error", error);
+    onError: (error: onErrorType) => {
+      toastError(error?.error?.response?.data?.message ?? Messages.OPERATION_FAILED)
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.VIDEO_LIST.key });
