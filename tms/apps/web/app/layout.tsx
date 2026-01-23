@@ -31,7 +31,7 @@ type IRootLayout = {
 
 export default function RootLayout({ children }: Readonly<IRootLayout>) {
   return (
-    <html lang="ja" suppressHydrationWarning className="translated-ltr">
+    <html lang="ja" suppressHydrationWarning className="translated-ltr light" style={{ colorScheme: 'light' }}>
       <body className={`${notoSansJP.className}  antialiased`}  >
         <TanStackQueryClientProvider >
           {children}

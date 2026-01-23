@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+/* Disable dark mode completely */
+@theme {
+  --color-scheme: light;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -32,6 +38,21 @@ body {
 
 /* Ensure all elements use light mode colors regardless of system preference */
 * {
+  color-scheme: light !important;
+}
+
+/* Disable all dark mode classes - prevent any dark: variants from working */
+html,
+html.dark,
+html[class*="dark"],
+[class*="dark:"] {
+  color-scheme: light !important;
+}
+
+/* Override any dark mode styles */
+.dark,
+[data-theme="dark"],
+[data-mode="dark"] {
   color-scheme: light !important;
 }
 
