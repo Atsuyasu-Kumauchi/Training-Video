@@ -28,17 +28,37 @@ export class CTrainingsDto extends BaseDto implements ITrainingsDto {
 
 }
 
+
+export interface ITrainingVideosStatus {
+    status: string;
+    watchDuration: number;
+}
+export class CTrainingVideosStatus implements ITrainingVideosStatus {
+    status: string = "";
+    watchDuration: number = 0;
+}
+
 export interface ITrainingsUserDto extends IBaseDto {
     userId: number;
-    progress: any[];
+    progress: ITrainingVideosStatus[];
+    videoProgressMap?: { [key: number]: ITrainingVideosStatus };
 }
 
 
 export class CTrainingsUserDto extends BaseDto implements ITrainingsUserDto {
     userId: number = 0;
-    progress: any[] = [];
+    progress: CTrainingVideosStatus[] = [];
+    videoProgressMap?: { [key: number]: CTrainingVideosStatus } = {};
 
     setAdditionalKey(): void {  // 
+
     }
 
+}
+
+
+export enum TrainingVideosStatusEnum {
+    NotStarted = 'NOT_STARTED',
+    InProgress = 'IN_PROGRESS',
+    Completed = 'COMPLETED',
 }

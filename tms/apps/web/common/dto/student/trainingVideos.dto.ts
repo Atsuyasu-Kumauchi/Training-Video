@@ -42,6 +42,8 @@ export interface IStudentTrainingVideosDto extends IBaseDto {
     audienceTags: string[]
     status: boolean
     test: IStudentTrainingVideosTestDto
+    videoDuration: number;
+    thumbnailUrl: string;
 }
 
 
@@ -58,6 +60,8 @@ export class CStudentTrainingVideosDto extends BaseDto implements IStudentTraini
     audienceTags: string[] = []
     status: boolean = false
     test: CStudentTrainingVideosTestDto = new CStudentTrainingVideosTestDto()
+    videoDuration: number = 0;
+    thumbnailUrl: string = "";
 
     setAdditionalKey(): void {  // 
     }

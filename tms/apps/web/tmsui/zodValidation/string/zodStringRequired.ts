@@ -1,13 +1,13 @@
+import { Messages } from "@/common/constants";
 import { z } from "zod";
 import { sanitizeSQLInput } from "./zodString";
 
-const defaultMessage = "This field is required";
+const defaultMessage = Messages.FIELD_REQUIRED; // This field is required
 
 export function zodStringRequired(message: string = defaultMessage) {
   return z.coerce
     .string()
     .min(1, { message })
-    .max(100, { message: "255 is the maximum length of the string" })
     .transform(sanitizeSQLInput);
 
 }

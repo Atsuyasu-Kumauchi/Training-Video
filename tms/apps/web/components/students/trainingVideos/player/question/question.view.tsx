@@ -123,7 +123,7 @@ export default function QuestionView({ questionModalRef, test, submitAnswer, act
                         <span className="bg-primary-100 px-3 py-1 rounded-full text-sm">
                             質問 {activeQuestionIndex + 1} / {total}
                         </span>
-                        <button type="button" onClick={() => questionModalRef.current?.modalClose()}>
+                        <button type="button" onClick={() => questionModalRef.current?.modalClose()} className="cursor-pointer">
                             <FontAwesomeIcon icon={faTimes} className="text-xl" />
                         </button>
                     </div>

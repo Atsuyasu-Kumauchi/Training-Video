@@ -1,6 +1,7 @@
+import { Messages } from "@/common/constants";
 import { z } from "zod";
 
-const defaultMessage = "This field is required";
+const defaultMessage = Messages.FIELD_REQUIRED; // This field is required
 
 export function zodEmailRequired(message: string = defaultMessage) {
   return z

@@ -1,6 +1,7 @@
+import { Messages } from "@/common/constants";
 import { z } from "zod";
 
-const defaultMessage = "This field is required";
+const defaultMessage = Messages.FIELD_REQUIRED; // This field is required
 
 export function zodNumberRequired(message: string = defaultMessage) {
   return z
@@ -15,6 +16,6 @@ export function zodNumberRequired(message: string = defaultMessage) {
       message,
     })
     .refine((val) => typeof val === "number" && val >= 0, {
-      message: "Only non-negative numbers allowed",
+      message: "非負の数値のみ許可されています。", // Only non-negative numbers allowed
     });
 }

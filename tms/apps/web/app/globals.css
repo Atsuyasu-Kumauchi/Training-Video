@@ -5,8 +5,6 @@
   --foreground: #171717;
 }
 
-
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -25,27 +23,183 @@
   --color-primary-900: #1e3a8a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Force light mode colors - design stays same in both modes */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f9fafb; /* bg-gray-50 */
+  color: #111827; /* text-gray-900 */
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "MS PGothic", sans-serif;
 }
 
+/* Ensure all elements use light mode colors regardless of system preference */
+* {
+  color-scheme: light !important;
+}
+
+/* Force all backgrounds to stay light */
+.bg-white,
+[class*="bg-white"] {
+  background-color: #ffffff !important;
+}
+
+.bg-gray-50,
+[class*="bg-gray-50"] {
+  background-color: #f9fafb !important;
+}
+
+.bg-gray-100,
+[class*="bg-gray-100"] {
+  background-color: #f3f4f6 !important;
+}
+
+/* Force all text colors to stay dark - but allow white text */
+.text-white,
+[class*="text-white"] {
+  color: #ffffff !important;
+}
+
+.text-gray-900,
+[class*="text-gray-900"],
+h1, h2, h3, h4, h5, h6 {
+  color: #111827 !important;
+}
+
+.text-gray-800,
+[class*="text-gray-800"] {
+  color: #1f2937 !important;
+}
+
+.text-gray-700,
+[class*="text-gray-700"] {
+  color: #374151 !important;
+}
+
+.text-gray-600,
+[class*="text-gray-600"] {
+  color: #4b5563 !important;
+}
+
+.text-gray-500,
+[class*="text-gray-500"] {
+  color: #6b7280 !important;
+}
+
+.text-gray-400,
+[class*="text-gray-400"] {
+  color: #9ca3af !important;
+}
+
+/* Primary colors - ensure they work */
+.text-primary-700,
+[class*="text-primary-700"] {
+  color: #1d4ed8 !important; /* primary-700 */
+}
+
+.bg-primary-50,
+[class*="bg-primary-50"] {
+  background-color: #eff6ff !important; /* primary-50 */
+}
+
+.bg-primary-600,
+[class*="bg-primary-600"] {
+  background-color: #2563eb !important; /* primary-600 */
+}
+
+.border-primary-600,
+[class*="border-primary-600"] {
+  border-color: #2563eb !important; /* primary-600 */
+}
+
+/* Icons on colored backgrounds should be white */
+.bg-primary-600 .text-white,
+.bg-primary-600 [class*="text-white"],
+.bg-primary-600 svg,
+.bg-primary-600 .fa,
+.bg-primary-600 .fas,
+.bg-blue-500 .text-white,
+.bg-blue-500 [class*="text-white"],
+.bg-blue-500 svg,
+.bg-blue-500 .fa,
+.bg-blue-500 .fas,
+.bg-green-500 .text-white,
+.bg-green-500 [class*="text-white"],
+.bg-green-500 svg,
+.bg-green-500 .fa,
+.bg-green-500 .fas,
+.bg-orange-500 .text-white,
+.bg-orange-500 [class*="text-white"],
+.bg-orange-500 svg,
+.bg-orange-500 .fa,
+.bg-orange-500 .fas,
+.bg-purple-500 .text-white,
+.bg-purple-500 [class*="text-white"],
+.bg-yellow-500 .text-white,
+.bg-yellow-500 [class*="text-white"],
+.bg-red-500 .text-white,
+.bg-red-500 [class*="text-white"] {
+  color: #ffffff !important;
+}
+
+/* Force all borders to stay light */
+.border-gray-200,
+[class*="border-gray-200"] {
+  border-color: #e5e7eb !important;
+}
+
+.border-gray-300,
+[class*="border-gray-300"] {
+  border-color: #d1d5db !important;
+}
+
+/* Form elements - always light mode */
+input, textarea, select {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280 !important; /* text-gray-500 */
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+/* Select box text and options - smaller font size */
+select {
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+select option {
+  font-size: 0.875rem !important; /* text-sm - 14px */
+}
+
+/* Select option placeholder styling (first empty option) */
+select option[value=""] {
+  font-size: 0.875rem !important; /* text-sm - 14px */
+  color: #6b7280 !important; /* text-gray-500 */
+}
 
 /* React Select custom css */
 .react-select__control {
   @apply border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.react-select__single-value,
+.react-select__input-container {
+  color: #111827 !important;
+}
+
+.react-select__placeholder {
+  color: #6b7280 !important; /* text-gray-500 */
+  font-size: 0.875rem !important; /* text-sm - 14px */
 }
 
 .react-select__option {
   @apply px-3 py-2 cursor-pointer;
+  background-color: #ffffff !important;
+  color: #111827 !important;
 }
 
 .react-select__option--is-selected {
@@ -53,11 +207,18 @@ body {
 }
 
 .react-select__option--is-focused:not(.react-select__option--is-selected) {
-  @apply bg-blue-100 text-black;
+  background-color: #dbeafe !important; /* bg-blue-100 */
+  color: #111827 !important;
 }
 
 .react-select__option:not(.react-select__option--is-selected):not(.react-select__option--is-focused) {
-  @apply bg-white text-black;
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.react-select__menu {
+  background-color: #ffffff !important;
+  border-color: #d1d5db !important;
 }
 
 .player-modal:fullscreen .player-modal-child-fullscreen {
@@ -82,6 +243,33 @@ body {
   width: 800px;
 }
 
+/* Ensure icons and SVGs are visible and inherit colors */
+svg {
+  color: inherit;
+  fill: currentColor;
+}
+
+/* FontAwesome icons - inherit parent color */
+.fa, .fas, .far, .fal, .fab,
+[class*="fa-"] {
+  color: inherit;
+}
+
+/* Sidebar icons should inherit link colors */
+#sidebar a .fa,
+#sidebar a .fas,
+#sidebar a svg,
+#sidebar a [class*="fa-"] {
+  color: inherit;
+}
+
+/* Active sidebar link icons should be primary-700 */
+#sidebar a.text-primary-700 .fa,
+#sidebar a.text-primary-700 .fas,
+#sidebar a.text-primary-700 svg,
+#sidebar a.text-primary-700 [class*="fa-"] {
+  color: #1d4ed8 !important; /* primary-700 */
+}
 
 /* #sidebar a:active{
   color: red !important;

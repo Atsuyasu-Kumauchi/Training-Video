@@ -2,8 +2,11 @@ import axios from "axios";
 import { getAuthToken } from "./server-cookie";
 
 
+const envBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL || "/";
+const BASE_URL = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
+
 export const AuthServer = axios.create({
-    baseURL: process.env.BASE_URL,
+    baseURL: BASE_URL,
     timeout: 1000 * 60,
     headers: {
         "Content-Type": "application/json",
@@ -17,8 +20,23 @@ AuthServer.interceptors.request.use(
         if (token) config.headers.Authorization = `Bearer ${token}`;
         return config;
     },
-    (error) => Promise.reject(error),
+    (error) => {
+        console.log("request error", error);
+        return Promise.reject(error);
+    }
 );
+
+// AuthServer.interceptors.response.use((response) => {
+//     return response;
+// }, async (error) => {
+//     console.log("response error", error);
+//     const token = await getAuthToken("tms_token");
+//     const payload = token ? decodeJwtClient<{ exp: number }>(token)?.exp : null;
+//     if (payload && payload < Date.now() / 1000) {
+//         await deleteAuthToken("tms_token");
+//     }
+//     return Promise.reject(error);
+// })
 
 // AuthServer.interceptors.response.use(
 //     (response) => response,

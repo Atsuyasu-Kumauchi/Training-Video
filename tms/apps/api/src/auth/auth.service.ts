@@ -70,8 +70,15 @@ export class AuthService {
     return !!await this.userRepository.findOneBy({ username });
   }
 
-  async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { username }, relations: { role: true } }) || throwSe(UserNotFound);
+  async validateUser(identifier: string, password: string): Promise<User> {
+    // Try to find user by username first, then by email
+    const user = await this.userRepository.findOne({ 
+      where: [
+        { username: identifier },
+        { email: identifier }
+      ], 
+      relations: { role: true } 
+    }) || throwSe(UserNotFound);
 
     if (await comparePassword(password, user.password)) return user;
 
@@ -96,8 +103,8 @@ export class AuthService {
     if (await comparePassword(newUserVerifySigRaw(user, otp), sig) && diffMinutes(otpToDate(otp), new Date()) < 720) {
       user.password = await hashPassword(newpassword);
       user.privatekey = authenticator.generateSecret();
-      await this.userRepository.save(user);
-      return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: false, isAdmin: user.isAdmin, sub: user.userId }) };
+      await this.userRepository.save({ ...user, resetPwd: true });
+      return { accessToken: this.jwtService.sign({ username: user.username, role: { id: user.roleId, name: user.role.name }, enabled: user.status, resetPwd: true, isAdmin: user.isAdmin, sub: user.userId }) };
     }
 
     throwSe(InvalidCredential);
