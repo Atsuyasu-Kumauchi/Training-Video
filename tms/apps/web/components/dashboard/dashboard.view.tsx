@@ -1,5 +1,6 @@
 import useLang from "@/lang";
-import { humanTime, useFormContext } from "@/tmsui";
+import { humanTime } from "@/tmsui";
+import { Loader } from "@/common";
 import {
   faBook,
   faClipboardCheck,
@@ -11,27 +12,58 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useState } from "react";
-import { TDashboardSchema } from "./dashboard.type";
+import { DashboardStats, RecentActivityItem } from "./dashboard.component";
 
-export default function DashboardView() {
-  const {
-    formState: { errors },
-    handleSubmit,
-  } = useFormContext<TDashboardSchema>();
-  const [isOpen, setIsOpen] = useState(false);
-  const [now] = useState(() => Date.now());
+interface DashboardViewProps {
+  stats?: DashboardStats;
+  isLoading: boolean;
+  isError: boolean;
+}
 
-  const humanTimeFromHoursAgo = (hoursAgo: number): string =>
-    humanTime(new Date(now - hoursAgo * 60 * 60 * 1000));
-
+export default function DashboardView({ stats, isLoading, isError }: DashboardViewProps) {
   const lang = useLang();
 
-  const data = [
-    { label: "Name", value: "value" },
-    { label: "Name 1", value: "value1" },
-    { label: "Name 2", value: "value2" },
-  ]
+  const getActivityIcon = (type: RecentActivityItem['type']) => {
+    switch (type) {
+      case 'user_registered':
+        return { icon: faUserPlus, bgColor: 'bg-green-100', textColor: 'text-green-600' };
+      case 'training_completed':
+        return { icon: faGraduationCap, bgColor: 'bg-blue-100', textColor: 'text-blue-600' };
+      case 'video_uploaded':
+        return { icon: faVideo, bgColor: 'bg-purple-100', textColor: 'text-purple-600' };
+      case 'test_created':
+        return { icon: faClipboardCheck, bgColor: 'bg-yellow-100', textColor: 'text-yellow-600' };
+      default:
+        return { icon: faUserPlus, bgColor: 'bg-gray-100', textColor: 'text-gray-600' };
+    }
+  };
+
+  const formatNumber = (num: number): string => {
+    return num.toLocaleString('ja-JP');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="px-6 py-8">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader />
+        </div>
+      </div>
+    );
+  }
+
+  if (isError || !stats) {
+    return (
+      <div className="px-6 py-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-900">{lang.dashboard.dashboard}</h1>
+        </div>
+        <div className="bg-red-50 border border-red-200 rounded-md p-4">
+          <p className="text-sm text-red-800">データの読み込みに失敗しました。もう一度お試しください。</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="px-6 py-8">
@@ -53,7 +85,7 @@ export default function DashboardView() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">{lang.dashboard.totalNumberOfUsers}</p>
-              <p className="text-2xl font-bold text-gray-900">1,247</p>
+              <p className="text-2xl font-bold text-gray-900">{formatNumber(stats.totalUsers)}</p>
             </div>
           </div>
         </div>
@@ -72,7 +104,7 @@ export default function DashboardView() {
               <p className="text-sm font-medium text-gray-500">
                 {lang.dashboard.activeTraining}
               </p>
-              <p className="text-2xl font-bold text-gray-900">24</p>
+              <p className="text-2xl font-bold text-gray-900">{formatNumber(stats.activeTrainings)}</p>
             </div>
           </div>
         </div>
@@ -89,7 +121,7 @@ export default function DashboardView() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-500">{lang.dashboard.totalNumberOfVideos}</p>
-              <p className="text-2xl font-bold text-gray-900">156</p>
+              <p className="text-2xl font-bold text-gray-900">{formatNumber(stats.totalVideos)}</p>
             </div>
           </div>
         </div>
@@ -104,86 +136,40 @@ export default function DashboardView() {
             </h3>
           </div>
           <div className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon
-                      icon={faUserPlus}
-                      className="fas fa-user-plus text-green-600 text-sm"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900">
-                    {lang.dashboard.newUserRegistered}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {lang.dashboard.sarahWilsonJoinedThePlatform}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {humanTimeFromHoursAgo(2)}
-                  </p>
-                </div>
+            {stats.recentActivity && stats.recentActivity.length > 0 ? (
+              <div className="space-y-4">
+                {stats.recentActivity.map((activity, index) => {
+                  const { icon, bgColor, textColor } = getActivityIcon(activity.type);
+                  return (
+                    <div key={index} className="flex items-start space-x-3">
+                      <div className="flex-shrink-0">
+                        <div className={`w-8 h-8 ${bgColor} rounded-full flex items-center justify-center`}>
+                          <FontAwesomeIcon
+                            icon={icon}
+                            className={`${textColor} text-sm`}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          {activity.title}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {activity.description}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {humanTime(new Date(activity.timestamp))}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon
-                      icon={faGraduationCap}
-                      className="fas fa-graduation-cap text-blue-600 text-sm"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900">
-                    {lang.dashboard.trainingCompleted}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {lang.dashboard.johnDoeHasCompleted}
-                  </p>
-                  <p className="text-xs text-gray-400">{humanTimeFromHoursAgo(4)}</p>
-                </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-sm text-gray-500">最近のアクティビティはありません。</p>
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon
-                      icon={faVideo}
-                      className="fas fa-video text-purple-600 text-sm"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900">
-                    {lang.dashboard.newVideoUploaded}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {lang.dashboard.reactHooksTutorialAddedToLibrary}
-                  </p>
-                  <p className="text-xs text-gray-400">{humanTimeFromHoursAgo(6)}</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon
-                      icon={faClipboardCheck}
-                      className="fas fa-clipboard-check text-yellow-600 text-sm"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900">
-                    {lang.dashboard.testCreated}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {lang.dashboard.advancedJavaScriptQuizCreated}
-                  </p>
-                  <p className="text-xs text-gray-400">{humanTimeFromHoursAgo(24)}</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
