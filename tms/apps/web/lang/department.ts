@@ -18,6 +18,7 @@ export const LangDepartment = {
     editTitle: "部門を編集", //Edit Department
     cancel: "キャンセル", //cancel
     subBtn: "部門を追加", //Add a department
+    updateBtn: "部門を更新する", //Update a department
   },
 };
 

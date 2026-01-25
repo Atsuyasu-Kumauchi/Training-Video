@@ -1,12 +1,10 @@
+import { StaticData } from "@/common";
 import useLang from "@/lang";
-import { Button, UiFormInput, UiFormSelect, useFormContext } from "@/tmsui";
-import { status, TDepartmentsFormViewSchema, TDepartmentsSchema } from "./departments.form.type";
+import { Button, UiFormInput, UiFormSelect } from "@/tmsui";
+import { TDepartmentsFormViewSchema, TDepartmentsSchema } from "./departments.form.type";
 
-export default function DepartmentsFormView({ modalRef, isPending }: TDepartmentsFormViewSchema) {
+export default function DepartmentsFormView({ isEdit, modalRef, isPending }: TDepartmentsFormViewSchema) {
   const { department } = useLang();
-  const { formState: { errors }, watch } = useFormContext()
-  console.log(watch());
-
   return (
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-12">
@@ -21,7 +19,7 @@ export default function DepartmentsFormView({ modalRef, isPending }: TDepartment
         <UiFormSelect<TDepartmentsSchema>
           name="status"
           label={department.form.status}
-          options={status}
+          options={StaticData.status}
           placeholder={department.form.status}
           required
         />
@@ -30,7 +28,7 @@ export default function DepartmentsFormView({ modalRef, isPending }: TDepartment
         <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>
           {department.form.cancel}
         </Button>
-        <Button type="submit" disabled={isPending} loading={isPending}> {department.form.subBtn}</Button>
+        <Button type="submit" disabled={isPending} loading={isPending}> {isEdit ? department.form.updateBtn : department.form.subBtn}</Button>
       </div>
     </div>
   );

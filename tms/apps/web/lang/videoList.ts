@@ -46,6 +46,7 @@ export const LangVideoList = {
     upYoutubeFooter: "有効なYouTube動画URLを入力", // Enter a valid YouTube video URL
     videoPreview: "動画プレビュー", //
     addVideo: " 動画を追加", // Add a Video
+    updateVideo: "動画を更新", // Update Video
     cancle: "キャンセル", // Cancel
   },
 };

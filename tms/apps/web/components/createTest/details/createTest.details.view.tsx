@@ -57,23 +57,24 @@ export default function CreateTestDetailsView({
             Participant Results
           </h4>
           <div className="overflow-x-auto">
-            {participant != null ? (
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Participant
-                    </th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Completed Date
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr className="hover:bg-gray-50">
+
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Participant
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Completed Date
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {participant ?
+                  (<tr className="hover:bg-gray-50">
                     <td className="px-4 py-3 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-8 w-8">
@@ -97,18 +98,18 @@ export default function CreateTestDetailsView({
                       2024-01-20
                     </td>
                   </tr>
-                </tbody>
-              </table>
-            ) : (
-              <tr>
-                <td
-                  colSpan={3}
-                  className="px-4 py-3 text-sm text-gray-500 text-center"
-                >
-                  No participants found
-                </td>
-              </tr>
-            )}
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="px-4 py-3 text-sm text-gray-500 text-center"
+                      >
+                        No participants found
+                      </td>
+                    </tr>
+                  )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

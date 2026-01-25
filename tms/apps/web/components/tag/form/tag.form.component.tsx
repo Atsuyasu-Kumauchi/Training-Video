@@ -1,4 +1,5 @@
 import { ITagDto, ListQueryConfig, Messages, TAG } from "@/common";
+import { useToast } from "@/hooks";
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -7,6 +8,7 @@ import { defaultValues, tagSchema, TTagFormComponentSchema, TTagSchema } from ".
 import TagFormView from "./tag.form.view";
 
 export default function TagFormComponent({ isEdit, editData, modalRef }: TTagFormComponentSchema) {
+  const { toastSuccess } = useToast();
   const formRef = useRef<TUiFormRef<TTagSchema>>(null);
   const tagMutation = useMutation({
     mutationKey: isEdit ? ["tag-update"] : ["tag-create"],
@@ -22,6 +24,7 @@ export default function TagFormComponent({ isEdit, editData, modalRef }: TTagFor
     onSuccess: () => {
       formRef.current?.reset();
       modalRef?.current?.modalClose();
+      toastSuccess(Messages.OPERATION_SUCCESS);
     },
     onError: (error: AxiosError<{ message: string }>) => {
       const errorMessage = error?.response?.data?.message ?? Messages.ERROR_OCCURRED; // Error occurred

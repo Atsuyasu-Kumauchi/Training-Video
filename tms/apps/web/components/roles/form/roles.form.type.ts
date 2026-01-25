@@ -10,7 +10,7 @@ export type TRolesFormViewSchema = TFormViewSchema<TRolesSchema>
 
 export const rolesSchema = zodObject({
   name: zodStringRequired(),
-  status: zodStringRequired(),
+  status: zodStringRequired().transform(value => value === "true"),
 });
 
 export type TRolesSchema = zodInfer<typeof rolesSchema>;
@@ -18,7 +18,7 @@ export const rolesKeys = Object.keys(rolesSchema.shape) as (keyof zodInfer<typeo
 
 export const initialValues: TRolesSchema = {
   name: "",
-  status: "true",
+  status: true,
 };
 
 export const defaultValues = (isEdit: boolean, editData: IRoleDto): Partial<TRolesSchema> => {

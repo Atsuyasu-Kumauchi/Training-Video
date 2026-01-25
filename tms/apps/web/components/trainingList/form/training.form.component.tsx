@@ -1,9 +1,10 @@
-import { ListQueryConfig, TRAINING_LIST } from "@/common";
+import { ListQueryConfig, Messages, TRAINING_LIST } from "@/common";
 import { useToast } from "@/hooks";
 import { AuthServer, queryClient, wait } from "@/tmsui";
 import { UiForm } from "@/tmsui/ui/Form/Form";
 import { TFormHandlerSubmit, TUiFormRef } from "@/tmsui/ui/Form/form.type";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRef } from "react";
 import {
   defaultValues,
@@ -30,13 +31,14 @@ export default function TrainingFormComponent({ modalRef, editData, isEdit }: TT
     onSuccess: () => {
       formRef.current?.reset();
       modalRef?.current?.modalClose();
+      toastSuccess(Messages.OPERATION_SUCCESS);
     },
-    onError: () => {
-      toastError("Something went wrong");
+    onError: (error: AxiosError<{ message: string[] }>) => {
+      // const errorData = error?.response?.data;
+      toastError(Messages.OPERATION_FAILED);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.TRAINING_LIST.key });
-      toastSuccess(isEdit ? "Training updated successfully" : "Training created successfully");
     },
 
   });

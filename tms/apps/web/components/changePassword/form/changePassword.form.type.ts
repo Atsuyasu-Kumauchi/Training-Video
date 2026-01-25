@@ -38,25 +38,25 @@ export function getPasswordStrength(password: string) {
 
     // Strong: all criteria met
     if (lengthOK && hasUpper && hasLower && hasNumber && hasSpecial) {
-        return { strength: "strong", message: "Strong password" };
+        return { strength: "strong", message: "強いパスワード" };
     }
 
     // Medium: at least 3 of 4 character types and length >= 8
     const typesCount = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
     if (lengthOK && typesCount >= 3) {
-        if (!hasUpper) return { strength: "medium", message: "Add an uppercase letter" };
-        if (!hasLower) return { strength: "medium", message: "Add a lowercase letter" };
-        if (!hasNumber) return { strength: "medium", message: "Add a number" };
-        if (!hasSpecial) return { strength: "medium", message: "Add a special character" };
-        return { strength: "medium", message: "Medium strength password" };
+        if (!hasUpper) return { strength: "medium", message: "大文字を含む必要があります" };
+        if (!hasLower) return { strength: "medium", message: "小文字を含む必要があります" };
+        if (!hasNumber) return { strength: "medium", message: "数字を含む必要があります" };
+        if (!hasSpecial) return { strength: "medium", message: "特殊文字を含む必要があります" };
+        return { strength: "medium", message: "中程度の強さのパスワード" };
     }
 
     // Weak: not enough length or types
-    if (!lengthOK) return { strength: "弱い", message: "Too short (min 8 characters)" };
-    if (!hasUpper) return { strength: "弱い", message: "Add an uppercase letter" };
-    if (!hasLower) return { strength: "弱い", message: "Add a lowercase letter" };
-    if (!hasNumber) return { strength: "弱い", message: "Add a number" };
-    if (!hasSpecial) return { strength: "弱い", message: "Add a special character" };
+    if (!lengthOK) return { strength: "weak", message: "短すぎます (最小8文字)" };
+    if (!hasUpper) return { strength: "weak", message: "大文字を含む必要があります" };
+    if (!hasLower) return { strength: "weak", message: "小文字を含む必要があります" };
+    if (!hasNumber) return { strength: "weak", message: "数字を含む必要があります" };
+    if (!hasSpecial) return { strength: "weak", message: "特殊文字を含む必要があります" };
 
-    return { strength: "弱い", message: "Weak password" };
+    return { strength: "weak", message: "弱いパスワード" };
 }

@@ -49,3 +49,28 @@ export const Avatar: React.FC<UserAvatarProps> = ({ name }) => {
         </div>
     );
 };
+
+interface UserAvatarProps {
+    name: string;
+}
+
+const AVATAR_COLOR = "#3b82f6"; // single fixed color (blue)
+
+const getInitialsUser = (name: string): string => {
+    if (!name) return "";
+    const words = name.trim().split(/\s+/);
+    return words.length === 1
+        ? words[0].slice(0, 2).toUpperCase()
+        : (words[0][0] + words[1][0]).toUpperCase();
+};
+
+export const AvatarUser: React.FC<UserAvatarProps> = ({ name }) => {
+    const initials = getInitialsUser(name);
+    return (
+        <div className="flex items-center gap-2">
+            <div >
+                {initials}
+            </div>
+        </div>
+    );
+};

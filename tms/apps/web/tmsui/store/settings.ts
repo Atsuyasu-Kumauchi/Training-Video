@@ -1,15 +1,20 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 export interface SettingsState {
-  isOpen: boolean; // for modal
-  isSidebarOpen: boolean; // for sidebar
+  isOpen: boolean;
+  isSidebarOpen: boolean;
+  user: {
+    username: string;
+  };
 }
 
 export interface SettingsActions {
   setIsOpen: (isOpen: boolean) => void;
   setIsSidebarOpen: (isOpen: boolean) => void;
   toggleSidebar: () => void;
+  setUser: (user: SettingsState["user"]) => void;
+  removeUser: () => void;
 }
 
 export type TSettingsStore = SettingsState & SettingsActions;
@@ -17,19 +22,30 @@ export type TSettingsStore = SettingsState & SettingsActions;
 export const initialSettingsState: SettingsState = {
   isOpen: false,
   isSidebarOpen: true,
+  user: {
+    username: "",
+  },
 };
 
 export const useSettings = create<TSettingsStore>()(
   devtools(
-    (set) => ({
-      ...initialSettingsState,
-      setIsOpen: (isOpen: boolean) => set(() => ({ isOpen })),
-      setIsSidebarOpen: (isOpen: boolean) => set({ isSidebarOpen: isOpen }),
-      toggleSidebar: () =>
-        set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
-    }),
+    persist(
+      (set) => ({
+        ...initialSettingsState,
+
+        setIsOpen: (isOpen) => set({ isOpen }),
+        setIsSidebarOpen: (isOpen) => set({ isSidebarOpen: isOpen }),
+        toggleSidebar: () =>
+          set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
+
+        setUser: (user) => set({ user }),
+        removeUser: () => set(initialSettingsState),
+      }),
+      {
+        name: "settings-store", // localStorage key
+      }
+    ),
     {
-      name: "settings-store",
       enabled:
         typeof window !== "undefined" && process.env.NODE_ENV !== "production",
     }
