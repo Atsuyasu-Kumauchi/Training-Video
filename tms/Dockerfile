@@ -5,7 +5,7 @@ FROM node:24-alpine
 WORKDIR /usr/src/app
 
 # Install system dependencies
-RUN apk add --no-cache python3 make g++ curl
+RUN apk add --no-cache python3 make g++ curl bash
 
 # Set npm global directory
 ENV NPM_CONFIG_PREFIX=/usr/local/lib/node_modules
