@@ -10,6 +10,7 @@ export type UiFormSelectProps<T extends FieldValues> = {
     required?: boolean;
     options: IOption[];
     placeholder?: string;
+    labelClassName?: string;
 } & React.ComponentPropsWithoutRef<"select">;
 
 // Generates a random key string of a given length
@@ -30,6 +31,7 @@ export const UiFormSelect = <T extends FieldValues>({
     className,
     required,
     placeholder,
+    labelClassName,
     ...rest
 }: UiFormSelectProps<T>) => {
     const { control } = useFormContext<T>();
@@ -41,9 +43,10 @@ export const UiFormSelect = <T extends FieldValues>({
                 // Convert null/undefined to empty string for controlled select
                 const selectValue = field.value ?? "";
                 const { value, ...fieldProps } = field;
+                const defaultLabelClass = "block text-sm font-medium text-gray-700 mb-2";
                 return (
                     <div>
-                        {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
+                        {label && <label htmlFor={label} className={labelClassName || defaultLabelClass}>{label} {required && <span className="text-red-500">*</span>}</label>}
                         <select
                             className={cn(
                                 "block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500",
