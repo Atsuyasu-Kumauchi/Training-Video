@@ -489,16 +489,47 @@ BEGIN
     END IF;
 END $$;
 
+-- ============================================================================
+-- Training Progress Test Data for User Training Counts
+-- ============================================================================
+-- This section creates test data to verify the training count functionality:
+-- - assigned_training: Total number of trainings assigned to a user
+-- - completed_training: Number of trainings where ALL videos are COMPLETED
+--
+-- Test Cases:
+-- User 1: 
+--   - React基礎トレーニング: COMPLETED (2/2 videos completed) ✓
+--   - Node.jsバックエンド開発: COMPLETED (1/1 video completed) ✓
+--   Expected: assigned_training = 2, completed_training = 2
+--
+-- User 2:
+--   - JavaScript上級コース: PARTIAL (1/2 videos completed) ✗
+--   - TypeScript入門: COMPLETED (1/1 video completed) ✓
+--   - Node.jsバックエンド開発: NOT STARTED (0/1 videos) ✗
+--   Expected: assigned_training = 3, completed_training = 1
+--
+-- User 3:
+--   - TypeScript入門: NOT STARTED (0/1 videos) ✗
+--   - React基礎トレーニング: PARTIAL (1/2 videos completed) ✗
+--   Expected: assigned_training = 2, completed_training = 0
+-- ============================================================================
+
 -- Insert Sample UserTrainings for Dashboard Testing (Training Completions)
 DO $$
 DECLARE
+    admin_id INTEGER;
     user1_id INTEGER;
     user2_id INTEGER;
     user3_id INTEGER;
     training1_id INTEGER;
     training2_id INTEGER;
     training3_id INTEGER;
+    video1_id INTEGER;
+    video2_id INTEGER;
+    video3_id INTEGER;
+    video4_id INTEGER;
 BEGIN
+    SELECT user_id INTO admin_id FROM users WHERE username = 'admin' LIMIT 1;
     SELECT user_id INTO user1_id FROM users WHERE username = 'user1' LIMIT 1;
     SELECT user_id INTO user2_id FROM users WHERE username = 'user2' LIMIT 1;
     SELECT user_id INTO user3_id FROM users WHERE username = 'user3' LIMIT 1;
@@ -506,30 +537,205 @@ BEGIN
     SELECT training_id INTO training2_id FROM trainings WHERE name = 'JavaScript上級コース' LIMIT 1;
     SELECT training_id INTO training3_id FROM trainings WHERE name = 'TypeScript入門' LIMIT 1;
 
-    -- User 1 completed React training (4 hours ago)
+    -- Get video IDs for progress data
+    SELECT video_id INTO video1_id FROM videos WHERE title = 'React Hooks入門' LIMIT 1;
+    SELECT video_id INTO video2_id FROM videos WHERE title = 'Reactコンポーネント設計' LIMIT 1;
+    SELECT video_id INTO video3_id FROM videos WHERE title = 'JavaScript非同期処理' LIMIT 1;
+    SELECT video_id INTO video4_id FROM videos WHERE title = 'JavaScript ES6+機能' LIMIT 1;
+    
+    -- User 1: React training - FULLY COMPLETED (all videos completed)
     IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user1_id AND training_id = training1_id) THEN
         INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
         VALUES (
-            user1_id, training1_id, '[]'::jsonb,
+            user1_id, training1_id, 
+            jsonb_build_array(
+                jsonb_build_object(video1_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 1800)),
+                jsonb_build_object(video2_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 2000))
+            ),
             NOW() - INTERVAL '4 hours', NOW() - INTERVAL '5 days'
         );
     END IF;
 
-    -- User 2 completed JavaScript training (1 day ago)
+    -- User 2: JavaScript training - PARTIALLY COMPLETED (only 1 of 2 videos completed)
     IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user2_id AND training_id = training2_id) THEN
         INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
         VALUES (
-            user2_id, training2_id, '[]'::jsonb,
+            user2_id, training2_id, 
+            jsonb_build_array(
+                jsonb_build_object(video3_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 2400)),
+                jsonb_build_object(video4_id::text, jsonb_build_object('status', 'IN_PROGRESS', 'watchDuration', 1200))
+            ),
             NOW() - INTERVAL '1 day', NOW() - INTERVAL '6 days'
         );
     END IF;
 
-    -- User 3 completed TypeScript training (2 days ago)
+    -- User 3: TypeScript training - NOT STARTED (no progress)
     IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user3_id AND training_id = training3_id) THEN
         INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
         VALUES (
             user3_id, training3_id, '[]'::jsonb,
             NOW() - INTERVAL '2 days', NOW() - INTERVAL '7 days'
         );
+    END IF;
+END $$;
+
+-- Update trainings to include video IDs in videos array for testing
+DO $$
+DECLARE
+    training1_id INTEGER;
+    training2_id INTEGER;
+    training3_id INTEGER;
+    training4_id INTEGER;
+    training5_id INTEGER;
+    video1_id INTEGER;
+    video2_id INTEGER;
+    video3_id INTEGER;
+    video4_id INTEGER;
+    video5_id INTEGER;
+    video6_id INTEGER;
+BEGIN
+    -- Get training IDs
+    SELECT training_id INTO training1_id FROM trainings WHERE name = 'React基礎トレーニング' LIMIT 1;
+    SELECT training_id INTO training2_id FROM trainings WHERE name = 'JavaScript上級コース' LIMIT 1;
+    SELECT training_id INTO training3_id FROM trainings WHERE name = 'TypeScript入門' LIMIT 1;
+    SELECT training_id INTO training4_id FROM trainings WHERE name = 'Node.jsバックエンド開発' LIMIT 1;
+    SELECT training_id INTO training5_id FROM trainings WHERE name = 'データベース設計' LIMIT 1;
+    
+    -- Get video IDs
+    SELECT video_id INTO video1_id FROM videos WHERE title = 'React Hooks入門' LIMIT 1;
+    SELECT video_id INTO video2_id FROM videos WHERE title = 'Reactコンポーネント設計' LIMIT 1;
+    SELECT video_id INTO video3_id FROM videos WHERE title = 'JavaScript非同期処理' LIMIT 1;
+    SELECT video_id INTO video4_id FROM videos WHERE title = 'JavaScript ES6+機能' LIMIT 1;
+    SELECT video_id INTO video5_id FROM videos WHERE title = 'TypeScript型システム' LIMIT 1;
+    SELECT video_id INTO video6_id FROM videos WHERE title = 'Node.js Express入門' LIMIT 1;
+    
+    -- Update React基礎トレーニング: 2 videos (video1, video2) - for user1 to complete
+    IF training1_id IS NOT NULL AND video1_id IS NOT NULL AND video2_id IS NOT NULL THEN
+        UPDATE trainings 
+        SET videos = jsonb_build_array(video1_id, video2_id)
+        WHERE training_id = training1_id;
+    END IF;
+    
+    -- Update JavaScript上級コース: 2 videos (video3, video4) - for user2 partial completion
+    IF training2_id IS NOT NULL AND video3_id IS NOT NULL AND video4_id IS NOT NULL THEN
+        UPDATE trainings 
+        SET videos = jsonb_build_array(video3_id, video4_id)
+        WHERE training_id = training2_id;
+    END IF;
+    
+    -- Update TypeScript入門: 1 video (video5) - for user3 no progress
+    IF training3_id IS NOT NULL AND video5_id IS NOT NULL THEN
+        UPDATE trainings 
+        SET videos = jsonb_build_array(video5_id)
+        WHERE training_id = training3_id;
+    END IF;
+    
+    -- Update Node.jsバックエンド開発: 1 video (video6)
+    IF training4_id IS NOT NULL AND video6_id IS NOT NULL THEN
+        UPDATE trainings 
+        SET videos = jsonb_build_array(video6_id)
+        WHERE training_id = training4_id;
+    END IF;
+END $$;
+
+-- Add more user trainings for comprehensive testing
+DO $$
+DECLARE
+    admin_id INTEGER;
+    user1_id INTEGER;
+    user2_id INTEGER;
+    user3_id INTEGER;
+    training1_id INTEGER;
+    training3_id INTEGER;
+    training4_id INTEGER;
+    video1_id INTEGER;
+    video2_id INTEGER;
+    video5_id INTEGER;
+    video6_id INTEGER;
+BEGIN
+    SELECT user_id INTO admin_id FROM users WHERE username = 'admin' LIMIT 1;
+    SELECT user_id INTO user1_id FROM users WHERE username = 'user1' LIMIT 1;
+    SELECT user_id INTO user2_id FROM users WHERE username = 'user2' LIMIT 1;
+    SELECT user_id INTO user3_id FROM users WHERE username = 'user3' LIMIT 1;
+    SELECT training_id INTO training1_id FROM trainings WHERE name = 'React基礎トレーニング' LIMIT 1;
+    SELECT training_id INTO training3_id FROM trainings WHERE name = 'TypeScript入門' LIMIT 1;
+    SELECT training_id INTO training4_id FROM trainings WHERE name = 'Node.jsバックエンド開発' LIMIT 1;
+    SELECT video_id INTO video1_id FROM videos WHERE title = 'React Hooks入門' LIMIT 1;
+    SELECT video_id INTO video2_id FROM videos WHERE title = 'Reactコンポーネント設計' LIMIT 1;
+    SELECT video_id INTO video5_id FROM videos WHERE title = 'TypeScript型システム' LIMIT 1;
+    SELECT video_id INTO video6_id FROM videos WHERE title = 'Node.js Express入門' LIMIT 1;
+    
+    -- User 1: Node.js training - FULLY COMPLETED (1 video completed)
+    IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user1_id AND training_id = training4_id) THEN
+        INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
+        VALUES (
+            user1_id, training4_id, 
+            jsonb_build_array(jsonb_build_object(video6_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 2700))),
+            NOW() - INTERVAL '2 hours', NOW() - INTERVAL '3 days'
+        );
+    END IF;
+    
+    -- User 2: TypeScript training - FULLY COMPLETED (1 video completed)
+    IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user2_id AND training_id = training3_id) THEN
+        INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
+        VALUES (
+            user2_id, training3_id, 
+            jsonb_build_array(jsonb_build_object(video5_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 2100))),
+            NOW() - INTERVAL '5 hours', NOW() - INTERVAL '4 days'
+        );
+    END IF;
+    
+    -- User 2: Node.js training - NOT STARTED
+    IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user2_id AND training_id = training4_id) THEN
+        INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
+        VALUES (
+            user2_id, training4_id, '[]'::jsonb,
+            NOW() - INTERVAL '1 day', NOW() - INTERVAL '2 days'
+        );
+    END IF;
+    
+    -- User 3: React training - PARTIALLY COMPLETED (1 of 2 videos completed)
+    IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = user3_id AND training_id = training1_id) THEN
+        INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
+        VALUES (
+            user3_id, training1_id, 
+            jsonb_build_array(
+                jsonb_build_object(video1_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 1800)),
+                jsonb_build_object(video2_id::text, jsonb_build_object('status', 'IN_PROGRESS', 'watchDuration', 800))
+            ),
+            NOW() - INTERVAL '3 days', NOW() - INTERVAL '8 days'
+        );
+    END IF;
+    
+    -- Admin: Add some trainings for testing (optional - for admin user testing)
+    IF admin_id IS NOT NULL THEN
+        SELECT training_id INTO training1_id FROM trainings WHERE name = 'React基礎トレーニング' LIMIT 1;
+        SELECT training_id INTO training4_id FROM trainings WHERE name = 'Node.jsバックエンド開発' LIMIT 1;
+        SELECT video_id INTO video1_id FROM videos WHERE title = 'React Hooks入門' LIMIT 1;
+        SELECT video_id INTO video2_id FROM videos WHERE title = 'Reactコンポーネント設計' LIMIT 1;
+        SELECT video_id INTO video6_id FROM videos WHERE title = 'Node.js Express入門' LIMIT 1;
+        
+        -- Admin: React training - FULLY COMPLETED
+        IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = admin_id AND training_id = training1_id) THEN
+            INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
+            VALUES (
+                admin_id, training1_id, 
+                jsonb_build_array(
+                    jsonb_build_object(video1_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 1800)),
+                    jsonb_build_object(video2_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 2000))
+                ),
+                NOW() - INTERVAL '1 hour', NOW() - INTERVAL '2 days'
+            );
+        END IF;
+        
+        -- Admin: Node.js training - FULLY COMPLETED
+        IF NOT EXISTS (SELECT 1 FROM user_trainings WHERE user_id = admin_id AND training_id = training4_id) THEN
+            INSERT INTO user_trainings (user_id, training_id, progress, modified, created)
+            VALUES (
+                admin_id, training4_id, 
+                jsonb_build_array(jsonb_build_object(video6_id::text, jsonb_build_object('status', 'COMPLETED', 'watchDuration', 2700))),
+                NOW() - INTERVAL '30 minutes', NOW() - INTERVAL '1 day'
+            );
+        END IF;
     END IF;
 END $$;
