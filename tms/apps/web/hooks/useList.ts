@@ -78,7 +78,7 @@ export function useList<TData, TValue = unknown>({
     //     setPageIndexZero();
     // };
 
-    const { data, isLoading, isError, error } = useFetchListQuery<TData>({
+    const { data, isLoading, isError, error, isFetching } = useFetchListQuery<TData>({
         query,
         pageIndex: pagination.pageIndex,
         pageSize: pagination.pageSize,
@@ -122,6 +122,7 @@ export function useList<TData, TValue = unknown>({
         columns,
         // globalFilter,
         // setGlobalFilter,
+        isFetching,
         isLoading,
         isError,
         error,

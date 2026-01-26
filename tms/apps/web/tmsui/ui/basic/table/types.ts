@@ -5,6 +5,7 @@ export type TListTableProps<TData, TValue> = {
     table: TanStackTable<TData>;
     columns: ColumnDef<TData, TValue>[];
     isLoading: boolean;
+    isFetching: boolean;
     isError: boolean;
     error: unknown;
     title?: string;
@@ -16,8 +17,10 @@ export type TListTableProps<TData, TValue> = {
 
 export type TUiListTableProps<TData, TValue> = {
     table: TanStackTable<TData>;
+    dataSource?: ApiResponse<TData>;
     columns: ColumnDef<TData, TValue>[];
     isLoading?: boolean;
+    isFetching?: boolean;
     isError?: boolean;
     error?: unknown;
     title?: string;
@@ -30,4 +33,5 @@ export type TUiListTableProps<TData, TValue> = {
 
 export type TListTableHeader<T> = {
     table: TanStackTable<T>;
+    dataSource?: ApiResponse<T>;
 };
