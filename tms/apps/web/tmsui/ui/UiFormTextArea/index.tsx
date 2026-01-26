@@ -14,6 +14,7 @@ export type UiFormTextAreaProps<T extends FieldValues> = {
 export const UiFormTextArea = <T extends FieldValues>({
     name,
     label,
+    required,
     ...rest
 }: UiFormTextAreaProps<T>) => {
     const { control } = useFormContext<T>();
@@ -25,9 +26,12 @@ export const UiFormTextArea = <T extends FieldValues>({
             render={({ field, fieldState: { error } }) => {
                 return (
                     <div>
-                        {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label}</label>}
+                        {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700 mb-2">{label} {required && <span className="text-red-500">*</span>}</label>}
                         <textarea
-                            className={cn("w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500")}
+                            className={cn(
+                                "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+                                error && "border-red-700 focus:ring-red-600 focus:border-red-600",
+                            )}
                             id={label}
                             autoComplete="true"
                             {...field}
