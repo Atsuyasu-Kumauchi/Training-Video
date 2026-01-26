@@ -108,7 +108,7 @@ BEGIN
             admin_role_id,
             true,
             CURRENT_DATE,
-            false
+            true
         );
     ELSE
         UPDATE users SET 
@@ -117,7 +117,7 @@ BEGIN
             is_admin = true,
             department_id = mgmt_id,
             role_id = admin_role_id,
-            reset_pwd = false
+            reset_pwd = true
         WHERE username = 'admin';
     END IF;
 END $$;

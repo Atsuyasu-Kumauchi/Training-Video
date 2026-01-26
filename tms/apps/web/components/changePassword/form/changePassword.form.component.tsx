@@ -3,12 +3,14 @@ import { useToast } from "@/hooks";
 import { AuthServer, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { changePasswordDefault, changePasswordSchema, ChangePasswordType } from "./changePassword.form.type";
 import ChangePasswordFormView from "./changePassword.form.view";
 
 export default function ChangePasswordFormComponent({ username }: { username: string }) {
     const { toastError, toastSuccess } = useToast()
+    const router = useRouter()
     const formRef = useRef<TUiFormRef<ChangePasswordType>>(null)
     const loginMutation = useMutation({
         mutationKey: ["admin-login-after-change-password"],
@@ -23,9 +25,9 @@ export default function ChangePasswordFormComponent({ username }: { username: st
             if (data.data?.accessToken) {
                 await setAuthToken({ name: "tms_token", value: data.data.accessToken });
                 await wait();
-                window.location.reload();
+                toastSuccess("パスワード変更に成功しました。")
+                router.push("/admin/dashboard");
             }
-            toastSuccess("パスワード変更に成功しました。")
         },
     });
 
@@ -47,7 +49,18 @@ export default function ChangePasswordFormComponent({ username }: { username: st
         },
         onError: (error) => {
             const errorData = (error as AxiosError<{ message: string }>)?.response?.data?.message;
-            toastError(errorData || Messages.OPERATION_FAILED)
+            const statusCode = (error as AxiosError)?.response?.status;
+            
+            // Set error on the password field for wrong password errors (401 Unauthorized typically means wrong password)
+            if (statusCode === 401 || (errorData && (errorData.includes('パスワード') || errorData.includes('password') || errorData.includes('メールアドレス') || errorData.includes('正しくありません')))) {
+                formRef.current?.setError("password", {
+                    type: "server",
+                    message: "現在のパスワードが正しくありません。", // Current password is incorrect
+                });
+            } else {
+                // Show toast for other errors
+                toastError(errorData || Messages.OPERATION_FAILED);
+            }
         }
     });
 

@@ -21,6 +21,21 @@ clean:
 	docker-compose down -v --remove-orphans
 	@echo "Cleanup complete!"
 
+# Rebuild all services from scratch (no cache)
+rebuild:
+	@echo "Rebuilding all services from scratch (clearing all cache)..."
+	@echo "Stopping and removing containers..."
+	@docker-compose down -v --remove-orphans || true
+	@echo "Removing images..."
+	@docker-compose rm -f || true
+	@echo "Pruning build cache..."
+	@docker builder prune -af --volumes || true
+	@echo "Rebuilding images (no cache)..."
+	@docker-compose build --no-cache --pull
+	@echo "Starting services..."
+	@docker-compose up -d
+	@echo "Rebuild complete! Services are starting"
+
 # Restart all services
 restart:
 	@echo "Restarting TMS services..."
@@ -39,6 +54,17 @@ seed:
 	@echo "Seeding database..."
 	docker exec -i tvms-db psql -U tvms_user -d tvms_db < db/seed.sql
 	@echo "Database seeded!"
+
+# Clear database and insert fresh seed data
+seed-fresh:
+	@echo "WARNING: This will delete ALL data in the database!"
+	@echo "Dropping all tables..."
+	@docker exec -i tvms-db psql -U tvms_user -d tvms_db -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; GRANT ALL ON SCHEMA public TO tvms_user; GRANT ALL ON SCHEMA public TO public;"
+	@echo "Recreating database schema..."
+	@docker exec -i tvms-db psql -U tvms_user -d tvms_db < apps/api/init/001_init.sql
+	@echo "Seeding database with fresh data..."
+	@docker exec -i tvms-db psql -U tvms_user -d tvms_db < db/seed.sql
+	@echo "Database cleared and fresh seed data inserted!"
 
 # Install Swagger and restart API (if needed)
 docs-setup:
