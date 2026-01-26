@@ -120,8 +120,12 @@ export class UserAssignmentService {
 
     async getReviewers() {
         return (await this.userRepository.find({ where: { role: { roleId: In(this.reviewerRoles) } }, relations: { role: true } })).map(u => ({
-            userId: u.userId, firstName: u.firstName, lastName: u.lastName, roleName: u.role.name
+            userId: u.userId, firstName: u.firstName, lastName: u.lastName, roleName: u.role.name, roleId: u.role.roleId
         }));
+    }
+
+    async saveUserAssignment(userId: any, userAssigment: DeepPartial<UserAssignment>) {
+        return await this.userAssignmentRepository.save({ ...userAssigment, userId });
     }
 
     // async getUserReviewers(userId: number) {

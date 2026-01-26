@@ -39,3 +39,21 @@ seed:
 	@echo "Seeding database..."
 	docker exec -i tvms-db psql -U tvms_user -d tvms_db < db/seed.sql
 	@echo "Database seeded!"
+
+# Install Swagger and restart API (if needed)
+docs-setup:
+	@echo "Installing Swagger package..."
+	@docker-compose exec api npm install @nestjs/swagger@^11.0.0 || true
+	@echo "Restarting API..."
+	@docker-compose restart api
+	@echo "Waiting for API to start..."
+	@sleep 5
+	@echo "Swagger : http://localhost:7001/api-docs"
+
+# Generate API documentation
+docs:
+	@echo "Checking if API is running..."
+	@docker ps --filter "name=tvms-api" --format "{{.Names}}" | grep -q tvms-api || (echo "❌ API container is not running. Run: docker-compose up -d api" && exit 1)
+	@echo "Generating API documentation..."
+	@node api_docs/generate-docs.js --host http://localhost:7001
+	@echo "Documentation generated in api_docs/"
