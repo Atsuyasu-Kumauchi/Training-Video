@@ -2,6 +2,7 @@ import { ASSIGNMENT_LIST, ERoleName, IAssignmentReviewerDto, IUserDto, ListQuery
 import { useToast } from '@/hooks';
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRef } from 'react';
 import { defaultValues, reviewFetch, TUserFormComponentSchema, TUserSchema, userSchema } from './user.form.type';
 import UserFormView from './user.form.view';
@@ -9,7 +10,7 @@ import UserFormView from './user.form.view';
 
 
 export default function UserFormComponent({ modalRef, editData, isEdit }: TUserFormComponentSchema) {
-    const { toastSuccess } = useToast();
+    const { toastSuccess, toastError } = useToast();
     const formRef = useRef<TUiFormRef<TUserSchema>>(null)
 
     const firstReviewData = reviewFetch({
@@ -59,8 +60,31 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
             return { previousUsers };
         },
         // 🔹 2️⃣ Error হলে rollback
-        onError: (_err, _newUser, context) => {
+        onError: (error, _newUser, context) => {
             queryClient.setQueryData(ListQueryConfig.USER.key, context?.previousUsers);
+            
+            const errorData = (error as AxiosError<{ message: string }>)?.response?.data?.message;
+            const statusCode = (error as AxiosError)?.response?.status;
+            
+            if (statusCode === 409 && errorData) {
+                // Check for Employee ID error - can be "Employee ID" (English) or "従業員ID" (Japanese)
+                if (errorData.includes('Employee ID') || errorData.includes('従業員ID')) {
+                    formRef.current?.setError("employeeId", {
+                        type: "server",
+                        message: errorData,
+                    });
+                } 
+                // All other duplicate errors (メールアドレス, Email, User, username, or generic) go to email field
+                else {
+                    formRef.current?.setError("email", {
+                        type: "server",
+                        message: errorData,
+                    });
+                }
+            } else {
+                // Show toast for non-409 errors
+                toastError(errorData || Messages.OPERATION_FAILED);
+            }
         },
 
         // 🔹 3️⃣ Success হলে UI clean

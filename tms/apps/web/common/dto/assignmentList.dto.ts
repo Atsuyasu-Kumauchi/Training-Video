@@ -39,7 +39,7 @@ export class CAssignmentReviewerDto extends BaseDto implements IAssignmentReview
 }
 
 export enum ERoleName {
-    DIRECT_MANAGER = "direct manager",
-    SENIOR_MANAGER = "senior manager",
-    EMPOWERMENT = "empowerment",
+    DIRECT_MANAGER = "直属マネージャー",
+    SENIOR_MANAGER = "シニアマネージャー",
+    EMPOWERMENT = "エンパワー部門",
 }

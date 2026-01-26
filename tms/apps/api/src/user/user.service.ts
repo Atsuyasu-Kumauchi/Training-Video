@@ -70,11 +70,17 @@ export class UserService {
 
   async create<T extends CreateUserDto>(createUserDto: T): Promise<User & { userTags: number[] }> {
     if (await this.userRepository.existsBy({ username: createUserDto.username })) {
-      throw new ConflictException(Messages.DUPLICAT_ENTRY('User'));
+      throw new ConflictException(Messages.DUPLICAT_ENTRY('メールアドレス'));
+    }
+
+    if (await this.userRepository.existsBy({ employeeId: createUserDto.employeeId })) {
+      throw new ConflictException(Messages.DUPLICAT_ENTRY('従業員ID'));
     }
 
     const user = await this.authService.createAuthUser(createUserDto, false, true);
     user.tags = createUserDto.userTagIds.map(t => ({ tagId: t } as Tag));
+    // Explicitly set reviewers field to ensure it's saved as JSONB array
+    user.reviewers = Array.isArray(createUserDto.reviewers) ? createUserDto.reviewers : [];
     return { ...(await this.userRepository.save(user) as any), tags: undefined, userTags: createUserDto.userTagIds } ;
   }
 
@@ -82,6 +88,10 @@ export class UserService {
     await this.userRepository.existsBy({ userId: id }) || throwSe(NotFoundException);
     await this.authService.updateAuthUser(user);
     user.tags = userTags.map(t => ({ tagId: t } as Tag));
+    // Ensure reviewers field is properly set if provided
+    if (user.reviewers !== undefined) {
+      user.reviewers = Array.isArray(user.reviewers) ? user.reviewers : [];
+    }
     return await this.userRepository.save({ ...user, userId: id });
   }
 
