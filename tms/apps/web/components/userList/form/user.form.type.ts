@@ -99,6 +99,6 @@ export const reviewFetch = ({ queryKey, url }: TReviewFetch) => {
 export const ReviewOptions = (ReviewData: IAssignmentReviewerDto[]) => {
   return ReviewData?.map((item: IAssignmentReviewerDto) => ({
     label: item.firstName + " " + item.lastName,
-    value: item.roleId,
+    value: item.userId,
   }));
 }

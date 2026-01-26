@@ -30,16 +30,36 @@ WHERE NOT EXISTS (
 
 -- Insert default role if it doesn't exist
 INSERT INTO roles (name)
-SELECT 'Administrator'
+SELECT '管理者'
 WHERE NOT EXISTS (
-    SELECT 1 FROM roles WHERE name = 'Administrator'
+    SELECT 1 FROM roles WHERE name = '管理者'
 );
 
 -- Insert Employee role
 INSERT INTO roles (name)
-SELECT 'Employee'
+SELECT '従業員'
 WHERE NOT EXISTS (
-    SELECT 1 FROM roles WHERE name = 'Employee'
+    SELECT 1 FROM roles WHERE name = '従業員'
+);
+
+-- Insert Reviewer Roles for Assignment Review Hierarchy
+-- These role names match ERoleName enum values in frontend (common/dto/assignmentList.dto.ts)
+INSERT INTO roles (name)
+SELECT '直属マネージャー'
+WHERE NOT EXISTS (
+    SELECT 1 FROM roles WHERE name = '直属マネージャー'
+);
+
+INSERT INTO roles (name)
+SELECT 'シニアマネージャー'
+WHERE NOT EXISTS (
+    SELECT 1 FROM roles WHERE name = 'シニアマネージャー'
+);
+
+INSERT INTO roles (name)
+SELECT 'エンパワー部門'
+WHERE NOT EXISTS (
+    SELECT 1 FROM roles WHERE name = 'エンパワー部門'
 );
 
 -- Insert Tags
@@ -78,7 +98,7 @@ DECLARE
     totp_secret TEXT := 'JBSWY3DPEHPK3PXP'; -- TOTP secret for 2FA
 BEGIN
     SELECT department_id INTO mgmt_id FROM departments WHERE name = 'Management' LIMIT 1;
-    SELECT role_id INTO admin_role_id FROM roles WHERE name = 'Administrator' LIMIT 1;
+    SELECT role_id INTO admin_role_id FROM roles WHERE name = '管理者' LIMIT 1;
 
     IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'admin') THEN
         INSERT INTO users (
@@ -135,7 +155,7 @@ BEGIN
     SELECT department_id INTO dept_a_id FROM departments WHERE name = 'Department A' LIMIT 1;
     SELECT department_id INTO dept_b_id FROM departments WHERE name = 'Department B' LIMIT 1;
     SELECT department_id INTO dept_c_id FROM departments WHERE name = 'Department C' LIMIT 1;
-    SELECT role_id INTO employee_role_id FROM roles WHERE name = 'Employee' LIMIT 1;
+    SELECT role_id INTO employee_role_id FROM roles WHERE name = '従業員' LIMIT 1;
 
     -- Insert User 1 (recently registered - 2 hours ago)
     IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'user1') THEN
@@ -195,6 +215,135 @@ BEGIN
             false, 'EMP006', dept_b_id, employee_role_id, true, CURRENT_DATE, false,
             NOW() - INTERVAL '7 days'
         );
+    END IF;
+END $$;
+
+-- Insert Reviewer Users for Assignment Review Hierarchy
+DO $$
+DECLARE
+    dept_a_id INTEGER;
+    dept_b_id INTEGER;
+    dept_c_id INTEGER;
+    direct_manager_role_id INTEGER;
+    senior_manager_role_id INTEGER;
+    empowerment_role_id INTEGER;
+    password_hash TEXT := '$2b$10$QmcQMenMNTd/Hy9ClsdYUO7j81xTwqMHtSi23EoApeS4TrCw9e9ke'; -- 'admin123'
+    totp_secret TEXT := 'JBSWY3DPEHPK3PXP';
+BEGIN
+    SELECT department_id INTO dept_a_id FROM departments WHERE name = 'Department A' LIMIT 1;
+    SELECT department_id INTO dept_b_id FROM departments WHERE name = 'Department B' LIMIT 1;
+    SELECT department_id INTO dept_c_id FROM departments WHERE name = 'Department C' LIMIT 1;
+    -- Get reviewer role IDs (matching ERoleName enum values)
+    SELECT role_id INTO direct_manager_role_id FROM roles WHERE name = '直属マネージャー' LIMIT 1;
+    SELECT role_id INTO senior_manager_role_id FROM roles WHERE name = 'シニアマネージャー' LIMIT 1;
+    SELECT role_id INTO empowerment_role_id FROM roles WHERE name = 'エンパワー部門' LIMIT 1;
+
+    -- Insert Direct Manager (一次レビュー担当者 - 直属マネージャー)
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'direct.manager1') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Takeshi', 'Tanaka', 'takeshi.tanaka@tms.com', 'direct.manager1', password_hash, totp_secret,
+            false, 'MGR001', dept_a_id, direct_manager_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'direct.manager2') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Yuki', 'Sato', 'yuki.sato@tms.com', 'direct.manager2', password_hash, totp_secret,
+            false, 'MGR002', dept_b_id, direct_manager_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'direct.manager3') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Hiroshi', 'Yamada', 'hiroshi.yamada@tms.com', 'direct.manager3', password_hash, totp_secret,
+            false, 'MGR003', dept_c_id, direct_manager_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+
+    -- Insert Senior Manager (二次レビュー担当者 - シニアマネージャー)
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'senior.manager1') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Kenji', 'Watanabe', 'kenji.watanabe@tms.com', 'senior.manager1', password_hash, totp_secret,
+            false, 'SMGR001', dept_a_id, senior_manager_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'senior.manager2') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Naomi', 'Kobayashi', 'naomi.kobayashi@tms.com', 'senior.manager2', password_hash, totp_secret,
+            false, 'SMGR002', dept_b_id, senior_manager_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+
+    -- Insert Empowerment Department (最終レビュー担当者 - エンパワー部門)
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'empowerment1') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Akiko', 'Nakamura', 'akiko.nakamura@tms.com', 'empowerment1', password_hash, totp_secret,
+            false, 'EMPW001', dept_a_id, empowerment_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'empowerment2') THEN
+        INSERT INTO users (
+            first_name, last_name, email, username, password, privatekey,
+            is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
+        ) VALUES (
+            'Masato', 'Ito', 'masato.ito@tms.com', 'empowerment2', password_hash, totp_secret,
+            false, 'EMPW002', dept_b_id, empowerment_role_id, true, CURRENT_DATE, false
+        );
+    END IF;
+END $$;
+
+-- Set Reviewer Roles in Config Table
+-- This is required for getReviewers() API to work
+DO $$
+DECLARE
+    direct_manager_role_id INTEGER;
+    senior_manager_role_id INTEGER;
+    empowerment_role_id INTEGER;
+    reviewer_role_ids INTEGER[];
+BEGIN
+    -- Get reviewer role IDs
+    SELECT role_id INTO direct_manager_role_id FROM roles WHERE name = '直属マネージャー' LIMIT 1;
+    SELECT role_id INTO senior_manager_role_id FROM roles WHERE name = 'シニアマネージャー' LIMIT 1;
+    SELECT role_id INTO empowerment_role_id FROM roles WHERE name = 'エンパワー部門' LIMIT 1;
+    
+    -- Build array of reviewer role IDs
+    reviewer_role_ids := ARRAY[]::INTEGER[];
+    IF direct_manager_role_id IS NOT NULL THEN
+        reviewer_role_ids := array_append(reviewer_role_ids, direct_manager_role_id);
+    END IF;
+    IF senior_manager_role_id IS NOT NULL THEN
+        reviewer_role_ids := array_append(reviewer_role_ids, senior_manager_role_id);
+    END IF;
+    IF empowerment_role_id IS NOT NULL THEN
+        reviewer_role_ids := array_append(reviewer_role_ids, empowerment_role_id);
+    END IF;
+    
+    -- Insert or update reviewer roles config
+    IF array_length(reviewer_role_ids, 1) > 0 THEN
+        INSERT INTO tvms_configs (config_key, config_value)
+        VALUES ('reviewer_roles', to_jsonb(reviewer_role_ids))
+        ON CONFLICT (config_key) 
+        DO UPDATE SET config_value = to_jsonb(reviewer_role_ids);
     END IF;
 END $$;
 
