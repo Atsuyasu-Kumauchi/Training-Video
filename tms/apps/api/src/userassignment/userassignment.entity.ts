@@ -31,11 +31,14 @@ export class UserAssignment {
   @Column({ name: "user_id", type: "integer" })
   userId: number;
 
-  @Column({ name: "user_id", type: "integer" })
+  @Column({ name: "assignment_id", type: "integer" })
   assignmentId: number;
 
   @Column({ name: "answer", type: "varchar" })
   answer: string;
+
+  @Column({ type: "jsonb", default: () => "'[]'::jsonb" })
+  reviews: any[] = [];
 
   @CreateDateColumn()
   created: Date;
