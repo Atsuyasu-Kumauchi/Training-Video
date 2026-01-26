@@ -2,7 +2,6 @@
 import { AUTH, Messages } from '@/common';
 import { AuthServer, decodeJwtClient, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { useRef } from 'react';
 import { adminLoginSchema, initialValues, TAdminLoginSchema } from './admin.login.type';
 import AdminLoginView from './admin.login.view';

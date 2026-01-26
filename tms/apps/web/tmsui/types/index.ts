@@ -1,4 +1,5 @@
 import { Column, ColumnDef, Table } from "@tanstack/react-table";
+import { AxiosError } from "axios";
 import { ComponentType, RefObject } from "react";
 import { FieldValues } from "react-hook-form";
 import { TUiBasicModalRef, TUiFormRef } from "../ui";
@@ -25,3 +26,8 @@ export type TFormViewSchema<FormType extends FieldValues> = {
     isPending?: boolean;
     isEdit?: boolean;
 };
+
+
+export type onErrorType = {
+    error: AxiosError<{ message: string }>;
+}

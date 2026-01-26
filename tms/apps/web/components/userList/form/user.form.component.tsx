@@ -1,5 +1,6 @@
-import { IUserDto, ListQueryConfig, USERS } from '@/common';
-import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm } from '@/tmsui';
+import { IUserDto, ListQueryConfig, Messages, USERS } from '@/common';
+import { useToast } from '@/hooks';
+import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { defaultValues, TUserFormComponentSchema, TUserSchema, userSchema } from './user.form.type';
@@ -32,11 +33,8 @@ const getByReview = (data: IUserDto[], reviewId: number) => {
 
 
 export default function UserFormComponent({ modalRef, editData, isEdit }: TUserFormComponentSchema) {
+    const { toastSuccess } = useToast();
     const formRef = useRef<TUiFormRef<TUserSchema>>(null)
-    console.log("editData", editData);
-
-
-
     const firstReviewData = reviewFetch({
         queryKey: ["USER_REVIEW_ONE"],
         url: USERS.USER_REVIEW,
@@ -63,6 +61,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
                 url: isEdit ? USERS.UPDATE(editData?.userId ?? "") : USERS.CREATE,
                 data,
             });
+            await wait();
             return response.data;
         },
 
@@ -93,6 +92,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         onSuccess: () => {
             formRef.current?.reset();
             modalRef?.current?.modalClose?.();
+            toastSuccess(Messages.OPERATION_SUCCESS);
         },
         onSettled: () => {
             queryClient.invalidateQueries({
@@ -124,6 +124,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         >
             <UserFormView
                 modalRef={modalRef}
+                isEdit={isEdit}
                 isPending={userMutation.isPending}
                 firstReviewData={firstReviewData.data}
                 secondReviewData={secondReviewData.data}

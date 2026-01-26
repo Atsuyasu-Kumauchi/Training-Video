@@ -16,7 +16,7 @@ export default function TanStackQueryClientProvider({ children }: TanStackQueryC
         <QueryClientProvider client={queryClient}>
             {children}
             <Toaster
-                position="top-right"
+                position="top-center"
             />
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

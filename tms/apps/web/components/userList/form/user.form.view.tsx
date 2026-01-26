@@ -23,6 +23,9 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
     trigger("password");
   }
 
+  console.log("isEdit", isEdit);
+
+
   return (
     <>
       <div className="grid grid-cols-12 gap-4">
@@ -195,7 +198,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
         </div> */}
 
 
-        <div className="col-span-12">
+        {!isEdit && <div className="col-span-12">
           <UiFormInput<TUserSchema>
             name="password"
             label={user.form.passSetting}
@@ -203,7 +206,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
             endIcon={<div className=" text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={generatePassword}>{user.form.generatePassword}</div>}
           />
         </div>
-
+        }
 
         <div className="col-span-12 flex justify-end space-x-3">
           <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>
