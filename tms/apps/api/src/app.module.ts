@@ -42,6 +42,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: configService.get('NODE_ENV') === 'development', // Only in development
         logging: configService.get('NODE_ENV') === 'development',
+        autoLoadEntities: true
       }),
       inject: [ConfigService],
     }),
