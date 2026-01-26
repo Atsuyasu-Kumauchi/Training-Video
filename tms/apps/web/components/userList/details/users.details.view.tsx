@@ -9,9 +9,9 @@ import { TUserFormComponentSchema } from "../form/user.form.type";
 export default function UsersDetailsView({
   modalRef,
   editData,
-}: TUserFormComponentSchema) {
+  isLoading,
+}: TUserFormComponentSchema & { isLoading?: boolean }) {
   const { view } = LangUser;
-  console.log("user editData", editData);
 
   return (
     <>
@@ -105,7 +105,9 @@ export default function UsersDetailsView({
                       <p className="text-sm font-medium text-blue-900">
                         {view.assignTraining}
                       </p>
-                      <p className="text-2xl font-bold text-blue-600">8</p>
+                      <p className="text-2xl font-bold text-blue-600">
+                        {isLoading ? "..." : (editData?.assigned_training ?? 0)}
+                      </p>
                     </div>
                     <div className="text-blue-600">
                       <FontAwesomeIcon icon={faBookOpen} className="text-xl" />
@@ -122,7 +124,9 @@ export default function UsersDetailsView({
                       <p className="text-sm font-medium text-green-900">
                         {view.completeTraining}
                       </p>
-                      <p className="text-2xl font-bold text-green-600">6</p>
+                      <p className="text-2xl font-bold text-green-600">
+                        {isLoading ? "..." : (editData?.completed_training ?? 0)}
+                      </p>
                     </div>
                     <div className="text-green-600">
                       <FontAwesomeIcon

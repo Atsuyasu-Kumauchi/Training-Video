@@ -7,6 +7,8 @@ import { CreateUserDto, UserQueryDto } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { throwSe } from 'src/common/exception/exception.util';
 import { Tag } from 'src/tag/tag.entity';
+import { UserTraining } from 'src/usertraining/usertraining.entity';
+import { Training } from 'src/training/training.entity';
 
 
 @Injectable()
@@ -14,6 +16,8 @@ export class UserService {
 
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserTraining) private readonly userTrainingRepository: Repository<UserTraining>,
+    @InjectRepository(Training) private readonly trainingRepository: Repository<Training>,
     private readonly authService: AuthService
   ) {}
 
@@ -57,7 +61,7 @@ export class UserService {
     };
   }
 
-  async findOne(id: number): Promise<User & { userTagIds: number[] }> {
+  async findOne(id: number): Promise<User & { userTagIds: number[], assigned_training: number, completed_training: number }> {
     const user = await this.userRepository.findOne({ where: { userId: id }, relations: { tags: true } }) as any;
     user.userTagIds = user.tags.map((t: Tag) => t.tagId);
 
@@ -65,7 +69,24 @@ export class UserService {
       throw new NotFoundException(Messages.MSG10_EX('User'));
     }
 
-    return user;
+    // Get all user trainings with training relations (assigned trainings)
+    const userTrainings = await this.userTrainingRepository.find({
+      where: { userId: id },
+      relations: { training: true }
+    });
+
+    const assignedTrainingCount = userTrainings.length;
+
+    // Count completed trainings (where all videos are completed)
+    const completedTrainingCount = userTrainings.filter(userTraining => {
+      return this.isTrainingCompleted(userTraining);
+    }).length;
+
+    return {
+      ...user,
+      assigned_training: assignedTrainingCount,
+      completed_training: completedTrainingCount
+    };
   }
 
   async create<T extends CreateUserDto>(createUserDto: T): Promise<User & { userTags: number[] }> {
@@ -82,6 +103,47 @@ export class UserService {
     // Explicitly set reviewers field to ensure it's saved as JSONB array
     user.reviewers = Array.isArray(createUserDto.reviewers) ? createUserDto.reviewers : [];
     return { ...(await this.userRepository.save(user) as any), tags: undefined, userTags: createUserDto.userTagIds } ;
+  }
+
+  /**
+   * Check if a training is completed (all videos have COMPLETED status)
+   * @param userTraining - UserTraining entity with training relation loaded
+   * @returns true if all videos in the training are completed
+   */
+  private isTrainingCompleted(userTraining: UserTraining): boolean {
+    const training = userTraining.training;
+    
+    // Early return if training or videos are missing
+    if (!training || !Array.isArray(training.videos) || training.videos.length === 0) {
+      return false;
+    }
+
+    const progress = userTraining.progress || [];
+    
+    // Build a map of video progress for O(1) lookup
+    const progressMap = new Map<number, any>();
+    for (const p of progress) {
+      if (typeof p === 'object' && p !== null) {
+        const entries = Object.entries(p);
+        if (entries.length > 0) {
+          const videoId = Number(entries[0][0]);
+          const progressData = entries[0][1];
+          progressMap.set(videoId, progressData);
+        }
+      }
+    }
+
+    // Extract video IDs from training.videos array
+    const videoIds = training.videos.map((v: any) => {
+      if (typeof v === 'number') return v;
+      return v?.videoId || v?.id || null;
+    }).filter((id): id is number => id !== null);
+
+    // Check if all videos are completed
+    return videoIds.length > 0 && videoIds.every((videoId: number) => {
+      const progressData = progressMap.get(videoId);
+      return progressData?.status === 'COMPLETED';
+    });
   }
 
   async save(id: number, user: DeepPartial<User>, userTags: number[]) {
