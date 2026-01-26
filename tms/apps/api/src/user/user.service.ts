@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Brackets, DeepPartial, IsNull, Not, Repository } from 'typeorm';
+import { Brackets, DeepPartial, In, IsNull, Not, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Messages } from '../common/constants/messages';
 import { CreateUserDto, UserQueryDto } from './user.dto';
@@ -43,10 +43,53 @@ export class UserService {
 
     const [result, resultCount] = await queryBuilder.getManyAndCount();
 
+    // Early return if no users found
+    if (result.length === 0) {
+      return {
+        data: [],
+        pageIndex: query.pageIndex,
+        pageSize: query.pageSize,
+        pageCount: 0,
+        resultCount: 0,
+        sortBy: query.sortBy,
+        sortDirection: query.sortDirection,
+        departmentIdFilter: query.departmentIdFilter || null,
+        simplenameFilter: query.simplenameFilter || null,
+        statusFilter: query.statusFilter
+      };
+    }
+
+    // Get all user IDs from the result
+    const userIds = result.map(u => u.userId);
+
+    // Fetch all user trainings for these users in a single query (avoids N+1)
+    // Load training relation to access training.videos JSONB column
+    const allUserTrainings = await this.userTrainingRepository.find({
+      where: { userId: In(userIds) },
+      relations: { training: true }
+    });
+
+    // Group user trainings by userId and calculate counts in a single pass
+    const userCountsMap = allUserTrainings.reduce((acc, userTraining) => {
+      const userId = userTraining.userId;
+      if (!acc.has(userId)) {
+        acc.set(userId, { assigned: 0, completed: 0 });
+      }
+      const counts = acc.get(userId)!;
+      counts.assigned++;
+      if (this.isTrainingCompleted(userTraining)) {
+        counts.completed++;
+      }
+      return acc;
+    }, new Map<number, { assigned: number; completed: number }>());
+
     return {
       data: result.map(u => {
         const user = u as any;
         user.userTagIds = user.tags.map((t: Tag) => t.tagId);
+        const counts = userCountsMap.get(u.userId) || { assigned: 0, completed: 0 };
+        user.assigned_training = counts.assigned;
+        user.completed_training = counts.completed;
         return user;
       }),
       pageIndex: query.pageIndex,

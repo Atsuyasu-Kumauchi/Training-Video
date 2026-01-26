@@ -46,7 +46,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.assignedTraining,
     cell: (ctx) => {
-      return <div>{"N/A"}</div>;
+      return <div>{ctx.row.original.assigned_training ?? 0}</div>;
     },
   },
   {
@@ -54,7 +54,7 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.completedTraining,
     cell: (ctx) => {
-      return <div>{"N/A"}</div>;
+      return <div>{ctx.row.original.completed_training ?? 0}</div>;
     },
   },
   {
