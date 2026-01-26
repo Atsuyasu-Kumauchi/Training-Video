@@ -1,5 +1,6 @@
-import { IUserDto } from "@/common";
+import { IAssignmentReviewerDto, IUserDto } from "@/common";
 import {
+  AuthServer,
   pickFormData,
   TFormComponentSchema,
   TFormViewSchema,
@@ -11,15 +12,16 @@ import {
   zodString,
   zodStringRequired,
 } from "@/tmsui";
+import { useQuery } from "@tanstack/react-query";
 
 export type TUserFormComponentSchema = TFormComponentSchema<TUserSchema> & {
   editData?: Partial<IUserDto>;
 };
 
 export type TUserFormViewSchema = TFormViewSchema<TUserSchema> & {
-  firstReviewData?: IUserDto[];
-  secondReviewData?: IUserDto[];
-  finalReviewData?: IUserDto[];
+  firstReviewData?: IAssignmentReviewerDto[];
+  secondReviewData?: IAssignmentReviewerDto[];
+  finalReviewData?: IAssignmentReviewerDto[];
 };
 
 export const userSchema = zodObject({
@@ -66,18 +68,37 @@ export const defaultValues = (
 ): Partial<TUserSchema> => {
   return isEdit
     ? pickFormData(
-        editData as unknown as TUserSchema,
-        userKeys as (keyof TUserSchema)[],
-      )
+      editData as unknown as TUserSchema,
+      userKeys as (keyof TUserSchema)[],
+    )
     : initialValues;
 };
 
-// export const tag = [
-//   { label: "Select Tag", value: "" }, //
-//   { label: "IT", value: "it" },
-//   { label: "HR", value: "hr" },
-//   { label: "SALES", value: "sales" },
-//   { label: "MARKETING", value: "marketing" },
-//   { label: "OPERATION", value: "operation" },
-//   { label: "FINANCE", value: "finance" },
-// ];
+
+
+// =============== Uitility function ===============
+type TReviewFetch = {
+  queryKey: string[]
+  url: string
+}
+
+export const reviewFetch = ({ queryKey, url }: TReviewFetch) => {
+  return useQuery({
+    queryKey: queryKey,
+    queryFn: async () => {
+      const response = await AuthServer({
+        method: "GET",
+        url: url,
+      });
+      return response.data;
+    },
+  })
+}
+
+
+export const ReviewOptions = (ReviewData: IAssignmentReviewerDto[]) => {
+  return ReviewData?.map((item: IAssignmentReviewerDto) => ({
+    label: item.firstName + " " + item.lastName,
+    value: item.roleId,
+  }));
+}

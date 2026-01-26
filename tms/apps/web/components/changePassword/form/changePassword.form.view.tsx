@@ -2,7 +2,7 @@ import useLang from "@/lang";
 import { Button, TUiFormRef } from "@/tmsui";
 import { UiFormInputPassword } from "@/tmsui/ui/UiFormInputPassword";
 import { RefObject } from "react";
-import { ChangePasswordType, getPasswordStrength } from "./changePassword.form.type";
+import { ChangePasswordType } from "./changePassword.form.type";
 
 interface IChangePasswordFormView {
     formRef?: RefObject<TUiFormRef<ChangePasswordType> | null>;
@@ -32,7 +32,6 @@ export default function ChangePasswordFormView({ formRef, isPwdPending }: IChang
                             name="newpassword"
                             label={changePassword.form.newPassword}
                             placeholder={changePassword.form.newPasswordPlaceholder}
-                            getPasswordStrength={getPasswordStrength}
                         />
                     </div>
                     <UiFormInputPassword<ChangePasswordType>
