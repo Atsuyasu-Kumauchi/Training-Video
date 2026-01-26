@@ -72,7 +72,7 @@ export const UiFormInputPassword = <T extends FieldValues>({
                             </button>
                         </div>
 
-                        {getPasswordStrength && <PasswordStrength getPasswordStrength={getPasswordStrength} password={field.value} />}
+                        {/* {getPasswordStrength && <PasswordStrength getPasswordStrength={getPasswordStrength} password={field.value} />} */}
 
                         {error && (
                             <small className="block text-sm font-medium text-red-700 mt-1">

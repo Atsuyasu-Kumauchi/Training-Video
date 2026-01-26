@@ -1,6 +1,6 @@
 import { CAssignmentListDto, ListQueryConfig } from "@/common";
 import { useList } from "@/hooks/useList";
-import AssignmentListView from "../assignmentList.view";
+import { ListTable } from "@/tmsui";
 import { assignmentListColumn } from "./assignmentList.list.column";
 
 
@@ -10,7 +10,6 @@ export default function AssignmentListComponent() {
     query: ListQueryConfig.ASSIGNMENT_LIST
   })
   return (
-    <AssignmentListView />
-    // <ListTable {...listHook} />
+    <ListTable {...listHook} />
   )
 }

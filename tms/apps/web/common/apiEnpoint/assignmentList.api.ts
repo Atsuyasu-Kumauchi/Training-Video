@@ -1,8 +1,9 @@
 import { BASE_URL } from "./baseUrl";
-const ASSIGNMENT_LIST_API_ENPOINT = "assignment-list";
+const ASSIGNMENT_LIST_API_END_POINT = "assignments"; // List of issue
 export const ASSIGNMENT_LIST = {
-    LIST: `${BASE_URL}${ASSIGNMENT_LIST_API_ENPOINT}`,
-    CREATE: `${BASE_URL}${ASSIGNMENT_LIST_API_ENPOINT}`,
-    UPDATE: (id: string) => `${BASE_URL}${ASSIGNMENT_LIST_API_ENPOINT}/${id}`,
-    DELETE: (id: string) => `${BASE_URL}${ASSIGNMENT_LIST_API_ENPOINT}/${id}`,
+    LIST: `${BASE_URL}${ASSIGNMENT_LIST_API_END_POINT}`,
+    CREATE: `${BASE_URL}${ASSIGNMENT_LIST_API_END_POINT}`,
+    UPDATE: (id: number) => `${BASE_URL}${ASSIGNMENT_LIST_API_END_POINT}/${id}`,
+    DELETE: (id: number) => `${BASE_URL}${ASSIGNMENT_LIST_API_END_POINT}/${id}`,
+    REVIEWERS: `${BASE_URL}${ASSIGNMENT_LIST_API_END_POINT}/getReviewers`,
 };
