@@ -1,5 +1,5 @@
 import { Transform, Type } from "class-transformer";
-import { IsArray, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, IsStrongPassword, Matches, MaxLength, Min, MinLength } from "class-validator";
+import { IsArray, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Matches, MaxLength, Min, MinLength } from "class-validator";
 import { SortDirection } from "src/common/enums/SortDirection";
 
 
@@ -13,7 +13,6 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @IsStrongPassword()
   password: string;
 
   @IsNotEmpty()
