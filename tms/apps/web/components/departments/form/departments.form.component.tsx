@@ -1,4 +1,4 @@
-import { DEPARTMENT, IDepartmentDto, ListQueryConfig } from "@/common";
+import { DEPARTMENT, IDepartmentDto, ListQueryConfig, Messages } from "@/common";
 import { useToast } from "@/hooks";
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
@@ -30,13 +30,13 @@ export default function DepartmentsFormComponent({ modalRef, editData, isEdit }:
     onSuccess: async () => {
       formRef.current?.reset();
       modalRef?.current?.modalClose();
+      toastSuccess(Messages.OPERATION_SUCCESS);
     },
     onError: () => {
-      toastError("Something went wrong");
+      toastError(Messages.OPERATION_FAILED);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ListQueryConfig.DEPARTMENT_LIST.key });
-      toastSuccess(isEdit ? "Department updated successfully" : "Department created successfully");
     },
   });
 
@@ -51,7 +51,7 @@ export default function DepartmentsFormComponent({ modalRef, editData, isEdit }:
       onSubmit={onSubmitHandler}
       ref={formRef}
     >
-      <DepartmentsFormView modalRef={modalRef} isPending={mutation.isPending} />
+      <DepartmentsFormView isEdit={isEdit} modalRef={modalRef} isPending={mutation.isPending} />
     </UiForm>
   );
 }

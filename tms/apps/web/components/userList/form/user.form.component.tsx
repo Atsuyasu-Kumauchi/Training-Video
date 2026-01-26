@@ -1,59 +1,32 @@
-import { IUserDto, ListQueryConfig, USERS } from '@/common';
-import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm } from '@/tmsui';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { ASSIGNMENT_LIST, ERoleName, IAssignmentReviewerDto, IUserDto, ListQueryConfig, Messages, USERS } from '@/common';
+import { useToast } from '@/hooks';
+import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
+import { useMutation } from '@tanstack/react-query';
 import { useRef } from 'react';
-import { defaultValues, TUserFormComponentSchema, TUserSchema, userSchema } from './user.form.type';
+import { defaultValues, reviewFetch, TUserFormComponentSchema, TUserSchema, userSchema } from './user.form.type';
 import UserFormView from './user.form.view';
 
-type TReviewFetch = {
-    queryKey: string[]
-    url: string
-    params: Record<string, string>
-}
-
-const reviewFetch = ({ params, queryKey, url }: TReviewFetch) => {
-    return useQuery({
-        queryKey: queryKey,
-        queryFn: async () => {
-            const response = await AuthServer({
-                method: "GET",
-                url: url,
-                params: params
-            });
-            return response.data;
-        },
-    })
-}
-
-const getByReview = (data: IUserDto[], reviewId: number) => {
-    const review = data?.find((item: IUserDto) => Number(item.userId) === reviewId)
-    return review
-}
 
 
 export default function UserFormComponent({ modalRef, editData, isEdit }: TUserFormComponentSchema) {
+    const { toastSuccess } = useToast();
     const formRef = useRef<TUiFormRef<TUserSchema>>(null)
-    console.log("editData", editData);
-
-
 
     const firstReviewData = reviewFetch({
-        queryKey: ["USER_REVIEW_ONE"],
-        url: USERS.USER_REVIEW,
-        params: { role: "senior-manager" }
-    })
+        queryKey: ["DIRECT_MANAGER"],
+        url: ASSIGNMENT_LIST.REVIEWERS,
+    }).data?.filter((item: IAssignmentReviewerDto) => item.roleName == ERoleName.DIRECT_MANAGER)
 
     const secondReviewData = reviewFetch({
-        queryKey: ["USER_REVIEW_TWO"],
-        url: USERS.USER_REVIEW,
-        params: { role: "senior-manager" }
-    })
+        queryKey: ["SENIOR_MANAGER"],
+        url: ASSIGNMENT_LIST.REVIEWERS,
+    }).data?.filter((item: IAssignmentReviewerDto) => item.roleName == ERoleName.SENIOR_MANAGER)
 
     const finalReviewData = reviewFetch({
-        queryKey: ["USER_REVIEW_FINAL"],
-        url: USERS.USER_REVIEW,
-        params: { role: "senior-manager" }
-    })
+        queryKey: ["EMPOWERMENT"],
+        url: ASSIGNMENT_LIST.REVIEWERS,
+    }).data?.filter((item: IAssignmentReviewerDto) => item.roleName == ERoleName.EMPOWERMENT)
+
 
     const userMutation = useMutation({
         mutationKey: isEdit ? ["user-update"] : ["user-create"],
@@ -63,6 +36,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
                 url: isEdit ? USERS.UPDATE(editData?.userId ?? "") : USERS.CREATE,
                 data,
             });
+            await wait();
             return response.data;
         },
 
@@ -93,6 +67,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         onSuccess: () => {
             formRef.current?.reset();
             modalRef?.current?.modalClose?.();
+            toastSuccess(Messages.OPERATION_SUCCESS);
         },
         onSettled: () => {
             queryClient.invalidateQueries({
@@ -101,17 +76,12 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         },
     })
 
-
     const onSubmit: TFormHandlerSubmit<TUserSchema> = (value) => {
-        const firstReview = getByReview(firstReviewData.data, Number(value.firstReview))
-        const secondReview = getByReview(secondReviewData.data, Number(value.secondReview))
-        const finalReview = getByReview(finalReviewData.data, Number(value.finalReview))
         const username = value?.email;
-        const modifyValue = { ...value, username, reviewers: [1, 1, 1] };
+        const modifyValue = { ...value, username, reviewers: [Number(value.firstReview), Number(value.secondReview), Number(value.finalReview)] };
         delete modifyValue.firstReview;
         delete modifyValue.secondReview;
         delete modifyValue.finalReview;
-
         userMutation.mutate({ ...modifyValue, username } as TUserSchema);
     }
 
@@ -124,10 +94,11 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         >
             <UserFormView
                 modalRef={modalRef}
+                isEdit={isEdit}
                 isPending={userMutation.isPending}
-                firstReviewData={firstReviewData.data}
-                secondReviewData={secondReviewData.data}
-                finalReviewData={finalReviewData.data}
+                firstReviewData={firstReviewData as IAssignmentReviewerDto[]}
+                secondReviewData={secondReviewData as IAssignmentReviewerDto[]}
+                finalReviewData={finalReviewData as IAssignmentReviewerDto[]}
             />
         </UiForm>
     )

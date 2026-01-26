@@ -1,5 +1,6 @@
-import { AUTH } from "@/common";
-import { AuthServer, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
+import { AUTH, Messages } from "@/common";
+import { useToast } from "@/hooks";
+import { AuthServer, onErrorType, setAuthToken, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from "@/tmsui";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { changePasswordDefault, changePasswordSchema, ChangePasswordType } from "./changePassword.form.type";
@@ -7,7 +8,7 @@ import ChangePasswordFormView from "./changePassword.form.view";
 
 export default function ChangePasswordFormComponent({ username }: { username: string }) {
     const formRef = useRef<TUiFormRef<ChangePasswordType>>(null)
-
+    const { toastError, toastSuccess } = useToast()
     const loginMutation = useMutation({
         mutationKey: ["student-login-after-change-password"],
         mutationFn: (data: { username: string, password: string }) => {
@@ -22,6 +23,7 @@ export default function ChangePasswordFormComponent({ username }: { username: st
                 await setAuthToken({ name: "tms_token", value: data.data.accessToken });
                 await wait();
                 window.location.reload();
+                toastSuccess("パスワード変更に成功しました。")
             }
         },
     });
@@ -41,6 +43,10 @@ export default function ChangePasswordFormComponent({ username }: { username: st
                 password: data?.newpassword as string,
             });
         },
+        onError: (error: onErrorType) => {
+            const errorData = error?.error?.response?.data?.message;
+            toastError(errorData || Messages.OPERATION_FAILED)
+        }
     });
 
 

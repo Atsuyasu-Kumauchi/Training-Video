@@ -1,22 +1,14 @@
-import { IUserDto, IVideoListDto, ListQueryConfig } from "@/common";
+import { IUserDto, IVideoListDto, ListQueryConfig, StaticData } from "@/common";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { Button, UiFormInput, UiFormSelect, UiFormSelect2, UiFormTextArea } from "@/tmsui";
-import { useFormContext } from "react-hook-form";
 import {
-  status,
   TTrainingFormViewSchema,
   TTrainingSchema
 } from "./training.form.type";
 
-export default function TrainingFormView({ formRef, modalRef, isEdit, isPending }: TTrainingFormViewSchema) {
+export default function TrainingFormView({ modalRef, isEdit, isPending }: TTrainingFormViewSchema) {
   const { trainingList } = useLang();
-
-  const { formState: { errors }, watch } = useFormContext<TTrainingSchema>();
-
-  console.log(watch());
-
-
   return (
     <div className="space-y-4">
       <UiFormInput<TTrainingSchema>
@@ -59,14 +51,14 @@ export default function TrainingFormView({ formRef, modalRef, isEdit, isPending 
       <UiFormSelect<TTrainingSchema>
         name="status"
         label={trainingList.form.status}
-        options={status}
+        options={StaticData.status}
         placeholder={trainingList.form.statusPlaceholder}
       />
       <div className="flex justify-end space-x-3 pt-4">
         <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>
           {trainingList.form.cancel}
         </Button>
-        <Button type="submit" disabled={isPending} loading={isPending} > {trainingList.form.createATraining}</Button>
+        <Button type="submit" disabled={isPending} loading={isPending} > {isEdit ? trainingList.form.updateATraining : trainingList.form.createATraining}</Button>
       </div>
     </div>
   );

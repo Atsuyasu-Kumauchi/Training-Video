@@ -1,17 +1,10 @@
-import { IDepartmentDto, IRoleDto, ITagDto, IUserDto, ListQueryConfig } from "@/common";
+import { IAssignmentReviewerDto, IDepartmentDto, IRoleDto, ITagDto, ListQueryConfig } from "@/common";
 import { useFetchList } from "@/hooks";
 import useLang from "@/lang";
 import { Button, passwordGenerate, UiFormInput, UiFormSelect, useFormContext } from "@/tmsui";
 import { UiFormSelect2 } from "@/tmsui/ui/UiFormSelect2";
-import { TUserFormViewSchema, TUserSchema } from "./user.form.type";
+import { ReviewOptions, TUserFormViewSchema, TUserSchema } from "./user.form.type";
 
-export function selectConvert<T>(data: T[]) {
-  const options = data?.map((item: any) => ({
-    label: item.firstName + " " + item.lastName + " - " + item.roleName,
-    value: item.userId,
-  }));
-  return options;
-};
 
 export default function UserFormView({ isEdit, modalRef, isPending, firstReviewData, secondReviewData, finalReviewData }: TUserFormViewSchema) {
   const { user } = useLang();
@@ -115,7 +108,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
             name="firstReview"
             label={user.form.firstReview}
             placeholder="選択してください"
-            options={selectConvert(firstReviewData as IUserDto[]) ?? []}
+            options={ReviewOptions(firstReviewData as IAssignmentReviewerDto[]) ?? []}
             labelClassName="block text-xs font-medium text-gray-700 mb-2"
           />
         </div>
@@ -124,7 +117,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
             name="secondReview"
             label={user.form.secondaryReview}
             placeholder="選択してください"
-            options={selectConvert(secondReviewData as IUserDto[]) ?? []}
+            options={ReviewOptions(secondReviewData as IAssignmentReviewerDto[]) ?? []}
             labelClassName="block text-xs font-medium text-gray-700 mb-2"
           />
         </div>
@@ -133,7 +126,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
             name="finalReview"
             label={user.form.finalReview}
             placeholder="選択してください"
-            options={selectConvert(finalReviewData as IUserDto[]) ?? []}
+            options={ReviewOptions(finalReviewData as IAssignmentReviewerDto[]) ?? []}
             labelClassName="block text-xs font-medium text-gray-700 mb-2"
           />
         </div>
@@ -195,7 +188,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
         </div> */}
 
 
-        <div className="col-span-12">
+        {!isEdit && <div className="col-span-12">
           <UiFormInput<TUserSchema>
             name="password"
             label={user.form.passSetting}
@@ -203,7 +196,7 @@ export default function UserFormView({ isEdit, modalRef, isPending, firstReviewD
             endIcon={<div className=" text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={generatePassword}>{user.form.generatePassword}</div>}
           />
         </div>
-
+        }
 
         <div className="col-span-12 flex justify-end space-x-3">
           <Button type="button" color="neutral" onClick={() => modalRef?.current?.modalClose()}>

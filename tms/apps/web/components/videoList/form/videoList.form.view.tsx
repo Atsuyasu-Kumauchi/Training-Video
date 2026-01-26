@@ -19,10 +19,8 @@ import {
 
 export default function VideoListFormView({ modalRef, isEdit, isPending, editData }: TVideoListFormViewSchema) {
   const { videoList } = useLang();
-  const { control, formState: { errors } } = useFormContext<TVideoListSchema>();
+  const { control } = useFormContext<TVideoListSchema>();
   const videoFileType = useWatch({ control, name: "uploadType" });
-  console.log(errors);
-
   return (
     <Fragment>
       <div className="space-y-4">
@@ -46,7 +44,7 @@ export default function VideoListFormView({ modalRef, isEdit, isPending, editDat
               query: ListQueryConfig.TAG_LIST,
               keyName: { label: "name", value: "name" }
             })}
-            placeholder={'カテゴリを選択'}
+            placeholder={'タグを選択'}
             required
           />
           <UiFormSelect<TVideoListSchema>
@@ -141,7 +139,7 @@ export default function VideoListFormView({ modalRef, isEdit, isPending, editDat
           >
             {videoList.form.cancle}
           </Button>
-          <Button type="submit" disabled={isPending} loading={isPending}> {videoList.form.addVideo}</Button>
+          <Button type="submit" disabled={isPending} loading={isPending}> {isEdit ? videoList.form.updateVideo : videoList.form.addVideo}</Button>
         </div>
       </div>
     </Fragment>

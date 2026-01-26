@@ -56,6 +56,7 @@ export const UiFormInputPassword = <T extends FieldValues>({
                                 placeholder={placeholder}
                                 className={cn("w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200",
                                     startIcon && "pl-10",
+                                    error && "focus:border-red-500 focus:ring-red-500"
                                 )}
                                 {...field}
                                 {...rest}
@@ -71,7 +72,7 @@ export const UiFormInputPassword = <T extends FieldValues>({
                             </button>
                         </div>
 
-                        {getPasswordStrength && <PasswordStrength getPasswordStrength={getPasswordStrength} password={field.value} />}
+                        {/* {getPasswordStrength && <PasswordStrength getPasswordStrength={getPasswordStrength} password={field.value} />} */}
 
                         {error && (
                             <small className="block text-sm font-medium text-red-700 mt-1">

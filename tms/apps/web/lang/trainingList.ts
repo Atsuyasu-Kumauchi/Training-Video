@@ -33,6 +33,7 @@ export const LangTrainingList = {
     cancel: "キャンセル", //cancel
     createATraining: "トレーニングを作成", //Create a training
     editTraining: "トレーニングを編集", //Edit Training
+    updateATraining: "トレーニングを更新", //Update Training
   },
   view: {
     trainingDetail: "トレーニング詳細", // Training Details
