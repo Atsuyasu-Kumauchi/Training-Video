@@ -1,0 +1,9 @@
+# Generated Swagger documentation files
+swagger.json
+swagger.yaml
+*.json
+*.yaml
+*.yml
+
+# Keep only the README and scripts
+!README.md
