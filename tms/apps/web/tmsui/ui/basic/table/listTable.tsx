@@ -13,13 +13,17 @@ export function ListTable<TData, TValue>({
     pageSize,
     showFilterColumns,
     className,
+    isFetching,
+
 }: TListTableProps<TData, TValue>) {
 
     return (
         <Table
             table={table}
+            dataSource={data}
             columns={columns}
             isLoading={isLoading}
+            isFetching={isFetching}
             isError={isError}
             error={error}
             title={title}

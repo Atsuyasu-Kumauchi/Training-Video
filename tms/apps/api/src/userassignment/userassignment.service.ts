@@ -1,16 +1,16 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { type DeepPartial, In, IsNull, Not, Raw, Repository } from "typeorm";
-import { Assignment, UserAssignment } from "./userassignment.entity";
-import { TvmsConfig } from '../common/entities';
 import { throwSe } from "src/common/exception/exception.util";
-import { AssignmentQueryDto, CreateAssignmentDto, UserAssignmentQueryDto } from "./userassignment.dto";
 import { User } from "src/user/user.entity";
+import { type DeepPartial, In, IsNull, Not, Raw, Repository } from "typeorm";
+import { TvmsConfig } from '../common/entities';
+import { AssignmentQueryDto, CreateAssignmentDto, UserAssignmentQueryDto } from "./userassignment.dto";
+import { Assignment, UserAssignment } from "./userassignment.entity";
 
 
 @Injectable()
 export class UserAssignmentService {
-    static readonly REVIEWER_ROLE_KEY = "reviewer_role";
+    static readonly REVIEWER_ROLE_KEY = "reviewer_roles";
 
     // reviewerRoles: number[] = [];
 
@@ -106,8 +106,8 @@ export class UserAssignmentService {
     }
 
     async setReviewerRoles(reviewerRoles: number[]) {
-        return await this.tvmsConfigRepository.upsert({ configKey: UserAssignmentService.REVIEWER_ROLE_KEY, configValue: reviewerRoles },
-            [UserAssignmentService.REVIEWER_ROLE_KEY]);
+        await this.tvmsConfigRepository.upsert({ configKey: UserAssignmentService.REVIEWER_ROLE_KEY, configValue: reviewerRoles }, ['configKey']);
+        return reviewerRoles;
     }
 
     async getReviewerRoles() {
