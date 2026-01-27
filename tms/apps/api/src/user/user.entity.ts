@@ -1,12 +1,13 @@
 import { Role } from 'src/role/role.entity';
 import { UserUriPermission } from 'src/auth/auth.entity';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany, ManyToMany, JoinTable, Check } from 'typeorm';
 import { Department } from 'src/department/department.entity';
 import { Tag } from 'src/tag/tag.entity';
 import { UserTraining } from 'src/usertraining/usertraining.entity';
 
 
 @Entity('users')
+@Check(`jsonb_typeof("reviewers") = 'array'`)
 export class User {
   @PrimaryGeneratedColumn({ name: 'user_id' })
   userId: number;
