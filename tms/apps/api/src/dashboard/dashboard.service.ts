@@ -124,7 +124,6 @@ export class DashboardService {
       where: { status: true },
       order: { created: 'DESC' },
       take: 1,
-      select: ['testId', 'name', 'created'],
     });
 
 	recentTests.forEach((test) => {
