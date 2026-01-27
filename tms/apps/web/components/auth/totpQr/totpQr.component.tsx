@@ -45,7 +45,7 @@ export default function TotpQrComponent(props: TTotpQrComponentProps) {
                     navigate.push("/admin/dashboard");
                     toastSuccess("ログインに成功しました");
                 } else {
-                    navigate.push("/student/dashboard");
+                    navigate.push("/dashboard");
                     toastSuccess("ログインに成功しました");
                 }
             }
