@@ -25,15 +25,19 @@ const ADMIN_ROUTES = [
 ];
 
 const STUDENT_ROUTES = [
-  "/student/dashboard",
-  "/student/my-trainings",
+  "/dashboard",
+  "/my-trainings",
+  "/results",
+  "/change-password",
+  "/student/dashboard", // Keep for backward compatibility
+  "/student/my-trainings", // Keep for backward compatibility
   "/student/training-videos",
-  "/student/results",
-  "/student/change-password",
+  "/student/results", // Keep for backward compatibility
+  "/student/change-password", // Keep for backward compatibility
 ];
 
 const CHANGE_PASSWORD_ROUTES_ADMIN = "/admin/change-password";
-const CHANGE_PASSWORD_ROUTES_STUDENT = "/student/change-password";
+const CHANGE_PASSWORD_ROUTES_STUDENT = "/change-password";
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -80,7 +84,7 @@ export async function proxy(request: NextRequest) {
 
     // Role restriction for admin and student
     if (isAdminRoute && !isAdmin) {
-      return NextResponse.redirect(new URL("/student/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
     if (isStudentRoute && isAdmin) {
@@ -106,7 +110,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isPublicRoute && token && otpStep) {
-    return NextResponse.redirect(new URL(isAdmin ? "/admin/dashboard" : "/student/dashboard", request.url));
+    return NextResponse.redirect(new URL(isAdmin ? "/admin/dashboard" : "/dashboard", request.url));
   }
 
   return NextResponse.next();
@@ -118,6 +122,10 @@ export const config = {
     "/",
     "/admin",
     "/admin/:path*",
+    "/dashboard",
+    "/my-trainings",
+    "/results",
+    "/change-password",
     "/student/:path*",
     "/forgot-password",
     "/reset-password",
