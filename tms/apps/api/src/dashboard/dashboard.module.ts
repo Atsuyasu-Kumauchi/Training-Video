@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DashboardController } from './dashboard.controller';
+import { DashboardController, StudentDashboardController } from './dashboard.controller';
 import { DashboardService } from './dashboard.service';
 import { User } from '../user/user.entity';
 import { Training } from '../training/training.entity';
@@ -14,7 +14,7 @@ import { AuthModule } from '../auth/auth.module';
 		TypeOrmModule.forFeature([User, Training, Video, UserTraining, Test]),
 		AuthModule,
 	],
-	controllers: [DashboardController],
+	controllers: [DashboardController, StudentDashboardController],
 	providers: [DashboardService],
 	exports: [DashboardService],
 })

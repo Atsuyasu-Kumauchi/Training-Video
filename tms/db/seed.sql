@@ -164,7 +164,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd, created
         ) VALUES (
             'Sarah', 'Wilson', 'sarah.wilson@tms.com', 'user1', password_hash, totp_secret,
-            false, 'EMP002', dept_a_id, employee_role_id, true, CURRENT_DATE, false,
+            false, 'EMP002', dept_a_id, employee_role_id, true, CURRENT_DATE, true,
             NOW() - INTERVAL '2 hours'
         );
     END IF;
@@ -176,7 +176,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd, created
         ) VALUES (
             'John', 'Doe', 'john.doe@tms.com', 'user2', password_hash, totp_secret,
-            false, 'EMP003', dept_b_id, employee_role_id, true, CURRENT_DATE, false,
+            false, 'EMP003', dept_b_id, employee_role_id, true, CURRENT_DATE, true,
             NOW() - INTERVAL '1 day'
         );
     END IF;
@@ -188,7 +188,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd, created
         ) VALUES (
             'Emily', 'Johnson', 'emily.johnson@tms.com', 'user3', password_hash, totp_secret,
-            false, 'EMP004', dept_c_id, employee_role_id, true, CURRENT_DATE, false,
+            false, 'EMP004', dept_c_id, employee_role_id, true, CURRENT_DATE, true,
             NOW() - INTERVAL '3 days'
         );
     END IF;
@@ -200,7 +200,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd, created
         ) VALUES (
             'Michael', 'Brown', 'michael.brown@tms.com', 'user4', password_hash, totp_secret,
-            false, 'EMP005', dept_a_id, employee_role_id, true, CURRENT_DATE, false,
+            false, 'EMP005', dept_a_id, employee_role_id, true, CURRENT_DATE, true,
             NOW() - INTERVAL '5 days'
         );
     END IF;
@@ -212,7 +212,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd, created
         ) VALUES (
             'Lisa', 'Anderson', 'lisa.anderson@tms.com', 'user5', password_hash, totp_secret,
-            false, 'EMP006', dept_b_id, employee_role_id, true, CURRENT_DATE, false,
+            false, 'EMP006', dept_b_id, employee_role_id, true, CURRENT_DATE, true,
             NOW() - INTERVAL '7 days'
         );
     END IF;
@@ -245,7 +245,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Takeshi', 'Tanaka', 'takeshi.tanaka@tms.com', 'direct.manager1', password_hash, totp_secret,
-            false, 'MGR001', dept_a_id, direct_manager_role_id, true, CURRENT_DATE, false
+            false, 'MGR001', dept_a_id, direct_manager_role_id, true, CURRENT_DATE, true
         );
     END IF;
 
@@ -255,7 +255,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Yuki', 'Sato', 'yuki.sato@tms.com', 'direct.manager2', password_hash, totp_secret,
-            false, 'MGR002', dept_b_id, direct_manager_role_id, true, CURRENT_DATE, false
+            false, 'MGR002', dept_b_id, direct_manager_role_id, true, CURRENT_DATE, true
         );
     END IF;
 
@@ -265,7 +265,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Hiroshi', 'Yamada', 'hiroshi.yamada@tms.com', 'direct.manager3', password_hash, totp_secret,
-            false, 'MGR003', dept_c_id, direct_manager_role_id, true, CURRENT_DATE, false
+            false, 'MGR003', dept_c_id, direct_manager_role_id, true, CURRENT_DATE, true
         );
     END IF;
 
@@ -276,7 +276,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Kenji', 'Watanabe', 'kenji.watanabe@tms.com', 'senior.manager1', password_hash, totp_secret,
-            false, 'SMGR001', dept_a_id, senior_manager_role_id, true, CURRENT_DATE, false
+            false, 'SMGR001', dept_a_id, senior_manager_role_id, true, CURRENT_DATE, true
         );
     END IF;
 
@@ -286,7 +286,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Naomi', 'Kobayashi', 'naomi.kobayashi@tms.com', 'senior.manager2', password_hash, totp_secret,
-            false, 'SMGR002', dept_b_id, senior_manager_role_id, true, CURRENT_DATE, false
+            false, 'SMGR002', dept_b_id, senior_manager_role_id, true, CURRENT_DATE, true
         );
     END IF;
 
@@ -297,7 +297,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Akiko', 'Nakamura', 'akiko.nakamura@tms.com', 'empowerment1', password_hash, totp_secret,
-            false, 'EMPW001', dept_a_id, empowerment_role_id, true, CURRENT_DATE, false
+            false, 'EMPW001', dept_a_id, empowerment_role_id, true, CURRENT_DATE, true
         );
     END IF;
 
@@ -307,7 +307,7 @@ BEGIN
             is_admin, employee_id, department_id, role_id, status, join_date, reset_pwd
         ) VALUES (
             'Masato', 'Ito', 'masato.ito@tms.com', 'empowerment2', password_hash, totp_secret,
-            false, 'EMPW002', dept_b_id, empowerment_role_id, true, CURRENT_DATE, false
+            false, 'EMPW002', dept_b_id, empowerment_role_id, true, CURRENT_DATE, true
         );
     END IF;
 END $$;

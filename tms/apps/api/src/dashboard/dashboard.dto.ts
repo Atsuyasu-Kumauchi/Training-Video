@@ -11,3 +11,17 @@ export class RecentActivityItem {
 	description: string;
 	timestamp: Date;
 }
+
+export class StudentDashboardStatsDto {
+	totalTrainings: number;
+	completedTrainings: number;
+	inProgressTrainings: number;
+	recentActivity: StudentRecentActivityItem[];
+}
+
+export class StudentRecentActivityItem {
+	type: 'training_assigned' | 'training_completed';
+	title: string;
+	description: string;
+	timestamp: Date;
+}
