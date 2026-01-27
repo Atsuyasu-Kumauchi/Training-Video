@@ -45,7 +45,7 @@ export class UserService {
         const user = u as any;
         user.userTagIds = user.tags.map((t: Tag) => t.tagId);
         user.assigned_training = u.userTrainings.length;
-        user.completed_training = u.userTrainings.filter(ut => ut.progress.every(p => Object.values(p)[0].status.toLocaleLowerCase() === "completed")).length;
+        user.completed_training = u.userTrainings.filter(ut => ut.progress.length ? ut.progress.every(p => Object.values(p)[0].status.toLocaleLowerCase() === "completed") : false).length;
         return { ...user, userTrainings: undefined };
       }),
       pageIndex: query.pageIndex,
@@ -71,7 +71,7 @@ export class UserService {
       ...user,
       userTagIds: user.tags.map((t: Tag) => t.tagId),
       assigned_training: user.userTrainings.length,
-      completed_training: user.userTrainings.filter(ut => ut.progress.every(p => Object.values(p)[0].status.toLocaleLowerCase() === "completed")).length,
+      completed_training: user.userTrainings.filter(ut => ut.progress.length ? ut.progress.every(p => Object.values(p)[0].status.toLocaleLowerCase() === "completed") : false).length,
       userTrainings: undefined
     };
   }
