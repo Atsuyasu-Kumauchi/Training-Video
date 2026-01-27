@@ -8,18 +8,37 @@ import {
   faGraduationCap,
   faHome,
   faKey,
+  faSpinner,
   faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function StudentSidebar() {
   const pathname = usePathname();
   const { isSidebarOpen, setIsSidebarOpen } = useSettings();
-
+  const [loadingPath, setLoadingPath] = useState<string | null>(null);
 
   const lang = useLang();
+
+  const handleLinkClick = (url: string) => {
+    if (url !== pathname) {
+      setLoadingPath(url);
+      // Close sidebar on mobile after navigation starts
+      if (window.innerWidth < 1024) {
+        setIsSidebarOpen(false);
+      }
+    }
+  };
+
+  // Clear loading state when pathname changes (navigation complete)
+  useEffect(() => {
+    if (loadingPath && pathname === loadingPath) {
+      setLoadingPath(null);
+    }
+  }, [pathname, loadingPath]);
 
   const sidebar = [
     { url: "/dashboard", icon: faHome, title: lang.menu.dashboard },
@@ -61,21 +80,35 @@ export function StudentSidebar() {
       <nav className="mt-6 px-3">
         <div className="space-y-3">
           {sidebar?.map((item, index) => {
+            const isActive = pathname === item.url;
+            const isLoading = loadingPath === item.url;
             return (
               <Link
                 key={index}
                 href={item.url}
+                onClick={() => handleLinkClick(item.url)}
                 className={cn(
-                  "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-all duration-200  active:scale-95 active:text-primary-700 ",
-                  pathname === item.url &&
-                  " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600"
+                  "flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 active:scale-95 active:text-primary-700 whitespace-nowrap relative",
+                  isActive &&
+                  " text-primary-700 bg-primary-50 rounded-lg border-l-4 border-primary-600",
+                  isLoading && "opacity-70"
                 )}
               >
                 <FontAwesomeIcon
                   icon={item.icon}
-                  className="fas fa-tachometer-alt w-5 h-5 mr-3"
+                  className={cn(
+                    "fas fa-tachometer-alt w-5 h-5 mr-3 flex-shrink-0",
+                    isLoading && "animate-pulse"
+                  )}
                 />
-                {item.title}
+                <span className="truncate">{item.title}</span>
+                {isLoading && (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="ml-auto w-4 h-4 text-primary-600"
+                  />
+                )}
               </Link>
             );
           })}
