@@ -16,8 +16,8 @@ export const LangStudentDashboard = {
     training_complete: "トレーニング完了", //Training complete
     training_complete_desc:
       "おめでとうございます！「JavaScript基礎」を92%のスコアで完了しました", //Congratulations! You completed JavaScript Fundamentals with a score of 92%
-    hours_age: "2時間前", //2 hours ago
-    days_age: "1日前", //1 day ago
+    hours_age: "時間前", //2 hours ago
+    days_age: "日前", //1 day ago
   },
 };
 

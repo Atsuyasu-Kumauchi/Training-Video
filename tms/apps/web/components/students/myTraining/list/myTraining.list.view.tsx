@@ -9,11 +9,12 @@ import Link from "next/link";
 
 type MyTrainingListViewProps = {
   trainingsData: IMyTrainingsDto[];
-}
+};
 
-export default function MyTrainingListView({ trainingsData }: MyTrainingListViewProps) {
+export default function MyTrainingListView({
+  trainingsData,
+}: MyTrainingListViewProps) {
   const { myTraining } = useStudentLang();
-
 
   // const router = useRouter();
 
@@ -35,27 +36,38 @@ export default function MyTrainingListView({ trainingsData }: MyTrainingListView
       <div className="space-y-4">
         {trainingsData?.length === 0 && (
           <div className="flex items-center justify-center h-[500px]">
-            <p className="text-gray-600">データが見つかりません</p>
+            <p className="text-gray-600">{myTraining.list.data_not_found}</p>
           </div>
         )}
         {trainingsData?.map((training) => (
-          <Link href={"/student/training-videos/" + training.trainingId} key={training.trainingId} className="flex items-start space-x-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${training.status === true ? "bg-green-100" : "bg-blue-100"}`} >
+          <Link
+            href={"/student/training-videos/" + training.trainingId}
+            key={training.trainingId}
+            className="flex items-start space-x-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+          >
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center ${training.status === true ? "bg-green-100" : "bg-blue-100"}`}
+            >
               <FontAwesomeIcon
                 icon={training.status === true ? faCheck : faBook}
-                className={`${training.status === true
-                  ? "text-green-600"
-                  : "text-blue-600"
-                  } text-lg`}
+                className={`${
+                  training.status === true ? "text-green-600" : "text-blue-600"
+                } text-lg`}
               />
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium">{training.name}</h3>
-                <span className={cn(
-                  "px-2.5 py-0.5 rounded-full text-xs font-medium",
-                  training.status === true ? "bg-green-100 text-green-800" : training.status === false ? "bg-yellow-100 text-yellow-800" : "bg-gray-100 text-gray-800"
-                )}>
+                <span
+                  className={cn(
+                    "px-2.5 py-0.5 rounded-full text-xs font-medium",
+                    training.status === true
+                      ? "bg-green-100 text-green-800"
+                      : training.status === false
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-gray-100 text-gray-800",
+                  )}
+                >
                   {training.status === true ? (
                     <> {myTraining.list.completion}</>
                   ) : training.status === false ? (
@@ -66,12 +78,15 @@ export default function MyTrainingListView({ trainingsData }: MyTrainingListView
                 </span>
               </div>
 
-              <p className="text-sm text-gray-600 mt-1">{training.description}</p>
+              <p className="text-sm text-gray-600 mt-1">
+                {training.description}
+              </p>
 
               <div className="flex items-center space-x-4 text-xs text-gray-500 mt-2">
                 <span>
                   <FontAwesomeIcon icon={faVideo} className="mr-1" />
-                  {`${training?.videos?.length}/${training?.videos?.length}`} {" "} {myTraining.list.video}
+                  {`${training?.videos?.length}/${training?.videos?.length}`}{" "}
+                  {myTraining.list.video}
                 </span>
                 <span>
                   {training.status === true

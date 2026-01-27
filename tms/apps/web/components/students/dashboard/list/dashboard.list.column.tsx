@@ -36,7 +36,7 @@ function DashboardListColumn() {
                   <div className="flex items-center space-x-2">
                     <span className="text-xs text-gray-500">
                       {" "}
-                      {dashboard.list.hours_age}
+                      2 {dashboard.list.hours_age}
                     </span>
                     <span className="w-2 h-2 bg-red-500 rounded-full" />
                   </div>
@@ -64,7 +64,7 @@ function DashboardListColumn() {
                   <div className="flex items-center space-x-2">
                     <span className="text-xs text-gray-500">
                       {" "}
-                      {dashboard.list.days_age}
+                      1 {dashboard.list.days_age}
                     </span>
                   </div>
                 </div>

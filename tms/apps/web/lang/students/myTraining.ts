@@ -19,6 +19,8 @@ export const LangStudentMyTraining = {
     completed: "完了", //Completed
     issue_review: "  課題レビュー", //Issue Review
     start_test: " テストを開始", //start test
+    data_not_found: "データが見つかりません", //data not found
+    start: "開始", //start
   },
 };
 
