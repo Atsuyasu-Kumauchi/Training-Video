@@ -22,10 +22,10 @@ export function StudentSidebar() {
   const lang = useLang();
 
   const sidebar = [
-    { url: "/student/dashboard", icon: faHome, title: lang.menu.dashboard },
-    { url: "/student/my-trainings", icon: faBook, title: lang.menu.myTrainings },
-    { url: "/student/results", icon: faChartBar, title: lang.menu.results },
-    { url: "/student/change-password", icon: faKey, title: lang.menu.changePassword },
+    { url: "/dashboard", icon: faHome, title: lang.menu.dashboard },
+    { url: "/my-trainings", icon: faBook, title: lang.menu.myTrainings },
+    { url: "/results", icon: faChartBar, title: lang.menu.results },
+    { url: "/change-password", icon: faKey, title: lang.menu.changePassword },
   ];
 
   return (

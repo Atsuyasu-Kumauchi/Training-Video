@@ -84,7 +84,7 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
             </p>
           </div>
           <Link
-            href="/student/my-trainings"
+            href="/my-trainings"
             className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
           >
             <FontAwesomeIcon
