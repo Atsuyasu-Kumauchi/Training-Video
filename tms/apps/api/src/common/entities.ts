@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('tvms_configs')
 export class TvmsConfig {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'tvms_config_id' })
   tvmsConfigId: number;
 
   @Column({ name: 'config_key', type: 'varchar', length: 100, nullable: false, unique: true })
