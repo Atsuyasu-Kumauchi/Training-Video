@@ -45,7 +45,7 @@ export enum ERoleName {
 }
 
 export enum ERoleId {
-    DIRECT_MANAGER = 3,
-    SENIOR_MANAGER = 2,
-    EMPOWERMENT = 4,
+    DIRECT_MANAGER = 3, // Direct Manager
+    SENIOR_MANAGER = 2, // Senior Manager
+    EMPOWERMENT = 4, // Empowerment
 }

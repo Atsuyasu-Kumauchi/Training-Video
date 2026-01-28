@@ -27,7 +27,7 @@ export default function MyTrainingListComponent() {
   //   );
   // })
 
-  // console.log("data ======", data);
+  console.log("data ======", data);
 
 
 
@@ -38,3 +38,4 @@ export default function MyTrainingListComponent() {
     </div>
   )
 }
+
