@@ -21,9 +21,6 @@ export default function TrainingVideosListComponent() {
     }
   })
 
-  console.log("data", data);
-
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen bg-white/50 opacity-50">

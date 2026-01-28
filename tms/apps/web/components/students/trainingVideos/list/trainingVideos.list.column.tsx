@@ -18,12 +18,11 @@ import {
   faBook,
   faCheck,
   faCircle,
-  faClipboardCheck,
-  faPlay,
+  faPlay
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import TrainingVideoPlayerComponent from "../player/trainingVideo.player.component";
 import { TrainingVideosListSidebar } from "./trainingVideos.list.sidebar";
 
@@ -31,14 +30,12 @@ interface TrainingVideosListColumnProps {
   training: ITrainingVideosDto;
 }
 
-export default function TrainingVideosListColumn({
-  training,
-}: TrainingVideosListColumnProps) {
+export default function TrainingVideosListColumn({ training }: TrainingVideosListColumnProps) {
+
   const { myTraining } = useStudentLang();
   const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
   const { setSidebarContent } = useStudentRightBar();
-  const [selectedVideo, setSelectedVideo] =
-    useState<IStudentTrainingVideosDto | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<IStudentTrainingVideosDto | null>(null);
 
   const handlePlayVideo = useCallback((video: IStudentTrainingVideosDto) => {
     setSelectedVideo(video);
@@ -52,34 +49,42 @@ export default function TrainingVideosListColumn({
     };
   }, [setSidebarContent]);
 
-  const startTest = useCallback((videoId: number) => {
-    console.log(videoId);
-  }, []);
+  const startTest = useCallback((videoId: number) => { console.log(videoId) }, []);
 
   const statusProgress = (videoId: number) => {
     const status = training?.users[0].videoProgressMap?.[videoId];
     return status;
   };
 
-  const totalCompleteVideo = training.users[0].progress?.filter(
-    (v: ITrainingVideosStatus) => {
-      const progressEntry = Object.entries(v)[0];
-      return progressEntry[1].status === TrainingVideosStatusEnum.Completed;
-    },
-  ).length;
+  const totalCompleteVideo = training.users[0].progress?.filter((v: ITrainingVideosStatus) => {
+    const progressEntry = Object.entries(v)[0];
+    return progressEntry[1].status === TrainingVideosStatusEnum.Completed;
+  }).length;
+
+
+
+
+
+  const watchPercentage = useMemo(() => {
+    if (!training) return 0
+    const totalVideoDuration = training.videos.reduce((total, video) => total + video.videoDuration, 0);
+    const totalCompleteVideoDuration = training.users[0].progress?.reduce((total, v: ITrainingVideosStatus) => {
+      return total + Object.entries(v)[0][1].watchDuration;
+    }, 0)
+    const watchDuration = Math.round(totalCompleteVideoDuration / totalVideoDuration * 100);
+    return watchDuration
+
+  }, [training])
+
+  console.log("watchPercentage", watchPercentage + '%');
+
+
+
 
   return (
     <>
       <div className="px-6 py-8">
         <div className="flex items-center justify-between mb-8">
-          {/* <div>
-            <h1 id="trainingTitle" className="text-2xl font-bold text-gray-900">
-              Project Management Basics
-            </h1>
-            <p id="trainingDescription" className="text-gray-600 mt-1">
-              Essential project management concepts and methodologies
-            </p>
-          </div> */}
           <div>
             <h1 id="trainingTitle" className="text-2xl font-bold text-gray-900">
               {training?.name}
@@ -135,7 +140,7 @@ export default function TrainingVideosListColumn({
                     id="progressText"
                     className="text-lg font-bold text-blue-600"
                   >
-                    67%
+                    {watchPercentage}%
                   </p>
                 </div>
                 <div className="text-center">
@@ -170,7 +175,13 @@ export default function TrainingVideosListColumn({
                   >
                     <div className="flex-shrink-0">
                       {/* <Image
-                        src={'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg'}
+                        src={
+                          video.uploadType === "file"
+                            ? MediaServer(video?.thumbnailUrl)
+                            : video.uploadType === "youtube"
+                              ? video?.thumbnailUrl
+                              : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                        }
                         alt={video.name}
                         width={96}
                         height={64}
@@ -206,10 +217,10 @@ export default function TrainingVideosListColumn({
                         >
                           <FontAwesomeIcon icon={faPlay} className="mr-1" />
                           {statusProgress(video.videoId)?.status ===
-                          TrainingVideosStatusEnum.Completed
+                            TrainingVideosStatusEnum.Completed
                             ? myTraining.list.rewatch
                             : statusProgress(video.videoId)?.status ===
-                                TrainingVideosStatusEnum.InProgress
+                              TrainingVideosStatusEnum.InProgress
                               ? `${myTraining.list.read_more}`
                               : `${myTraining.list.start}`}
                         </button>
@@ -221,7 +232,7 @@ export default function TrainingVideosListColumn({
                               TrainingVideosStatusEnum.Completed
                               ? "bg-green-100 text-green-800"
                               : statusProgress(video.videoId)?.status ===
-                                  TrainingVideosStatusEnum.InProgress
+                                TrainingVideosStatusEnum.InProgress
                                 ? "bg-yellow-100 text-yellow-800"
                                 : "bg-gray-100 text-gray-800",
                           )}
@@ -229,40 +240,40 @@ export default function TrainingVideosListColumn({
                           <FontAwesomeIcon
                             icon={
                               statusProgress(video.videoId)?.status ===
-                              TrainingVideosStatusEnum.Completed
+                                TrainingVideosStatusEnum.Completed
                                 ? faCheck
                                 : statusProgress(video.videoId)?.status ===
-                                    TrainingVideosStatusEnum.InProgress
+                                  TrainingVideosStatusEnum.InProgress
                                   ? faPlay
                                   : faCircle
                             }
                             className="mr-1"
                           />
                           {statusProgress(video.videoId)?.status ===
-                          TrainingVideosStatusEnum.Completed
+                            TrainingVideosStatusEnum.Completed
                             ? myTraining.list.completion
                             : statusProgress(video.videoId)?.status ===
-                                TrainingVideosStatusEnum.InProgress
+                              TrainingVideosStatusEnum.InProgress
                               ? myTraining.list.in_progress
                               : myTraining.list.not_started}
                         </span>
                       </div>
                     </div>
-                    {statusProgress(video.videoId)?.status ===
+                    {/* {statusProgress(video.videoId)?.status ===
                       TrainingVideosStatusEnum.InProgress && (
-                      <div className="flex-shrink-0">
-                        <button
-                          onClick={() => startTest(video?.videoId)}
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-                        >
-                          <FontAwesomeIcon
-                            icon={faClipboardCheck}
-                            className="mr-2"
-                          />
-                          {myTraining.list.start_test}
-                        </button>
-                      </div>
-                    )}
+                        <div className="flex-shrink-0">
+                          <button
+                            onClick={() => startTest(video?.videoId)}
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                          >
+                            <FontAwesomeIcon
+                              icon={faClipboardCheck}
+                              className="mr-2"
+                            />
+                            {myTraining.list.start_test}
+                          </button>
+                        </div>
+                      )} */}
                   </div>
                 );
               })}
