@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 
 @Entity('assignments')
 export class Assignment {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'assignment_id' })
   assignmentId: number;
 
   @Column({ type: 'varchar', length: 100 })
@@ -25,7 +25,7 @@ export class Assignment {
 
 @Entity('user_assignments')
 export class UserAssignment {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'user_assignment_id' })
   userAssignmentId: number;
 
   @Column({ name: "user_id", type: "integer" })

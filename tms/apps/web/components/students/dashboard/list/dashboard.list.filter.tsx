@@ -1,8 +1,14 @@
 import useStudentLang from "@/lang/students";
 import { faBook, faCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StudentDashboardStats } from "../studentDashboard.controller";
 
-function DashboardListFilter() {
+interface DashboardListFilterProps {
+  stats?: StudentDashboardStats;
+  isLoading: boolean;
+}
+
+function DashboardListFilter({ stats, isLoading }: DashboardListFilterProps) {
   const { dashboard } = useStudentLang();
   return (
     <div>
@@ -19,7 +25,9 @@ function DashboardListFilter() {
               <p className="text-sm font-medium text-gray-500">
                 {dashboard.filter.sessions}
               </p>
-              <p className="text-2xl font-bold text-gray-900">8</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {isLoading ? "..." : (stats?.totalTrainings ?? 0)}
+              </p>
             </div>
           </div>
         </div>
@@ -39,7 +47,9 @@ function DashboardListFilter() {
                 {" "}
                 {dashboard.filter.completion}
               </p>
-              <p className="text-2xl font-bold text-gray-900">6</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {isLoading ? "..." : (stats?.completedTrainings ?? 0)}
+              </p>
             </div>
           </div>
         </div>
@@ -58,7 +68,9 @@ function DashboardListFilter() {
               <p className="text-sm font-medium text-gray-500">
                 {dashboard.filter.progress}
               </p>
-              <p className="text-2xl font-bold text-gray-900">2</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {isLoading ? "..." : (stats?.inProgressTrainings ?? 0)}
+              </p>
             </div>
           </div>
         </div>

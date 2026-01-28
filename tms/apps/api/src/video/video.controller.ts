@@ -9,8 +9,6 @@ import { Test, TestQuestion } from "src/test/test.entity";
 import * as path from 'path';
 import * as fs from 'fs';
 import Ffmpeg, * as ffmpeg from 'fluent-ffmpeg';
-import * as ffmpegPath from 'ffmpeg-static';
-import * as ffprobe from 'ffprobe-static';
 import { YouTube } from 'youtube-sr';
 
 
@@ -21,8 +19,6 @@ export class VideoController {
 
     constructor(private readonly videoService: VideoService, private readonly testService: TestService) {
         if (!fs.existsSync(this.uploadDir)) fs.mkdirSync(this.uploadDir, { recursive: true });
-        ffmpeg.setFfmpegPath(ffmpegPath.default as any);
-        ffmpeg.setFfprobePath(ffprobe.path);
     }
 
     @Post("uploads")
@@ -78,7 +74,7 @@ export class VideoController {
             ...createVideoDto,
             videoDuration: createVideoDto.uploadType === "file"
                 ? Math.floor(await this.getVideoDuration(videoPath))
-                : (await YouTube.getVideo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).duration,
+                : (await YouTube.getVideo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).duration / 1000,
             thumbnailUrl: createVideoDto.uploadType === "file"
                 ? (await this.takeVideoThumbnail(videoPath, videoPath.replace(/\.[^.]*$/, ".thumb.jpg"))).replace(/.*\/public/, '')
                 : (await YouTube.getVideo(`https://www.youtube.com/watch?v=${createVideoDto.videoUrl}`)).thumbnail?.url || "",

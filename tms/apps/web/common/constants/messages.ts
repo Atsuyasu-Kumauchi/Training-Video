@@ -22,4 +22,5 @@ export class Messages {
 
   // Auth validation messages (Japanese)
   static readonly LOGIN_FAILED = 'メールアドレスまたはパスワードが正しくありません。'; // Invalid credentials
+  static readonly CURRENT_PASSWORD_INCORRECT = '現在のパスワードが正しくありません。'; // Current password is incorrect
 }
