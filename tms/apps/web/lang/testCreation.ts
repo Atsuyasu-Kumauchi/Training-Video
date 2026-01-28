@@ -7,6 +7,9 @@ export const LangTestCreation = {
     status: "ステータス", // Status
     search: "検索", // Search
     searchPlaceholder: "テスト名で検索...", //Search by test name...
+    all_status: "すべてのステータス", // all status
+    active: "アクティブ", // active
+    inactive: "非アクティブ", // inactive
   },
   list: {
     test: "テスト", //test

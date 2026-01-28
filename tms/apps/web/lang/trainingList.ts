@@ -7,6 +7,7 @@ export const LangTrainingList = {
     status: "ステータス", // Status
     search: "検索", // Search
     searchPlaceholder: "トレーニング名または説明で検索...", // Search by training name or description
+    all_status: "すべてのステータス", // all status
   },
   list: {
     training: "トレーニング", // Training
