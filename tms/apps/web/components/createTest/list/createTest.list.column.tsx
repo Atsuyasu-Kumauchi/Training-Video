@@ -43,6 +43,14 @@ export const createTestListColumn: TListColumnDef<CTestCreationDto>[] = [
       );
     },
   },
+  // {
+  //   accessorKey: "Tag",
+  //   enableHiding: false,
+  //   header: () => list.status,
+  //   cell: ({ row: { original } }) => {
+  //     return <Badge status={original.status ? "Active" : "Inactive"} />;
+  //   },
+  // },
   {
     accessorKey: "status",
     enableHiding: false,

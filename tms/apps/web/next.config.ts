@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["img.youtube.com"],
   },
-  env:{
+  env: {
     BASE_URL: process.env.BASE_URL
   }
 };

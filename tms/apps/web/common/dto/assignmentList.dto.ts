@@ -43,3 +43,9 @@ export enum ERoleName {
     SENIOR_MANAGER = "シニアマネージャー",
     EMPOWERMENT = "エンパワー部門",
 }
+
+export enum ERoleId {
+    DIRECT_MANAGER = 3,
+    SENIOR_MANAGER = 2,
+    EMPOWERMENT = 4,
+}
