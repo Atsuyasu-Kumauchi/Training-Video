@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Headers, Param, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { VideoService } from "./video.service";
 import { Video } from "./video.entity";
-import { CreateVideoDto, VideoQueryDto } from "./video.dto";
+import { CreateVideoDto, testQuestionSetRand, VideoQueryDto } from "./video.dto";
 import { type DeepPartial } from "typeorm";
 import { IsAdmin, JwtAuthGuard, VerifyUser } from "src/auth/auth.guard";
 import { TestService } from "src/test/test.service";
@@ -268,7 +268,7 @@ RULES:
         await this.testService.save(createVideoDto.testId || video.testId, {
             ...video.test,
             testId: createVideoDto.testId,
-            testQuestions: (await this.generateVideoQuestions(videoPath)).map((tq: { question: string, correct_answer: string, choices: any[] }) => ({
+            testQuestions: (video.uploadType === "youtube" ? testQuestionSetRand() : await this.generateVideoQuestions(videoPath)).map(tq => ({
                 question: tq.question,
                 correctOption: +tq.correct_answer,
                 options: tq.choices
