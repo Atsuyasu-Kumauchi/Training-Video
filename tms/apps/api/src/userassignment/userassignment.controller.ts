@@ -30,13 +30,13 @@ export class UserAssignmentController {
         return await this.userAssignmentService.getReviewers();
     }
 
-    @Post('saveUserAssignment')
-    async saveUserAssignment(@Req() req, @Body() userAssigment: DeepPartial<UserAssignment>) {
+    @Post('saveUserAssignment/:id')
+    async saveUserAssignment(@Req() req, @Query('id') assignmentId: number, @Body() userAssigment: DeepPartial<UserAssignment>) {
         if (!req.user.isAdmin) {
             delete userAssigment.reviews;
             delete userAssigment.assignment;
         }
-        return await this.userAssignmentService.saveUserAssignment(req.user.userId, userAssigment);
+        return await this.userAssignmentService.saveUserAssignment(req.user.userId, assignmentId, userAssigment);
     }
 
     @Get('getUserAssignments')
