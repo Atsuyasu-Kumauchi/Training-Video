@@ -40,7 +40,7 @@ export default function CreateTestFormComponent() {
 
   const testEditDataValues = {
     name: testEditData?.data?.name,
-    description: testEditData?.data?.description,
+    description: testEditData?.data?.description === null ? '' : testEditData?.data?.description,
     status: testEditData?.data?.status,
     testQuestions: testEditData?.data?.testQuestions?.map((item: any) => {
       return {
@@ -50,6 +50,9 @@ export default function CreateTestFormComponent() {
       }
     })
   }
+
+  console.log("testEditDataValues", testEditDataValues);
+
 
   const testMutation = useMutation({
     mutationKey: ["test-update", id],
