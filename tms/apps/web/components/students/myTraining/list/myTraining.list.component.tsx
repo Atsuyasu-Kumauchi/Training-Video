@@ -21,20 +21,10 @@ export default function MyTrainingListComponent() {
     </div>
   }
 
-  // data?.data?.forEach((training) => {
-  //   training.users[0].videoProgressMap = Object.fromEntries(
-  //     training.users[0].progress.map(v => [Object.entries(v)[0][0], Object.entries(v)[0][1]])
-  //   );
-  // })
-
-  // console.log("data ======", data);
-
-
-
-
   return (
     <div className="bg-white rounded-lg  border border-gray-200 overflow-hidden">
       <MyTrainingListView trainingsData={data?.data as IMyTrainingsDto[]} />
     </div>
   )
 }
+

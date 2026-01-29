@@ -18,7 +18,7 @@ export function TablePagination<T>({ table, dataSource }: TListTableHeader<T>) {
 
     return (
         <div className="px-6 py-3 border-t border-gray-200">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="flex items-center text-sm text-gray-700">
                     <span>
                         {from} 〜 {to} 件 / 全 {dataSource?.resultCount} 件を表示

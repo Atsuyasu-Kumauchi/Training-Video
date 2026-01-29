@@ -37,15 +37,15 @@ export const trainingListColumn: TListColumnDef<CTrainingsDto>[] = [
     accessorKey: "trainingId",
     enableHiding: false,
     header: () => list.registered,
-    cell: (ctx) => {
-      return <div>N/A</div>;
+    cell: ({ row: { original } }) => {
+      return <div>{original?.users?.length}</div>;
     },
   },
   {
     accessorKey: "userId",
     enableHiding: false,
     header: () => list.completion,
-    cell: (ctx) => {
+    cell: ({ row: { original } }) => {
       return <div>N/A</div>;
     },
   },

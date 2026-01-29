@@ -3,7 +3,7 @@ import { Badge } from "@/common/components/badge";
 import { CUserDto, IUserDto } from "@/common/dto/user.dto";
 import useLang from "@/lang";
 import { LangUser } from "@/lang/user";
-import { Button } from "@/tmsui";
+import { Button, LinkButton } from "@/tmsui";
 import { TListColumnDef } from "@/tmsui/types";
 import {
   TUiBasicModalRef,
@@ -46,7 +46,16 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.assignedTraining,
     cell: (ctx) => {
-      return <div>{ctx.row.original.assigned_training ?? 0}</div>;
+      const original = ctx.row.original;
+      return (
+        <div>
+          <LinkButton
+            href={`/admin/users/user-training-details/${ctx.row.original.userId}`}
+            variant="ghost"
+            color="primary"
+          >{original.assigned_training ? original.assigned_training : '0'}</LinkButton>
+        </div>
+      );
     },
   },
   {
@@ -54,7 +63,16 @@ export const userListColumn: TListColumnDef<CUserDto>[] = [
     enableHiding: false,
     header: () => list.completedTraining,
     cell: (ctx) => {
-      return <div>{ctx.row.original.completed_training ?? 0}</div>;
+      const original = ctx.row.original;
+      return (
+        <div>
+          <LinkButton
+            href={`/admin/users/user-training-details/${ctx.row.original.userId}`}
+            variant="ghost"
+            color="primary"
+          >{original.completed_training ? original.completed_training : '0'}</LinkButton>
+        </div>
+      )
     },
   },
   {

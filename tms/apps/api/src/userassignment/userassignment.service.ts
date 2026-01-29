@@ -121,8 +121,8 @@ export class UserAssignmentService {
         }));
     }
 
-    async saveUserAssignment(userId: any, userAssigment: DeepPartial<UserAssignment>) {
-        return await this.userAssignmentRepository.save({ ...userAssigment, userId });
+    async saveUserAssignment(userId: number, assignmentId: number, userAssigment: DeepPartial<UserAssignment>) {
+        return await this.userAssignmentRepository.save({ ...userAssigment, assignmentId, userId });
     }
 
     // async getUserReviewers(userId: number) {

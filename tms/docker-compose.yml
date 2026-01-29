@@ -43,6 +43,7 @@ services:
       DATABASE_NAME: ${POSTGRES_DB:-tvms_db}
       DATABASE_USER: ${POSTGRES_USER:-tvms_user}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-tvms_password}
+      OPENAI_KEY: ${OPENAI_KEY}
     working_dir: /usr/src/app
     command: sh -c "npm install && npm run start:debug"
     depends_on:

@@ -1,4 +1,4 @@
-import { ASSIGNMENT_LIST, ERoleName, IAssignmentReviewerDto, IUserDto, ListQueryConfig, Messages, USERS } from '@/common';
+import { ASSIGNMENT_LIST, ERoleId, IAssignmentReviewerDto, IUserDto, ListQueryConfig, Messages, USERS } from '@/common';
 import { useToast } from '@/hooks';
 import { AuthServer, queryClient, TFormHandlerSubmit, TUiFormRef, UiForm, wait } from '@/tmsui';
 import { useMutation } from '@tanstack/react-query';
@@ -16,17 +16,17 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
     const firstReviewData = reviewFetch({
         queryKey: ["DIRECT_MANAGER"],
         url: ASSIGNMENT_LIST.REVIEWERS,
-    }).data?.filter((item: IAssignmentReviewerDto) => item.roleName == ERoleName.DIRECT_MANAGER)
+    }).data?.filter((item: IAssignmentReviewerDto) => item.roleId == ERoleId.DIRECT_MANAGER)
 
     const secondReviewData = reviewFetch({
         queryKey: ["SENIOR_MANAGER"],
         url: ASSIGNMENT_LIST.REVIEWERS,
-    }).data?.filter((item: IAssignmentReviewerDto) => item.roleName == ERoleName.SENIOR_MANAGER)
+    }).data?.filter((item: IAssignmentReviewerDto) => item.roleId == ERoleId.SENIOR_MANAGER)
 
     const finalReviewData = reviewFetch({
         queryKey: ["EMPOWERMENT"],
         url: ASSIGNMENT_LIST.REVIEWERS,
-    }).data?.filter((item: IAssignmentReviewerDto) => item.roleName == ERoleName.EMPOWERMENT)
+    }).data?.filter((item: IAssignmentReviewerDto) => item.roleId == ERoleId.EMPOWERMENT)
 
 
     const userMutation = useMutation({
@@ -62,10 +62,10 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
         // 🔹 2️⃣ Error হলে rollback
         onError: (error, _newUser, context) => {
             queryClient.setQueryData(ListQueryConfig.USER.key, context?.previousUsers);
-            
+
             const errorData = (error as AxiosError<{ message: string }>)?.response?.data?.message;
             const statusCode = (error as AxiosError)?.response?.status;
-            
+
             if (statusCode === 409 && errorData) {
                 // Check for Employee ID error - can be "Employee ID" (English) or "従業員ID" (Japanese)
                 if (errorData.includes('Employee ID') || errorData.includes('従業員ID')) {
@@ -73,7 +73,7 @@ export default function UserFormComponent({ modalRef, editData, isEdit }: TUserF
                         type: "server",
                         message: errorData,
                     });
-                } 
+                }
                 // All other duplicate errors (メールアドレス, Email, User, username, or generic) go to email field
                 else {
                     formRef.current?.setError("email", {

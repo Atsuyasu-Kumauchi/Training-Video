@@ -69,9 +69,8 @@ function DashboardListColumn({ recentActivity, isLoading }: DashboardListColumnP
               {recentActivity.map((activity, index) => (
                 <div
                   key={index}
-                  className={`flex items-start space-x-3 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200 ${
-                    activity.type === 'training_completed' ? 'opacity-75' : ''
-                  }`}
+                  className={`flex items-start space-x-3 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200 ${activity.type === 'training_completed' ? 'opacity-75' : ''
+                    }`}
                 >
                   <div className="flex-shrink-0">
                     <div className={`w-10 h-10 ${getActivityBgColor(activity.type)} rounded-full flex items-center justify-center`}>
