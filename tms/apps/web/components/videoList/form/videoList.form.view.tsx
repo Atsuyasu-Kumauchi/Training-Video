@@ -1,4 +1,5 @@
 "use client"
+import { StaticData } from "@/common";
 import { ListQueryConfig } from "@/common/apiEnpoint";
 import { ITagDto } from "@/common/dto";
 import { useFetchList } from "@/hooks";
@@ -11,16 +12,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWatch } from "react-hook-form";
 import { Fragment } from "react/jsx-runtime";
 import {
-  assignment,
   TVideoListFormViewSchema,
-  TVideoListSchema,
-  videoStatus
+  TVideoListSchema
 } from "./videoList.form.type";
 
 export default function VideoListFormView({ modalRef, isEdit, isPending, editData }: TVideoListFormViewSchema) {
   const { videoList } = useLang();
-  const { control } = useFormContext<TVideoListSchema>();
+  const { control, formState: { errors } } = useFormContext<TVideoListSchema>();
   const videoFileType = useWatch({ control, name: "uploadType" });
+  console.log(errors);
+
   return (
     <Fragment>
       <div className="space-y-4">
@@ -50,7 +51,7 @@ export default function VideoListFormView({ modalRef, isEdit, isPending, editDat
           <UiFormSelect<TVideoListSchema>
             name="status"
             label={videoList.form.status}
-            options={videoStatus}
+            options={StaticData.status}
             placeholder={videoList.form.status}
             required
           />
@@ -59,7 +60,10 @@ export default function VideoListFormView({ modalRef, isEdit, isPending, editDat
         <UiFormSelect<TVideoListSchema>
           name="assignmentId"
           label={videoList.form.assignment}
-          options={assignment}
+          options={useFetchList<ITagDto[]>({
+            query: ListQueryConfig.ASSIGNMENT_LIST,
+            keyName: { label: "name", value: "assignmentId" }
+          })}
           placeholder={videoList.form.assignment}
           required
         />

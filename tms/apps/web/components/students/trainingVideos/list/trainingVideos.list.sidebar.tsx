@@ -8,9 +8,17 @@ export const TrainingVideosListSidebar = () => {
     <>
       <div className="px-4 py-4.5 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-          <FontAwesomeIcon icon={fas.faClipboardList} className="mr-2 text-primary-600" />
+          <FontAwesomeIcon
+            icon={fas.faClipboardList}
+            className="mr-2 text-primary-600"
+          />
           {myTraining.list.issue_review}
-          <span id="assignmentCount" className="ml-2 bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded-full">3</span>
+          <span
+            id="assignmentCount"
+            className="ml-2 bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded-full"
+          >
+            3
+          </span>
         </h3>
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">

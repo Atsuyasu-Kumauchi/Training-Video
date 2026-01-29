@@ -11,7 +11,7 @@ export default function CreateTestListHeader() {
     const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
     return (
         <Fragment>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">{listOfIssues.header.title}</h2>
                     <p className="text-gray-600 mt-1">{listOfIssues.header.description}</p>
@@ -27,7 +27,6 @@ export default function CreateTestListHeader() {
                 title={listOfIssues.header.addNewAssignment}
                 body={<AssignmentListFormComponent modalRef={modalRef} />}
             />
-
         </Fragment>
     )
 }

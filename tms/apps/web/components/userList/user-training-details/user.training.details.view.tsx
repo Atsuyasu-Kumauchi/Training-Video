@@ -1,5 +1,6 @@
 "use client";
 import { USERS } from "@/common";
+import { LangUser } from "@/lang/user";
 import { AuthServer, Button } from "@/tmsui";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 const UserTrainingDetailsView = () => {
+  const { detailsView } = LangUser;
   const router = useRouter();
   const searchParams = useSearchParams();
   const { id } = useParams<{ id: string }>();
@@ -52,8 +54,7 @@ const UserTrainingDetailsView = () => {
                 icon={faArrowLeft}
                 className="fas fa-arrow-left w-5 h-5 mr-2"
               />
-              ユーザー一覧に戻る
-              {/* Back to User List */}
+              {detailsView.returnToUserList}
             </Button>
           </div>
           {/* User Info Card */}

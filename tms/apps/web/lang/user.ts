@@ -12,6 +12,9 @@ export const LangUser = {
     department: "部署", // Department
     search: "検索", // Search
     searchPlaceholder: "名前またはメールで検索...", // Search by name or email
+    all_status: "すべてのステータス", // all status
+    active: "アクティブ", // active
+    inactive: "非アクティブ", // inactive
   },
   list: {
     user: "ユーザー", // User
@@ -36,6 +39,9 @@ export const LangUser = {
     assignTraining: "割り当て済みトレーニング", // Assigned Training
     completeTraining: "完了済みトレーニング", // Completed Training
     close: "閉じる", // close
+  },
+  detailsView: {
+    returnToUserList: "ユーザーリストに戻る", // Return to User List
   },
 
   form: {

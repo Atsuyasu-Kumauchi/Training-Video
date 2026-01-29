@@ -11,7 +11,7 @@ export const LangVideoList = {
   },
   list: {
     video: "動画", // Video
-    category: "カテゴリ", // Category
+    audienceTags: "タグ", // Category
     playbackTime: "再生時間", // Playback Time
     uploadDate: "アップロード日", // Upload Date
     status: "ステータス", // Status
