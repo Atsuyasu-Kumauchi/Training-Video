@@ -16,15 +16,20 @@ export default function TrainingListFilter() {
     router.push(`?${params.toString()}`);
   };
 
-  const { register, handleSubmit, reset } = useForm({ mode: "all", defaultValues: { nameFilter: "" } })
-  const onSearchFilterChange: SubmitHandler<{ nameFilter: string }> = (value) => {
+  const { register, handleSubmit, reset } = useForm({
+    mode: "all",
+    defaultValues: { nameFilter: "" },
+  });
+  const onSearchFilterChange: SubmitHandler<{ nameFilter: string }> = (
+    value,
+  ) => {
     updateQuery("nameFilter", value.nameFilter);
-  }
+  };
 
   const onClearFilterChange = () => {
-    reset()  // input clear
-    router.push("?");    // all query param delete
-  }
+    reset(); // input clear
+    router.push("?"); // all query param delete
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
@@ -39,13 +44,16 @@ export default function TrainingListFilter() {
               onChange={(e) => updateQuery("statusFilter", e.target.value)}
               className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             >
-              <option value="">すべてのステータス</option>
-              <option value="true">アクティブ</option>
-              <option value="false">非アクティブ</option>
+              <option value=""> {testCreation.filter.all_status}</option>
+              <option value="true"> {testCreation.filter.active}</option>
+              <option value="false"> {testCreation.filter.inactive}</option>
             </select>
           </div>
           <div className="col-span-12 md:col-span-4">
-            <form onSubmit={handleSubmit(onSearchFilterChange)} className="flex gap-2">
+            <form
+              onSubmit={handleSubmit(onSearchFilterChange)}
+              className="flex gap-2"
+            >
               <div className="flex gap-4 w-full items-end flex-wrap">
                 <div className="flex-1">
                   <label className="block text-sm font-medium text-gray-700 mb-2">

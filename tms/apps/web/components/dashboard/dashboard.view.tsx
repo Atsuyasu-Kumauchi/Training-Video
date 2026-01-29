@@ -1,6 +1,6 @@
+import { Loader } from "@/common";
 import useLang from "@/lang";
 import { humanTime } from "@/tmsui";
-import { Loader } from "@/common";
 import {
   faBook,
   faClipboardCheck,
@@ -8,7 +8,7 @@ import {
   faUser,
   faUserPlus,
   faUsers,
-  faVideo
+  faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -20,26 +20,50 @@ interface DashboardViewProps {
   isError: boolean;
 }
 
-export default function DashboardView({ stats, isLoading, isError }: DashboardViewProps) {
+export default function DashboardView({
+  stats,
+  isLoading,
+  isError,
+}: DashboardViewProps) {
   const lang = useLang();
 
-  const getActivityIcon = (type: RecentActivityItem['type']) => {
+  const getActivityIcon = (type: RecentActivityItem["type"]) => {
     switch (type) {
-      case 'user_registered':
-        return { icon: faUserPlus, bgColor: 'bg-green-100', textColor: 'text-green-600' };
-      case 'training_completed':
-        return { icon: faGraduationCap, bgColor: 'bg-blue-100', textColor: 'text-blue-600' };
-      case 'video_uploaded':
-        return { icon: faVideo, bgColor: 'bg-purple-100', textColor: 'text-purple-600' };
-      case 'test_created':
-        return { icon: faClipboardCheck, bgColor: 'bg-yellow-100', textColor: 'text-yellow-600' };
+      case "user_registered":
+        return {
+          icon: faUserPlus,
+          bgColor: "bg-green-100",
+          textColor: "text-green-600",
+        };
+      case "training_completed":
+        return {
+          icon: faGraduationCap,
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-600",
+        };
+      case "video_uploaded":
+        return {
+          icon: faVideo,
+          bgColor: "bg-purple-100",
+          textColor: "text-purple-600",
+        };
+      case "test_created":
+        return {
+          icon: faClipboardCheck,
+          bgColor: "bg-yellow-100",
+          textColor: "text-yellow-600",
+        };
       default:
-        return { icon: faUserPlus, bgColor: 'bg-gray-100', textColor: 'text-gray-600' };
+        return {
+          icon: faUserPlus,
+          bgColor: "bg-gray-100",
+          textColor: "text-gray-600",
+        };
     }
   };
 
   const formatNumber = (num: number): string => {
-    return num.toLocaleString('ja-JP');
+    return num.toLocaleString("ja-JP");
   };
 
   if (isLoading) {
@@ -56,10 +80,12 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
     return (
       <div className="px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">{lang.dashboard.dashboard}</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            {lang.dashboard.dashboard}
+          </h1>
         </div>
         <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-sm text-red-800">データの読み込みに失敗しました。もう一度お試しください。</p>
+          <p className="text-sm text-red-800">{lang.dashboard.failed_load}</p>
         </div>
       </div>
     );
@@ -68,7 +94,9 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
   return (
     <div className="px-6 py-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">{lang.dashboard.dashboard}</h1>
+        <h1 className="text-2xl font-bold text-gray-900">
+          {lang.dashboard.dashboard}
+        </h1>
       </div>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -84,8 +112,12 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">{lang.dashboard.totalNumberOfUsers}</p>
-              <p className="text-2xl font-bold text-gray-900">{formatNumber(stats.totalUsers)}</p>
+              <p className="text-sm font-medium text-gray-500">
+                {lang.dashboard.totalNumberOfUsers}
+              </p>
+              <p className="text-2xl font-bold text-gray-900">
+                {formatNumber(stats.totalUsers)}
+              </p>
             </div>
           </div>
         </div>
@@ -104,7 +136,9 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
               <p className="text-sm font-medium text-gray-500">
                 {lang.dashboard.activeTraining}
               </p>
-              <p className="text-2xl font-bold text-gray-900">{formatNumber(stats.activeTrainings)}</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {formatNumber(stats.activeTrainings)}
+              </p>
             </div>
           </div>
         </div>
@@ -120,8 +154,12 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">{lang.dashboard.totalNumberOfVideos}</p>
-              <p className="text-2xl font-bold text-gray-900">{formatNumber(stats.totalVideos)}</p>
+              <p className="text-sm font-medium text-gray-500">
+                {lang.dashboard.totalNumberOfVideos}
+              </p>
+              <p className="text-2xl font-bold text-gray-900">
+                {formatNumber(stats.totalVideos)}
+              </p>
             </div>
           </div>
         </div>
@@ -139,11 +177,15 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
             {stats.recentActivity && stats.recentActivity.length > 0 ? (
               <div className="space-y-4">
                 {stats.recentActivity.map((activity, index) => {
-                  const { icon, bgColor, textColor } = getActivityIcon(activity.type);
+                  const { icon, bgColor, textColor } = getActivityIcon(
+                    activity.type,
+                  );
                   return (
                     <div key={index} className="flex items-start space-x-3">
                       <div className="flex-shrink-0">
-                        <div className={`w-7 h-7 ${bgColor} rounded-full flex items-center justify-center`}>
+                        <div
+                          className={`w-7 h-7 ${bgColor} rounded-full flex items-center justify-center`}
+                        >
                           <FontAwesomeIcon
                             icon={icon}
                             className={`${textColor} text-xs`}
@@ -167,7 +209,9 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-xs text-gray-500">最近のアクティビティはありません。</p>
+                <p className="text-xs text-gray-500">
+                  {lang.dashboard.no_recent_activity}
+                </p>
               </div>
             )}
           </div>
@@ -176,7 +220,9 @@ export default function DashboardView({ stats, isLoading, isError }: DashboardVi
         {/* Quick Actions */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">{lang.dashboard.quickActions}</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              {lang.dashboard.quickActions}
+            </h3>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 gap-3">
