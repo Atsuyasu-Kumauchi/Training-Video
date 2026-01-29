@@ -17,12 +17,16 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
         enableHiding: false,
         header: () => list.video,
         cell: ({ row: { original } }) => {
+
             return (
                 <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-24">
                         <div className="h-16 w-24 bg-gray-200 rounded-lg flex items-center justify-center ">
                             <img src={
-                                original.uploadType === "file" ? MediaServer(original?.thumbnailUrl) : original.uploadType === "youtube" ? original?.thumbnailUrl : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                                original.uploadType === "file" ?
+                                    MediaServer(original?.thumbnailUrl) :
+                                    original.uploadType === "youtube" ? original?.thumbnailUrl :
+                                        "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                             } alt={original?.name} width={150} height={150} className="w-24 h-16 object-cover rounded-lg" />
                         </div>
                     </div>
@@ -34,20 +38,36 @@ export const videoListColumn: TListColumnDef<CVideoListDto>[] = [
             )
         }
     },
-    // {
-    //     accessorKey: "category",
-    //     enableHiding: false,
-    //     header: () => list.category,
-    //     cell: (ctx) => {
-    //         return <div>{ctx.row.original.category}</div>
-    //     }
-    // },
+    {
+        accessorKey: "audienceTags",
+        enableHiding: false,
+        header: () => list.audienceTags,
+        cell: (ctx) => {
+            return <div>{ctx.row.original.audienceTags.join(", ")}</div>
+        }
+    },
     {
         accessorKey: "playbackTime",
         enableHiding: false,
         header: () => list.playbackTime,
         cell: (ctx) => {
-            return <div>{ctx.row.original.playbackTime}</div>
+            function secondsToHMS(totalSeconds: number) {
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                return { hours, minutes, seconds };
+            }
+            function formatHMS(seconds: number) {
+                const { hours, minutes, seconds: sec } = secondsToHMS(seconds);
+                if (hours > 0) {
+                    return `${hours}:${minutes}:${sec}`;
+                }
+                return `${minutes}:${sec}`;
+            }
+
+            return (
+                <div>{formatHMS(ctx.row.original.videoDuration)}</div>
+            )
         }
     },
     {

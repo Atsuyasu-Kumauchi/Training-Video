@@ -7,8 +7,7 @@ import {
   zodBoolean,
   zodInfer,
   zodObject,
-  zodString,
-  zodStringRequired,
+  zodStringRequired
 } from "@/tmsui";
 
 export type TCreateTestFormComponentSchema = TFormComponentSchema<TCreateTestSchema> & {
@@ -21,7 +20,7 @@ export type TCreateTestFormViewSchema = TFormViewSchema<TCreateTestSchema> & {
 
 export const createTestSchema = zodObject({
   name: zodStringRequired(),
-  description: zodString(),
+  description: zodStringRequired(),
   status: zodBoolean(),
   testQuestions: zodArray(
     zodObject({
