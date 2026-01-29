@@ -11,7 +11,7 @@ export default function TrainingListHeader() {
     const modalRef = useRef<TUiBasicModalRef>(uiBasicModalRefDefaultValue());
     return (
         <Fragment>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-8 gap-4 flex-wrap">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">
                         {trainingList.header.title}

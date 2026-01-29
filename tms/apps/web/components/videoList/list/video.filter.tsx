@@ -98,23 +98,24 @@ export default function VideoListFilter() {
                         />
 
                     </div>
-                    <div className="col-span-12 md:col-span-6">
-                        <form className="flex gap-2 flex-wrap w-full" onSubmit={handleSubmit(onSubmitSearch)}>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">検索</label>
-                                <div className="flex gap-2">
-                                    <input type="text" {...register("nameFilter")} id="searchInput" placeholder="タイトルまたは説明で検索..." className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+                    <div className="col-span-12 md:col-span-4">
+                        <form onSubmit={handleSubmit(onSubmitSearch)}>
+                            <div className="flex gap-2 flex-wrap w-full items-end" >
+                                <div className="flex-1">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">検索</label>
+                                    <div className="flex gap-2">
+                                        <input type="text" {...register("nameFilter")} id="searchInput" placeholder="タイトルまたは説明で検索..." className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2 opacity-0">.</label>
-                                <div className="flex gap-2">
-                                    <button type="submit" className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-                                        {user.filter.search}
-                                    </button>
-                                    <button type="button" onClick={() => onClearFilters()} className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
-                                        {user.filter.clearFilters}
-                                    </button>
+                                <div>
+                                    <div className="flex gap-2">
+                                        <button type="submit" className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                                            {user.filter.search}
+                                        </button>
+                                        <button type="button" onClick={() => onClearFilters()} className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+                                            {user.filter.clearFilters}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </form>

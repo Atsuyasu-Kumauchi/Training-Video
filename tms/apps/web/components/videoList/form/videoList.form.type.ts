@@ -1,4 +1,4 @@
-import { IVideoListDto } from "@/common";
+import { IVideoListDto, Messages } from "@/common";
 import { pickFormData, TFormComponentSchema, TFormViewSchema, zodArray, zodBooleanRequired, zodInfer, zodNumberRequired, zodObject, zodString, zodStringRequired } from "@/tmsui";
 
 export type TVideoListFormComponentSchema = TFormComponentSchema<TVideoListSchema> & {
@@ -12,7 +12,7 @@ export type TVideoListFormViewSchema = TFormViewSchema<TVideoListSchema> & {
 export const videoListSchema = zodObject({
   name: zodStringRequired(),
   description: zodStringRequired(),
-  audienceTags: zodArray(zodStringRequired()).nonempty(),
+  audienceTags: zodArray(zodStringRequired()).min(1, Messages.FIELD_REQUIRED),
   assignmentId: zodNumberRequired(),
   uploadType: zodString(),
   videoUrl: zodString(),
@@ -49,20 +49,7 @@ export const defaultValues = (isEdit?: boolean, editData?: Partial<IVideoListDto
   return isEdit ? pickFormData(editData as unknown as TVideoListSchema, videoListKeys as (keyof TVideoListSchema)[]) : initialValues;
 }
 
-export const videoStatus = [
-  { label: "アクティブ", value: "true" },
-  { label: "非アクティブ", value: "false" },
-];
 
-// export const questionSet = [
-//   { label: "問題セットを選択", value: "value" }, //Select a problem set
-//   { label: "JavaScript Basics Quiz", value: "javascript-basics" },
-//   { label: "React Fundamentals Test", value: "react-fundamentals" },
-//   { label: "CSS Grid Assessment", value: "css-grid" },
-//   { label: "Node.js Backend Quiz", value: "nodejs-backend" },
-//   { label: "Database Design Test", value: "database-design" },
-//   { label: "Leadership Assessment", value: "leadership-assessment" },
-// ];
 export const assignment = [
   { label: "Assignment 1: JavaScript Fundamentals", value: 1 },
   { label: "Assignment 2: React Components", value: 2 },
