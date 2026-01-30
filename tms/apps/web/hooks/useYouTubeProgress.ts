@@ -50,6 +50,12 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
     const playerRef = useRef<YT.Player | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const fullscreenRef = useRef<HTMLDivElement | null>(null);
+    const [questionMessage, setQuestionMessage] = useState<{ correct: boolean; type: string; message: string }>({
+        correct: false,
+        type: "",
+        message: ""
+    });
+    const [countdown, setCountdown] = useState<number | null>(null);
 
     const lastSavedTimeRef = useRef<number>(0);
     const lastQuestionIndexRef = useRef<number | null>(null);
@@ -127,6 +133,7 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
     const activeQuestionIndex = currentTime > 0 && currentTime % 180 === 0 && (currentTime / 180 - 1) < questions.length ? currentTime / 180 - 1 : -1;
     const activeQuestion: Question | undefined = activeQuestionIndex >= 0 ? questions[activeQuestionIndex] : undefined;
 
+
     useEffect(() => {
         if (!isReady || activeQuestionIndex === -1 || activeQuestionIndex === lastQuestionIndexRef.current) return;
 
@@ -186,12 +193,11 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
     };
 
     /* -------------------- Answer -------------------- */
-    const submitAnswer = (isCorrect: boolean): void => {
+    const submitAnswer = async (isCorrect: boolean): Promise<void> => {
         const player = playerRef.current;
         if (!player || !dataSource?.videoId) return;
 
         if (isCorrect) {
-            toastSuccess("あなたの答えは正しいです");
             ytSubmitProgressMutation.mutate({
                 videoId: dataSource.videoId,
                 progress: {
@@ -199,16 +205,48 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
                     watchDuration: Math.floor(player.getCurrentTime()),
                 },
             });
-        } else {
-            toastError("あなたの答えは間違っています");
-            const rewindTime = Math.max(0, currentTime - (step - 1));
-            player.seekTo(rewindTime, true);
-            lastSavedTimeRef.current = rewindTime;
-            localStorage.setItem(storageKey, String(rewindTime));
+            setQuestionMessage({
+                correct: true,
+                type: "success",
+                message: "あなたの答えは正しいです"
+            });
         }
+        setCountdown(3);
+        await new Promise<void>((resolve) => {
+            let count = 3;
+            const interval = setInterval(() => {
+                count -= 1;
+                setCountdown(count);
+                if (count <= 0) {
+                    if (!isCorrect) {
+                        const rewindTime = Math.max(0, currentTime - (step - 1));
+                        player.seekTo(rewindTime, true);
+                        lastSavedTimeRef.current = rewindTime;
+                        localStorage.setItem(storageKey, String(rewindTime));
+                        setQuestionMessage({
+                            correct: false,
+                            type: "error",
+                            message: "あなたの答えは間違っています"
+                        });
+                    }
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 1000);
+        });
         questionModalRef.current?.modalClose();
         player.playVideo();
     };
+
+    const modalClose = () => {
+        const player = playerRef.current;
+        if (!player || !dataSource?.videoId) return;
+        const rewindTime = Math.max(0, currentTime - (step - 1));
+        player.seekTo(rewindTime, true);
+        lastSavedTimeRef.current = rewindTime;
+        localStorage.setItem(storageKey, String(rewindTime));
+        questionModalRef.current?.modalClose();
+    }
 
     return {
         containerRef,
@@ -216,7 +254,10 @@ export function useYouTubeProgress({ videoId, questions, storageKey, questionMod
         currentTime,
         toggleFullscreen,
         submitAnswer,
+        modalClose,
         activeQuestion,
-        activeQuestionIndex
+        activeQuestionIndex,
+        questionMessage,
+        countdown
     };
 }

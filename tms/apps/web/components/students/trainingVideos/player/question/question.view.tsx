@@ -72,7 +72,7 @@
 // }
 
 import { cn } from "@/tmsui";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faExclamationCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo, useState } from "react";
 import { QuestionViewProps } from "./question.type";
@@ -94,11 +94,10 @@ type Props = {
     onClose: () => void;
 };
 
-export default function QuestionView({ questionModalRef, test, submitAnswer, activeQuestion, activeQuestionIndex }: QuestionViewProps) {
+export default function QuestionView({ modalClose, test, submitAnswer, activeQuestion, activeQuestionIndex, questionMessage, countdown }: QuestionViewProps) {
     const questions = test?.testQuestions ?? [];
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const total = questions.length;
-
     const progressPercent = useMemo(() => {
         if (!total) return 0;
         return ((activeQuestionIndex + 1) / total) * 100;
@@ -112,18 +111,17 @@ export default function QuestionView({ questionModalRef, test, submitAnswer, act
     };
 
     if (!activeQuestion) return null;
-
     return (
         <div className={cn("bg-black/70 rounded-lg border-3 border-gray-500 h-full w-full p-2 player-modal-child-fullscreen absolute overflow-y-auto scrollbar-none hover:scrollbar-thin top-0 left-0 z-50")}>
             <div className="bg-white rounded p-4 max-w-3xl mx-auto">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold">{test.name}</h3>
+                    <h3 className="text-xl font-bold">{test.name}  s</h3>
                     <div className="flex items-center space-x-3">
                         <span className="bg-primary-100 px-3 py-1 rounded-full text-sm">
                             質問 {activeQuestionIndex + 1} / {total}
                         </span>
-                        <button type="button" onClick={() => questionModalRef.current?.modalClose()} className="cursor-pointer">
+                        <button type="button" onClick={modalClose} className="cursor-pointer">
                             <FontAwesomeIcon icon={faTimes} className="text-xl" />
                         </button>
                     </div>
@@ -137,17 +135,29 @@ export default function QuestionView({ questionModalRef, test, submitAnswer, act
                 {/* Options */}
                 <div className="space-y-3">
                     {activeQuestion?.options?.map((option, idx) => {
+                        const isSelected = selectedIndex === idx;
+                        const isAnswered = countdown !== null; // submit হয়ে গেছে
+
+                        const optionClass = cn(
+                            "flex items-center p-4 border-2 rounded-lg cursor-pointer",
+                            // Submit এর আগে
+                            !isAnswered && !isSelected && "border-gray-300",
+                            !isAnswered && isSelected && "border-primary-500",
+                            // Submit এর পরে
+                            isAnswered && isSelected && questionMessage?.correct && "bg-green-50 border-green-500",
+                            isAnswered && isSelected && !questionMessage?.correct && "bg-red-50 border-red-500",
+                            // Submit এর পরে non-selected
+                            isAnswered && !isSelected && "border-gray-300"
+                        );
                         return (
                             <label
                                 key={idx}
-                                className={`flex items-center p-4 border-2 rounded-lg cursor-pointer ${selectedIndex === idx
-                                    ? "border-primary-500 bg-primary-50"
-                                    : "border-gray-200"
-                                    }`}
+                                className={optionClass}
                             >
                                 <input
                                     type="radio"
                                     name="question"
+                                    checked={selectedIndex === idx}
                                     onChange={() => setSelectedIndex(idx)}
                                     className="h-5 w-5"
                                 />
@@ -165,6 +175,17 @@ export default function QuestionView({ questionModalRef, test, submitAnswer, act
                     />
                 </div>
 
+                {/* Question Message */}
+                {questionMessage?.message && (
+                    <div className={cn(`
+                        mt-6 p-3 flex items-center gap-2 /* animate-[pulse_2s_ease-in-out_infinite] */ rounded-lg border`,
+                        questionMessage.correct ? "bg-green-50 border-green-400 text-green-600" : "bg-red-50 border-red-400 text-red-600"
+                    )}>
+                        <FontAwesomeIcon icon={questionMessage.correct ? faCheckCircle : faExclamationCircle} className="text-xl" />
+                        <p className="font-medium">{questionMessage.message}</p>
+                    </div>
+                )}
+
                 {/* Footer */}
                 <div className="flex justify-between items-center mt-8 pt-6 border-t">
                     <span className="text-sm text-gray-500">
@@ -177,8 +198,13 @@ export default function QuestionView({ questionModalRef, test, submitAnswer, act
                         >
                             問題をスキップ
                         </button> */}
-                        <button type="button" onClick={(e) => handleSubmit(e)} disabled={selectedIndex === null} className="px-6 py-2 bg-primary-600 text-white rounded-lg disabled:opacity-50">
-                            回答を提出
+                        <button
+                            type="button"
+                            onClick={(e) => handleSubmit(e)}
+                            disabled={selectedIndex === null || countdown !== null}
+                            className="px-6 py-2 bg-primary-600 text-white rounded-lg disabled:opacity-50"
+                        >
+                            {countdown ? `回答を提出 ( ${countdown}s )` : "回答を提出"}
                         </button>
                     </div>
                 </div>

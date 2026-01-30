@@ -61,10 +61,6 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
     return progressEntry[1].status === TrainingVideosStatusEnum.Completed;
   }).length;
 
-
-
-
-
   const watchPercentage = useMemo(() => {
     if (!training) return 0
     const totalVideoDuration = training.videos.reduce((total, video) => total + video.videoDuration, 0);
@@ -75,12 +71,6 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
     return watchDuration
 
   }, [training])
-
-  console.log("watchPercentage", watchPercentage + '%');
-
-
-
-
   return (
     <>
       <div className="px-6 py-8">
@@ -286,6 +276,7 @@ export default function TrainingVideosListColumn({ training }: TrainingVideosLis
                 selectedVideo ? (
                   <TrainingVideoPlayerComponent
                     videoDetails={selectedVideo}
+                    training={training}
                     modalRef={modalRef}
                   />
                 ) : null

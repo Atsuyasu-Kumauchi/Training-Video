@@ -25,6 +25,12 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
     const { toastError, toastSuccess } = useToast()
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const fullscreenRef = useRef<HTMLDivElement | null>(null);
+    const [questionMessage, setQuestionMessage] = useState<{ correct: boolean; type: string; message: string }>({
+        correct: false,
+        type: "",
+        message: ""
+    });
+    const [countdown, setCountdown] = useState<number | null>(null);
 
     const lastSavedTimeRef = useRef<number>(0);
     const lastQuestionIndexRef = useRef<number | null>(null);
@@ -138,29 +144,65 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
         };
     }, []);
 
-    const submitAnswer = (isCorrect: boolean): void => {
+    const submitAnswer = async (isCorrect: boolean): Promise<void> => {
         const player = videoRef.current;
         if (!player) return;
+
         if (isCorrect) {
-            toastSuccess("あなたの答えは正しいです");
             submitProgress.mutate({
                 videoId: dataSource?.videoId,
                 progress: {
                     status: "IN_PROGRESS",
                     watchDuration: currentTime,
                 }
-            })
+            });
+            setQuestionMessage({
+                correct: true,
+                type: "success",
+                message: "あなたの答えは正しいです"
+            });
         } else {
-            toastError("あなたの答えは間違っています");
-            const rewindTime = Math.max(0, currentTime - (step - 1));
-            player.currentTime = rewindTime;
-            lastSavedTimeRef.current = rewindTime;
-            localStorage.setItem(storageKey, String(rewindTime));
-            player.play();
+            setQuestionMessage({
+                correct: false,
+                type: "error",
+                message: "あなたの答えは間違っています"
+            });
         }
+
+        setCountdown(3);
+        await new Promise<void>((resolve) => {
+            let count = 3;
+            const interval = setInterval(() => {
+                count -= 1;
+                setCountdown(count);
+                if (count <= 0) {
+                    if (!isCorrect) {
+                        const rewindTime = Math.max(0, currentTime - (step - 1));
+                        player.currentTime = rewindTime;
+                        lastSavedTimeRef.current = rewindTime;
+                        localStorage.setItem(storageKey, String(rewindTime));
+                    }
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 1000);
+        });
         questionModalRef.current?.modalClose();
+        setCountdown(null);
         player.play();
     };
+
+
+    const modalClose = () => {
+        const player = videoRef.current;
+        if (!player) return;
+        const rewindTime = Math.max(0, currentTime - (step - 1));
+        player.currentTime = rewindTime;
+        lastSavedTimeRef.current = rewindTime;
+        localStorage.setItem(storageKey, String(rewindTime));
+        player.play();
+        questionModalRef.current?.modalClose();
+    }
 
     return {
         videoRef,
@@ -170,8 +212,11 @@ export function useVideoProgress({ questions, storageKey, questionModalRef, step
         totalDuration,
         toggleFullscreen,
         submitAnswer,
+        modalClose,
         activeQuestion,
-        activeQuestionIndex
+        activeQuestionIndex,
+        questionMessage,
+        countdown
     };
 }
 
